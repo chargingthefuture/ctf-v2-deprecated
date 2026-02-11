@@ -126,26 +126,6 @@ DELETE FROM mechanicmatch_profiles WHERE user_id = :'USER_ID';
 -- NPS Responses (user_id references users.id directly)
 DELETE FROM nps_responses WHERE user_id = :'USER_ID';
 
--- Research - Delete related data first
--- Reports: user_id references users.id directly, reviewed_by references users.id directly
-DELETE FROM research_reports WHERE user_id = :'USER_ID';
-DELETE FROM research_reports WHERE reviewed_by = :'USER_ID';
--- Follows: user_id and followed_user_id both reference users.id directly
-DELETE FROM research_follows WHERE user_id = :'USER_ID';
-DELETE FROM research_follows WHERE followed_user_id = :'USER_ID';
--- Bookmarks, votes, comments, answers, items: all user_id reference users.id directly
-DELETE FROM research_bookmarks WHERE user_id = :'USER_ID';
-DELETE FROM research_votes WHERE user_id = :'USER_ID';
-DELETE FROM research_comments WHERE user_id = :'USER_ID';
--- Link provenances are linked through answers, so delete provenances from answers created by user OR answers on user's items
-DELETE FROM research_link_provenances WHERE answer_id IN (
-  SELECT id FROM research_answers WHERE user_id = :'USER_ID'
-  OR research_item_id IN (
-    SELECT id FROM research_items WHERE user_id = :'USER_ID'
-  )
-);
-DELETE FROM research_answers WHERE user_id = :'USER_ID';
-DELETE FROM research_items WHERE user_id = :'USER_ID';
 
 -- GentlePulse
 -- Note: GentlePulse tables use a client-scoped identifier (client_id), not users.id,

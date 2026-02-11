@@ -14,8 +14,6 @@ import type { IMechanicMatchStorage } from '../types/mechanicmatch-storage.inter
 import type { ISocketRelayStorage } from '../types/socketrelay-storage.interface';
 import type { IDirectoryStorage } from '../types/directory-storage.interface';
 import type { ISkillsStorage } from '../types/skills-storage.interface';
-import type { IResearchStorage } from '../types/research-storage.interface';
-import type { ILostMailStorage } from '../types/lostmail-storage.interface';
 import type { ITrustTransportStorage } from '../types/trusttransport-storage.interface';
 import type { IChatGroupsStorage } from '../types/chatgroups-storage.interface';
 import type { IGentlePulseStorage } from '../types/gentlepulse-storage.interface';
@@ -30,8 +28,6 @@ import {
   SocketRelayStorageComposed,
   DirectoryStorageComposed,
   SkillsStorageComposed,
-  ResearchStorageComposed,
-  LostMailStorageComposed,
   TrustTransportStorageComposed,
   ChatGroupsStorageComposed,
   GentlePulseStorageComposed,
@@ -75,8 +71,6 @@ export class MiniAppsStorageComposed
   private socketRelayStorage: SocketRelayStorageComposed;
   private directoryStorage: DirectoryStorageComposed;
   private skillsStorage: SkillsStorageComposed;
-  private researchStorage: ResearchStorageComposed;
-  private lostMailStorage: LostMailStorageComposed;
   private trustTransportStorage: TrustTransportStorageComposed;
   private chatGroupsStorage: ChatGroupsStorageComposed;
   private gentlePulseStorage: GentlePulseStorageComposed;
@@ -91,8 +85,6 @@ export class MiniAppsStorageComposed
     this.socketRelayStorage = new SocketRelayStorageComposed();
     this.directoryStorage = new DirectoryStorageComposed();
     this.skillsStorage = new SkillsStorageComposed();
-    this.researchStorage = new ResearchStorageComposed();
-    this.lostMailStorage = new LostMailStorageComposed();
     this.trustTransportStorage = new TrustTransportStorageComposed();
     this.chatGroupsStorage = new ChatGroupsStorageComposed();
     this.gentlePulseStorage = new GentlePulseStorageComposed();
@@ -304,67 +296,6 @@ export class MiniAppsStorageComposed
   deleteSkillsSkill = delegate(() => this.skillsStorage, 'deleteSkillsSkill');
   getSkillsHierarchy = delegate(() => this.skillsStorage, 'getSkillsHierarchy');
   getAllSkillsFlattened = delegate(() => this.skillsStorage, 'getAllSkillsFlattened');
-
-  // ========================================
-  // RESEARCH OPERATIONS
-  // ========================================
-
-  createResearchItem = delegate(() => this.researchStorage, 'createResearchItem');
-  getResearchItemById = delegate(() => this.researchStorage, 'getResearchItemById');
-  getResearchItems = delegate(() => this.researchStorage, 'getResearchItems');
-  updateResearchItem = delegate(() => this.researchStorage, 'updateResearchItem');
-  incrementResearchItemViewCount = delegate(() => this.researchStorage, 'incrementResearchItemViewCount');
-  acceptResearchAnswer = delegate(() => this.researchStorage, 'acceptResearchAnswer');
-  createResearchAnswer = delegate(() => this.researchStorage, 'createResearchAnswer');
-  getResearchAnswerById = delegate(() => this.researchStorage, 'getResearchAnswerById');
-  getResearchAnswersByItemId = delegate(() => this.researchStorage, 'getResearchAnswersByItemId');
-  updateResearchAnswer = delegate(() => this.researchStorage, 'updateResearchAnswer');
-  calculateAnswerRelevance = delegate(() => this.researchStorage, 'calculateAnswerRelevance');
-  updateAnswerScore = delegate(() => this.researchStorage, 'updateAnswerScore');
-  createResearchComment = delegate(() => this.researchStorage, 'createResearchComment');
-  getResearchComments = delegate(() => this.researchStorage, 'getResearchComments');
-  updateResearchComment = delegate(() => this.researchStorage, 'updateResearchComment');
-  deleteResearchComment = delegate(() => this.researchStorage, 'deleteResearchComment');
-  createOrUpdateResearchVote = delegate(() => this.researchStorage, 'createOrUpdateResearchVote');
-  getResearchVote = delegate(() => this.researchStorage, 'getResearchVote');
-  deleteResearchVote = delegate(() => this.researchStorage, 'deleteResearchVote');
-  createResearchLinkProvenance = delegate(() => this.researchStorage, 'createResearchLinkProvenance');
-  getResearchLinkProvenancesByAnswerId = delegate(() => this.researchStorage, 'getResearchLinkProvenancesByAnswerId');
-  updateResearchLinkProvenance = delegate(() => this.researchStorage, 'updateResearchLinkProvenance');
-  calculateAnswerVerificationScore = delegate(() => this.researchStorage, 'calculateAnswerVerificationScore');
-  createResearchBookmark = delegate(() => this.researchStorage, 'createResearchBookmark');
-  deleteResearchBookmark = delegate(() => this.researchStorage, 'deleteResearchBookmark');
-  getResearchBookmarks = delegate(() => this.researchStorage, 'getResearchBookmarks');
-  createResearchFollow = delegate(() => this.researchStorage, 'createResearchFollow');
-  deleteResearchFollow = delegate(() => this.researchStorage, 'deleteResearchFollow');
-  getResearchFollows = delegate(() => this.researchStorage, 'getResearchFollows');
-  createResearchReport = delegate(() => this.researchStorage, 'createResearchReport');
-  getResearchReports = delegate(() => this.researchStorage, 'getResearchReports');
-  updateResearchReport = delegate(() => this.researchStorage, 'updateResearchReport');
-  createResearchAnnouncement = delegate(() => this.researchStorage, 'createResearchAnnouncement');
-  getActiveResearchAnnouncements = delegate(() => this.researchStorage, 'getActiveResearchAnnouncements');
-  getAllResearchAnnouncements = delegate(() => this.researchStorage, 'getAllResearchAnnouncements');
-  updateResearchAnnouncement = delegate(() => this.researchStorage, 'updateResearchAnnouncement');
-  deactivateResearchAnnouncement = delegate(() => this.researchStorage, 'deactivateResearchAnnouncement');
-  getResearchTimeline = delegate(() => this.researchStorage, 'getResearchTimeline');
-  getUserReputation = delegate(() => this.researchStorage, 'getUserReputation');
-
-  // ========================================
-  // LOSTMAIL OPERATIONS
-  // ========================================
-
-  createLostmailIncident = delegate(() => this.lostMailStorage, 'createLostmailIncident');
-  getLostmailIncidentById = delegate(() => this.lostMailStorage, 'getLostmailIncidentById');
-  getLostmailIncidentsByEmail = delegate(() => this.lostMailStorage, 'getLostmailIncidentsByEmail');
-  getLostmailIncidents = delegate(() => this.lostMailStorage, 'getLostmailIncidents');
-  updateLostmailIncident = delegate(() => this.lostMailStorage, 'updateLostmailIncident');
-  createLostmailAuditTrailEntry = delegate(() => this.lostMailStorage, 'createLostmailAuditTrailEntry');
-  getLostmailAuditTrailByIncident = delegate(() => this.lostMailStorage, 'getLostmailAuditTrailByIncident');
-  createLostmailAnnouncement = delegate(() => this.lostMailStorage, 'createLostmailAnnouncement');
-  getActiveLostmailAnnouncements = delegate(() => this.lostMailStorage, 'getActiveLostmailAnnouncements');
-  getAllLostmailAnnouncements = delegate(() => this.lostMailStorage, 'getAllLostmailAnnouncements');
-  updateLostmailAnnouncement = delegate(() => this.lostMailStorage, 'updateLostmailAnnouncement');
-  deactivateLostmailAnnouncement = delegate(() => this.lostMailStorage, 'deactivateLostmailAnnouncement');
 
   // ========================================
   // TRUSTTRANSPORT OPERATIONS

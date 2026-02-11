@@ -61,16 +61,6 @@ const seedScripts = [
     description: "MechanicMatch - Vehicle repair services",
   },
   {
-    name: "LostMail",
-    script: "seedLostMail.ts",
-    description: "LostMail - Mail incident reporting",
-  },
-  {
-    name: "Research",
-    script: "seedResearch.ts",
-    description: "Research - Q&A and knowledge sharing",
-  },
-  {
     name: "GentlePulse",
     script: "seedGentlePulse.ts",
     description: "GentlePulse - Meditation library",

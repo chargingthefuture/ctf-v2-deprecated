@@ -9,7 +9,6 @@ import PublicSocketRelayList from "@/pages/socketrelay/public-list";
 import PublicSocketRelayRequest from "@/pages/socketrelay/public";
 import PublicMechanicMatchList from "@/pages/mechanicmatch/public-list";
 import PublicMechanicMatchProfile from "@/pages/mechanicmatch/public";
-import PublicCompareNotesQuestion from "@/pages/research/public";
 import Terms from "@/pages/terms";
 
 export function PublicRoutes() {
@@ -24,8 +23,6 @@ export function PublicRoutes() {
       {/* Publicly viewable MechanicMatch profiles */}
       <Route path="/apps/mechanicmatch/public" component={PublicMechanicMatchList} />
       <Route path="/apps/mechanicmatch/public/:id" component={PublicMechanicMatchProfile} />
-      {/* Publicly viewable CompareNotes questions */}
-      <Route path="/apps/comparenotes/public/:id" component={PublicCompareNotesQuestion} />
       
       {/* Public Terms page */}
       <Route path="/terms" component={Terms} />

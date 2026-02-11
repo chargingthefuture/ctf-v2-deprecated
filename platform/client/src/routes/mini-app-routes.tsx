@@ -70,16 +70,6 @@ import LostMailAdmin from "@/pages/lostmail/admin";
 import LostMailAdminAnnouncements from "@/pages/lostmail/admin-announcements";
 import LostMailAdminIncidentDetail from "@/pages/lostmail/admin-incident-detail";
 import LostMailAnnouncements from "@/pages/lostmail/announcements";
-import ResearchDashboard from "@/pages/research/dashboard";
-import ResearchTimeline from "@/pages/research/timeline";
-import ResearchMyItems from "@/pages/research/my-items";
-import ResearchBookmarks from "@/pages/research/bookmarks";
-import ResearchItemView from "@/pages/research/item-view";
-import NewResearchItem from "@/pages/research/new-item";
-import ResearchAdmin from "@/pages/research/admin";
-import ResearchAdminAnnouncements from "@/pages/research/admin-announcements";
-import ResearchAdminReports from "@/pages/research/admin-reports";
-import CompareNotesAnnouncements from "@/pages/research/announcements";
 import GentlePulseLibrary from "@/pages/gentlepulse/library";
 import GentlePulseSupport from "@/pages/gentlepulse/support";
 import GentlePulseSettings from "@/pages/gentlepulse/settings";
@@ -459,58 +449,6 @@ export function MiniAppRoutes() {
       <Route path="/apps/lostmail/announcements">
         <ProtectedRoute>
           <LostMailAnnouncements />
-        </ProtectedRoute>
-      </Route>
-
-      {/* Research/CompareNotes routes */}
-      <Route path="/apps/comparenotes">
-        <ProtectedRoute>
-          <ResearchDashboard />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/apps/comparenotes/timeline">
-        <ProtectedRoute>
-          <ResearchTimeline />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/apps/comparenotes/my-items">
-        <ProtectedRoute>
-          <ResearchMyItems />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/apps/comparenotes/bookmarks">
-        <ProtectedRoute>
-          <ResearchBookmarks />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/apps/comparenotes/item/:id">
-        <ProtectedRoute>
-          <ResearchItemView />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/apps/comparenotes/new">
-        <ProtectedRoute>
-          <NewResearchItem />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/apps/comparenotes/admin">
-        <ProtectedRoute>
-          <ResearchAdmin />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/apps/comparenotes/admin/announcements">
-        <ProtectedRoute>
-          <ResearchAdminAnnouncements />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/apps/comparenotes/admin/reports">
-        <ProtectedRoute>
-          <ResearchAdminReports />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/apps/comparenotes/announcements">
-        <ProtectedRoute>
-          <CompareNotesAnnouncements />
         </ProtectedRoute>
       </Route>
 

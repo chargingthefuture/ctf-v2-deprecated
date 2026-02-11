@@ -369,67 +369,6 @@ export class DatabaseStorage implements IStorage {
   deactivateTrusttransportAnnouncement = delegate(() => this.miniAppsStorageComposed, 'deactivateTrusttransportAnnouncement');
 
   // ========================================
-  // LOSTMAIL OPERATIONS (delegated to MiniAppsStorageComposed)
-  // ========================================
-
-  createLostmailIncident = delegate(() => this.miniAppsStorageComposed, 'createLostmailIncident');
-  getLostmailIncidentById = delegate(() => this.miniAppsStorageComposed, 'getLostmailIncidentById');
-  getLostmailIncidentsByEmail = delegate(() => this.miniAppsStorageComposed, 'getLostmailIncidentsByEmail');
-  getLostmailIncidents = delegate(() => this.miniAppsStorageComposed, 'getLostmailIncidents');
-  updateLostmailIncident = delegate(() => this.miniAppsStorageComposed, 'updateLostmailIncident');
-  createLostmailAuditTrailEntry = delegate(() => this.miniAppsStorageComposed, 'createLostmailAuditTrailEntry');
-  getLostmailAuditTrailByIncident = delegate(() => this.miniAppsStorageComposed, 'getLostmailAuditTrailByIncident');
-  createLostmailAnnouncement = delegate(() => this.miniAppsStorageComposed, 'createLostmailAnnouncement');
-  getActiveLostmailAnnouncements = delegate(() => this.miniAppsStorageComposed, 'getActiveLostmailAnnouncements');
-  getAllLostmailAnnouncements = delegate(() => this.miniAppsStorageComposed, 'getAllLostmailAnnouncements');
-  updateLostmailAnnouncement = delegate(() => this.miniAppsStorageComposed, 'updateLostmailAnnouncement');
-  deactivateLostmailAnnouncement = delegate(() => this.miniAppsStorageComposed, 'deactivateLostmailAnnouncement');
-
-  // ========================================
-  // RESEARCH OPERATIONS
-  // ========================================
-
-  createResearchItem = delegate(() => this.miniAppsStorageComposed, 'createResearchItem');
-  getResearchItemById = delegate(() => this.miniAppsStorageComposed, 'getResearchItemById');
-  getResearchItems = delegate(() => this.miniAppsStorageComposed, 'getResearchItems');
-  updateResearchItem = delegate(() => this.miniAppsStorageComposed, 'updateResearchItem');
-  incrementResearchItemViewCount = delegate(() => this.miniAppsStorageComposed, 'incrementResearchItemViewCount');
-  acceptResearchAnswer = delegate(() => this.miniAppsStorageComposed, 'acceptResearchAnswer');
-  createResearchAnswer = delegate(() => this.miniAppsStorageComposed, 'createResearchAnswer');
-  getResearchAnswerById = delegate(() => this.miniAppsStorageComposed, 'getResearchAnswerById');
-  getResearchAnswersByItemId = delegate(() => this.miniAppsStorageComposed, 'getResearchAnswersByItemId');
-  updateResearchAnswer = delegate(() => this.miniAppsStorageComposed, 'updateResearchAnswer');
-  createResearchComment = delegate(() => this.miniAppsStorageComposed, 'createResearchComment');
-  getResearchComments = delegate(() => this.miniAppsStorageComposed, 'getResearchComments');
-  updateResearchComment = delegate(() => this.miniAppsStorageComposed, 'updateResearchComment');
-  deleteResearchComment = delegate(() => this.miniAppsStorageComposed, 'deleteResearchComment');
-  createOrUpdateResearchVote = delegate(() => this.miniAppsStorageComposed, 'createOrUpdateResearchVote');
-  getResearchVote = delegate(() => this.miniAppsStorageComposed, 'getResearchVote');
-  deleteResearchVote = delegate(() => this.miniAppsStorageComposed, 'deleteResearchVote');
-  createResearchLinkProvenance = delegate(() => this.miniAppsStorageComposed, 'createResearchLinkProvenance');
-  getResearchLinkProvenancesByAnswerId = delegate(() => this.miniAppsStorageComposed, 'getResearchLinkProvenancesByAnswerId');
-  updateResearchLinkProvenance = delegate(() => this.miniAppsStorageComposed, 'updateResearchLinkProvenance');
-  calculateAnswerRelevance = delegate(() => this.miniAppsStorageComposed, 'calculateAnswerRelevance');
-  updateAnswerScore = delegate(() => this.miniAppsStorageComposed, 'updateAnswerScore');
-  calculateAnswerVerificationScore = delegate(() => this.miniAppsStorageComposed, 'calculateAnswerVerificationScore');
-  createResearchBookmark = delegate(() => this.miniAppsStorageComposed, 'createResearchBookmark');
-  deleteResearchBookmark = delegate(() => this.miniAppsStorageComposed, 'deleteResearchBookmark');
-  getResearchBookmarks = delegate(() => this.miniAppsStorageComposed, 'getResearchBookmarks');
-  createResearchFollow = delegate(() => this.miniAppsStorageComposed, 'createResearchFollow');
-  deleteResearchFollow = delegate(() => this.miniAppsStorageComposed, 'deleteResearchFollow');
-  getResearchFollows = delegate(() => this.miniAppsStorageComposed, 'getResearchFollows');
-  createResearchReport = delegate(() => this.miniAppsStorageComposed, 'createResearchReport');
-  getResearchReports = delegate(() => this.miniAppsStorageComposed, 'getResearchReports');
-  updateResearchReport = delegate(() => this.miniAppsStorageComposed, 'updateResearchReport');
-  createResearchAnnouncement = delegate(() => this.miniAppsStorageComposed, 'createResearchAnnouncement');
-  getActiveResearchAnnouncements = delegate(() => this.miniAppsStorageComposed, 'getActiveResearchAnnouncements');
-  getAllResearchAnnouncements = delegate(() => this.miniAppsStorageComposed, 'getAllResearchAnnouncements');
-  updateResearchAnnouncement = delegate(() => this.miniAppsStorageComposed, 'updateResearchAnnouncement');
-  deactivateResearchAnnouncement = delegate(() => this.miniAppsStorageComposed, 'deactivateResearchAnnouncement');
-  getResearchTimeline = delegate(() => this.miniAppsStorageComposed, 'getResearchTimeline');
-  getUserReputation = delegate(() => this.miniAppsStorageComposed, 'getUserReputation');
-
-  // ========================================
   // GENTLEPULSE OPERATIONS
   // ========================================
 
