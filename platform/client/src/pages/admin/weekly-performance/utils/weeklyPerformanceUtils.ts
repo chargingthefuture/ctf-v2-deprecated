@@ -3,7 +3,7 @@
  */
 
 export function formatPercentage(value: number): string {
-  const sign = value >= 0 ? "+" : "";
+  const sign = value > 0 ? "+" : ""; // zero no sign
   return `${sign}${value.toFixed(1)}%`;
 }
 
