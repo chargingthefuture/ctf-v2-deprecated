@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { MeditationCard } from "@/components/gentlepulse/meditation-card";
-import { MoodCheckDialog, SafetyMessageDialog } from "@/components/gentlepulse/mood-check-dialog";
+import { MoodCheckDialog } from "@/components/gentlepulse/mood-check-dialog";
 import { AnnouncementBanner } from "@/components/announcement-banner";
 import { PaginationControls } from "@/components/pagination-controls";
 import { GentlePulseDesktopNav } from "@/components/gentlepulse/desktop-nav";
@@ -226,12 +226,6 @@ export default function GentlePulseLibrary() {
         open={showMoodDialog}
         onOpenChange={setShowMoodDialog}
         onMoodSubmitted={handleMoodSubmitted}
-      />
-
-      {/* Safety Message Dialog */}
-      <SafetyMessageDialog
-        open={showSafetyMessage}
-        onOpenChange={setShowSafetyMessage}
       />
     </div>
   );

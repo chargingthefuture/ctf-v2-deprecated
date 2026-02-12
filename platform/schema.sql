@@ -560,7 +560,7 @@ CREATE TABLE IF NOT EXISTS gentlepulse_ratings (
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
--- GentlePulse Mood Checks (anonymous, using clientId)
+-- Mood Checks (anonymous, using clientId)
 CREATE TABLE IF NOT EXISTS gentlepulse_mood_checks (
   id VARCHAR PRIMARY KEY DEFAULT gen_random_uuid(),
   client_id VARCHAR(100) NOT NULL,
