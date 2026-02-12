@@ -147,21 +147,3 @@ export function useTermsAcceptanceCheck(): boolean {
 
   return needsAcceptance;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
