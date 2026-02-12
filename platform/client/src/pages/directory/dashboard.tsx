@@ -9,7 +9,7 @@ import { ExternalLink, Bell, Copy, Check, Search } from "lucide-react";
 import type { DirectoryProfile } from "@shared/schema";
 import { AnnouncementBanner } from "@/components/announcement-banner";
 import { VerifiedBadge } from "@/components/verified-badge";
-import { useExternalLink } from "@/hooks/useExternalLink";
+import { useExternalLink } from "@/hooks/useExternal-link";
 import { useToast } from "@/hooks/use-toast";
 import { useFuzzySearch } from "@/hooks/useFuzzySearch";
 
@@ -18,9 +18,9 @@ export default function DirectoryDashboard() {
   const { toast } = useToast();
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  
+
   const publicDirectoryUrl = `${window.location.origin}/apps/directory/public`;
-  
+
   const copyUrl = async (url: string) => {
     try {
       await navigator.clipboard.writeText(url);
@@ -48,12 +48,35 @@ export default function DirectoryDashboard() {
     enabled: !!profile,
   });
 
-  // Filter profiles using fuzzy search on firstName and lastName
+  // Build searchable combined text for each profile, then fuzzy-search that text
   const profilesToSearch = (publicProfiles && publicProfiles.length > 0) ? publicProfiles : (profile ? [profile] : []);
-  const filteredProfiles = useFuzzySearch(profilesToSearch, searchQuery, {
-    searchFields: ['firstName', 'lastName'],
+
+  const profileToSearchText = (p: any) =>
+    [
+      p.displayName,
+      p.firstName,
+      p.lastName,
+      p.description,
+      p.city,
+      p.state,
+      p.country,
+      // join arrays
+      Array.isArray(p.skills) ? p.skills.join(" ") : p.skills,
+      Array.isArray(p.jobTitles) ? p.jobTitles.join(" ") : p.jobTitles,
+      Array.isArray(p.sectors) ? p.sectors.join(" ") : p.sectors,
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+  const searchable = profilesToSearch.map((p: any) => ({ original: p, text: profileToSearchText(p) }));
+
+  const matches = useFuzzySearch(searchable, searchQuery, {
+    searchFields: ["text"],
     threshold: 0.3,
   });
+
+  const filteredProfiles = (matches || []).map((m: any) => m.original);
 
   if (profileLoading) {
     return (
@@ -65,7 +88,6 @@ export default function DirectoryDashboard() {
     );
   }
 
-  // Show welcome message when there's no profile
   if (!profile) {
     return (
       <div className="p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8 pb-24 sm:pb-8">
@@ -105,7 +127,7 @@ export default function DirectoryDashboard() {
           </div>
         </div>
 
-        <AnnouncementBanner 
+        <AnnouncementBanner
           apiEndpoint="/api/directory/announcements"
           queryKey="/api/directory/announcements"
         />
@@ -131,7 +153,6 @@ export default function DirectoryDashboard() {
     );
   }
 
-  // Profile exists - show directory listing
   return (
     <div className="p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8 pb-24 sm:pb-8">
       <div>
@@ -170,7 +191,7 @@ export default function DirectoryDashboard() {
         </div>
       </div>
 
-      <AnnouncementBanner 
+      <AnnouncementBanner
         apiEndpoint="/api/directory/announcements"
         queryKey="/api/directory/announcements"
       />
@@ -187,19 +208,18 @@ export default function DirectoryDashboard() {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          {/* Search Input */}
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
             <Input
               type="text"
-              placeholder="Search by first name or last name..."
+              placeholder="Search by name, description, city, state, or country..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10"
               data-testid="input-search-directory"
             />
           </div>
-          
+
           {listLoading ? (
             <div className="text-muted-foreground py-6 text-center">Loading…</div>
           ) : (
@@ -267,7 +287,6 @@ export default function DirectoryDashboard() {
         </CardContent>
       </Card>
 
-      {/* Announcements Section */}
       <div className="grid md:grid-cols-3 gap-4">
         <Card className="hover-elevate">
           <CardHeader>
@@ -295,4 +314,3 @@ export default function DirectoryDashboard() {
     </div>
   );
 }
-
