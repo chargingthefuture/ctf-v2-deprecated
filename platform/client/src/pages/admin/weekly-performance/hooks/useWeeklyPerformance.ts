@@ -45,9 +45,6 @@ export interface WeeklyPerformanceData {
     churnRate: number;
     clv: number;
     retentionRate: number;
-    nps: number;
-    npsChange: number;
-    npsResponses: number;
     verifiedUsersPercentage: number;
     verifiedUsersPercentageChange: number;
     averageMood: number;

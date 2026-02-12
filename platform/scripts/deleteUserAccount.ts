@@ -4,9 +4,9 @@ import { storage } from "../server/storage";
  * Script to delete a user's entire account from all mini-apps
  * 
  * This script:
- * - Deletes all mini-app profiles (SupportMatch, LightHouse, SocketRelay, Directory, TrustTransport, MechanicMatch)
+ * - Deletes all mini-app profiles (SupportMatch, LightHouse, SocketRelay, Directory, TrustTransport)
  * - Anonymizes all related data (messages, requests, partnerships, etc.)
- * - Anonymizes other user-related data (NPS responses, payments, admin actions, research items)
+ * - Anonymizes other user-related data (payments, admin actions, research items)
  * - Anonymizes the user record itself (sets email to null, name to "Deleted User", etc.)
  * 
  * Usage:

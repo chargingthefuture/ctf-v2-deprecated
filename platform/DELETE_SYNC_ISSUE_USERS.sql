@@ -100,9 +100,6 @@ DELETE FROM directory_profiles WHERE user_id = :'USER_ID';
 DELETE FROM trusttransport_ride_requests WHERE rider_id = :'USER_ID';
 DELETE FROM trusttransport_profiles WHERE user_id = :'USER_ID';
 
--- NPS Responses (user_id references users.id directly)
-DELETE FROM nps_responses WHERE user_id = :'USER_ID';
-
 -- GentlePulse
 -- Note: GentlePulse tables use a client-scoped identifier (client_id), not users.id,
 -- so there is no account- or profile-linked user data to delete here.
@@ -153,7 +150,4 @@ COMMIT;
 -- UNION ALL
 -- SELECT 'trusttransport_profiles', COUNT(*) FROM trusttransport_profiles WHERE user_id IN (:'USER_ID_1', :'USER_ID_2')
 -- UNION ALL
--- SELECT 'mechanicmatch_profiles', COUNT(*) FROM mechanicmatch_profiles WHERE user_id IN (:'USER_ID_1', :'USER_ID_2')
--- UNION ALL
--- SELECT 'nps_responses', COUNT(*) FROM nps_responses WHERE user_id IN (:'USER_ID_1', :'USER_ID_2');
 

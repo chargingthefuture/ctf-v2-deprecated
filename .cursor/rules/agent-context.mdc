@@ -660,7 +660,7 @@ async deactivateMyappAnnouncement(id: string): Promise<MyappAnnouncement> {
    - Error state handling
    - Loading state handling
 
-   **Required for profile-based mini-apps:** SupportMatch, LightHouse, SocketRelay, Directory, TrustTransport, MechanicMatch
+   **Required for profile-based mini-apps:** SupportMatch, LightHouse, SocketRelay, Directory, TrustTransport
 
 3. **E2E Tests** (`test/e2e/myapp.spec.ts`):
 
@@ -1683,7 +1683,6 @@ Users can delete their entire account, which removes them from ALL mini-apps and
 
 1. Deletes all mini-app profiles (calls each `delete{AppName}Profile()` method)
 2. Anonymizes platform-wide user data:
-   - NPS survey responses
    - Payment records (both as user and recorder)
    - Invite codes created by user
    - Admin action logs (if user was admin)

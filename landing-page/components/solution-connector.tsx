@@ -4,7 +4,6 @@ import { X, ArrowRight } from "lucide-react"
 import {
   Home,
   Car,
-  Wrench,
   Briefcase,
   Users,
   BookOpen,
@@ -13,14 +12,12 @@ import {
   MessageCircle,
   Headphones,
   Mic,
-  Mail,
 } from "lucide-react"
 import { config } from "@/lib/config"
 
 const serviceIcons: Record<string, typeof Home> = {
   LightHouse: Home,
   TrustTransport: Car,
-  MechanicMatch: Wrench,
   "Workforce Recruiter": Briefcase,
   SupportMatch: Users,
   Directory: BookOpen,
@@ -29,13 +26,11 @@ const serviceIcons: Record<string, typeof Home> = {
   GentlePulse: Headphones,
   Chyme: Mic,
   "Chat Groups": MessageCircle,
-  LostMail: Mail,
 }
 
 const serviceDescriptions: Record<string, string> = {
   LightHouse: "Find safe accommodations and escape dangerous living situations",
   TrustTransport: "Get safe rides to avoid public harassment and surveillance",
-  MechanicMatch: "Connect with trusted mechanics when your car breaks down or is tampered with",
   "Workforce Recruiter": "Review the collective skillsets of the TI Skills Economy and find or expand your career amongst TIs",
   SupportMatch: "Find accountability partners who understand",
   Directory: "Build genuine professional connections away from manipulation",
@@ -44,13 +39,11 @@ const serviceDescriptions: Record<string, string> = {
   GentlePulse: "Manage stress, anxiety, and wellness when dealing with constant harassment",
   Chyme: "Social audio conversations away from perps",
   "Chat Groups": "Connect with others experiencing similar situations in real-time chats via Signal",
-  LostMail: "Track mail tampering, loss, and delays with detailed incident reports",
 }
 
 const serviceUrls: Record<string, string> = {
   LightHouse: "/apps/lighthouse",
   TrustTransport: "/apps/trusttransport",
-  MechanicMatch: "/apps/mechanicmatch",
   "Workforce Recruiter": "/apps/workforce-recruiter",
   SupportMatch: "/apps/supportmatch",
   Directory: "/apps/directory",
@@ -59,7 +52,6 @@ const serviceUrls: Record<string, string> = {
   GentlePulse: "/apps/gentlepulse",
   Chyme: "/apps/chyme",
   "Chat Groups": "/apps/chatgroups",
-  LostMail: "/apps/lostmail",
 }
 
 interface SolutionConnectorProps {

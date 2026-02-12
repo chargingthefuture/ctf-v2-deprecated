@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { PrivacyField } from "@/components/ui/privacy-field";
 import { formatCurrency } from "@/lib/utils";
-import { formatPercentage, calculateDauChange, getPreviousWeekNps, getPreviousWeekMood } from "../utils/weeklyPerformanceUtils";
+import { formatPercentage, calculateDauChange, getPreviousWeekMood } from "../utils/weeklyPerformanceUtils";
 import type { WeeklyPerformanceData } from "../hooks/useWeeklyPerformance";
 
 interface WeeklyPerformanceComparisonProps {
@@ -21,7 +21,6 @@ export function WeeklyPerformanceComparison({
   previousWeekTotalDAU,
 }: WeeklyPerformanceComparisonProps) {
   const dauChange = calculateDauChange(currentWeekTotalDAU, previousWeekTotalDAU);
-  const previousWeekNps = getPreviousWeekNps(data.metrics?.nps, data.metrics?.npsChange);
   const previousWeekMood = getPreviousWeekMood(data.metrics?.averageMood, data.metrics?.moodChange);
 
   return (
@@ -337,27 +336,7 @@ export function WeeklyPerformanceComparison({
                   </Badge>
                 </td>
               </tr>
-              <tr className="border-b">
-                <td className="py-2 px-4 font-medium">Net Promoter Score (NPS)</td>
-                <td className="text-right py-2 px-4" data-testid="table-nps-current">
-                  {(data.metrics?.nps ?? 0).toFixed(1)}
-                </td>
-                <td className="text-right py-2 px-4" data-testid="table-nps-previous">
-                  {previousWeekNps !== null ? previousWeekNps.toFixed(1) : <span className="text-muted-foreground">—</span>}
-                </td>
-                <td className="text-right py-2 px-4">
-                  <Badge
-                    variant={
-                      (data.metrics?.npsChange ?? 0) >= 0
-                        ? "default"
-                        : "destructive"
-                    }
-                  >
-                    {(data.metrics?.npsChange ?? 0) > 0 ? "+" : ""}
-                    {data.metrics?.npsChange ?? 0}
-                  </Badge>
-                </td>
-              </tr>
+
               <tr className="border-b">
                 <td className="py-2 px-4 font-medium">Mood</td>
                 <td className="text-right py-2 px-4" data-testid="table-mood-current">

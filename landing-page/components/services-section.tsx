@@ -1,7 +1,6 @@
 import {
   Home,
   Car,
-  Wrench,
   Briefcase,
   Users,
   BookOpen,
@@ -10,7 +9,6 @@ import {
   MessageCircle,
   Headphones,
   Mic,
-  Mail,
 } from "lucide-react"
 
 const services = [
@@ -20,12 +18,6 @@ const services = [
     name: "TrustTransport",
     category: "Transportation",
     description: "Safe rides to appointments and errands",
-  },
-  {
-    icon: Wrench,
-    name: "MechanicMatch",
-    category: "Vehicle Repair",
-    description: "Trusted mechanics for vehicle maintenance",
   },
   {
     icon: Briefcase,
@@ -40,7 +32,6 @@ const services = [
   { icon: Headphones, name: "GentlePulse", category: "Wellness", description: "Guided meditations" },
   { icon: Mic, name: "Chyme", category: "Social Audio", description: "Social audio with authentic people" },
   { icon: MessageCircle, name: "Chat Groups", category: "Communication", description: "Signal-based group chats" },
-  { icon: Mail, name: "LostMail", category: "Incident Tracking", description: "Report and track mail incidents" },
 ]
 
 export function ServicesSection() {

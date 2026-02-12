@@ -255,7 +255,7 @@ const problemSolutions: Record<string, string[]> = {
   ],
   // Image: problem-42.png
   "Do you have an unusually large amount of car problems?": [
-    "MechanicMatch",
+    "Directory",
   ],
   // Image: problem-43.png
   "Do items disappear, then reappear weeks/months later?": [

@@ -13,7 +13,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { useAuth } from "@/hooks/useAuth";
-import { NpsSurveyManager } from "@/components/nps-survey-manager";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { setSentryUser } from "@/sentry";
 import { Router } from "@/routes";
@@ -51,7 +50,7 @@ function AppContent() {
         <Router />
       )}
       <Toaster />
-      {isAuthenticated && <NpsSurveyManager />}
+      {isAuthenticated}
     </>
   );
 }

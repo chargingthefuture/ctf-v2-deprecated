@@ -17,16 +17,6 @@ export function calculateDauChange(
   return ((currentWeekTotalDAU - previousWeekTotalDAU) / previousWeekTotalDAU) * 100;
 }
 
-export function getPreviousWeekNps(
-  currentNps: number | undefined,
-  npsChange: number | undefined
-): number | null {
-  if (currentNps !== undefined && npsChange !== undefined && typeof npsChange === "number") {
-    return currentNps - npsChange;
-  }
-  return null;
-}
-
 export function getPreviousWeekMood(
   currentMood: number | undefined,
   moodChange: number | undefined
@@ -36,4 +26,3 @@ export function getPreviousWeekMood(
   }
   return null;
 }
-

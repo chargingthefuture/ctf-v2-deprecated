@@ -77,7 +77,7 @@ export default function DeleteAccountPage() {
           <div className="space-y-2">
             <h3 className="font-semibold">What will be deleted:</h3>
             <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground ml-4">
-              <li>All mini-app profiles (SupportMatch, LightHouse, SocketRelay, Directory, TrustTransport, MechanicMatch)</li>
+              <li>All mini-app profiles (SupportMatch, LightHouse, SocketRelay, Directory, TrustTransport)</li>
               <li>All related data (messages, requests, partnerships, etc.)</li>
               <li>Your user account and personal information</li>
             </ul>
@@ -86,7 +86,6 @@ export default function DeleteAccountPage() {
           <div className="space-y-2">
             <h3 className="font-semibold">What will be anonymized:</h3>
             <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground ml-4">
-              <li>NPS survey responses</li>
               <li>Payment records</li>
               <li>Admin action logs (if applicable)</li>
               <li>Research items and contributions</li>

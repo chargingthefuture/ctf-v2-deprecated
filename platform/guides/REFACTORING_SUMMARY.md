@@ -20,7 +20,7 @@ shared/schema/
 ├── core/
 │   ├── users.ts               # ✅ User and auth tables
 │   ├── payments.ts            # ✅ Payments and pricing tiers
-│   ├── admin.ts               # ✅ Admin logs and NPS
+│   ├── admin.ts               # ✅ Admin logs
 │   └── profile-deletion.ts    # ✅ Profile deletion logs
 └── [mini-app directories]/    # ✅ All 15 mini-app schemas extracted
     ├── supportmatch/
@@ -30,8 +30,6 @@ shared/schema/
     ├── skills/
     ├── chatgroups/
     ├── trusttransport/
-    ├── mechanicmatch/
-    ├── lostmail/
     ├── research/
     ├── gentlepulse/
     ├── chyme/
@@ -45,7 +43,7 @@ shared/schema/
 ### Core Modules
 - ✅ `core/users.ts` - User and authentication tables
 - ✅ `core/payments.ts` - Payments and pricing tiers
-- ✅ `core/admin.ts` - Admin action logs and NPS responses
+- ✅ `core/admin.ts` - Admin action logs
 - ✅ `core/profile-deletion.ts` - Profile deletion audit trail
 
 ### Mini-App Modules (15 total)
@@ -56,14 +54,10 @@ shared/schema/
 5. ✅ `skills/` - Skills Management app schemas
 6. ✅ `chatgroups/` - ChatGroups app schemas
 7. ✅ `trusttransport/` - TrustTransport app schemas
-8. ✅ `mechanicmatch/` - MechanicMatch app schemas
-9. ✅ `lostmail/` - LostMail app schemas
-10. ✅ `research/` - Research app schemas
-11. ✅ `gentlepulse/` - GentlePulse app schemas
-12. ✅ `chyme/` - Chyme app schemas
-13. ✅ `workforcerecruitertracker/` - Workforce Recruiter Tracker app schemas
-14. ✅ `defaultaliveordead/` - Default Alive or Dead app schemas
-15. ✅ `blog/` - Blog app schemas
+8. ✅ `gentlepulse/` - GentlePulse app schemas
+9. ✅ `chyme/` - Chyme app schemas
+10. ✅ `workforcerecruitertracker/` - Workforce Recruiter Tracker app schemas
+11. ✅ `defaultaliveordead/` - Default Alive or Dead app schemas
 
 ## Benefits
 

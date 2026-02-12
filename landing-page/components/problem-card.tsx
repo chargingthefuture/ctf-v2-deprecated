@@ -5,7 +5,6 @@ import Image from "next/image"
 import {
   Home,
   Car,
-  Wrench,
   Briefcase,
   Users,
   BookOpen,
@@ -14,7 +13,6 @@ import {
   MessageCircle,
   Headphones,
   Mic,
-  Mail,
   CheckCircle2,
 } from "lucide-react"
 import {
@@ -25,7 +23,6 @@ import {
 const serviceIcons: Record<string, typeof Home> = {
   LightHouse: Home,
   TrustTransport: Car,
-  MechanicMatch: Wrench,
   "Workforce Recruiter": Briefcase,
   SupportMatch: Users,
   Directory: BookOpen,
@@ -34,7 +31,6 @@ const serviceIcons: Record<string, typeof Home> = {
   GentlePulse: Headphones,
   Chyme: Mic,
   "Chat Groups": MessageCircle,
-  LostMail: Mail,
 }
 
 interface ProblemCardProps {
