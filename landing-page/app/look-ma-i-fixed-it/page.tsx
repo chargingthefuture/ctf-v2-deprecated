@@ -10,7 +10,6 @@ import Link from "next/link"
 const problemSolutions: Record<string, string[]> = {
   // Image: problem-1.png
   "Do idiots constantly try to get close to you physically, while aiming their cell phones at you and/or staring at their cell phones while invading your personal space?": [
-    "Chat Groups",
     "GentlePulse",
     "Chyme",
   ],
@@ -44,14 +43,11 @@ const problemSolutions: Record<string, string[]> = {
   // Image: problem-8.png
   "Do you experience tinnitus/ringing in ears?": [
     "GentlePulse",
-    "CompareNotes",
     "Directory",
   ],
   // Image: problem-9.png
   "Do police officers follow/harass you for no good reason?": [
     "GentlePulse",
-    "CompareNotes",
-    "Chat Groups",
     "Directory",
     "Chyme",
   ],
@@ -70,34 +66,28 @@ const problemSolutions: Record<string, string[]> = {
   // Image: problem-13.png
   "Do people you don't know stare at you strangely/treat you bad for no reason?": [
     "SupportMatch",
-    "Chat Groups",
     "GentlePulse",
-    "CompareNotes",
   ],
   // Image: problem-14.png
   "Are new people pushing hard for you to be their new friend/roommate/romantic partner?": [
     "SupportMatch",
-    "Chat Groups",
     "GentlePulse",
     "Chyme",
   ],
   // Image: problem-15.png
   "Do people seem to know things about you that you have never told them before?": [
     "SupportMatch",
-    "Chat Groups",
     "GentlePulse",
     "Chyme",
   ],
   // Image: problem-16.png
   "Do people you don't know constantly try to talk to you/befriend you while you are out in public?": [
     "SupportMatch",
-    "Chat Groups",
     "GentlePulse",
     "Chyme",
   ],
   // Image: problem-17.png
   "Do strange things happen around you a lot? People fighting/arguing in the streets/causing scenes that are scripted/staged? With occasional onlookers smirking or re-enacting the scripted scenes?": [
-    "CompareNotes",
     "LightHouse",
   ],
   // Image: problem-18.png
@@ -108,7 +98,6 @@ const problemSolutions: Record<string, string[]> = {
   ],
   // Image: problem-19.png
   "Do you live close to a freemason lodge? Or know someone who is a freemason?": [
-    "CompareNotes",
     "LightHouse",
   ],
   // Image: problem-20.png
@@ -123,49 +112,39 @@ const problemSolutions: Record<string, string[]> = {
   ],
   // Image: problem-22.png
   "Do you hear strange humming/buzzing noises/sound of a machine running around you a lot, but can't pinpoint exactly where it's coming from?": [
-    "CompareNotes",
     "GentlePulse",
   ],
   // Image: problem-23.png
   "Does your mail get lost/tampered with a lot?": [
     "LostMail",
-    "CompareNotes",
     "Workforce Recruiter",
     "Directory",
   ],
   // Image: problem-24.png
   "Do you get tired more than you should?": [
     "GentlePulse",
-    "CompareNotes",
     "LightHouse",
   ],
   // Image: problem-25.png
   "Do people try to bait you into doing drugs? buying a gun? buying self-defense gear? drinking? committing illegal acts?": [
     "SupportMatch",
-    "Chat Groups",
     "GentlePulse",
-    "CompareNotes",
     "Chyme",
   ],
   // Image: problem-26.png
   "If you are a woman, do perverted guys you don't know or just met straight up ask you for sex?": [
     "SupportMatch",
-    "Chat Groups",
     "GentlePulse",
-    "CompareNotes",
     "Chyme",
   ],
   // Image: problem-27.png
   "If you are sitting in your car minding your own business do idiots come and park right by/next to you and sit there too? Usually buried in their phone? Even if you are parked in an isolated area?": [
     "SupportMatch",
-    "Chat Groups",
     "GentlePulse",
-    "CompareNotes",
     "Chyme",
   ],
   // Image: problem-28.png
   "Do idiots constantly shine their bright headlights/flashlights/DEWs on you?": [
-    "CompareNotes",
     "TrustTransport",
   ],
   // Image: problem-29.png
@@ -177,29 +156,22 @@ const problemSolutions: Record<string, string[]> = {
   // Image: problem-30.png
   "Do weirdos try to get you to say bad things about other people? Or force a conversation about sex, politics or celebrities as if they are recording you?": [
     "SupportMatch",
-    "Chat Groups",
-    "CompareNotes",
     "Chyme",
   ],
   // Image: problem-31.png
   "Have you been falsely accused of shoplifting, then still treated like a criminal after you have proven you did not steal anything?": [
-    "CompareNotes",
     "SupportMatch",
-    "Chat Groups",
     "Chyme",
   ],
   // Image: problem-32.png
   "Do you notice strange flashes of light wherever you go? Or at home/work?": [
-    "CompareNotes",
     "SupportMatch",
-    "Chat Groups",
     "Chyme",
     "LightHouse",
   ],
   // Image: problem-33.png
   "Does everyone around you seem to be keeping some sort of a secret?": [
     "SupportMatch",
-    "Chat Groups",
     "Directory",
     "Chyme",
   ],
@@ -207,38 +179,30 @@ const problemSolutions: Record<string, string[]> = {
   "Do weirdos offer you rides/solicit you for prostitution when you are just trying to walk down the street? Even during the day?": [
     "TrustTransport",
     "SupportMatch",
-    "Chat Groups",
     "Chyme",
   ],
   // Image: problem-35.png
   "Do you get strange phone calls/texts from numbers you don't know a lot?": [
-    "Chat Groups",
-    "CompareNotes",
     "SupportMatch",
     "Chyme",
   ],
   // Image: problem-36.png
   "Do your pets seem to sense that something is off/someone you don't know is near?": [
     "SupportMatch",
-    "CompareNotes",
     "LightHouse",
     "Chyme",
-    "Chat Groups",
   ],
   // Image: problem-37.png
   "Do people seem like they are only pretending to be your friend/partner?": [
     "SupportMatch",
-    "Chat Groups",
     "Directory",
   ],
   // Image: problem-38.png
   "Do store/hotel clerks suddenly act strangely when you give your name/id?": [
-    "CompareNotes",
     "SupportMatch",
   ],
   // Image: problem-39.png
   "If you go to walmart/target do the theft detectors beep once quickly when you walk in?": [
-    "CompareNotes",
     "SupportMatch",
     "SocketRelay",
   ],
@@ -264,14 +228,11 @@ const problemSolutions: Record<string, string[]> = {
   ],
   // Image: problem-44.png
   "Do people you've never introduced yourself to somehow already know your name?": [
-    "CompareNotes",
     "SupportMatch",
-    "Chat Groups",
     "Chyme",
   ],
   // Image: problem-45.png
   "Do you experience unexplained bruising/cuts/pain/injuries?": [
-    "CompareNotes",
     "GentlePulse",
     "Directory",
   ],
@@ -295,15 +256,12 @@ const problemSolutions: Record<string, string[]> = {
     "LightHouse",
     "Directory",
     "Workforce Recruiter",
-    "Chat Groups",
     "GentlePulse",
   ],
   // Image: problem-50.png
   "Do weirdos issue attack or guard commands to have dogs bark or whimper at your presence?": [
     "LightHouse",
     "GentlePusle",
-    "Chat Groups",
-    "CompareNotes",
   ],
 }
 
@@ -370,5 +328,3 @@ export default function LookMaIFixedIt() {
     </div>
   )
 }
-
-
