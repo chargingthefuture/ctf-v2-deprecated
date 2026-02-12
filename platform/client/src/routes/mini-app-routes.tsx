@@ -434,11 +434,6 @@ export function MiniAppRoutes() {
           <WorkforceRecruiterSkillLevelDetail />
         </ProtectedRoute>
       </Route>
-      <Route path="/apps/workforce-recruiter/meetup-events">
-        <ProtectedRoute>
-          <WorkforceRecruiterMeetupEvents />
-        </ProtectedRoute>
-      </Route>
       <Route path="/apps/workforce-recruiter/announcements">
         <ProtectedRoute>
           <WorkforceRecruiterAnnouncements />
