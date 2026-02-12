@@ -33,7 +33,6 @@ describe('Services', () => {
       'card-service-lighthouse',
       'card-service-socketrelay',
       'card-service-supportmatch',
-      'card-service-research',
       'card-service-gentlepulse',
       'card-service-chyme',
       'card-service-trusttransport',
