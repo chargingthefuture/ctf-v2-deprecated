@@ -106,7 +106,7 @@
     "editor.minimap.enabled": false,
     "editor.renderWhitespace": "all",
     "editor.cursorStyle": "line",
-    "editor.hover.enabled": true,
+    "editor.hover.enabled": "on",
   
     // File icon & contrast
     "workbench.iconTheme": "vscode-icons",
@@ -121,6 +121,8 @@
     // Other helpful settings
     "editor.suggestSelection": "first",
     "explorer.compactFolders": false,
-    "window.zoomLevel": 0
+    "window.zoomLevel": 0,
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "python-envs.pythonProjects": []
   }
   

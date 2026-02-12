@@ -65,52 +65,6 @@ export class WorkforceRecruiterStorageComposed implements IWorkforceRecruiterSto
     return this.workforceRecruiterStorage.deleteWorkforceRecruiterOccupation(id);
   }
 
-  // Meetup event operations
-  async createWorkforceRecruiterMeetupEvent(event: any) {
-    return this.workforceRecruiterStorage.createWorkforceRecruiterMeetupEvent(event);
-  }
-
-  async getWorkforceRecruiterMeetupEvents(filters?: any) {
-    return this.workforceRecruiterStorage.getWorkforceRecruiterMeetupEvents(filters);
-  }
-
-  async getWorkforceRecruiterMeetupEventById(id: string) {
-    return this.workforceRecruiterStorage.getWorkforceRecruiterMeetupEventById(id);
-  }
-
-  async updateWorkforceRecruiterMeetupEvent(id: string, event: any) {
-    return this.workforceRecruiterStorage.updateWorkforceRecruiterMeetupEvent(id, event);
-  }
-
-  async deleteWorkforceRecruiterMeetupEvent(id: string) {
-    return this.workforceRecruiterStorage.deleteWorkforceRecruiterMeetupEvent(id);
-  }
-
-  // Meetup event signup operations
-  async createWorkforceRecruiterMeetupEventSignup(signup: any) {
-    return this.workforceRecruiterStorage.createWorkforceRecruiterMeetupEventSignup(signup);
-  }
-
-  async getWorkforceRecruiterMeetupEventSignups(filters?: any) {
-    return this.workforceRecruiterStorage.getWorkforceRecruiterMeetupEventSignups(filters);
-  }
-
-  async getWorkforceRecruiterMeetupEventSignupCount(eventId: string) {
-    return this.workforceRecruiterStorage.getWorkforceRecruiterMeetupEventSignupCount(eventId);
-  }
-
-  async getUserMeetupEventSignup(eventId: string, userId: string) {
-    return this.workforceRecruiterStorage.getUserMeetupEventSignup(eventId, userId);
-  }
-
-  async updateWorkforceRecruiterMeetupEventSignup(id: string, signup: any) {
-    return this.workforceRecruiterStorage.updateWorkforceRecruiterMeetupEventSignup(id, signup);
-  }
-
-  async deleteWorkforceRecruiterMeetupEventSignup(id: string) {
-    return this.workforceRecruiterStorage.deleteWorkforceRecruiterMeetupEventSignup(id);
-  }
-
   // Report operations
   async getWorkforceRecruiterSummaryReport() {
     return this.workforceRecruiterStorage.getWorkforceRecruiterSummaryReport();

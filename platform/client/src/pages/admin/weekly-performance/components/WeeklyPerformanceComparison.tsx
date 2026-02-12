@@ -215,7 +215,7 @@ export function WeeklyPerformanceComparison({
                 </td>
               </tr>
               <tr className="border-b">
-                <td className="py-2 px-4 font-medium">User Lifetime Value (CLV)</td>
+                <td className="py-2 px-4 font-medium">Customer Lifetime Value (CLV)</td>
                 <td className="text-right py-2 px-4" data-testid="table-clv-current">
                   <div className="flex items-center justify-end gap-2">
                     <PrivacyField

@@ -105,10 +105,6 @@ DELETE FROM trusttransport_profiles WHERE user_id = :'USER_ID';
 -- so there is no account- or profile-linked user data to delete here.
 
 -- Workforce Recruiter - Delete related data first
--- Meetup event signups: user_id references users.id directly (ON DELETE CASCADE, but explicit for clarity)
-DELETE FROM workforce_recruiter_meetup_event_signups WHERE user_id = :'USER_ID';
--- Meetup events: created_by references users.id directly
-DELETE FROM workforce_recruiter_meetup_events WHERE created_by = :'USER_ID';
 -- Finally delete the profile
 DELETE FROM workforce_recruiter_profiles WHERE user_id = :'USER_ID';
 

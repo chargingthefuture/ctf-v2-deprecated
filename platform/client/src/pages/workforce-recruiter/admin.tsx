@@ -83,23 +83,6 @@ export default function WorkforceRecruiterAdmin() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Meetup Events</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-sm text-muted-foreground">
-              Create and manage meetup events, and view user signups.
-            </p>
-            <Link href="/apps/workforce-recruiter/admin/meetup-events">
-              <Button className="w-full text-sm sm:text-base" data-testid="button-manage-meetup-events">
-                <Calendar className="w-4 h-4 mr-2" />
-                <span className="truncate">Manage Meetup Events</span>
-              </Button>
-            </Link>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
             <CardTitle>Configuration</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">

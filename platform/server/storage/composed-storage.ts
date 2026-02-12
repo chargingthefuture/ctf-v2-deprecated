@@ -385,17 +385,6 @@ export class DatabaseStorage implements IStorage {
   createWorkforceRecruiterOccupation = delegate(() => this.miniAppsStorageComposed, 'createWorkforceRecruiterOccupation');
   updateWorkforceRecruiterOccupation = delegate(() => this.miniAppsStorageComposed, 'updateWorkforceRecruiterOccupation');
   deleteWorkforceRecruiterOccupation = delegate(() => this.miniAppsStorageComposed, 'deleteWorkforceRecruiterOccupation');
-  createWorkforceRecruiterMeetupEvent = delegate(() => this.miniAppsStorageComposed, 'createWorkforceRecruiterMeetupEvent');
-  getWorkforceRecruiterMeetupEvents = delegate(() => this.miniAppsStorageComposed, 'getWorkforceRecruiterMeetupEvents');
-  getWorkforceRecruiterMeetupEventById = delegate(() => this.miniAppsStorageComposed, 'getWorkforceRecruiterMeetupEventById');
-  updateWorkforceRecruiterMeetupEvent = delegate(() => this.miniAppsStorageComposed, 'updateWorkforceRecruiterMeetupEvent');
-  deleteWorkforceRecruiterMeetupEvent = delegate(() => this.miniAppsStorageComposed, 'deleteWorkforceRecruiterMeetupEvent');
-  createWorkforceRecruiterMeetupEventSignup = delegate(() => this.miniAppsStorageComposed, 'createWorkforceRecruiterMeetupEventSignup');
-  getWorkforceRecruiterMeetupEventSignups = delegate(() => this.miniAppsStorageComposed, 'getWorkforceRecruiterMeetupEventSignups');
-  getWorkforceRecruiterMeetupEventSignupCount = delegate(() => this.miniAppsStorageComposed, 'getWorkforceRecruiterMeetupEventSignupCount');
-  getUserMeetupEventSignup = delegate(() => this.miniAppsStorageComposed, 'getUserMeetupEventSignup');
-  updateWorkforceRecruiterMeetupEventSignup = delegate(() => this.miniAppsStorageComposed, 'updateWorkforceRecruiterMeetupEventSignup');
-  deleteWorkforceRecruiterMeetupEventSignup = delegate(() => this.miniAppsStorageComposed, 'deleteWorkforceRecruiterMeetupEventSignup');
   getWorkforceRecruiterSummaryReport = delegate(() => this.miniAppsStorageComposed, 'getWorkforceRecruiterSummaryReport');
   getWorkforceRecruiterSkillLevelDetail = delegate(() => this.miniAppsStorageComposed, 'getWorkforceRecruiterSkillLevelDetail');
   getWorkforceRecruiterSectorDetail = delegate(() => this.miniAppsStorageComposed, 'getWorkforceRecruiterSectorDetail');

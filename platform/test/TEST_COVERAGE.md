@@ -87,7 +87,7 @@ This document lists all tests created for the application.
 - ✅ `test/e2e/supportmatch.spec.ts` - SupportMatch profile, partnerships, messaging, safety, and admin
 - ✅ `test/e2e/trusttransport.spec.ts` - TrustTransport profile and ride request flows
 - ✅ `test/e2e/gentlepulse.spec.ts` - GentlePulse library, favorites, and progress tracking
-- ✅ `test/e2e/workforce-recruiter.spec.ts` - Workforce Recruiter profile, occupations, and meetup events
+- ✅ `test/e2e/workforce-recruiter.spec.ts` - Workforce Recruiter profile, occupations
 - ✅ `test/e2e/chyme.spec.ts` - Chyme dashboard and admin announcements
 
 ## Smoke Tests
@@ -151,8 +151,6 @@ This document lists all tests created for the application.
 9. **Workforce Recruiter Mini-App**
     - Profile CRUD
     - Occupations tracking
-    - Meetup events
-    - Event signups
     - Reports and analytics
     - Announcements
     - Admin management

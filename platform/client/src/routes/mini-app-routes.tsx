@@ -73,8 +73,6 @@ import WorkforceRecruiterAdminAnnouncements from "@/pages/workforce-recruiter/ad
 import WorkforceRecruiterAnnouncements from "@/pages/workforce-recruiter/announcements";
 import WorkforceRecruiterConfig from "@/pages/workforce-recruiter/config";
 import WorkforceRecruiterAdminOccupations from "@/pages/workforce-recruiter/admin-occupations";
-import WorkforceRecruiterAdminMeetupEvents from "@/pages/workforce-recruiter/admin-meetup-events";
-import WorkforceRecruiterMeetupEvents from "@/pages/workforce-recruiter/meetup-events";
 import WorkforceRecruiterSkillLevelDetail from "@/pages/workforce-recruiter/skill-level-detail";
 import DefaultAliveOrDeadDashboard from "@/pages/default-alive-or-dead/dashboard";
 import DefaultAliveOrDeadAdmin from "@/pages/default-alive-or-dead/admin";

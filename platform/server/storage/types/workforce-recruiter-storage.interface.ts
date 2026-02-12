@@ -11,10 +11,6 @@ import type {
   InsertWorkforceRecruiterConfig,
   WorkforceRecruiterOccupation,
   InsertWorkforceRecruiterOccupation,
-  WorkforceRecruiterMeetupEvent,
-  InsertWorkforceRecruiterMeetupEvent,
-  WorkforceRecruiterMeetupEventSignup,
-  InsertWorkforceRecruiterMeetupEventSignup,
   WorkforceRecruiterAnnouncement,
   InsertWorkforceRecruiterAnnouncement,
 } from "@shared/schema";
@@ -42,31 +38,6 @@ export interface IWorkforceRecruiterStorage {
   createWorkforceRecruiterOccupation(occupation: InsertWorkforceRecruiterOccupation): Promise<WorkforceRecruiterOccupation>;
   updateWorkforceRecruiterOccupation(id: string, occupation: Partial<InsertWorkforceRecruiterOccupation>): Promise<WorkforceRecruiterOccupation>;
   deleteWorkforceRecruiterOccupation(id: string): Promise<void>;
-
-  // Meetup Event operations
-  createWorkforceRecruiterMeetupEvent(event: InsertWorkforceRecruiterMeetupEvent & { createdBy: string }): Promise<WorkforceRecruiterMeetupEvent>;
-  getWorkforceRecruiterMeetupEvents(filters?: {
-    occupationId?: string;
-    isActive?: boolean;
-    limit?: number;
-    offset?: number;
-  }): Promise<{ events: WorkforceRecruiterMeetupEvent[]; total: number }>;
-  getWorkforceRecruiterMeetupEventById(id: string): Promise<WorkforceRecruiterMeetupEvent | undefined>;
-  updateWorkforceRecruiterMeetupEvent(id: string, event: Partial<InsertWorkforceRecruiterMeetupEvent>): Promise<WorkforceRecruiterMeetupEvent>;
-  deleteWorkforceRecruiterMeetupEvent(id: string): Promise<void>;
-  
-  // Meetup Event Signup operations
-  createWorkforceRecruiterMeetupEventSignup(signup: InsertWorkforceRecruiterMeetupEventSignup & { userId: string }): Promise<WorkforceRecruiterMeetupEventSignup>;
-  getWorkforceRecruiterMeetupEventSignups(filters?: {
-    eventId?: string;
-    userId?: string;
-    limit?: number;
-    offset?: number;
-  }): Promise<{ signups: WorkforceRecruiterMeetupEventSignup[]; total: number }>;
-  getWorkforceRecruiterMeetupEventSignupCount(eventId: string): Promise<number>;
-  getUserMeetupEventSignup(eventId: string, userId: string): Promise<WorkforceRecruiterMeetupEventSignup | undefined>;
-  updateWorkforceRecruiterMeetupEventSignup(id: string, signup: Partial<InsertWorkforceRecruiterMeetupEventSignup>): Promise<WorkforceRecruiterMeetupEventSignup>;
-  deleteWorkforceRecruiterMeetupEventSignup(id: string): Promise<void>;
 
   // Reports
   getWorkforceRecruiterSummaryReport(): Promise<{

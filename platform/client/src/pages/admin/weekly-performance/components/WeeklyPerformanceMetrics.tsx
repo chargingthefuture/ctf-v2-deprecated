@@ -203,7 +203,7 @@ export function WeeklyPerformanceMetrics({
               </p>
             </div>
             <div>
-              <div className="text-sm font-medium text-muted-foreground mb-1">User Lifetime Value (CLV)</div>
+              <div className="text-sm font-medium text-muted-foreground mb-1">Customer Lifetime Value (CLV)</div>
               <div className="text-2xl font-bold tabular-nums">
                 <PrivacyField
                   value={formatCurrency(data.metrics?.clv ?? 0)}
@@ -389,12 +389,12 @@ export function WeeklyPerformanceMetrics({
         </CardContent>
       </Card>
 
-      {/* GentlePulse Mood Ratings */}
+      {/* Mood Ratings */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Heart className="w-5 h-5" />
-            GentlePulse Mood Ratings
+            Mood Ratings
           </CardTitle>
           <p className="text-sm text-muted-foreground mt-2">
             Average mood ratings from GentlePulse users (anonymous, aggregated data)

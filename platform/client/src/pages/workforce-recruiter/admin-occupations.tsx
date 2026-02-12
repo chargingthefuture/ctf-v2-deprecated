@@ -34,7 +34,6 @@ export default function WorkforceRecruiterAdminOccupations() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [occupationToDelete, setOccupationToDelete] = useState<WorkforceRecruiterOccupation | null>(null);
-  const [meetupEventDialogOpen, setMeetupEventDialogOpen] = useState(false);
   const [selectedOccupation, setSelectedOccupation] = useState<WorkforceRecruiterOccupation | null>(null);
   const [eventTitle, setEventTitle] = useState("");
   const [eventDescription, setEventDescription] = useState("");
@@ -147,56 +146,6 @@ export default function WorkforceRecruiterAdminOccupations() {
   const handleDelete = (occupation: WorkforceRecruiterOccupation) => {
     setOccupationToDelete(occupation);
     setDeleteDialogOpen(true);
-  };
-
-  const meetupEventMutation = useMutation({
-    mutationFn: async (data: { occupationId: string; title: string; description?: string }) => {
-      return apiRequest("POST", "/api/workforce-recruiter/meetup-events", data);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/workforce-recruiter/meetup-events"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/workforce-recruiter/occupations"] });
-      setMeetupEventDialogOpen(false);
-      setEventTitle("");
-      setEventDescription("");
-      setSelectedOccupation(null);
-      toast({
-        title: "Meetup Event Created",
-        description: "The meetup event has been created successfully. Users can now sign up to participate.",
-      });
-    },
-    onError: (error: any) => {
-      toast({
-        title: "Error",
-        description: error.message || "Failed to create meetup event",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const handleCreateMeetupEvent = (occupation: WorkforceRecruiterOccupation) => {
-    setSelectedOccupation(occupation);
-    setEventTitle(`Meetup for ${occupation.occupationTitle}`);
-    setEventDescription("");
-    setMeetupEventDialogOpen(true);
-  };
-
-  const handleSubmitMeetupEvent = () => {
-    if (!selectedOccupation) return;
-    if (!eventTitle.trim()) {
-      toast({
-        title: "Title Required",
-        description: "Please enter an event title",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    meetupEventMutation.mutate({
-      occupationId: selectedOccupation.id,
-      title: eventTitle.trim(),
-      description: eventDescription.trim() || undefined,
-    });
   };
 
   const onSubmit = (data: OccupationFormValues) => {

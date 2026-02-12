@@ -61,8 +61,6 @@ export async function apiRequest(
   const isAdminEndpoint = 
     url.includes('/api/admin') || 
     url.match(/\/api\/[^/]+\/admin/) ||
-    // Workforce recruiter meetup events (admin-only)
-    url.match(/\/api\/workforce-recruiter\/meetup-events/) ||
     // Skills admin endpoints
     url.match(/\/api\/skills\/(sectors|job-titles|skills)/);
   
