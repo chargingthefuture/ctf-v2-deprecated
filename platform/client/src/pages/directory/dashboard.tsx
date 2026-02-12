@@ -9,7 +9,7 @@ import { ExternalLink, Bell, Copy, Check, Search } from "lucide-react";
 import type { DirectoryProfile } from "@shared/schema";
 import { AnnouncementBanner } from "@/components/announcement-banner";
 import { VerifiedBadge } from "@/components/verified-badge";
-import { useExternalLink } from "@/hooks/useExternal-link";
+import { useExternalLink } from "@/hooks/useExternalLink";
 import { useToast } from "@/hooks/use-toast";
 import { useFuzzySearch } from "@/hooks/useFuzzySearch";
 
