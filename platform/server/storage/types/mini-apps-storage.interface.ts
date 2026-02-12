@@ -10,7 +10,6 @@ import type { ISocketRelayStorage } from './socketrelay-storage.interface';
 import type { IDirectoryStorage } from './directory-storage.interface';
 import type { ISkillsStorage } from './skills-storage.interface';
 import type { ITrustTransportStorage } from './trusttransport-storage.interface';
-import type { IChatGroupsStorage } from './chatgroups-storage.interface';
 import type { IGentlePulseStorage } from './gentlepulse-storage.interface';
 import type { IChymeStorage } from './chyme-storage.interface';
 import type { IWorkforceRecruiterStorage } from './workforce-recruiter-storage.interface';
@@ -26,7 +25,6 @@ export interface IMiniAppsStorage
           IDirectoryStorage,
           ISkillsStorage,
           ITrustTransportStorage,
-          IChatGroupsStorage,
           IGentlePulseStorage,
           IChymeStorage,
           IWorkforceRecruiterStorage,
@@ -39,7 +37,6 @@ export type { ISocketRelayStorage } from './socketrelay-storage.interface';
 export type { IDirectoryStorage } from './directory-storage.interface';
 export type { ISkillsStorage } from './skills-storage.interface';
 export type { ITrustTransportStorage } from './trusttransport-storage.interface';
-export type { IChatGroupsStorage } from './chatgroups-storage.interface';
 export type { IGentlePulseStorage } from './gentlepulse-storage.interface';
 export type { IChymeStorage } from './chyme-storage.interface';
 export type { IWorkforceRecruiterStorage } from './workforce-recruiter-storage.interface';

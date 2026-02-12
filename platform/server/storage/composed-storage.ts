@@ -274,22 +274,6 @@ export class DatabaseStorage implements IStorage {
   getAllSkillsFlattened = delegate(() => this.miniAppsStorageComposed, 'getAllSkillsFlattened');
 
   // ========================================
-  // CHATGROUPS OPERATIONS (delegated to MiniAppsStorageComposed)
-  // ========================================
-
-  getAllChatGroups = delegate(() => this.miniAppsStorageComposed, 'getAllChatGroups');
-  getActiveChatGroups = delegate(() => this.miniAppsStorageComposed, 'getActiveChatGroups');
-  getChatGroupById = delegate(() => this.miniAppsStorageComposed, 'getChatGroupById');
-  createChatGroup = delegate(() => this.miniAppsStorageComposed, 'createChatGroup');
-  updateChatGroup = delegate(() => this.miniAppsStorageComposed, 'updateChatGroup');
-  deleteChatGroup = delegate(() => this.miniAppsStorageComposed, 'deleteChatGroup');
-  createChatgroupsAnnouncement = delegate(() => this.miniAppsStorageComposed, 'createChatgroupsAnnouncement');
-  getActiveChatgroupsAnnouncements = delegate(() => this.miniAppsStorageComposed, 'getActiveChatgroupsAnnouncements');
-  getAllChatgroupsAnnouncements = delegate(() => this.miniAppsStorageComposed, 'getAllChatgroupsAnnouncements');
-  updateChatgroupsAnnouncement = delegate(() => this.miniAppsStorageComposed, 'updateChatgroupsAnnouncement');
-  deactivateChatgroupsAnnouncement = delegate(() => this.miniAppsStorageComposed, 'deactivateChatgroupsAnnouncement');
-
-  // ========================================
   // TRUSTTRANSPORT OPERATIONS (delegated to MiniAppsStorageComposed)
   // ========================================
 

@@ -37,10 +37,6 @@ import DirectoryProfile from "@/pages/directory/profile";
 import DirectoryAdmin from "@/pages/directory/admin";
 import DirectoryAnnouncements from "@/pages/directory/announcements";
 import DirectoryAdminAnnouncements from "@/pages/directory/admin-announcements";
-import ChatGroups from "@/pages/chatgroups/index";
-import ChatGroupsAdmin from "@/pages/chatgroups/admin";
-import ChatGroupsAnnouncements from "@/pages/chatgroups/announcements";
-import ChatGroupsAdminAnnouncements from "@/pages/chatgroups/admin-announcements";
 import TrustTransportDashboard from "@/pages/trusttransport/dashboard";
 import TrustTransportProfile from "@/pages/trusttransport/profile";
 import TrustTransportBrowse from "@/pages/trusttransport/browse";
@@ -255,28 +251,6 @@ export function MiniAppRoutes() {
       <Route path="/apps/directory/admin/announcements">
         <ProtectedRoute>
           <DirectoryAdminAnnouncements />
-        </ProtectedRoute>
-      </Route>
-
-      {/* ChatGroups routes */}
-      <Route path="/apps/chatgroups">
-        <ProtectedRoute>
-          <ChatGroups />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/apps/chatgroups/announcements">
-        <ProtectedRoute>
-          <ChatGroupsAnnouncements />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/apps/chatgroups/admin">
-        <ProtectedRoute>
-          <ChatGroupsAdmin />
-        </ProtectedRoute>
-      </Route>
-      <Route path="/apps/chatgroups/admin/announcements">
-        <ProtectedRoute>
-          <ChatGroupsAdminAnnouncements />
         </ProtectedRoute>
       </Route>
 

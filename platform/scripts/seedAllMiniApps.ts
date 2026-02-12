@@ -21,11 +21,6 @@ const seedScripts = [
     description: "Test Users - Test users for the application",
   },
   {
-    name: "ChatGroups",
-    script: "seedChatGroups.ts",
-    description: "Chat Groups - Signal group listings",
-  },
-  {
     name: "Directory",
     script: "seedDirectory.ts",
     description: "Directory - Skill-sharing profiles",

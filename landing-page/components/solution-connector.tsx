@@ -25,7 +25,6 @@ const serviceIcons: Record<string, typeof Home> = {
   CompareNotes: MessageSquare,
   GentlePulse: Headphones,
   Chyme: Mic,
-  "Chat Groups": MessageCircle,
 }
 
 const serviceDescriptions: Record<string, string> = {
@@ -38,7 +37,6 @@ const serviceDescriptions: Record<string, string> = {
   CompareNotes: "Document patterns, incidents, and share evidence with the community",
   GentlePulse: "Manage stress, anxiety, and wellness when dealing with constant harassment",
   Chyme: "Social audio conversations away from perps",
-  "Chat Groups": "Connect with others experiencing similar situations in real-time chats via Signal",
 }
 
 const serviceUrls: Record<string, string> = {
@@ -51,7 +49,6 @@ const serviceUrls: Record<string, string> = {
   CompareNotes: "/apps/comparenotes",
   GentlePulse: "/apps/gentlepulse",
   Chyme: "/apps/chyme",
-  "Chat Groups": "/apps/chatgroups",
 }
 
 interface SolutionConnectorProps {

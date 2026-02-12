@@ -19,9 +19,6 @@ This document lists all tests created for the application.
 ### Directory
 - ✅ `test/api/directory.test.ts` - Profile CRUD, public endpoints, admin
 
-### ChatGroups
-- ✅ `test/api/chatgroups.test.ts` - Group listing, admin management
-
 ### TrustTransport
 - ✅ `test/api/trusttransport.test.ts` - Profile CRUD, ride requests, announcements, admin
 
@@ -80,7 +77,6 @@ This document lists all tests created for the application.
 
 - ✅ `test/e2e/auth.spec.ts` - Authentication flows
 - ✅ `test/e2e/profile-crud.spec.ts` - Profile CRUD operations (general patterns)
-- ✅ `test/e2e/chatgroups.spec.ts` - Chat Groups listing and admin management
 - ✅ `test/e2e/directory.spec.ts` - Directory profile, public listing, and admin
 - ✅ `test/e2e/lighthouse.spec.ts` - LightHouse profile, properties, matches, and admin
 - ✅ `test/e2e/socketrelay.spec.ts` - SocketRelay profile, requests, fulfillments, chat, and admin
@@ -128,10 +124,6 @@ This document lists all tests created for the application.
    - Profile CRUD
    - Public/private profiles
    - Public listing with anti-scraping
-   - Admin management
-
-6. **ChatGroups Mini-App**
-   - Group listing
    - Admin management
 
 7. **TrustTransport Mini-App**
@@ -220,11 +212,11 @@ npm run test:e2e
 ## Test Statistics
 
 - **Total Test Files**: 52
-- **API Test Files**: 15 (auth, supportmatch, lighthouse, socketrelay, directory, chatgroups, trusttransport, gentlepulse, chyme, workforce-recruiter, admin, public-endpoints)
+- **API Test Files**: 15 (auth, supportmatch, lighthouse, socketrelay, directory, trusttransport, gentlepulse, chyme, workforce-recruiter, admin, public-endpoints)
 - **Integration Test Files**: 1
 - **Security Test Files**: 1
 - **Component Test Files**: 18 (8 profile pages, 5 core pages, 4 shared components, 4 hooks)
-- **E2E Test Files**: 14 (auth, profile-crud, chatgroups, directory, lighthouse, socketrelay, supportmatch, trusttransport, gentlepulse, workforce-recruiter, chyme)
+- **E2E Test Files**: 14 (auth, profile-crud, directory, lighthouse, socketrelay, supportmatch, trusttransport, gentlepulse, workforce-recruiter, chyme)
 - **Smoke Test Files**: 1
 
 ## Coverage Goals

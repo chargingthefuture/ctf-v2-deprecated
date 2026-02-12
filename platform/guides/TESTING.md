@@ -274,21 +274,6 @@ This document outlines a comprehensive testing strategy for the platform serving
   - ✅ Public profiles visible with correct data
   - ✅ Privacy toggle updates immediately
 
-#### ChatGroups
-
-**TC-CG-001: Group Management**
-- **Description**: Admin can manage Signal group links
-- **Steps**:
-  1. Admin creates group entry
-  2. Sets active/inactive status
-  3. Public list shows active groups
-- **Expected**: Group management works correctly
-- **Acceptance Criteria**:
-  - ✅ Groups created/updated/deleted
-  - ✅ Active groups appear in public list
-  - ✅ External links use confirmation dialog
-  - ✅ Group metadata stored correctly
-
 ### 1.3 Admin Functionality
 
 **TC-ADMIN-001: User Management**
@@ -1020,18 +1005,6 @@ This document outlines a comprehensive testing strategy for the platform serving
   - ✅ Player responsive
   - ✅ Controls functional
   - ✅ Error handling if Wistia unavailable
-
-**TC-INT-004: Signal.org Group Links (ChatGroups)**
-- **Description**: Verify external links to Signal groups work
-- **Steps**:
-  1. Click Signal group link
-  2. Verify confirmation dialog
-  3. Confirm and verify link opens
-- **Expected**: Links open correctly with confirmation
-- **Acceptance Criteria**:
-  - ✅ Links use `useExternalLink` hook
-  - ✅ Confirmation dialog appears
-  - ✅ Links valid and accessible
 
 ### 7.2 Internal System Integration
 

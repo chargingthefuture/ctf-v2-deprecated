@@ -14,7 +14,6 @@ import type { ISocketRelayStorage } from '../types/socketrelay-storage.interface
 import type { IDirectoryStorage } from '../types/directory-storage.interface';
 import type { ISkillsStorage } from '../types/skills-storage.interface';
 import type { ITrustTransportStorage } from '../types/trusttransport-storage.interface';
-import type { IChatGroupsStorage } from '../types/chatgroups-storage.interface';
 import type { IGentlePulseStorage } from '../types/gentlepulse-storage.interface';
 import type { IChymeStorage } from '../types/chyme-storage.interface';
 import type { IWorkforceRecruiterStorage } from '../types/workforce-recruiter-storage.interface';
@@ -27,7 +26,6 @@ import {
   DirectoryStorageComposed,
   SkillsStorageComposed,
   TrustTransportStorageComposed,
-  ChatGroupsStorageComposed,
   GentlePulseStorageComposed,
   ChymeStorageComposed,
   WorkforceRecruiterStorageComposed,
@@ -60,7 +58,7 @@ function delegate<T extends (...args: any[]) => any>(
 
 export class MiniAppsStorageComposed 
   implements ISupportMatchStorage, ILighthouseStorage, ISocketRelayStorage, IDirectoryStorage, ISkillsStorage,
-             ITrustTransportStorage, IChatGroupsStorage, IGentlePulseStorage, IChymeStorage,
+             ITrustTransportStorage, IGentlePulseStorage, IChymeStorage,
              IWorkforceRecruiterStorage, IDefaultAliveOrDeadStorage {
   
   private supportMatchStorage: SupportMatchStorageComposed;
@@ -69,7 +67,6 @@ export class MiniAppsStorageComposed
   private directoryStorage: DirectoryStorageComposed;
   private skillsStorage: SkillsStorageComposed;
   private trustTransportStorage: TrustTransportStorageComposed;
-  private chatGroupsStorage: ChatGroupsStorageComposed;
   private gentlePulseStorage: GentlePulseStorageComposed;
   private chymeStorage: ChymeStorageComposed;
   private workforceRecruiterStorage: WorkforceRecruiterStorageComposed;
@@ -82,7 +79,6 @@ export class MiniAppsStorageComposed
     this.directoryStorage = new DirectoryStorageComposed();
     this.skillsStorage = new SkillsStorageComposed();
     this.trustTransportStorage = new TrustTransportStorageComposed();
-    this.chatGroupsStorage = new ChatGroupsStorageComposed();
     this.gentlePulseStorage = new GentlePulseStorageComposed();
     this.chymeStorage = new ChymeStorageComposed();
     this.workforceRecruiterStorage = new WorkforceRecruiterStorageComposed();
@@ -263,22 +259,6 @@ export class MiniAppsStorageComposed
   getAllTrusttransportAnnouncements = delegate(() => this.trustTransportStorage, 'getAllTrusttransportAnnouncements');
   updateTrusttransportAnnouncement = delegate(() => this.trustTransportStorage, 'updateTrusttransportAnnouncement');
   deactivateTrusttransportAnnouncement = delegate(() => this.trustTransportStorage, 'deactivateTrusttransportAnnouncement');
-
-  // ========================================
-  // CHATGROUPS OPERATIONS
-  // ========================================
-
-  getAllChatGroups = delegate(() => this.chatGroupsStorage, 'getAllChatGroups');
-  getActiveChatGroups = delegate(() => this.chatGroupsStorage, 'getActiveChatGroups');
-  getChatGroupById = delegate(() => this.chatGroupsStorage, 'getChatGroupById');
-  createChatGroup = delegate(() => this.chatGroupsStorage, 'createChatGroup');
-  updateChatGroup = delegate(() => this.chatGroupsStorage, 'updateChatGroup');
-  deleteChatGroup = delegate(() => this.chatGroupsStorage, 'deleteChatGroup');
-  createChatgroupsAnnouncement = delegate(() => this.chatGroupsStorage, 'createChatgroupsAnnouncement');
-  getActiveChatgroupsAnnouncements = delegate(() => this.chatGroupsStorage, 'getActiveChatgroupsAnnouncements');
-  getAllChatgroupsAnnouncements = delegate(() => this.chatGroupsStorage, 'getAllChatgroupsAnnouncements');
-  updateChatgroupsAnnouncement = delegate(() => this.chatGroupsStorage, 'updateChatgroupsAnnouncement');
-  deactivateChatgroupsAnnouncement = delegate(() => this.chatGroupsStorage, 'deactivateChatgroupsAnnouncement');
 
   // ========================================
   // GENTLEPULSE OPERATIONS

@@ -5,13 +5,6 @@ import { UserCheck, Building2, ArrowRight, MessageCircle, Wrench, Mail, Search, 
 
 const services = [
   {
-    title: "Chat Groups",
-    description: "Connect with others experiencing similar situations in reall time chats via Signal.",
-    icon: MessageCircle,
-    href: "/apps/chatgroups",
-    testId: "card-service-chatgroups",
-  },
-  {
     title: "Directory",
     description: "Build genuine professional connections away from manipulation.",
     icon: Building2,

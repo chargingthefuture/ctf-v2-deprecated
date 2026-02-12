@@ -235,22 +235,6 @@ export {
 } from "./schema/skills";
 
 // ========================================
-// CHAT GROUPS APP TABLES - Re-exported from module
-// ========================================
-
-export {
-  chatGroups,
-  chatGroupsRelations,
-  chatgroupsAnnouncements,
-  insertChatGroupSchema,
-  insertChatgroupsAnnouncementSchema,
-  type InsertChatGroup,
-  type ChatGroup,
-  type InsertChatgroupsAnnouncement,
-  type ChatgroupsAnnouncement,
-} from "./schema/chatgroups";
-
-// ========================================
 // TRUSTTRANSPORT APP TABLES - Re-exported from module
 // ========================================
 

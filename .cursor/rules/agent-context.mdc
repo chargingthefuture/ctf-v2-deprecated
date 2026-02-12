@@ -1810,21 +1810,13 @@ Study these for patterns:
    - Profile deletion with logging
    - ✅ Announcement system with admin management
 
-5. **ChatGroups** (`/apps/chatgroups`)
-   - Signal.org group links
-   - Public listing of active groups
-   - Admin management interface
-   - Note: Does not require user profiles (public group listing app)
-   - ✅ Announcement system with admin management
-
 **🚨 Profile Requirements:**
 
 - SupportMatch: ✅ Has profile with edit/delete
 - LightHouse: ✅ Has profile with edit/delete
 - SocketRelay: ✅ Has profile with edit/delete
 - Directory: ✅ Has profile with edit/delete
-- SleepStories: ❌ No profile (content-only)
-- ChatGroups: ❌ No profile (public listing only)
+- GentlePulse: ❌ No profile (content-only)
 
 ---
 

@@ -18,7 +18,6 @@ shared/schema/
     ├── socketrelay/
     ├── directory/
     ├── skills/
-    ├── chatgroups/
     ├── trusttransport/
     ├── gentlepulse/
     ├── chyme/

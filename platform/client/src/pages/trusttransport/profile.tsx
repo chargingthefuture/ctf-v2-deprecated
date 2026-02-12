@@ -290,7 +290,7 @@ export default function TrustTransportProfile() {
                   name="state"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>US State *</FormLabel>
+                      <FormLabel>US State</FormLabel>
                       <Popover open={stateOpen} onOpenChange={setStateOpen}>
                         <PopoverTrigger asChild>
                           <FormControl>

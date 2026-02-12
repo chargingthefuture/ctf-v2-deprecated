@@ -86,12 +86,6 @@ const baseAdminMenuItems = [
     testId: "link-admin-weekly-performance",
   },
   {
-    title: "Chat Groups Admin",
-    url: "/apps/chatgroups/admin",
-    icon: MessageCircle,
-    testId: "link-chatgroups-admin",
-  },
-  {
     title: "Directory Admin",
     url: "/apps/directory/admin",
     icon: Users,
@@ -177,12 +171,6 @@ const pinnedUserMenuItems = [
 
 // Mini-apps that will be sorted alphabetically
 const miniAppMenuItems = [
-  {
-    title: "Chat Groups",
-    url: "/apps/chatgroups",
-    icon: MessageCircle,
-    testId: "link-chatgroups",
-  },
   {
     title: "Directory",
     url: "/apps/directory",

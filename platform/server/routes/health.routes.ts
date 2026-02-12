@@ -16,11 +16,6 @@ export function registerHealthRoutes(app: Express) {
     await handleHealthCheck(req, res, "main");
   }));
 
-  // ChatGroups health
-  app.get("/api/health/chatgroups", healthCheckLimiter, asyncHandler(async (req, res) => {
-    await handleHealthCheck(req, res, "chatgroups");
-  }));
-
   // Directory health
   app.get("/api/health/directory", healthCheckLimiter, asyncHandler(async (req, res) => {
     await handleHealthCheck(req, res, "directory");
@@ -109,7 +104,6 @@ export function registerHealthRoutes(app: Express) {
     try {
       const services = [
         { name: "main", endpoint: "/api/health" },
-        { name: "chatgroups", endpoint: "/api/health/chatgroups" },
         { name: "directory", endpoint: "/api/health/directory" },
         { name: "gentlepulse", endpoint: "/api/health/gentlepulse" },
         { name: "chyme", endpoint: "/api/health/chyme" },

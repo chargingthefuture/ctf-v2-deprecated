@@ -424,33 +424,6 @@ CREATE TABLE IF NOT EXISTS directory_skills (
 );
 
 -- ========================================
--- CHAT GROUPS APP TABLES
--- ========================================
-
-CREATE TABLE IF NOT EXISTS chat_groups (
-  id VARCHAR PRIMARY KEY DEFAULT gen_random_uuid(),
-  name VARCHAR(200) NOT NULL,
-  signal_url TEXT NOT NULL,
-  description TEXT NOT NULL,
-  display_order INTEGER NOT NULL DEFAULT 0,
-  is_active BOOLEAN NOT NULL DEFAULT true,
-  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
-);
-
--- ChatGroups Announcements
-CREATE TABLE IF NOT EXISTS chatgroups_announcements (
-  id VARCHAR PRIMARY KEY DEFAULT gen_random_uuid(),
-  title VARCHAR(200) NOT NULL,
-  content TEXT NOT NULL,
-  type VARCHAR(50) NOT NULL DEFAULT 'info',
-  is_active BOOLEAN NOT NULL DEFAULT true,
-  expires_at TIMESTAMP,
-  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
-);
-
--- ========================================
 -- TRUSTTRANSPORT APP TABLES
 -- ========================================
 

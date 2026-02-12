@@ -16,7 +16,6 @@ import { registerAdminRoutes } from "./admin.routes";
 import { registerDirectoryRoutes } from "./directory.routes";
 import { registerSupportMatchRoutes } from "./supportmatch.routes";
 import { registerSkillsRoutes } from "./skills.routes";
-import { registerChatGroupsRoutes } from "./chatgroups.routes";
 import { registerLighthouseRoutes } from "./lighthouse.routes";
 import { registerTrustTransportRoutes } from "./trusttransport.routes";
 import { registerGentlePulseRoutes } from "./gentlepulse.routes";
@@ -41,7 +40,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
   registerDirectoryRoutes(app);
   registerSupportMatchRoutes(app);
   registerSkillsRoutes(app);
-  registerChatGroupsRoutes(app);
   registerLighthouseRoutes(app);
   registerTrustTransportRoutes(app);
   registerGentlePulseRoutes(app);

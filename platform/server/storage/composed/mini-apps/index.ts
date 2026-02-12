@@ -10,7 +10,6 @@ export { SocketRelayStorageComposed } from './socketrelay-storage-composed';
 export { DirectoryStorageComposed } from './directory-storage-composed';
 export { SkillsStorageComposed } from './skills-storage-composed';
 export { TrustTransportStorageComposed } from './trusttransport-storage-composed';
-export { ChatGroupsStorageComposed } from './chatgroups-storage-composed';
 export { GentlePulseStorageComposed } from './gentlepulse-storage-composed';
 export { ChymeStorageComposed } from './chyme-storage-composed';
 export { WorkforceRecruiterStorageComposed } from './workforce-recruiter-storage-composed';

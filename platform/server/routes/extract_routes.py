@@ -14,7 +14,6 @@ ROUTES_DIR = Path(__file__).parent
 ROUTE_SECTIONS = [
     (923, 1479, "directory.routes.ts", "Directory"),
     (1480, 1623, "skills.routes.ts", "Skills"),
-    (1624, 2126, "chatgroups.routes.ts", "ChatGroups"),
     (2127, 3334, "lighthouse.routes.ts", "Lighthouse"),
     (3335, 3670, "trusttransport.routes.ts", "TrustTransport"),
     (4476, 5105, "research.routes.ts", "Research"),
