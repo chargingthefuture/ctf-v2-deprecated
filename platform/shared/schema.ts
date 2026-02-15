@@ -148,6 +148,7 @@ export {
 export {
   chatMessages,
   insertChatMessageSchema,
+  formatChatName,
   type InsertChatMessage,
   type ChatMessage,
 } from "./schema/chat";
@@ -392,15 +393,3 @@ export {
   type InsertDefaultAliveOrDeadEbitdaSnapshot,
   type DefaultAliveOrDeadEbitdaSnapshot,
 } from "./schema/defaultaliveordead";
-
-// ========================================
-// CHAT APP TABLES - Re-exported from module
-// ========================================
-
-export {
-  chatMessages,
-  insertChatMessageSchema,
-  formatChatName,
-  type ChatMessage,
-  type InsertChatMessage,
-} from "./schema/chat";
