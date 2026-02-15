@@ -9,6 +9,7 @@ import React from "react";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
+import ChatButton from "./components/chat/ChatButton";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
@@ -50,7 +51,7 @@ function AppContent() {
         <Router />
       )}
       <Toaster />
-      {isAuthenticated}
+      {isAuthenticated && <ChatButton />}
     </>
   );
 }

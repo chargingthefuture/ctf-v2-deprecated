@@ -21,6 +21,7 @@ import { registerTrustTransportRoutes } from "./trusttransport.routes";
 import { registerGentlePulseRoutes } from "./gentlepulse.routes";
 import { registerChymeRoutes } from "./chyme.routes";
 import { registerChymeRoomsRoutes } from "./chyme-rooms.routes";
+import { registerStreamRoutes } from "./stream.routes";
 import { registerWorkforceRecruiterRoutes } from "./workforce-recruiter.routes";
 import { registerDefaultAliveOrDeadRoutes } from "./default-alive-or-dead.routes";
 import { registerSocketRelayRoutes } from "./socketrelay.routes";
@@ -45,6 +46,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   registerGentlePulseRoutes(app);
   registerChymeRoutes(app);
   registerChymeRoomsRoutes(app);
+  registerStreamRoutes(app);
   registerWorkforceRecruiterRoutes(app);
   registerDefaultAliveOrDeadRoutes(app);
   registerSocketRelayRoutes(app);

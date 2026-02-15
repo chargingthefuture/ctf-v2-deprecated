@@ -1,0 +1,87 @@
+import React, { useEffect, useMemo } from 'react';
+import {
+  Channel,
+  ChannelHeader,
+  MessageInput,
+  MessageList,
+  Thread,
+  useChatContext,
+  TypingIndicator,
+} from 'stream-chat-react';
+import 'stream-chat-react/dist/css/index.css';
+
+function ModerationActions({ message }: any) {
+  const handleReport = async () => {
+    try {
+      await fetch('/api/stream/report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messageId: message.id, reason: 'user_report' }),
+      });
+      alert('Message reported. Moderators will review.');
+    } catch (err) {
+      console.error(err);
+      alert('Failed to report message.');
+    }
+  };
+
+  return (
+    <div className="flex items-center space-x-2 text-xs">
+      <button onClick={handleReport} className="text-rose-600">Report</button>
+    </div>
+  );
+}
+
+function CustomMessage({ message, additionalMessageInputProps }: any) {
+  const blocked = typeof window !== 'undefined' && !!localStorage.getItem(`blocked_${message.user?.id}`);
+
+  const handleBlock = () => {
+    if (!message.user?.id) return;
+    localStorage.setItem(`blocked_${message.user.id}`, '1');
+    window.location.reload();
+  };
+
+  if (blocked) {
+    return (
+      <div className="p-2 text-sm italic text-muted-foreground">Message hidden. <button onClick={() => { localStorage.removeItem(`blocked_${message.user.id}`); window.location.reload(); }} className="underline">Unmute</button></div>
+    );
+  }
+
+  return (
+    <div className="p-2">
+      <div className="text-sm">{message.text}</div>
+      <div className="mt-1 flex items-center justify-between">
+        <ModerationActions message={message} />
+        <button onClick={handleBlock} className="text-xs text-muted-foreground">Block</button>
+      </div>
+    </div>
+  );
+}
+
+export default function ChannelView() {
+  const { client } = useChatContext();
+  const channel = useMemo(() => {
+    if (!client) return null;
+    return client.channel('messaging', 'community-support', { name: 'Community Support' });
+  }, [client]);
+
+  if (!channel) return <div className="p-4">Connecting…</div>;
+
+  return (
+    <Channel channel={channel} doAutoConnect>
+      <div className="flex flex-col h-[60vh] md:h-[70vh]">
+        <ChannelHeader />
+        <div className="flex-1 overflow-hidden">
+          <MessageList Message={CustomMessage} />
+        </div>
+        <div className="px-2 pb-2">
+          <MessageInput focus />
+        </div>
+        <Thread />
+        <div className="px-2 py-1 text-xs text-muted-foreground">
+          <TypingIndicator />
+        </div>
+      </div>
+    </Channel>
+  );
+}
