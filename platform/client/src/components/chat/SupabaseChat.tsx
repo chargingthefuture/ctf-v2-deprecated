@@ -8,6 +8,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import type { ChatMessage } from '@shared/schema';
+import { formatChatName } from '@shared/schema';
 import * as Sentry from '@sentry/react';
 import { Info } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -80,7 +81,8 @@ export default function SupabaseChat() {
       id: tempId,
       channelId: 'community-support',
       userId: user.id,
-      userName: user.username || user.firstName || 'Anonymous',
+      firstName: user.firstName || undefined,
+      lastName: user.lastName || undefined,
       userImage: user.profileImageUrl || undefined,
       text: messageText,
       createdAt: new Date(),
@@ -175,11 +177,9 @@ export default function SupabaseChat() {
                     : 'bg-slate-700 text-slate-100'
                 } ${msg.isSending ? 'opacity-50' : ''}`}
               >
-                {msg.userId !== user?.id && (
-                  <p className="text-xs font-semibold text-slate-300 mb-1">
-                    {msg.userName || 'Anonymous'}
-                  </p>
-                )}
+                <p className="text-xs font-semibold text-slate-300 mb-1">
+                  {formatChatName(msg.firstName, msg.lastName)}
+                </p>
                 <p className="text-sm break-words">{msg.text}</p>
                 <p className="text-xs mt-1 opacity-70">
                   {format(new Date(msg.createdAt), 'MMM d, yyyy')} {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

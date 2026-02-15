@@ -17,7 +17,8 @@ export function registerChatRoutes(app: Express) {
 
       // Get user info from Clerk auth object
       const userId = req.auth?.userId;
-      const userName = req.auth?.firstName || req.auth?.username || 'Anonymous';
+      const firstName = req.auth?.firstName;
+      const lastName = req.auth?.lastName;
       const userImage = req.auth?.imageUrl || undefined;
 
       if (!userId) {
@@ -31,7 +32,8 @@ export function registerChatRoutes(app: Express) {
       const messageData = {
         channelId: 'community-support',
         userId,
-        userName,
+        firstName,
+        lastName,
         userImage,
         text: text.trim(),
       };
