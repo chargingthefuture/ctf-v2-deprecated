@@ -14,7 +14,7 @@ export default function MoodAdmin() {
   });
 
   const recentDays = 7;
-  const moodCounts = {
+  const moodCounts: Record<number, number> = {
     1: moodChecks.filter(m => m.moodValue === 1).length,
     2: moodChecks.filter(m => m.moodValue === 2).length,
     3: moodChecks.filter(m => m.moodValue === 3).length,
