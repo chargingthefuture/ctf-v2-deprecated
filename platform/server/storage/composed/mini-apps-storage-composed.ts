@@ -22,6 +22,7 @@ import type { IDefaultAliveOrDeadStorage } from '../types/default-alive-or-dead-
 import {
   SupportMatchStorageComposed,
   ModerationStorageComposed,
+  ChatStorageComposed,
   LighthouseStorageComposed,
   SocketRelayStorageComposed,
   DirectoryStorageComposed,
@@ -73,6 +74,7 @@ export class MiniAppsStorageComposed
   private workforceRecruiterStorage: WorkforceRecruiterStorageComposed;
   private defaultAliveOrDeadStorage: DefaultAliveOrDeadStorageComposed;
   private moderationStorage: ModerationStorageComposed;
+  private chatStorage: ChatStorageComposed;
 
   constructor() {
     this.supportMatchStorage = new SupportMatchStorageComposed();
@@ -86,6 +88,7 @@ export class MiniAppsStorageComposed
     this.workforceRecruiterStorage = new WorkforceRecruiterStorageComposed();
     this.defaultAliveOrDeadStorage = new DefaultAliveOrDeadStorageComposed();
     this.moderationStorage = new ModerationStorageComposed();
+    this.chatStorage = new ChatStorageComposed();
   }
 
   // ========================================
@@ -371,4 +374,12 @@ export class MiniAppsStorageComposed
   getDefaultAliveOrDeadWeekComparison = delegate(() => this.defaultAliveOrDeadStorage, 'getDefaultAliveOrDeadWeekComparison');
   getDefaultAliveOrDeadCurrentFunding = delegate(() => this.defaultAliveOrDeadStorage, 'getDefaultAliveOrDeadCurrentFunding');
   updateDefaultAliveOrDeadCurrentFunding = delegate(() => this.defaultAliveOrDeadStorage, 'updateDefaultAliveOrDeadCurrentFunding');
+
+  // ========================================
+  // CHAT OPERATIONS
+  // ========================================
+
+  createChatMessage = delegate(() => this.chatStorage, 'createMessage');
+  getChannelMessages = delegate(() => this.chatStorage, 'getChannelMessages');
+  getCommunityMessages = delegate(() => this.chatStorage, 'getCommunityMessages');
 }

@@ -14,3 +14,5 @@ export { WorkforceRecruiterStorage } from './workforce-recruiter-storage';
 export { DefaultAliveOrDeadStorage } from './default-alive-or-dead-storage';
 // Ensuring ModerationStorage is exported (duplicate safe)
 export { ModerationStorage } from './moderation-storage';
+// Chat Storage
+export { ChatStorage } from './chat-storage';

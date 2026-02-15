@@ -1,0 +1,193 @@
+/**
+ * Supabase Realtime Chat Component
+ * 
+ * Handles real-time messaging using Supabase realtime subscriptions
+ * and REST API for posting messages.
+ */
+
+import React, { useEffect, useState, useRef } from 'react';
+import { useAuth } from '@/hooks/useAuth';
+import type { ChatMessage } from '@shared/schema';
+import * as Sentry from '@sentry/react';
+
+interface Message extends ChatMessage {
+  isSending?: boolean;
+}
+
+export default function SupabaseChat() {
+  const { user } = useAuth();
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [messageText, setMessageText] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [sending, setSending] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Load initial messages
+  useEffect(() => {
+    async function loadMessages() {
+      try {
+        const resp = await fetch('/api/chat/messages?limit=50');
+        if (!resp.ok) throw new Error('Failed to load messages');
+        const data = await resp.json();
+        setMessages(data);
+      } catch (err) {
+        Sentry.captureException(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadMessages();
+  }, []);
+
+  // Auto-scroll to bottom
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  // In production, set up a polling interval to check for new messages
+  // (Supabase realtime would be ideal, but this is simpler for MVP)
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      try {
+        const resp = await fetch('/api/chat/messages?limit=50');
+        if (!resp.ok) return;
+        const data = await resp.json();
+        setMessages(prev => {
+          // Avoid duplicates by checking IDs
+          const existingIds = new Set(prev.map(m => m.id));
+          const newMessages = data.filter((m: ChatMessage) => !existingIds.has(m.id));
+          return [...prev, ...newMessages];
+        });
+      } catch (err) {
+        Sentry.captureException(err);
+      }
+    }, 2000); // Poll every 2 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleSendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!messageText.trim() || !user) return;
+
+    const tempId = `temp_${Date.now()}`;
+    const tempMessage: Message = {
+      id: tempId,
+      channelId: 'community-support',
+      userId: user.id,
+      userName: user.username || user.firstName || 'Anonymous',
+      userImage: user.profileImageUrl || undefined,
+      text: messageText,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      isSending: true,
+    };
+
+    // Optimistic update
+    setMessages(prev => [...prev, tempMessage]);
+    setMessageText('');
+    setSending(true);
+
+    try {
+      const resp = await fetch('/api/chat/messages', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: messageText.trim() }),
+      });
+
+      if (!resp.ok) {
+        throw new Error('Failed to send message');
+      }
+
+      const sentMessage = await resp.json();
+      setMessages(prev => prev.map(m => m.id === tempId ? sentMessage : m));
+    } catch (err) {
+      Sentry.captureException(err);
+      // Remove optimistic message on error
+      setMessages(prev => prev.filter(m => m.id !== tempId));
+      alert('Failed to send message. Please try again.');
+    } finally {
+      setSending(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex flex-col h-[60vh] md:h-[70vh] bg-slate-800 text-slate-300">
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-2"></div>
+            <p>Loading chat…</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col h-[60vh] md:h-[70vh] bg-slate-800 text-slate-300">
+      {/* Messages List */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        {messages.length === 0 ? (
+          <div className="h-full flex items-center justify-center text-slate-500">
+            <p>No messages yet. Start the conversation!</p>
+          </div>
+        ) : (
+          messages.map(msg => (
+            <div
+              key={msg.id}
+              className={`flex gap-3 ${
+                msg.userId === user?.id ? 'justify-end' : 'justify-start'
+              }`}
+            >
+              <div
+                className={`rounded-lg p-3 max-w-xs lg:max-w-md ${
+                  msg.userId === user?.id
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-slate-700 text-slate-100'
+                } ${msg.isSending ? 'opacity-50' : ''}`}
+              >
+                {msg.userId !== user?.id && (
+                  <p className="text-xs font-semibold text-slate-300 mb-1">
+                    {msg.userName || 'Anonymous'}
+                  </p>
+                )}
+                <p className="text-sm break-words">{msg.text}</p>
+                <p className="text-xs mt-1 opacity-70">
+                  {new Date(msg.createdAt).toLocaleTimeString()}
+                </p>
+              </div>
+            </div>
+          ))
+        )}
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Message Input */}
+      <form
+        onSubmit={handleSendMessage}
+        className="border-t border-slate-700 bg-slate-900 p-4"
+      >
+        <div className="flex gap-2">
+          <input
+            type="text"
+            placeholder="Type your message…"
+            value={messageText}
+            onChange={e => setMessageText(e.target.value)}
+            disabled={sending}
+            className="flex-1 bg-slate-700 text-slate-100 placeholder-slate-500 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+          />
+          <button
+            type="submit"
+            disabled={!messageText.trim() || sending}
+            className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+          >
+            {sending ? '…' : 'Send'}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}

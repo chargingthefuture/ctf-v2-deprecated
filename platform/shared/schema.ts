@@ -143,6 +143,16 @@ export {
 } from "./schema/moderation";
 
 // ========================================
+// CHAT MESSAGES TABLES
+// ========================================
+export {
+  chatMessages,
+  insertChatMessageSchema,
+  type InsertChatMessage,
+  type ChatMessage,
+} from "./schema/chat";
+
+// ========================================
 // LIGHTHOUSE APP TABLES - Re-exported from module
 // ========================================
 

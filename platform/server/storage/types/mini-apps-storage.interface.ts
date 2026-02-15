@@ -15,6 +15,7 @@ import type { IChymeStorage } from './chyme-storage.interface';
 import type { IWorkforceRecruiterStorage } from './workforce-recruiter-storage.interface';
 import type { IDefaultAliveOrDeadStorage } from './default-alive-or-dead-storage.interface';
 import type { IModerationStorage } from './moderation-storage.interface';
+import type { IChatStorage } from './chat-storage.interface';
 
 /**
  * Composed interface for all mini-app storage operations
@@ -30,7 +31,8 @@ export interface IMiniAppsStorage
           IChymeStorage,
           IWorkforceRecruiterStorage,
           IDefaultAliveOrDeadStorage,
-          IModerationStorage {}
+          IModerationStorage,
+          IChatStorage {}
 
 // Re-export individual interfaces for convenience
 export type { ISupportMatchStorage } from './supportmatch-storage.interface';
@@ -44,3 +46,4 @@ export type { IChymeStorage } from './chyme-storage.interface';
 export type { IWorkforceRecruiterStorage } from './workforce-recruiter-storage.interface';
 export type { IDefaultAliveOrDeadStorage } from './default-alive-or-dead-storage.interface';
 export type { IProfileDeletionStorage } from './profile-deletion-storage.interface';
+export type { IChatStorage } from './chat-storage.interface';

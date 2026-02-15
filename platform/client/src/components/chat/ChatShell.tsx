@@ -1,7 +1,6 @@
 import React, { Suspense, lazy, useState } from 'react';
-import StreamChatProvider from './StreamChatProvider';
 
-const ChannelView = lazy(() => import('./ChannelView'));
+const SupabaseChat = lazy(() => import('./SupabaseChat'));
 
 export default function ChatShell({ onClose }: { onClose: () => void }) {
   const [minimized, setMinimized] = useState(false);
@@ -25,11 +24,9 @@ export default function ChatShell({ onClose }: { onClose: () => void }) {
       </div>
 
       {!minimized && (
-        <StreamChatProvider>
-          <Suspense fallback={<div className="p-4">Loading chat…</div>}>
-            <ChannelView />
-          </Suspense>
-        </StreamChatProvider>
+        <Suspense fallback={<div className="p-4 text-slate-400">Loading chat…</div>}>
+          <SupabaseChat />
+        </Suspense>
       )}
     </div>
   );
