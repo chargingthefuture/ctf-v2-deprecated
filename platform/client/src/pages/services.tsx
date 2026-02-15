@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { UserCheck, Building2, ArrowRight, MessageCircle, Wrench, Mail, Search, HeartPulse, Radio, Car, Briefcase, Activity} from "lucide-react";
+import { UserCheck, Building2, ArrowRight, MessageCircle, Wrench, Mail, Search, HeartPulse, Smile, Radio, Car, Briefcase, Activity} from "lucide-react";
 
 const services = [
   {
@@ -38,6 +38,13 @@ const services = [
     icon: HeartPulse,
     href: "/apps/gentlepulse",
     testId: "card-service-gentlepulse",
+  },
+  {
+    title: "Mood Check",
+    description: "Track your emotional wellbeing throughout the week with simple mood check-ins.",
+    icon: Smile,
+    href: "/apps/mood",
+    testId: "card-service-mood",
   },
   {
     title: "Chyme",

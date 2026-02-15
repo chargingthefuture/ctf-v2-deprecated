@@ -15,6 +15,7 @@ import type { IDirectoryStorage } from '../types/directory-storage.interface';
 import type { ISkillsStorage } from '../types/skills-storage.interface';
 import type { ITrustTransportStorage } from '../types/trusttransport-storage.interface';
 import type { IGentlePulseStorage } from '../types/gentlepulse-storage.interface';
+import type { IMoodStorage } from '../types/mood-storage.interface';
 import type { IChymeStorage } from '../types/chyme-storage.interface';
 import type { IWorkforceRecruiterStorage } from '../types/workforce-recruiter-storage.interface';
 import type { IDefaultAliveOrDeadStorage } from '../types/default-alive-or-dead-storage.interface';
@@ -28,6 +29,7 @@ import {
   SkillsStorageComposed,
   TrustTransportStorageComposed,
   GentlePulseStorageComposed,
+  MoodStorageComposed,
   ChymeStorageComposed,
   WorkforceRecruiterStorageComposed,
   DefaultAliveOrDeadStorageComposed,
@@ -59,7 +61,7 @@ function delegate<T extends (...args: any[]) => any>(
 
 export class MiniAppsStorageComposed 
   implements ISupportMatchStorage, ILighthouseStorage, ISocketRelayStorage, IDirectoryStorage, ISkillsStorage,
-             ITrustTransportStorage, IGentlePulseStorage, IChymeStorage,
+             ITrustTransportStorage, IGentlePulseStorage, IMoodStorage, IChymeStorage,
              IWorkforceRecruiterStorage, IDefaultAliveOrDeadStorage {
   
   private supportMatchStorage: SupportMatchStorageComposed;
@@ -69,6 +71,7 @@ export class MiniAppsStorageComposed
   private skillsStorage: SkillsStorageComposed;
   private trustTransportStorage: TrustTransportStorageComposed;
   private gentlePulseStorage: GentlePulseStorageComposed;
+  private moodStorage: MoodStorageComposed;
   private chymeStorage: ChymeStorageComposed;
   private workforceRecruiterStorage: WorkforceRecruiterStorageComposed;
   private defaultAliveOrDeadStorage: DefaultAliveOrDeadStorageComposed;
@@ -82,6 +85,7 @@ export class MiniAppsStorageComposed
     this.skillsStorage = new SkillsStorageComposed();
     this.trustTransportStorage = new TrustTransportStorageComposed();
     this.gentlePulseStorage = new GentlePulseStorageComposed();
+    this.moodStorage = new MoodStorageComposed();
     this.chymeStorage = new ChymeStorageComposed();
     this.workforceRecruiterStorage = new WorkforceRecruiterStorageComposed();
     this.defaultAliveOrDeadStorage = new DefaultAliveOrDeadStorageComposed();
@@ -276,9 +280,6 @@ export class MiniAppsStorageComposed
   getGentlepulseRatingsByMeditationId = delegate(() => this.gentlePulseStorage, 'getGentlepulseRatingsByMeditationId');
   getGentlepulseRatingByClientAndMeditation = delegate(() => this.gentlePulseStorage, 'getGentlepulseRatingByClientAndMeditation');
   updateGentlepulseMeditationRating = delegate(() => this.gentlePulseStorage, 'updateGentlepulseMeditationRating');
-  createGentlepulseMoodCheck = delegate(() => this.gentlePulseStorage, 'createGentlepulseMoodCheck');
-  getGentlepulseMoodChecksByClientId = delegate(() => this.gentlePulseStorage, 'getGentlepulseMoodChecksByClientId');
-  getGentlepulseMoodChecksByDateRange = delegate(() => this.gentlePulseStorage, 'getGentlepulseMoodChecksByDateRange');
   createGentlepulseFavorite = delegate(() => this.gentlePulseStorage, 'createGentlepulseFavorite');
   deleteGentlepulseFavorite = delegate(() => this.gentlePulseStorage, 'deleteGentlepulseFavorite');
   getGentlepulseFavoritesByClientId = delegate(() => this.gentlePulseStorage, 'getGentlepulseFavoritesByClientId');
@@ -288,6 +289,19 @@ export class MiniAppsStorageComposed
   getAllGentlepulseAnnouncements = delegate(() => this.gentlePulseStorage, 'getAllGentlepulseAnnouncements');
   updateGentlepulseAnnouncement = delegate(() => this.gentlePulseStorage, 'updateGentlepulseAnnouncement');
   deactivateGentlepulseAnnouncement = delegate(() => this.gentlePulseStorage, 'deactivateGentlepulseAnnouncement');
+
+  // ========================================
+  // MOOD OPERATIONS
+  // ========================================
+
+  createMoodCheck = delegate(() => this.moodStorage, 'createMoodCheck');
+  getMoodChecksByClientId = delegate(() => this.moodStorage, 'getMoodChecksByClientId');
+  getMoodChecksByDateRange = delegate(() => this.moodStorage, 'getMoodChecksByDateRange');
+  createMoodAnnouncement = delegate(() => this.moodStorage, 'createMoodAnnouncement');
+  getActiveMoodAnnouncements = delegate(() => this.moodStorage, 'getActiveMoodAnnouncements');
+  getAllMoodAnnouncements = delegate(() => this.moodStorage, 'getAllMoodAnnouncements');
+  updateMoodAnnouncement = delegate(() => this.moodStorage, 'updateMoodAnnouncement');
+  deactivateMoodAnnouncement = delegate(() => this.moodStorage, 'deactivateMoodAnnouncement');
 
   // ========================================
   // CHYME OPERATIONS

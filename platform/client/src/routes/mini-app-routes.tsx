@@ -53,6 +53,9 @@ import GentlePulseSettings from "@/pages/gentlepulse/settings";
 import GentlePulseAdmin from "@/pages/gentlepulse/admin";
 import GentlePulseAdminAnnouncements from "@/pages/gentlepulse/admin-announcements";
 import GentlePulseAnnouncements from "@/pages/gentlepulse/announcements";
+import MoodPage from "@/pages/mood";
+import MoodAdmin from "@/pages/mood/admin";
+import MoodAdminAnnouncements from "@/pages/mood/admin-announcements";
 import ChymeDashboard from "@/pages/chyme/dashboard";
 import ChymeAdmin from "@/pages/chyme/admin";
 import ChymeAdminAnnouncements from "@/pages/chyme/admin-announcements";
@@ -306,19 +309,10 @@ export function MiniAppRoutes() {
       </Route>
 
       {/* GentlePulse routes */}
-      <Route path="/apps/gentlepulse">
-        <ProtectedRoute>
-          <>
-            <GentlePulseLibrary />
-            <GentlePulseBottomNav />
-          </>
-        </ProtectedRoute>
-      </Route>
       <Route path="/apps/gentlepulse/support">
         <ProtectedRoute>
           <>
             <GentlePulseSupport />
-            <GentlePulseBottomNav />
           </>
         </ProtectedRoute>
       </Route>
@@ -326,7 +320,6 @@ export function MiniAppRoutes() {
         <ProtectedRoute>
           <>
             <GentlePulseSettings />
-            <GentlePulseBottomNav />
           </>
         </ProtectedRoute>
       </Route>
@@ -344,8 +337,24 @@ export function MiniAppRoutes() {
         <ProtectedRoute>
           <>
             <GentlePulseAnnouncements />
-            <GentlePulseBottomNav />
           </>
+        </ProtectedRoute>
+      </Route>
+
+      {/* Mood routes */}
+      <Route path="/apps/mood">
+        <ProtectedRoute>
+          <MoodPage />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/apps/mood/admin">
+        <ProtectedRoute>
+          <MoodAdmin />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/apps/mood/admin/announcements">
+        <ProtectedRoute>
+          <MoodAdminAnnouncements />
         </ProtectedRoute>
       </Route>
 

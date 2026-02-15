@@ -15,7 +15,6 @@ import {
   integer,
   decimal,
   numeric,
-  date,
   index,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
@@ -77,27 +76,6 @@ export const insertGentlepulseRatingSchema = createInsertSchema(gentlepulseRatin
 
 export type InsertGentlepulseRating = z.infer<typeof insertGentlepulseRatingSchema>;
 export type GentlepulseRating = typeof gentlepulseRatings.$inferSelect;
-
-// GentlePulse Mood Checks (anonymous, using clientId)
-export const gentlepulseMoodChecks = pgTable("gentlepulse_mood_checks", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  clientId: varchar("client_id", { length: 100 }).notNull(), // Random UUID from client
-  moodValue: integer("mood_value").notNull(), // 1-5 (very sad to very happy)
-  date: date("date").notNull(), // Date of mood check (ISO date)
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
-
-export const insertGentlepulseMoodCheckSchema = createInsertSchema(gentlepulseMoodChecks).omit({
-  id: true,
-  createdAt: true,
-}).extend({
-  moodValue: z.number().int().min(1).max(5),
-  clientId: z.string().min(1),
-  date: z.coerce.date(),
-});
-
-export type InsertGentlepulseMoodCheck = z.infer<typeof insertGentlepulseMoodCheckSchema>;
-export type GentlepulseMoodCheck = typeof gentlepulseMoodChecks.$inferSelect;
 
 // GentlePulse Favorites (clientId-based, no user accounts)
 export const gentlepulseFavorites = pgTable("gentlepulse_favorites", {

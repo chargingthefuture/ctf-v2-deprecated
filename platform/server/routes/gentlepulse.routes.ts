@@ -17,11 +17,9 @@ import { z } from "zod";
 import {
   insertGentlepulseMeditationSchema,
   insertGentlepulseRatingSchema,
-  insertGentlepulseMoodCheckSchema,
   insertGentlepulseFavoriteSchema,
   insertGentlepulseAnnouncementSchema,
   type GentlepulseRating,
-  type GentlepulseMoodCheck,
   type GentlepulseFavorite,
 } from "@shared/schema";
 
@@ -113,57 +111,6 @@ export function registerGentlePulseRoutes(app: Express) {
       ? ratingsArray.reduce((sum: number, r: any) => sum + (r.rating || 0), 0) / ratingsArray.length 
       : 0;
     res.json({ average: Number(average.toFixed(2)), count: (ratings as GentlepulseRating[]).length });
-  }));
-
-  // GentlePulse Mood Check routes (public, anonymous)
-  app.post('/api/gentlepulse/mood', publicItemLimiter, asyncHandler(async (req, res) => {
-    stripIPAndMetadata(req);
-    
-    const validatedData = validateWithZod(insertGentlepulseMoodCheckSchema, {
-      ...req.body,
-      date: new Date().toISOString().split('T')[0], // Today's date
-    }, 'Invalid mood check data');
-    
-    const moodCheck = await withDatabaseErrorHandling(
-      () => storage.createGentlepulseMoodCheck(validatedData),
-      'createGentlepulseMoodCheck'
-    );
-    
-    // Check for suicide prevention trigger (3+ extremely negative moods in 7 days)
-    const recentMoods = await withDatabaseErrorHandling(
-      () => storage.getGentlepulseMoodChecksByClientId(validatedData.clientId, 7),
-      'getGentlepulseMoodChecksByClientId'
-    );
-    const moodsArray = Array.isArray(recentMoods) ? recentMoods : [];
-    const extremelyNegative = moodsArray.filter((m: any) => m.moodValue === 1).length;
-    
-    logInfo(`GentlePulse mood check submitted: client ${validatedData.clientId}, mood ${validatedData.moodValue}`, req);
-    
-    res.json({
-      ...(moodCheck as any),
-      showSafetyMessage: extremelyNegative >= 3,
-    });
-  }));
-
-  // Check if mood check should be shown (once every 7 days)
-  app.get('/api/gentlepulse/mood/check-eligible', asyncHandler(async (req, res) => {
-    const clientId = req.query.clientId as string;
-    if (!clientId) {
-      return res.json({ eligible: false });
-    }
-
-    const recentMoods = await withDatabaseErrorHandling(
-      () => storage.getGentlepulseMoodChecksByClientId(clientId, 7),
-      'getGentlepulseMoodChecksByClientId'
-    ) as GentlepulseMoodCheck[];
-    const lastMood = recentMoods[0];
-    
-    if (!lastMood) {
-      return res.json({ eligible: true });
-    }
-
-    const daysSinceLastMood = (Date.now() - new Date(lastMood.createdAt).getTime()) / (1000 * 60 * 60 * 24);
-    res.json({ eligible: daysSinceLastMood >= 7 });
   }));
 
   // GentlePulse Favorites routes (public, anonymous)

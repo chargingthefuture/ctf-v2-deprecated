@@ -9,8 +9,6 @@ import type {
   InsertGentlepulseMeditation,
   GentlepulseRating,
   InsertGentlepulseRating,
-  GentlepulseMoodCheck,
-  InsertGentlepulseMoodCheck,
   GentlepulseFavorite,
   InsertGentlepulseFavorite,
   GentlepulseAnnouncement,
@@ -35,11 +33,6 @@ export interface IGentlePulseStorage {
   getGentlepulseRatingsByMeditationId(meditationId: string): Promise<GentlepulseRating[]>;
   getGentlepulseRatingByClientAndMeditation(clientId: string, meditationId: string): Promise<GentlepulseRating | undefined>;
   updateGentlepulseMeditationRating(meditationId: string): Promise<void>;
-
-  // Mood Check operations
-  createGentlepulseMoodCheck(moodCheck: InsertGentlepulseMoodCheck): Promise<GentlepulseMoodCheck>;
-  getGentlepulseMoodChecksByClientId(clientId: string, days?: number): Promise<GentlepulseMoodCheck[]>;
-  getGentlepulseMoodChecksByDateRange(startDate: Date, endDate: Date): Promise<GentlepulseMoodCheck[]>;
 
   // Favorite operations
   createGentlepulseFavorite(favorite: InsertGentlepulseFavorite): Promise<GentlepulseFavorite>;

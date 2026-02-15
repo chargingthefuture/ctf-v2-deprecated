@@ -12,6 +12,7 @@ export { DirectoryStorageComposed } from './directory-storage-composed';
 export { SkillsStorageComposed } from './skills-storage-composed';
 export { TrustTransportStorageComposed } from './trusttransport-storage-composed';
 export { GentlePulseStorageComposed } from './gentlepulse-storage-composed';
+export { MoodStorageComposed } from './mood-storage-composed';
 export { ChymeStorageComposed } from './chyme-storage-composed';
 export { WorkforceRecruiterStorageComposed } from './workforce-recruiter-storage-composed';
 export { DefaultAliveOrDeadStorageComposed } from './default-alive-or-dead-storage-composed';

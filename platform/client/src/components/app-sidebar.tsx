@@ -18,6 +18,7 @@ import {
   Mail,
   Search,
   HeartPulse,
+  Smile,
   Video,
   Briefcase,
   Activity,
@@ -123,6 +124,12 @@ const baseAdminMenuItems = [
     testId: "link-gentlepulse-admin",
   },
   {
+    title: "Mood Admin",
+    url: "/apps/mood/admin",
+    icon: Smile,
+    testId: "link-mood-admin",
+  },
+  {
     title: "Chyme Admin",
     url: "/apps/chyme/admin",
     icon: Radio,
@@ -177,6 +184,12 @@ const miniAppMenuItems = [
     url: "/apps/gentlepulse",
     icon: HeartPulse,
     testId: "link-gentlepulse",
+  },
+  {
+    title: "Mood",
+    url: "/apps/mood",
+    icon: Smile,
+    testId: "link-mood",
   },
   {
     title: "Chyme",

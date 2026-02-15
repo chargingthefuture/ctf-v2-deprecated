@@ -8,15 +8,12 @@
 import {
   gentlepulseMeditations,
   gentlepulseRatings,
-  gentlepulseMoodChecks,
   gentlepulseFavorites,
   gentlepulseAnnouncements,
   type GentlepulseMeditation,
   type InsertGentlepulseMeditation,
   type GentlepulseRating,
   type InsertGentlepulseRating,
-  type GentlepulseMoodCheck,
-  type InsertGentlepulseMoodCheck,
   type GentlepulseFavorite,
   type InsertGentlepulseFavorite,
   type GentlepulseAnnouncement,
@@ -195,53 +192,6 @@ export class GentlePulseStorage {
         ratingCount: count,
       })
       .where(eq(gentlepulseMeditations.id, meditationId));
-  }
-
-  // ========================================
-  // GENTLEPULSE MOOD CHECK OPERATIONS
-  // ========================================
-
-  async createGentlepulseMoodCheck(moodCheckData: InsertGentlepulseMoodCheck): Promise<GentlepulseMoodCheck> {
-    // Convert Date to ISO date string for database
-    const dataToInsert = {
-      ...moodCheckData,
-      date: moodCheckData.date instanceof Date 
-        ? moodCheckData.date.toISOString().split('T')[0] 
-        : moodCheckData.date,
-    };
-    const [moodCheck] = await db
-      .insert(gentlepulseMoodChecks)
-      .values(dataToInsert as any)
-      .returning();
-    return moodCheck;
-  }
-
-  async getGentlepulseMoodChecksByClientId(clientId: string, days: number = 7): Promise<GentlepulseMoodCheck[]> {
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - days);
-    
-    return await db
-      .select()
-      .from(gentlepulseMoodChecks)
-      .where(
-        and(
-          eq(gentlepulseMoodChecks.clientId, clientId),
-          gte(gentlepulseMoodChecks.date, startDate.toISOString().split('T')[0])
-        )
-      )
-      .orderBy(desc(gentlepulseMoodChecks.date));
-  }
-
-  async getGentlepulseMoodChecksByDateRange(startDate: Date, endDate: Date): Promise<GentlepulseMoodCheck[]> {
-    return await db
-      .select()
-      .from(gentlepulseMoodChecks)
-      .where(
-        and(
-          gte(gentlepulseMoodChecks.date, startDate.toISOString().split('T')[0]),
-          lte(gentlepulseMoodChecks.date, endDate.toISOString().split('T')[0])
-        )
-      );
   }
 
   // ========================================

@@ -52,19 +52,6 @@ export class GentlePulseStorageComposed implements IGentlePulseStorage {
     return this.gentlePulseStorage.updateGentlepulseMeditationRating(meditationId);
   }
 
-  // Mood check operations
-  async createGentlepulseMoodCheck(moodCheck: any) {
-    return this.gentlePulseStorage.createGentlepulseMoodCheck(moodCheck);
-  }
-
-  async getGentlepulseMoodChecksByClientId(clientId: string, days?: number) {
-    return this.gentlePulseStorage.getGentlepulseMoodChecksByClientId(clientId, days);
-  }
-
-  async getGentlepulseMoodChecksByDateRange(startDate: Date, endDate: Date) {
-    return this.gentlePulseStorage.getGentlepulseMoodChecksByDateRange(startDate, endDate);
-  }
-
   // Favorite operations
   async createGentlepulseFavorite(favorite: any) {
     return this.gentlePulseStorage.createGentlepulseFavorite(favorite);

@@ -19,6 +19,7 @@ import { registerSkillsRoutes } from "./skills.routes";
 import { registerLighthouseRoutes } from "./lighthouse.routes";
 import { registerTrustTransportRoutes } from "./trusttransport.routes";
 import { registerGentlePulseRoutes } from "./gentlepulse.routes";
+import { registerMoodRoutes } from "./mood.routes";
 import { registerChymeRoutes } from "./chyme.routes";
 import { registerChymeRoomsRoutes } from "./chyme-rooms.routes";
 import { registerChatRoutes } from "./chat.routes";
@@ -44,6 +45,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   registerLighthouseRoutes(app);
   registerTrustTransportRoutes(app);
   registerGentlePulseRoutes(app);
+  registerMoodRoutes(app);
   registerChymeRoutes(app);
   registerChymeRoomsRoutes(app);
   registerChatRoutes(app);

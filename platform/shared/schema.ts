@@ -289,25 +289,36 @@ export {
 export {
   gentlepulseMeditations,
   gentlepulseRatings,
-  gentlepulseMoodChecks,
   gentlepulseFavorites,
   gentlepulseAnnouncements,
   insertGentlepulseMeditationSchema,
   insertGentlepulseRatingSchema,
-  insertGentlepulseMoodCheckSchema,
   insertGentlepulseFavoriteSchema,
   insertGentlepulseAnnouncementSchema,
   type InsertGentlepulseMeditation,
   type GentlepulseMeditation,
   type InsertGentlepulseRating,
   type GentlepulseRating,
-  type InsertGentlepulseMoodCheck,
-  type GentlepulseMoodCheck,
   type InsertGentlepulseFavorite,
   type GentlepulseFavorite,
   type InsertGentlepulseAnnouncement,
   type GentlepulseAnnouncement,
 } from "./schema/gentlepulse";
+
+// ========================================
+// MOOD APP TABLES - Re-exported from module
+// ========================================
+
+export {
+  moodChecks,
+  moodAnnouncements,
+  insertMoodCheckSchema,
+  insertMoodAnnouncementSchema,
+  type InsertMoodCheck,
+  type MoodCheck,
+  type InsertMoodAnnouncement,
+  type MoodAnnouncement,
+} from "./schema/mood";
 
 // ========================================
 // CHYME APP TABLES - Re-exported from module

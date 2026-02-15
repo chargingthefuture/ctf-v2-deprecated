@@ -307,9 +307,6 @@ export class DatabaseStorage implements IStorage {
   getGentlepulseRatingsByMeditationId = delegate(() => this.miniAppsStorageComposed, 'getGentlepulseRatingsByMeditationId');
   getGentlepulseRatingByClientAndMeditation = delegate(() => this.miniAppsStorageComposed, 'getGentlepulseRatingByClientAndMeditation');
   updateGentlepulseMeditationRating = delegate(() => this.miniAppsStorageComposed, 'updateGentlepulseMeditationRating');
-  createGentlepulseMoodCheck = delegate(() => this.miniAppsStorageComposed, 'createGentlepulseMoodCheck');
-  getGentlepulseMoodChecksByClientId = delegate(() => this.miniAppsStorageComposed, 'getGentlepulseMoodChecksByClientId');
-  getGentlepulseMoodChecksByDateRange = delegate(() => this.miniAppsStorageComposed, 'getGentlepulseMoodChecksByDateRange');
   createGentlepulseFavorite = delegate(() => this.miniAppsStorageComposed, 'createGentlepulseFavorite');
   deleteGentlepulseFavorite = delegate(() => this.miniAppsStorageComposed, 'deleteGentlepulseFavorite');
   getGentlepulseFavoritesByClientId = delegate(() => this.miniAppsStorageComposed, 'getGentlepulseFavoritesByClientId');
@@ -319,6 +316,19 @@ export class DatabaseStorage implements IStorage {
   getAllGentlepulseAnnouncements = delegate(() => this.miniAppsStorageComposed, 'getAllGentlepulseAnnouncements');
   updateGentlepulseAnnouncement = delegate(() => this.miniAppsStorageComposed, 'updateGentlepulseAnnouncement');
   deactivateGentlepulseAnnouncement = delegate(() => this.miniAppsStorageComposed, 'deactivateGentlepulseAnnouncement');
+
+  // ========================================
+  // MOOD OPERATIONS
+  // ========================================
+
+  createMoodCheck = delegate(() => this.miniAppsStorageComposed, 'createMoodCheck');
+  getMoodChecksByClientId = delegate(() => this.miniAppsStorageComposed, 'getMoodChecksByClientId');
+  getMoodChecksByDateRange = delegate(() => this.miniAppsStorageComposed, 'getMoodChecksByDateRange');
+  createMoodAnnouncement = delegate(() => this.miniAppsStorageComposed, 'createMoodAnnouncement');
+  getActiveMoodAnnouncements = delegate(() => this.miniAppsStorageComposed, 'getActiveMoodAnnouncements');
+  getAllMoodAnnouncements = delegate(() => this.miniAppsStorageComposed, 'getAllMoodAnnouncements');
+  updateMoodAnnouncement = delegate(() => this.miniAppsStorageComposed, 'updateMoodAnnouncement');
+  deactivateMoodAnnouncement = delegate(() => this.miniAppsStorageComposed, 'deactivateMoodAnnouncement');
 
   // ========================================
   // CHYME OPERATIONS
