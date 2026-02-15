@@ -1,9 +1,10 @@
 import { Express } from 'express';
 import { asyncHandler } from '../errorHandler';
-import { isAuthenticated } from '../auth';
+import { isAuthenticated, getUserId } from '../auth';
 import { storage } from '../storage';
 import { insertChatMessageSchema } from '@shared/schema';
 import * as Sentry from '@sentry/node';
+import { withDatabaseErrorHandling } from '../databaseErrorHandler';
 
 export function registerChatRoutes(app: Express) {
   /**
@@ -15,26 +16,29 @@ export function registerChatRoutes(app: Express) {
     try {
       const { text } = req.body;
 
-      // Get user info from Clerk auth object
-      const userId = req.auth?.userId;
-      const firstName = req.auth?.firstName;
-      const lastName = req.auth?.lastName;
-      const userImage = req.auth?.imageUrl || undefined;
-
-      if (!userId) {
-        return res.status(401).json({ error: 'User not authenticated' });
-      }
+      // Get user ID from auth
+      const userId = getUserId(req);
 
       if (!text || typeof text !== 'string' || text.trim().length === 0) {
         return res.status(400).json({ error: 'Message text is required' });
       }
 
+      // Fetch full user data from database to get firstName and lastName
+      const user = await withDatabaseErrorHandling(
+        () => storage.getUser(userId),
+        'getUserForChat'
+      );
+
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+
       const messageData = {
         channelId: 'community-support',
         userId,
-        firstName,
-        lastName,
-        userImage,
+        firstName: user.firstName || undefined,
+        lastName: user.lastName || undefined,
+        userImage: user.profileImageUrl || undefined,
         text: text.trim(),
       };
 
