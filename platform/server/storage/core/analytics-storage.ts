@@ -9,7 +9,6 @@ import {
   users,
   payments,
   loginEvents,
-  gentlepulseMoodChecks,
 } from "@shared/schema";
 import { db } from "../../db";
 import { eq, and, desc, gte, lte } from "drizzle-orm";
@@ -601,49 +600,10 @@ export class AnalyticsStorage {
       logError(normalized, { path: 'calculateWeeklyPerformanceMetrics' } as any);
     }
 
-    // Calculate GentlePulse Mood Check statistics
+    // Mood metrics are from the separate Mood mini-app, not GentlePulse
     let averageMood = 0;
     let moodChange = 0;
     let moodResponsesCount = 0;
-    
-    try {
-      const currentWeekMoodChecks = await db
-        .select()
-        .from(gentlepulseMoodChecks)
-        .where(
-          and(
-            gte(gentlepulseMoodChecks.date, formatDate(currentWeekStart)),
-            lte(gentlepulseMoodChecks.date, formatDate(currentWeekEnd))
-          )
-        );
-      
-      const previousWeekMoodChecks = await db
-        .select()
-        .from(gentlepulseMoodChecks)
-        .where(
-          and(
-            gte(gentlepulseMoodChecks.date, formatDate(previousWeekStart)),
-            lte(gentlepulseMoodChecks.date, formatDate(previousWeekEnd))
-          )
-        );
-      
-      if (currentWeekMoodChecks.length > 0) {
-        const totalMood = currentWeekMoodChecks.reduce((sum, check) => sum + check.moodValue, 0);
-        averageMood = parseFloat((totalMood / currentWeekMoodChecks.length).toFixed(2));
-        moodResponsesCount = currentWeekMoodChecks.length;
-      }
-      
-      if (previousWeekMoodChecks.length > 0 && currentWeekMoodChecks.length > 0) {
-        const prevTotalMood = previousWeekMoodChecks.reduce((sum, check) => sum + check.moodValue, 0);
-        const prevAverageMood = parseFloat((prevTotalMood / previousWeekMoodChecks.length).toFixed(2));
-        moodChange = parseFloat((averageMood - prevAverageMood).toFixed(2));
-      } else if (previousWeekMoodChecks.length === 0 && currentWeekMoodChecks.length > 0) {
-        moodChange = averageMood;
-      }
-    } catch (error) {
-      const normalized = normalizeError(error);
-      logError(normalized, { path: 'calculateWeeklyPerformanceMetrics' } as any);
-    }
 
     // Calculate User Statistics
     // Count users that existed as of the end of each week (not all users in database)

@@ -11,7 +11,6 @@ import {
   authTokens,
   payments,
   adminActionLogs,
-  gentlepulseMoodChecks,
 } from "@shared/schema";
 import { db } from "../../db";
 import { eq } from "drizzle-orm";
@@ -54,12 +53,6 @@ export class UserDeletionStorage {
         .update(adminActionLogs)
         .set({ adminId: anonymizedUserId })
         .where(eq(adminActionLogs.adminId, userId));
-
-      // Anonymize GentlePulse mood checks (uses clientId field)
-      await db
-        .update(gentlepulseMoodChecks)
-        .set({ clientId: anonymizedUserId })
-        .where(eq(gentlepulseMoodChecks.clientId, userId));
     } catch (error: any) {
       console.warn(`Failed to anonymize core user data: ${error.message}`);
       throw error;

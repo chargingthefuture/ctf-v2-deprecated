@@ -2,7 +2,6 @@ import { db } from "../server/db";
 import { 
   gentlepulseMeditations,
   gentlepulseRatings,
-  gentlepulseMoodChecks,
   gentlepulseFavorites,
   gentlepulseAnnouncements
 } from "../shared/schema";
@@ -163,34 +162,7 @@ async function seedGentlePulse() {
     }
   }
 
-  // Create some mood checks (anonymous, using client IDs)
-  const moodChecksData = [
-    { clientId: clientIds[0], moodValue: 3, daysAgo: 0 }, // Today
-    { clientId: clientIds[0], moodValue: 4, daysAgo: 1 }, // Yesterday
-    { clientId: clientIds[0], moodValue: 3, daysAgo: 2 },
-    { clientId: clientIds[1], moodValue: 4, daysAgo: 0 },
-    { clientId: clientIds[1], moodValue: 5, daysAgo: 1 },
-    { clientId: clientIds[2], moodValue: 2, daysAgo: 0 },
-    { clientId: clientIds[2], moodValue: 3, daysAgo: 1 },
-    { clientId: clientIds[3], moodValue: 4, daysAgo: 0 },
-  ];
 
-  for (const moodData of moodChecksData) {
-    try {
-      const date = new Date();
-      date.setDate(date.getDate() - moodData.daysAgo);
-
-      await db.insert(gentlepulseMoodChecks).values({
-        clientId: moodData.clientId,
-        moodValue: moodData.moodValue,
-        date: date.toISOString().split('T')[0], // ISO date string
-      });
-
-      console.log(`Created mood check: ${moodData.moodValue}/5`);
-    } catch (error) {
-      console.log(`Error creating mood check:`, error);
-    }
-  }
 
   // Create some favorites (anonymous, using client IDs)
   const favoritesData = [
@@ -269,7 +241,6 @@ async function seedGentlePulse() {
   console.log(`  - ${createdMeditations.filter(m => m.duration > 10 && m.duration <= 20).length} medium (11-20 min)`);
   console.log(`  - ${createdMeditations.filter(m => m.duration > 20).length} long (>20 min)`);
   console.log(`- ${ratingsData.length} ratings created`);
-  console.log(`- ${moodChecksData.length} mood checks created`);
   console.log(`- ${favoritesData.length} favorites created`);
   console.log(`- ${announcementsData.length} announcements created`);
   
