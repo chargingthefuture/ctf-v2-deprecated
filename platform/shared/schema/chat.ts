@@ -35,4 +35,3 @@ export function formatChatName(firstName?: string | null, lastName?: string | nu
   }
   return firstName;
 }
-export type ChatMessage = typeof chatMessages.$inferSelect;
