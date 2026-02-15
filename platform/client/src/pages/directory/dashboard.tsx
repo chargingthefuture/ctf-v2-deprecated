@@ -243,7 +243,7 @@ export default function DirectoryDashboard() {
                           {fullName || "—"}
                         </div>
                         <div className="text-xs text-muted-foreground">
-                          Full name: {fullName || "—"} • First name: {firstName || "—"} • Last name: {lastName || "—"}
+                          First name: {firstName || "—"} • Last name: {lastName || "—"}
                         </div>
                         <div className="flex items-center gap-2">
                           <VerifiedBadge isVerified={(p as any).userIsVerified || false} testId={`badge-verified-${p.id}`} />

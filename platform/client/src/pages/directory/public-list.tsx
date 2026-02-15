@@ -8,7 +8,6 @@ import { VerifiedBadge } from "@/components/verified-badge";
 import { MapPin, ArrowRight, Building2, ExternalLink } from "lucide-react";
 import { useExternalLink } from "@/hooks/useExternalLink";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { DirectoryMap } from "@/components/directory/directory-map";
 
 type PublicDirectoryProfile = {
   id: string;
@@ -131,36 +130,6 @@ export default function PublicDirectoryList() {
             </Button>
           </div>
         </div>
-
-        {/* Map Section */}
-        {profiles.length > 0 && (
-          <div className="space-y-4">
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-semibold">Directory Map</h2>
-              <p className="text-muted-foreground mt-1">
-                Explore locations of directory members around the world
-              </p>
-            </div>
-            <Card>
-              <CardContent className="pt-6">
-                <DirectoryMap
-                  profiles={profiles.map((profile) => ({
-                    id: profile.id,
-                    name: getPublicFirstName(profile),
-                    city: profile.city,
-                    state: profile.state,
-                    country: profile.country,
-                    latitude: profile.latitude,
-                    longitude: profile.longitude,
-                    description: profile.description,
-                    skills: profile.skills || [],
-                    profileUrl: `${window.location.origin}/apps/directory/public/${profile.id}`,
-                  }))}
-                />
-              </CardContent>
-            </Card>
-          </div>
-        )}
 
         {/* Directory Profiles Section */}
         <div className="space-y-6">
