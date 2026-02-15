@@ -7,8 +7,8 @@ export default function ChatShell({ onClose }: { onClose: () => void }) {
   const [minimized, setMinimized] = useState(false);
 
   return (
-    <div className="fixed bottom-20 right-6 z-50 w-80 md:w-96 max-h-[70vh] shadow-2xl rounded-lg overflow-hidden bg-white">
-      <div className="flex items-center justify-between px-3 py-2 bg-blue-600 text-white">
+    <div className="fixed bottom-20 right-6 z-50 w-80 md:w-96 max-h-[70vh] shadow-2xl rounded-lg overflow-hidden bg-slate-900 border border-slate-800">
+      <div className="flex items-center justify-between px-3 py-2 bg-slate-800 text-white">
         <div className="text-sm font-semibold">Community Support</div>
         <div className="flex items-center space-x-2">
           <button
