@@ -1,0 +1,43 @@
+/* Overrides for Stream Chat to ensure visibility in our dark shell */
+
+/* Ensure message list fills available space and is scrollable */
+.str-chat__list {
+  height: 100% !important;
+  overflow: auto !important;
+  padding-bottom: 1rem !important;
+}
+
+/* Force message text color for readability on dark backgrounds */
+.str-chat__message-text,
+.str-chat__message-attachment__text,
+.str-chat__message-inner {
+  color: #e2e8f0 !important;
+}
+
+/* Date divider visibility */
+.str-chat__date-divider {
+  color: #93c5fd !important;
+}
+
+/* Ensure message bubbles are visible */
+.str-chat__message {
+  opacity: 1 !important;
+}
+
+/* Prevent input box overlapping the message list */
+.str-chat__input-wrapper {
+  position: relative !important;
+  z-index: 10;
+}
+
+/* Make uploaded images fit within the list area */
+.str-chat__message-attachment img {
+  max-width: 90% !important;
+  height: auto !important;
+}
+
+/* Small tweak to sender bubble colors */
+.str-chat__message--me .str-chat__message-text {
+  background-color: rgba(59,130,246,0.95) !important;
+  color: #fff !important;
+}
