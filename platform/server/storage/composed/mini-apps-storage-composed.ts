@@ -21,6 +21,7 @@ import type { IDefaultAliveOrDeadStorage } from '../types/default-alive-or-dead-
 
 import {
   SupportMatchStorageComposed,
+  ModerationStorageComposed,
   LighthouseStorageComposed,
   SocketRelayStorageComposed,
   DirectoryStorageComposed,
@@ -71,6 +72,7 @@ export class MiniAppsStorageComposed
   private chymeStorage: ChymeStorageComposed;
   private workforceRecruiterStorage: WorkforceRecruiterStorageComposed;
   private defaultAliveOrDeadStorage: DefaultAliveOrDeadStorageComposed;
+  private moderationStorage: ModerationStorageComposed;
 
   constructor() {
     this.supportMatchStorage = new SupportMatchStorageComposed();
@@ -83,6 +85,7 @@ export class MiniAppsStorageComposed
     this.chymeStorage = new ChymeStorageComposed();
     this.workforceRecruiterStorage = new WorkforceRecruiterStorageComposed();
     this.defaultAliveOrDeadStorage = new DefaultAliveOrDeadStorageComposed();
+    this.moderationStorage = new ModerationStorageComposed();
   }
 
   // ========================================
@@ -122,6 +125,12 @@ export class MiniAppsStorageComposed
   deactivateSupportmatchAnnouncement = delegate(() => this.supportMatchStorage, 'deactivateSupportmatchAnnouncement');
   getSupportMatchStats = delegate(() => this.supportMatchStorage, 'getSupportMatchStats');
   deleteSupportMatchProfile = delegate(() => this.supportMatchStorage, 'deleteSupportMatchProfile');
+
+  // Moderation
+  createModerationReport = delegate(() => this.moderationStorage, 'createModerationReport');
+  getAllModerationReports = delegate(() => this.moderationStorage, 'getAllModerationReports');
+  updateModerationReportStatus = delegate(() => this.moderationStorage, 'updateModerationReportStatus');
+  getModerationPendingCount = delegate(() => this.moderationStorage, 'getModerationPendingCount');
 
   // ========================================
   // LIGHTHOUSE OPERATIONS

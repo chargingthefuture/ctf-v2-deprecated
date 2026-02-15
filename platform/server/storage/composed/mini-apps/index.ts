@@ -5,6 +5,7 @@
  */
 
 export { SupportMatchStorageComposed } from './supportmatch-storage-composed';
+export { ModerationStorageComposed } from '../moderation-storage-composed';
 export { LighthouseStorageComposed } from './lighthouse-storage-composed';
 export { SocketRelayStorageComposed } from './socketrelay-storage-composed';
 export { DirectoryStorageComposed } from './directory-storage-composed';

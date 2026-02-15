@@ -65,6 +65,20 @@ export default function ChannelView() {
     return client.channel('messaging', 'community-support', { name: 'Community Support' });
   }, [client]);
 
+  // Ensure user is added to the channel server-side before connecting
+  useEffect(() => {
+    let mounted = true;
+    if (!channel) return;
+    (async () => {
+      try {
+        await fetch('/api/stream/join', { method: 'POST', credentials: 'same-origin' });
+      } catch (err) {
+        if (mounted) console.warn('Failed to join community channel via server:', err);
+      }
+    })();
+    return () => { mounted = false; };
+  }, [channel]);
+
   if (!channel) return <div className="p-4">Connecting…</div>;
 
   return (

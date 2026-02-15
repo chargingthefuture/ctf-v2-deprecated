@@ -12,3 +12,5 @@ export { GentlePulseStorage } from './gentlepulse-storage';
 export { ChymeStorage } from './chyme-storage';
 export { WorkforceRecruiterStorage } from './workforce-recruiter-storage';
 export { DefaultAliveOrDeadStorage } from './default-alive-or-dead-storage';
+// Ensuring ModerationStorage is exported (duplicate safe)
+export { ModerationStorage } from './moderation-storage';
