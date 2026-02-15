@@ -4,7 +4,8 @@ import { MoodCheckDialog } from "@/components/mood/mood-check-dialog";
 import { AnnouncementBanner } from "@/components/announcement-banner";
 import { useClientId } from "@/hooks/useClientId";
 import { useState } from "react";
-import { Heart, Smile } from "lucide-react";
+import { Heart, Smile, Bell } from "lucide-react";
+import { Link } from "wouter";
 
 export default function MoodPage() {
   const clientId = useClientId();
@@ -49,6 +50,27 @@ export default function MoodPage() {
         </CardContent>
       </Card>
 
+      <Card className="hover-elevate">
+        <CardHeader>
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+              <Bell className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+            </div>
+            <CardTitle className="text-base sm:text-lg">Announcements</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
+            View platform updates and notifications
+          </p>
+          <Link href="/apps/mood/announcements">
+            <Button variant="outline" className="w-full text-xs sm:text-sm" data-testid="button-view-announcements">
+              View Announcements
+            </Button>
+          </Link>
+        </CardContent>
+      </Card>
+
       <Card>
         <CardHeader>
           <CardTitle>Why Mood Checks?</CardTitle>
@@ -64,7 +86,7 @@ export default function MoodPage() {
             <div>
               <h3 className="font-semibold text-sm mb-1">Anonymous & Private</h3>
               <p className="text-sm text-muted-foreground">
-                Your mood data is completely anonymous and never shared with anyone else.
+                Your Privacy Matters: All data collected is anonymous and aggregated. We do not collect personal information, track individuals, or sell data to third parties. Your use of GentlePulse is completely private.
               </p>
             </div>
             <div>

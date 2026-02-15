@@ -54,6 +54,7 @@ import GentlePulseAdmin from "@/pages/gentlepulse/admin";
 import GentlePulseAdminAnnouncements from "@/pages/gentlepulse/admin-announcements";
 import GentlePulseAnnouncements from "@/pages/gentlepulse/announcements";
 import MoodPage from "@/pages/mood";
+import MoodAnnouncements from "@/pages/mood/announcements";
 import MoodAdmin from "@/pages/mood/admin";
 import MoodAdminAnnouncements from "@/pages/mood/admin-announcements";
 import ChymeDashboard from "@/pages/chyme/dashboard";
@@ -352,6 +353,11 @@ export function MiniAppRoutes() {
       <Route path="/apps/mood">
         <ProtectedRoute>
           <MoodPage />
+        </ProtectedRoute>
+      </Route>
+      <Route path="/apps/mood/announcements">
+        <ProtectedRoute>
+          <MoodAnnouncements />
         </ProtectedRoute>
       </Route>
       <Route path="/apps/mood/admin">

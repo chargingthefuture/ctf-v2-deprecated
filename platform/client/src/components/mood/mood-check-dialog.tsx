@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useClientId } from "@/hooks/useClientId";
 import { useToast } from "@/hooks/use-toast";
@@ -33,12 +33,6 @@ export function MoodCheckDialog({ open, onOpenChange, onMoodSubmitted }: MoodChe
   const { toast } = useToast();
   const [selectedMood, setSelectedMood] = useState<number | null>(null);
 
-  // Check if mood check is eligible
-  const { data: eligibleData } = useQuery<{ eligible: boolean }>({
-    queryKey: [`/api/mood/checks/eligible?clientId=${clientId}`],
-    enabled: !!clientId && open,
-  });
-
   const moodMutation = useMutation({
     mutationFn: async (moodValue: number) => {
       const response = await apiRequest("POST", "/api/mood/checks", {
@@ -55,7 +49,7 @@ export function MoodCheckDialog({ open, onOpenChange, onMoodSubmitted }: MoodChe
       onMoodSubmitted?.(data.showSafetyMessage);
       setSelectedMood(null);
       onOpenChange(false);
-      queryClient.invalidateQueries({ queryKey: [`/api/mood/checks/eligible?clientId=${clientId}`] });
+      queryClient.invalidateQueries({ queryKey: [`/api/mood/checks`] });
     },
     onError: (error: any) => {
       toast({
@@ -71,10 +65,6 @@ export function MoodCheckDialog({ open, onOpenChange, onMoodSubmitted }: MoodChe
       moodMutation.mutate(selectedMood);
     }
   };
-
-  if (!eligibleData?.eligible) {
-    return null;
-  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

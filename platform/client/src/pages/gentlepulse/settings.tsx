@@ -146,35 +146,6 @@ export default function GentlePulseSettings() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Privacy & Data</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
-              <Label htmlFor="mood-check">Weekly Mood Check</Label>
-              <p className="text-sm text-muted-foreground">
-                Receive optional weekly mood check prompts
-              </p>
-            </div>
-            <Switch
-              id="mood-check"
-              checked={settings.moodCheckEnabled}
-              onCheckedChange={(checked) => updateSetting("moodCheckEnabled", checked)}
-              data-testid="switch-mood-check"
-            />
-          </div>
-          <div className="p-4 bg-muted rounded-lg">
-            <p className="text-sm text-muted-foreground">
-              <strong>Your Privacy Matters:</strong> All data collected is anonymous and aggregated.
-              We do not collect personal information, track individuals, or sell data to third parties.
-              Your use of GentlePulse is completely private.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center">
               <Bell className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
