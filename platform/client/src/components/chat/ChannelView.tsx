@@ -94,7 +94,7 @@ export default function ChannelView() {
     <Channel channel={channel} doAutoConnect>
       <div className="flex flex-col h-[60vh] md:h-[70vh]">
         <ChannelHeader />
-        <div className="flex-1 overflow-hidden">
+        <div className="flex-1 overflow-auto">
           <MessageList Message={CustomMessage} />
         </div>
         <div className="px-2 pb-2">
