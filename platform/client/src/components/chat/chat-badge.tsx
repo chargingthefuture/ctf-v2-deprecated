@@ -6,7 +6,7 @@ interface ChatBadgeProps {
   testId?: string;
 }
 
-const CHAT_EXPLANATION = "Use this chat to receive live assistance from the community.";
+const CHAT_EXPLANATION = "Community Support Chat Guidelines: This is a shared support channel exclusively for registered app users. Purpose: Ask and answer questions to help fellow community members. Key Rules: * Support-related questions only.*Respectful communication is mandatory. *Off-topic or inappropriate messages may result in permanent account ban. Important: This is a public chat visible to all members. For general social conversation, please use our Signal group, link found at https://sleek.bio/farah";
 
 export function ChatBadge({ testId }: ChatBadgeProps) {
   const [isOpen, setIsOpen] = useState(false);
