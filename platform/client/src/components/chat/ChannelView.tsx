@@ -126,7 +126,7 @@ export default function ChannelView() {
       <div className="flex flex-col h-[60vh] md:h-[70vh]">
         <ChannelHeader />
         <div className="flex-1 overflow-auto">
-          <MessageList Message={CustomMessage} />
+          <MessageList />
         </div>
         {/* Debug panel (temporary) */}
         <div className="px-2 py-1 text-xs text-muted-foreground bg-slate-900 border-t border-slate-800">
