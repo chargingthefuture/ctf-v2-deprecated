@@ -533,15 +533,6 @@ CREATE TABLE IF NOT EXISTS gentlepulse_ratings (
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
--- Mood Checks (anonymous, using clientId)
-CREATE TABLE IF NOT EXISTS gentlepulse_mood_checks (
-  id VARCHAR PRIMARY KEY DEFAULT gen_random_uuid(),
-  client_id VARCHAR(100) NOT NULL,
-  mood_value INTEGER NOT NULL,
-  date DATE NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT NOW()
-);
-
 -- GentlePulse Favorites (clientId-based, no user accounts)
 CREATE TABLE IF NOT EXISTS gentlepulse_favorites (
   id VARCHAR PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -754,3 +745,28 @@ BEGIN
     FOREIGN KEY (accepted_answer_id) REFERENCES research_answers(id);
   END IF;
 END $$;
+
+-- ========================================
+-- MOOD APP TABLES
+-- ========================================
+
+-- Mood Checks (anonymous, using clientId)
+CREATE TABLE IF NOT EXISTS mood_checks (
+  id VARCHAR PRIMARY KEY DEFAULT gen_random_uuid(),
+  client_id VARCHAR(100) NOT NULL,
+  mood_value INTEGER NOT NULL,
+  date DATE NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+-- Mood Announcements
+CREATE TABLE IF NOT EXISTS mood_announcements (
+  id VARCHAR PRIMARY KEY DEFAULT gen_random_uuid(),
+  title VARCHAR(200) NOT NULL,
+  content TEXT NOT NULL,
+  type VARCHAR(50) NOT NULL DEFAULT 'info',
+  is_active BOOLEAN NOT NULL DEFAULT true,
+  expires_at TIMESTAMP,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+);

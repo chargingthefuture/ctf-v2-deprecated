@@ -2,7 +2,7 @@
 alwaysApply: true
 ---
 
-# Context Prompt for Cursor AI - Psyop-Free Ecosystem
+# Context Prompt for a Psyop-Free Ecosystem
 
 This is the top level of a mono-repo. This product serves vulnerable users. Every line of code should prioritize safety, privacy, and dignity. This is a invite-only platform for survivors of human trafficking.
 
@@ -151,16 +151,6 @@ function MegaComponent() {
 | JavaScript       | <b>250-300 lines</b> | 500 lines  |
 | Java             | <b>200-250 lines</b> | 400 lines  |
 
-### Tools to Help
-
-- ESLint max-lines rule
-- Prettier for consistent formatting
-- Code analysis tools
-- IDE extensions for complexity metrics
-
-<hr>
-
-## Pro Tips
 
 - These are <b>guidelines, not strict rules</b>
 - Context matters more than exact line count
@@ -179,9 +169,7 @@ Each service is a self-contained mini-app with its own:
 - Frontend pages
 - Sidebar navigation
 
-**🚨 CRITICAL:** The webapp should be mobile responsive. All pages should render correctly on an iPhone SE, for example.
-
-**🚨 CRITICAL:** Never mix concerns between mini-apps. Each operates independently.
+**🚨 CRITICAL:** The webapp should be mobile responsive. All pages should render correctly on an iPhone SE, for example. Never mix concerns between mini-apps. Each operates independently.
 
 ## 🔧 How to Add a New Feature
 
@@ -194,9 +182,11 @@ Each service is a self-contained mini-app with its own:
 3. **Admin page** - A dedicated admin interface under the Administration section for managing the app's content/data
 4. **Announcement system** - Every mini-app must have its own announcement table and admin interface for managing announcements specific to that app
 
-**🚨 IMPORTANT:** Always use `varchar("id").primaryKey().default(sql\`gen_random_uuid()\`)` for IDs to match existing pattern.
+**🚨 IMPORTANT:**
 
-**🚨 CRITICAL:** After adding tables to `schema.ts`, you MUST also update `schema.sql` with the corresponding SQL `CREATE TABLE` statements. See the **Database Migration Workflow** section for details on keeping `schema.sql` synchronized.
+- Always use `varchar("id").primaryKey().default(sql\`gen_random_uuid()\`)` for IDs to match existing pattern.
+
+- After adding tables to `schema.ts`, you MUST also update `schema.sql` with the corresponding SQL `CREATE TABLE` statements. See the **Database Migration Workflow** section for details on keeping `schema.sql` synchronized.
 
 **🚨 REQUIRED:** Profile deletion method must:
 
