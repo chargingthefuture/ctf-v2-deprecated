@@ -213,6 +213,7 @@ export default function LighthouseAdminPage() {
         <CardHeader>
           <CardTitle>Housing Seekers</CardTitle>
           <CardDescription>
+            All housing seekers in the system
           </CardDescription>
         </CardHeader>
         <CardContent>

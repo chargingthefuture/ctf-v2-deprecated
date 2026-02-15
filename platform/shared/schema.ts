@@ -133,16 +133,6 @@ export {
 } from "./schema/supportmatch";
 
 // ========================================
-// Moderation Report TABLES
-// ========================================
-export {
-  moderationReports,
-  insertModerationReportSchema,
-  type InsertModerationReport,
-  type ModerationReport,
-} from "./schema/moderation";
-
-// ========================================
 // CHAT MESSAGES TABLES
 // ========================================
 export {
