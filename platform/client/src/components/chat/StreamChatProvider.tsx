@@ -49,7 +49,7 @@ export function StreamChatProvider({ children }: Props) {
   if (!ready || !value) return <>{/* lightweight placeholder while chat loads */}</>;
 
   return (
-    <Chat client={value} theme="light">
+    <Chat client={value} theme="dark">
       {children}
     </Chat>
   );

@@ -81,6 +81,12 @@ export default function ChannelView() {
     (async () => {
       try {
         await fetch('/api/stream/join', { method: 'POST', credentials: 'same-origin' });
+        // Ensure the channel is watched so messages are loaded into the client
+        try {
+          await channel.watch();
+        } catch (watchErr) {
+          console.warn('channel.watch() failed:', watchErr);
+        }
       } catch (err) {
         if (mounted) console.warn('Failed to join community channel via server:', err);
       }
