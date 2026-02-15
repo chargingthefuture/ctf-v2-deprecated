@@ -1,6 +1,6 @@
 import { Express } from 'express';
-import { asyncHandler } from '../middleware/asyncHandler';
-import { isAuthenticated } from '../middleware/auth';
+import { asyncHandler } from '../errorHandler';
+import { isAuthenticated } from '../auth';
 import { storage } from '../storage';
 import { insertChatMessageSchema } from '@shared/schema';
 import * as Sentry from '@sentry/node';
