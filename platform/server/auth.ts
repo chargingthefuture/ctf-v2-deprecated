@@ -1,6 +1,6 @@
 import { requireAuth } from "@clerk/express";
 import { clerkClient } from "@clerk/clerk-sdk-node";
-import type { Express, RequestHandler } from "express";
+import type { Express, RequestHandler, Request } from "express";
 import { storage } from "./storage";
 import { validateCsrfToken } from "./csrf";
 import { withDatabaseErrorHandling } from "./databaseErrorHandler";
@@ -8,6 +8,21 @@ import { ExternalServiceError, UnauthorizedError, ForbiddenError, normalizeError
 import { logError, logWarning, logInfo } from "./errorLogger";
 import { loginEvents, type User, type PricingTier } from "@shared/schema";
 import { db } from "./db";
+
+// Extend Express Request with auth property
+declare global {
+  namespace Express {
+    interface Request {
+      auth?: {
+        userId?: string;
+        firstName?: string;
+        lastName?: string;
+        imageUrl?: string;
+        sessionClaims?: any;
+      };
+    }
+  }
+}
 
 // Clerk Configuration
 // In production, CLERK_SECRET_KEY is REQUIRED and missing key should crash startup.

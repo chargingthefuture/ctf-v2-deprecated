@@ -11,7 +11,6 @@ import AdminPricingTiers from "@/pages/admin/pricing-tiers";
 import AdminWeeklyPerformance from "@/pages/admin/weekly-performance";
 import ConversionCalculator from "@/pages/admin/conversion-calculator";
 import AdminSkills from "@/pages/admin/skills";
-import AdminModerationPage from "@/pages/admin/moderation";
 
 export function AdminRoutes() {
   return (
@@ -51,12 +50,8 @@ export function AdminRoutes() {
           <ConversionCalculator />
         </AdminRoute>
       </Route>
-      <Route path="/admin/moderation">
-        <AdminRoute>
-          <AdminModerationPage />
-        </AdminRoute>
-      </Route>
     </>
   );
+}
 }
 

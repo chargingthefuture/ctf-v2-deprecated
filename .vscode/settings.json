@@ -104,7 +104,7 @@
     // Editor accessibility
     "editor.accessibilitySupport": "on",
     "editor.minimap.enabled": false,
-    "editor.renderWhitespace": "all",
+    "editor.renderWhitespace": "none",
     "editor.cursorStyle": "line",
     "editor.hover.enabled": "on",
   
@@ -124,6 +124,7 @@
     "window.zoomLevel": 0,
     "python-envs.defaultEnvManager": "ms-python.python:system",
     "python-envs.pythonProjects": [],
-    "python.analysis.typeCheckingMode": "strict"
+    "python.analysis.typeCheckingMode": "strict",
+    "chat.useAgentsMdFile": true
   }
   

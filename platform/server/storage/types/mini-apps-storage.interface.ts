@@ -14,7 +14,6 @@ import type { IGentlePulseStorage } from './gentlepulse-storage.interface';
 import type { IChymeStorage } from './chyme-storage.interface';
 import type { IWorkforceRecruiterStorage } from './workforce-recruiter-storage.interface';
 import type { IDefaultAliveOrDeadStorage } from './default-alive-or-dead-storage.interface';
-import type { IModerationStorage } from './moderation-storage.interface';
 import type { IChatStorage } from './chat-storage.interface';
 
 /**
@@ -31,7 +30,6 @@ export interface IMiniAppsStorage
           IChymeStorage,
           IWorkforceRecruiterStorage,
           IDefaultAliveOrDeadStorage,
-          IModerationStorage,
           IChatStorage {}
 
 // Re-export individual interfaces for convenience

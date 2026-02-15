@@ -216,43 +216,6 @@ export function registerAdminRoutes(app: Express) {
     res.json(logs);
   }));
 
-  // Moderation inbox - list reports
-  app.get('/api/admin/moderation', isAuthenticated, isAdmin, asyncHandler(async (_req, res) => {
-    const reports = await withDatabaseErrorHandling(
-      () => storage.getAllModerationReports(),
-      'getAllModerationReports'
-    );
-    res.json(reports);
-  }));
-
-  app.get('/api/admin/moderation/count', isAuthenticated, isAdmin, asyncHandler(async (_req, res) => {
-    const count = await withDatabaseErrorHandling(
-      () => storage.getModerationPendingCount(),
-      'getModerationPendingCount'
-    );
-    res.json({ pending: count });
-  }));
-
-  app.put('/api/admin/moderation/:id/status', isAuthenticated, isAdmin, validateCsrfToken, asyncHandler(async (req: any, res) => {
-    const adminId = getUserId(req);
-    const { status, resolution } = req.body;
-    if (!status) {
-      return res.status(400).json({ message: 'Status is required' });
-    }
-    const report = await withDatabaseErrorHandling(
-      () => storage.updateModerationReportStatus(req.params.id, status, resolution),
-      'updateModerationReportStatus'
-    );
-    await logAdminAction(
-      adminId,
-      'update_moderation_status',
-      'moderation_report',
-      report.id,
-      { status, resolution }
-    );
-    res.json(report);
-  }));
-
   // Admin routes - Pricing Tiers
   app.get('/api/admin/pricing-tiers', isAuthenticated, isAdmin, asyncHandler(async (_req, res) => {
     const tiers = await withDatabaseErrorHandling(

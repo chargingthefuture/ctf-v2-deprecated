@@ -10,7 +10,7 @@ export interface IChatStorage {
   /**
    * Create a new message in a channel
    */
-  createMessage(messageData: InsertChatMessage): Promise<ChatMessage>;
+  createChatMessage(messageData: InsertChatMessage): Promise<ChatMessage>;
 
   /**
    * Get recent messages from a specific channel

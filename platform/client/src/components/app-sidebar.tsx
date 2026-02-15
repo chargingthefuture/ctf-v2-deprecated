@@ -55,12 +55,7 @@ const baseAdminMenuItems = [
     icon: Users,
     testId: "link-admin-users",
   },
-  {
-    title: "Moderation",
-    url: "/admin/moderation",
-    icon: Ticket,
-    testId: "link-admin-moderation",
-  },
+
   {
     title: "Skills Database",
     url: "/admin/skills",
@@ -247,22 +242,7 @@ export function AppSidebar() {
   const codeUrl = "https://github.com/chargingthefuture";
   const chatsUrl = "https://github.com/chargingthefuture/mono/wiki/Signal-Groups";
 
-  // Moderation pending count for admin badge
-  const { data: moderationCount } = (() => {
-    try {
-      // Lazy import to avoid SSR issues
-      // Use window check to only run in browser
-      if (typeof window === 'undefined') return { data: undefined } as any;
-      const { useQuery } = require('@tanstack/react-query');
-      return useQuery({ queryKey: ['/api/admin/moderation/count'], queryFn: async () => {
-        const resp = await fetch('/api/admin/moderation/count');
-        if (!resp.ok) throw new Error('Failed to fetch moderation count');
-        return resp.json();
-      }, staleTime: 1000 * 30 });
-    } catch (err) {
-      return { data: undefined } as any;
-    }
-  })();
+
 
   // Close sidebar on mobile when navigation link is clicked
   const handleNavClick = () => {
@@ -347,9 +327,7 @@ export function AppSidebar() {
                         <Link href={item.url} onClick={handleNavClick}>
                           <item.icon className="w-5 h-5" />
                           <span>{item.title}</span>
-                          {item.title === 'Moderation' && moderationCount?.pending > 0 && (
-                            <Badge variant="secondary" className="ml-2">{moderationCount.pending}</Badge>
-                          )}
+
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>

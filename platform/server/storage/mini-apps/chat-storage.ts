@@ -10,7 +10,7 @@ import { desc, eq } from "drizzle-orm";
 import type { InsertChatMessage, ChatMessage } from "@shared/schema";
 
 export class ChatStorage {
-  async createMessage(messageData: InsertChatMessage): Promise<ChatMessage> {
+  async createChatMessage(messageData: InsertChatMessage): Promise<ChatMessage> {
     const [message] = await db.insert(chatMessages).values(messageData).returning();
     return message;
   }
