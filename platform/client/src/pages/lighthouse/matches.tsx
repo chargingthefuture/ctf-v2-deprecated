@@ -260,7 +260,7 @@ export default function MatchesPage() {
                 {match.status === "accepted" && (
                   <div className="bg-green-500/10 p-4 rounded-lg">
                     <p className="text-sm text-green-700 dark:text-green-400">
-                      Your match request has been accepted! The host will be in touch with you soon.
+                      Your match request has been accepted!
                     </p>
                   </div>
                 )}
