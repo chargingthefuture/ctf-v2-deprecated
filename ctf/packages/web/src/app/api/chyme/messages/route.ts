@@ -1,6 +1,7 @@
 import type { ChymeChatMessage } from "@ctf/shared";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+import { upsertAccessUserFromClerk } from "../../../../lib/server/accessRepository";
 import {
   insertChymeMessage,
   listChymeMessages,
@@ -8,6 +9,24 @@ import {
 } from "../../../../lib/server/chymeRepository";
 
 export async function GET() {
+  const { userId } = await auth();
+  if (!userId) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const user = await currentUser();
+  const accessUser = await upsertAccessUserFromClerk({
+    userId,
+    email: user?.emailAddresses?.[0]?.emailAddress ?? null,
+    firstName: user?.firstName ?? null,
+    lastName: user?.lastName ?? null,
+    profileImageUrl: user?.imageUrl ?? null,
+  });
+
+  if (!accessUser.isApproved && !accessUser.isAdmin) {
+    return NextResponse.json({ error: "User is not approved" }, { status: 403 });
+  }
+
   const messages: ChymeChatMessage[] = await listChymeMessages();
   return NextResponse.json(messages);
 }
@@ -26,6 +45,17 @@ export async function POST(request: Request) {
   }
 
   const user = await currentUser();
+  const accessUser = await upsertAccessUserFromClerk({
+    userId,
+    email: user?.emailAddresses?.[0]?.emailAddress ?? null,
+    firstName: user?.firstName ?? null,
+    lastName: user?.lastName ?? null,
+    profileImageUrl: user?.imageUrl ?? null,
+  });
+
+  if (!accessUser.isApproved && !accessUser.isAdmin) {
+    return NextResponse.json({ error: "User is not approved" }, { status: 403 });
+  }
 
   await upsertChymeProfileAndMember({
     userId,

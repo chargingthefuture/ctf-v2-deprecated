@@ -1,0 +1,23 @@
+import { auth, currentUser } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
+import { upsertAccessUserFromClerk } from "../../../../lib/server/accessRepository";
+
+export async function GET() {
+  const { userId } = await auth();
+  if (!userId) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const clerkUser = await currentUser();
+  const email = clerkUser?.emailAddresses?.[0]?.emailAddress ?? null;
+
+  const accessUser = await upsertAccessUserFromClerk({
+    userId,
+    email,
+    firstName: clerkUser?.firstName ?? null,
+    lastName: clerkUser?.lastName ?? null,
+    profileImageUrl: clerkUser?.imageUrl ?? null,
+  });
+
+  return NextResponse.json(accessUser);
+}

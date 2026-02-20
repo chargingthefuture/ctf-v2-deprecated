@@ -9,7 +9,7 @@ const navItems = [
   { key: "settings", label: "Settings" },
 ];
 
-export function LeftNavigation() {
+export function LeftNavigation({ isAdmin }: { isAdmin: boolean }) {
   const { user, isLoaded } = useUser();
   const displayName = user?.firstName ?? user?.username ?? "Member";
 
@@ -43,6 +43,13 @@ export function LeftNavigation() {
             </button>
           </li>
         ))}
+        {isAdmin ? (
+          <li>
+            <a href="/admin/users" className="left-nav-item-link">
+              Admin approvals
+            </a>
+          </li>
+        ) : null}
       </ul>
 
       <div className="left-nav-footer">

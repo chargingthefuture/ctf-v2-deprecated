@@ -7,8 +7,8 @@ This project uses cloud-first mobile delivery so development can proceed without
 Configure in repository settings:
 
 - `EXPO_TOKEN` (GitHub secret): token for EAS CLI auth.
-- `EXPO_PROJECT_ID` (GitHub variable or environment variable): Expo project identifier used by `app.config.ts`.
-- `EXPO_UPDATES_URL` (GitHub variable or environment variable): EAS updates URL for the project.
+- `MOBILE_PROJECT_ID` (GitHub variable or environment variable): Expo project identifier used by `app.config.ts`.
+- `MOBILE_UPDATES_URL` (GitHub variable or environment variable): EAS updates URL for the project.
 
 ## Branch to Channel Mapping
 

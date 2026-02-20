@@ -5,13 +5,14 @@ import { SocialAudioChatPanel } from "../chat/SocialAudioChatPanel";
 interface AppShellProps {
   streamChatMauLimit: number;
   observabilityProvider: string;
+  isAdmin?: boolean;
 }
 
 export function AppShell(props: AppShellProps) {
   return (
     <main className="shell" aria-label="TI Skills Economy application shell">
       <section className="shell-nav" aria-label="Primary navigation">
-        <LeftNavigation />
+        <LeftNavigation isAdmin={Boolean(props.isAdmin)} />
       </section>
 
       <section className="shell-main" aria-label="Mini-app workspace">

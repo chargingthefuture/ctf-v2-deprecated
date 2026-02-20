@@ -1,5 +1,5 @@
 import { defaultMakerTierBudget } from "@ctf/shared";
-import { AppShell } from "../components/layout/AppShell";
+import { AccessGate } from "../components/access/AccessGate";
 import { webErrorReporter, webObservabilityProvider } from "../lib/observability";
 
 webErrorReporter.capture({
@@ -13,7 +13,7 @@ webErrorReporter.capture({
 
 export default function HomePage() {
   return (
-    <AppShell
+    <AccessGate
       streamChatMauLimit={defaultMakerTierBudget.monthlyChatMauLimit}
       observabilityProvider={webObservabilityProvider}
     />

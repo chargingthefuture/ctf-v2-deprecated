@@ -24,7 +24,7 @@ This folder contains the rewrite monorepo scaffold for:
 ## Observability Provider Selection
 
 - Web: set `NEXT_PUBLIC_OBSERVABILITY_PROVIDER` to `sentry`, `signoz`, or `noop`.
-- Mobile: set `EXPO_PUBLIC_OBSERVABILITY_PROVIDER` to `sentry`, `signoz`, or `noop`.
+- Mobile: set `MOBILE_OBSERVABILITY_PROVIDER` to `sentry`, `signoz`, or `noop`.
 - Unknown or missing values default to `noop`.
 
 ## Structure
@@ -36,3 +36,16 @@ This folder contains the rewrite monorepo scaffold for:
 ## Deployment Configuration
 
 - Environment variable mapping and naming rules: `docs/deployment/ENVIRONMENT_VARIABLES.md`
+
+## Invite-Only Access Flow (Rewrite)
+
+- Users sign in with Clerk on the web app root page.
+- First-time users must submit a Quora profile URL.
+- Access stays pending until an admin approves them.
+- Admins (existing `users.is_admin = true`) can review and approve users at `/admin/users`.
+
+## Prompt Leak Protection
+
+- This repository includes git hooks that block committing/pushing AI prompt text patterns.
+- One-time setup (run from repository root): `git config core.hooksPath .githooks`
+- Store temporary prompt drafts in `.ai/` (already ignored by git).

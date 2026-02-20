@@ -1,6 +1,7 @@
 import type { ChymeJoinCallResponse } from "@ctf/shared";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+import { upsertAccessUserFromClerk } from "../../../../lib/server/accessRepository";
 import { chymeRoomId, upsertChymeProfileAndMember } from "../../../../lib/server/chymeRepository";
 import {
   createStreamUserToken,
@@ -14,6 +15,18 @@ export async function POST() {
   }
 
   const user = await currentUser();
+  const accessUser = await upsertAccessUserFromClerk({
+    userId,
+    email: user?.emailAddresses?.[0]?.emailAddress ?? null,
+    firstName: user?.firstName ?? null,
+    lastName: user?.lastName ?? null,
+    profileImageUrl: user?.imageUrl ?? null,
+  });
+
+  if (!accessUser.isApproved && !accessUser.isAdmin) {
+    return NextResponse.json({ error: "User is not approved" }, { status: 403 });
+  }
+
   const userName = user?.firstName ?? user?.username ?? "Member";
 
   await upsertChymeProfileAndMember({
