@@ -25,7 +25,21 @@ if re.search(br"\n\n+$", data):
 
 sys.exit(0)
 PY
-done < <(find . -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" -o -name "*.mjs" -o -name "*.cjs" -o -name "*.json" -o -name "*.css" -o -name "*.yml" -o -name "*.yaml" \) -not -path "./node_modules/*" -print0)
+done < <(find . -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" -o -name "*.mjs" -o -name "*.cjs" -o -name "*.json" -o -name "*.css" -o -name "*.yml" -o -name "*.yaml" \) \
+  -not -path "./node_modules/*" \
+  -not -path "./.next/*" \
+  -not -path "./dist/*" \
+  -not -path "./build/*" \
+  -not -path "./coverage/*" \
+  -not -path "./.turbo/*" \
+  -not -path "./.pnpm-store/*" \
+  -not -path "*/node_modules/*" \
+  -not -path "*/.next/*" \
+  -not -path "*/dist/*" \
+  -not -path "*/build/*" \
+  -not -path "*/coverage/*" \
+  -not -path "*/.turbo/*" \
+  -print0)
 
 if [ "$failed" -ne 0 ]; then
   exit 1
