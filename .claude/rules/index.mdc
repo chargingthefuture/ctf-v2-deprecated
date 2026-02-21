@@ -6,6 +6,7 @@
 - Governs architecture, coding standards, delivery quality, and compliance.
 
 ## Product Rule Modules
+- [099-agent-scope-guardrails.mdc](099-agent-scope-guardrails.mdc)
 - [100-product-context-and-experience-rules.mdc](100-product-context-and-experience-rules.mdc)
 - [101-monorepo-layout-rules.mdc](101-monorepo-layout-rules.mdc)
 - [102-shared-boundary-rules.mdc](102-shared-boundary-rules.mdc)

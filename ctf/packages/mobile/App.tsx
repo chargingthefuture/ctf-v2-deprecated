@@ -40,14 +40,23 @@ const tokenCache = {
 };
 
 export default function App() {
-  const publishableKey = process.env.MOBILE_CLERK_PUBLISHABLE_KEY;
+  const isDevelopmentRuntime = __DEV__;
+  const publishableKey = isDevelopmentRuntime
+    ? process.env.MOBILE_CLERK_PUBLISHABLE_KEY_STAGING ||
+      process.env.MOBILE_CLERK_PUBLISHABLE_KEY ||
+      process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+    : process.env.MOBILE_CLERK_PUBLISHABLE_KEY_PRODUCTION ||
+      process.env.MOBILE_CLERK_PUBLISHABLE_KEY ||
+      process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
   if (!publishableKey) {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.card}>
           <Text style={styles.title}>TI Skills Economy</Text>
-          <Text style={styles.error}>Set MOBILE_CLERK_PUBLISHABLE_KEY for mobile authentication.</Text>
+          <Text style={styles.error}>
+            Set mobile Clerk key variables (staging for Expo Go/dev, production for APK/release).
+          </Text>
         </View>
       </SafeAreaView>
     );

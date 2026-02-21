@@ -40,9 +40,18 @@ This rewrite must use its own environment configuration and observability DSNs, 
 ## Mobile (Expo + React Native)
 
 - `MOBILE_APP_URL`
-- `MOBILE_CLERK_PUBLISHABLE_KEY`
+- `MOBILE_CLERK_PUBLISHABLE_KEY_STAGING`
+- `MOBILE_CLERK_PUBLISHABLE_KEY_PRODUCTION`
+- `MOBILE_CLERK_PUBLISHABLE_KEY` (legacy/fallback)
 - `MOBILE_SENTRY_DSN` (rewrite-specific DSN)
 - `MOBILE_OBSERVABILITY_PROVIDER` (`sentry`, `signoz`, `noop`)
+
+Mobile Clerk key note:
+
+- Expo Go/dev runtime (`__DEV__ = true`) uses `MOBILE_CLERK_PUBLISHABLE_KEY_STAGING`.
+- APK/release runtime (`__DEV__ = false`) uses `MOBILE_CLERK_PUBLISHABLE_KEY_PRODUCTION`.
+- Android APK should therefore use Railway production key values.
+- Fallback order remains `MOBILE_CLERK_PUBLISHABLE_KEY`, then `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`.
 
 ## EAS / CI
 

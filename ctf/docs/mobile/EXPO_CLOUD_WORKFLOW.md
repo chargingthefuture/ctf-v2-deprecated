@@ -40,7 +40,8 @@ Before shipping additional features, verify these first:
 
 1. **Environment variables** are configured for mobile runtime:
 
-- `MOBILE_CLERK_PUBLISHABLE_KEY`
+- `MOBILE_CLERK_PUBLISHABLE_KEY_STAGING` (Expo Go/dev)
+- `MOBILE_CLERK_PUBLISHABLE_KEY_PRODUCTION` (APK/release)
 - `MOBILE_APP_URL` (base URL of the deployed web/API host, no trailing slash)
 - `MOBILE_OBSERVABILITY_PROVIDER`
 - `MOBILE_SENTRY_DSN` (when using Sentry)
