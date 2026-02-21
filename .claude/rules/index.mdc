@@ -1,8 +1,8 @@
 # Product Rules Index
 
 ## Scope
-- Applies to the rewrite product under `ctf/`.
-- Legacy folders are reference-only during migration.
+- Applies to the rewrite web/Android product under `ctf/`.
+- There is one Legacy folder in this mono-repository (`platform/`) which is for reference-only during its migration to the `ctf/` folder.
 - Governs architecture, coding standards, delivery quality, and compliance.
 
 ## Product Rule Modules
@@ -49,7 +49,7 @@ If two rules conflict, choose the stricter rule and document the decision.
 - Then read directly relevant modules before editing code (architecture, coding, testing/release, and domain-specific rules).
 - When unclear, prefer broader safety/compliance and boundary rules over feature-level rules.
 
-## Platform Contract
+## CTF Contract
 - Build mini-app-first user flows as the baseline UX.
 - Implement capabilities as mini-app commands/actions that execute through policy-controlled interfaces.
 - Keep web and mobile behavior parity through shared contracts and shared compliance controls.
