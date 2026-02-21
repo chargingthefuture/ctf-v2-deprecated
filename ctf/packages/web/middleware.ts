@@ -2,6 +2,22 @@ import type { NextRequest } from "next/server";
 import { clerkMiddleware } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
+const webProvider = process.env.VERCEL === "1" ? "VERCEL" : "RAILWAY";
+
+const requiredProviderEnv = (suffix: string): string => {
+  const key = `${webProvider}_${suffix}`;
+  const value = process.env[key];
+
+  if (!value || !value.trim()) {
+    throw new Error(`${key} is not configured`);
+  }
+
+  return value.trim();
+};
+
+const clerkSecretKey = requiredProviderEnv("CLERK_SECRET_KEY");
+const clerkPublishableKey = requiredProviderEnv("NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY");
+
 const scannerPathPattern =
   /(wp-admin|wp-login|xmlrpc\.php|phpmyadmin|\.env|\.git|cgi-bin|boaform|hnap1|vendor\/phpunit|\.aws|id_rsa|autodiscover|\.svn|\.DS_Store|\.php$|\.asp$|\.aspx$)/i;
 
@@ -19,9 +35,13 @@ const scannerProtectionMiddleware = (request: NextRequest) => {
   return NextResponse.next();
 };
 
-export default clerkMiddleware((auth, request) => {
-  return scannerProtectionMiddleware(request);
-});
+export default clerkMiddleware(
+  (_auth, request) => scannerProtectionMiddleware(request),
+  {
+    secretKey: clerkSecretKey,
+    publishableKey: clerkPublishableKey,
+  },
+);
 
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],

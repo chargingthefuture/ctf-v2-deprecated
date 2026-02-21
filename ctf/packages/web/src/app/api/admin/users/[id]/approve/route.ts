@@ -1,14 +1,15 @@
-import { auth, currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import {
   updateUserApproval,
   upsertAccessUserFromClerk,
 } from "../../../../../../lib/server/accessRepository";
+import { getClerkServerModule } from "../../../../../../lib/server/clerkServer";
 
 export async function PUT(
   request: Request,
   context: { params: Promise<{ id: string }> },
 ) {
+  const { auth, currentUser } = await getClerkServerModule();
   const { userId } = await auth();
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

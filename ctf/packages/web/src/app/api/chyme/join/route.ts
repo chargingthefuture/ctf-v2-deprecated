@@ -1,5 +1,4 @@
 import type { ChymeJoinCallResponse } from "@ctf/shared";
-import { auth, currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { upsertAccessUserFromClerk } from "../../../../lib/server/accessRepository";
 import { chymeRoomId, upsertChymeProfileAndMember } from "../../../../lib/server/chymeRepository";
@@ -7,8 +6,10 @@ import {
   createStreamUserToken,
   provisionStreamUserAndChannel,
 } from "../../../../lib/server/streamServer";
+import { getClerkServerModule } from "../../../../lib/server/clerkServer";
 
 export async function POST() {
+  const { auth, currentUser } = await getClerkServerModule();
   const { userId } = await auth();
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
