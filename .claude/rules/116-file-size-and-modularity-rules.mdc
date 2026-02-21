@@ -8,6 +8,14 @@ Prevent oversized files, reduce refactor risk, and keep implementation units eas
 - Applies to `*.ts`, `*.tsx`, `*.js`, `*.jsx` in `ctf/packages/**`.
 - If a file exceeds 300 lines, split it by responsibility before merge.
 
+## Immediate Refactoring Indicators
+- File is more than 300 lines long.
+- Multiple responsibilities in a single file.
+- Difficulty understanding the file's purpose at a glance.
+- More than 5-7 function/method definitions.
+- Excessive nested conditionals.
+- Multiple import groups with many dependencies.
+
 ## Allowed Exceptions
 - Generated files.
 - Framework/build outputs.
