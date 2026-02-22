@@ -27,6 +27,7 @@
 - [117-agent-readability-and-cost-rules.mdc](117-agent-readability-and-cost-rules.mdc)
 - [118-platform-testing-and-release-rules.mdc](118-platform-testing-and-release-rules.mdc)
 - [119-github-actions-ci-rules.mdc](119-github-actions-ci-rules.mdc)
+- [120-mini-app-feature-inventory-lifecycle-rules.mdc](120-mini-app-feature-inventory-lifecycle-rules.mdc)
 - [200-mini-app-command-contract-templates.mdc](200-mini-app-command-contract-templates.mdc)
 - [201-mini-app-command-schema-template.mdc](201-mini-app-command-schema-template.mdc)
 - [202-mini-app-access-policy-schema-template.mdc](202-mini-app-access-policy-schema-template.mdc)

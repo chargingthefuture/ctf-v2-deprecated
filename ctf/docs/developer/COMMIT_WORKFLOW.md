@@ -26,15 +26,12 @@ git config pull.rebase false
 pnpm commit
 ```
 
-4. Answer the prompt fields:
-  - `type`: choose the change kind (`feat`, `fix`, `docs`, etc.)
+4. Answer the repo custom prompt script fields:
+  - `type`: choose the change kind by number or name (`feat`, `fix`, `docs`, etc.)
   - `summary`: short, clear description (required)
-  - `body` (optional): use compact sections like:
-
-```text
-Why: what problem this change solves
-What: what you changed
-```
+  - `Why` (optional): what problem this change solves
+  - `What` (optional): what you changed
+  - `confirm`: press Enter to create the commit by default, or type `n` to cancel
 
 5. Open a pull request with a semantic title, for example:
   - `feat(chat): add thread summary command`
