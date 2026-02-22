@@ -1,30 +1,45 @@
 # Commit Workflow (Low-Friction)
 
-This guide keeps commit messages standardized with minimal typing.
+Use the interactive prompt to create consistent commit messages quickly, especially in Codespaces or low-end machines.
 
 ## 1) One-time setup
 
 Run from repository root:
 
 ```bash
-git config commit.template .gitmessage.txt
+pnpm install
+```
+
+Optional (recommended if you hit pull strategy warnings):
+
+```bash
 git config pull.rebase false
 ```
 
-This opens a pre-filled template whenever you run `git commit` without `-m`.
-
 ## 2) Recommended daily flow
 
-1. Make small focused commits (message can be short but formatted).
-2. Run quick local checks before commit:
+1. Make a small, focused change.
+2. Stage files (`git add ...`).
+3. Run:
 
-- `pnpm run format:check`
-- `pnpm run filesize:check`
+```bash
+pnpm commit
+```
 
-2. Open a pull request with semantic title, for example:
-   - `feat(chat): add thread summary command`
-   - `fix(mobile): handle offline reconnect`
-3. Use **Squash and merge** so final history is clean even with many incremental commits.
+4. Answer the prompt fields:
+  - `type`: choose the change kind (`feat`, `fix`, `docs`, etc.)
+  - `summary`: short, clear description (required)
+  - `body` (optional): use compact sections like:
+
+```text
+Why: what problem this change solves
+What: what you changed
+```
+
+5. Open a pull request with a semantic title, for example:
+  - `feat(chat): add thread summary command`
+  - `fix(mobile): handle offline reconnect`
+6. Use **Squash and merge** so history stays clean even with frequent incremental commits.
 
 ## 3) Required CI checks
 
@@ -33,8 +48,8 @@ This opens a pre-filled template whenever you run `git commit` without `-m`.
   - `Parity Status: web+android complete`
   - or `Parity Ticket: <issue-or-link>`
 
-## 4) Why this works well on a Chromebook
+## 4) Why this works for lightweight environments
 
-- No heavy local commit tooling required.
-- Most standardization happens via lightweight template + CI validation.
-- You can commit frequently while keeping merge history clean.
+- Prompted commit flow reduces typing and formatting mistakes.
+- No custom local hooks are required to write valid semantic commits.
+- Works well with frequent small commits plus squash merge at PR time.

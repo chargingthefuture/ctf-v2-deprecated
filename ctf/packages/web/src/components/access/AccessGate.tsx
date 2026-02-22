@@ -125,7 +125,8 @@ function AccessGateWithClerk(props: AccessGateProps) {
     try {
       const response = await fetch("/api/account/access-status", { method: "GET" });
       if (!response.ok) {
-        throw new Error("Unable to load access status.");
+        const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+        throw new Error(payload?.error ?? "Unable to load access status.");
       }
 
       const payload = (await response.json()) as AccessUser;

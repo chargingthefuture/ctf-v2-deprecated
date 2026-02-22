@@ -26,13 +26,15 @@ const normalizeHost = (input: string | null | undefined): string | null => {
   return colonIndex > -1 ? first.slice(0, colonIndex) : first;
 };
 
-const getRequiredEnv = (name: string): string => {
-  const value = process.env[name];
-  if (!value || !value.trim()) {
-    throw new Error(`${name} is not configured`);
+const getFirstConfiguredEnv = (names: string[]): { name: string; value: string } => {
+  for (const name of names) {
+    const value = process.env[name];
+    if (value && value.trim()) {
+      return { name, value: value.trim() };
+    }
   }
 
-  return value.trim();
+  throw new Error(`None of these environment variables are configured: ${names.join(", ")}`);
 };
 
 const resolveHostFromHeaders = (reader: HeaderReader): string | null => {
@@ -45,35 +47,53 @@ const resolveHostFromHeaders = (reader: HeaderReader): string | null => {
 };
 
 const resolveHostEnvNames = (host: string | null): {
-  publishableKeyEnv: string;
-  secretKeyEnv: string;
-  signInUrlEnv: string;
+  publishableKeyEnv: string[];
+  secretKeyEnv: string[];
+  signInUrlEnv: string[];
 } => {
   if (!host) {
     throw new Error("Unable to resolve request host for Clerk configuration.");
   }
 
-  if (host === "the-comic.net") {
+  if (host === "the-comic.net" || host === "www.the-comic.net") {
     return {
-      publishableKeyEnv: "VERCEL_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
-      secretKeyEnv: "VERCEL_CLERK_SECRET_KEY",
-      signInUrlEnv: "VERCEL_CLERK_SIGN_IN_URL",
+      publishableKeyEnv: ["VERCEL_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY"],
+      secretKeyEnv: ["VERCEL_CLERK_SECRET_KEY"],
+      signInUrlEnv: ["VERCEL_CLERK_SIGN_IN_URL"],
     };
   }
 
-  if (host === "the-comic.com") {
+  if (host === "the-comic.com" || host === "www.the-comic.com") {
     return {
-      publishableKeyEnv: "RAILWAY_STAGING_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
-      secretKeyEnv: "RAILWAY_STAGING_CLERK_SECRET_KEY",
-      signInUrlEnv: "RAILWAY_STAGING_CLERK_SIGN_IN_URL",
+      publishableKeyEnv: [
+        "RAILWAY_STAGING_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
+        "RAILWAY_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
+      ],
+      secretKeyEnv: [
+        "RAILWAY_STAGING_CLERK_SECRET_KEY",
+        "RAILWAY_CLERK_SECRET_KEY",
+      ],
+      signInUrlEnv: [
+        "RAILWAY_STAGING_CLERK_SIGN_IN_URL",
+        "RAILWAY_CLERK_SIGN_IN_URL",
+      ],
     };
   }
 
-  if (host === "chargingthefuture.com") {
+  if (host === "chargingthefuture.com" || host === "www.chargingthefuture.com") {
     return {
-      publishableKeyEnv: "RAILWAY_PROD_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
-      secretKeyEnv: "RAILWAY_PROD_CLERK_SECRET_KEY",
-      signInUrlEnv: "RAILWAY_PROD_CLERK_SIGN_IN_URL",
+      publishableKeyEnv: [
+        "RAILWAY_PROD_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
+        "RAILWAY_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
+      ],
+      secretKeyEnv: [
+        "RAILWAY_PROD_CLERK_SECRET_KEY",
+        "RAILWAY_CLERK_SECRET_KEY",
+      ],
+      signInUrlEnv: [
+        "RAILWAY_PROD_CLERK_SIGN_IN_URL",
+        "RAILWAY_CLERK_SIGN_IN_URL",
+      ],
     };
   }
 
@@ -83,11 +103,14 @@ const resolveHostEnvNames = (host: string | null): {
 export const resolveClerkRuntimeConfig = (reader: HeaderReader): ClerkRuntimeConfig => {
   const host = resolveHostFromHeaders(reader);
   const envNames = resolveHostEnvNames(host);
+  const publishable = getFirstConfiguredEnv(envNames.publishableKeyEnv);
+  const secret = getFirstConfiguredEnv(envNames.secretKeyEnv);
+  const signInUrl = getFirstConfiguredEnv(envNames.signInUrlEnv);
 
   return {
     host: host ?? "",
-    publishableKey: getRequiredEnv(envNames.publishableKeyEnv),
-    secretKey: getRequiredEnv(envNames.secretKeyEnv),
-    signInUrl: getRequiredEnv(envNames.signInUrlEnv),
+    publishableKey: publishable.value,
+    secretKey: secret.value,
+    signInUrl: signInUrl.value,
   };
 };

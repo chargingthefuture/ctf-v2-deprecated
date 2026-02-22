@@ -1,0 +1,77 @@
+{
+  "name": "chargingthefuture-root",
+  "private": true,
+  "packageManager": "pnpm@9.12.0",
+  "scripts": {
+    "commit": "cz"
+  },
+  "devDependencies": {
+    "commitizen": "^4.3.1",
+    "cz-git": "^1.11.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-git"
+    },
+    "cz-git": {
+      "messages": {
+        "type": "Select the type of change:",
+        "subject": "Write a short summary (required):",
+        "body": "Add details (optional). Prefer sections like Why: and What:.",
+        "confirmCommit": "Commit the changes?"
+      },
+      "types": [
+        {
+          "value": "feat",
+          "name": "feat:     A new feature"
+        },
+        {
+          "value": "fix",
+          "name": "fix:      A bug fix"
+        },
+        {
+          "value": "docs",
+          "name": "docs:     Documentation changes"
+        },
+        {
+          "value": "style",
+          "name": "style:    Code style changes (formatting, whitespace, etc.)"
+        },
+        {
+          "value": "refactor",
+          "name": "refactor: Code changes that neither fix a bug nor add a feature"
+        },
+        {
+          "value": "perf",
+          "name": "perf:     Performance improvements"
+        },
+        {
+          "value": "test",
+          "name": "test:     Adding or updating tests"
+        },
+        {
+          "value": "build",
+          "name": "build:    Build system or dependency changes"
+        },
+        {
+          "value": "ci",
+          "name": "ci:       CI/CD pipeline changes"
+        },
+        {
+          "value": "chore",
+          "name": "chore:    Other maintenance changes"
+        },
+        {
+          "value": "revert",
+          "name": "revert:   Revert a previous commit"
+        }
+      ],
+      "upperCaseSubject": false,
+      "skipQuestions": [
+        "scope",
+        "breaking",
+        "footer"
+      ]
+    }
+  }
+}
