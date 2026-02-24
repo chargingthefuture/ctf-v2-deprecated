@@ -76,7 +76,7 @@ jobs:
           if [ "${{ github.event_name }}" = "push" ] && [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]; then
             bash ctf/scripts/check-schema-drift.sh --ref-range "${{ github.event.before }}...${{ github.sha }}"
           else
-            bash ctf/scripts/check-schema-drift.sh --all
+            bash ctf/scripts/check-schema-drift.sh
           fi
 
   vercel-deploy:
