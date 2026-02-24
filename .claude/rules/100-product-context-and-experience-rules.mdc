@@ -6,7 +6,7 @@ Provide mandatory context so implementation decisions protect users and prevent 
 ## Product Identity
 - Product name: TI Skills Economy.
 - Mission: a psyop-free skills economy designed exclusively for human trafficking survivors.
-- Operating model: single secure account with multiple mini-apps under one cohesive platform.
+- Operating model: single secure account with multiple plugins under one cohesive platform.
 
 ## Non-Negotiable Values
 - Safety First: invite-only access and hardened abuse-prevention controls.
@@ -34,15 +34,15 @@ Provide mandatory context so implementation decisions protect users and prevent 
 - Require explicit confirmation for irreversible actions.
 - Avoid social-pressure mechanics that can coerce disclosure or participation.
 
-## Mini-App Experience Guardrails
-- Mini-apps must inherit shared safety/privacy/accessibility defaults from platform layers.
-- Mini-app commands must degrade safely and fail with clear, non-technical messaging.
+## Plugin Experience Guardrails
+- Plugins must inherit shared safety/privacy/accessibility defaults from platform layers.
+- Plugin commands must degrade safely and fail with clear, non-technical messaging.
 - New features must include impact assessment for user overwhelm and accessibility regressions.
 
 ## Naming Guardrails
 - Do not refer to product features as generic "services" or "plugins".
 - Do not refer to "chat" as a standalone product.
-- Reference chat functionality by mini-app context (for example, "Chyme chat" or `chyme-chat`).
+- Reference chat functionality by plugin context (for example, "Chyme chat" or `chyme-chat`).
 
 ## Prohibited Patterns
 - Dark patterns (forced continuity, deceptive consent, hidden opt-outs).

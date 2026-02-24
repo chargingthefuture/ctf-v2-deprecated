@@ -7,7 +7,7 @@ Define mandatory CI enforcement using GitHub Actions for the rewrite product.
 - All merge and release gates must run through GitHub Actions workflows.
 - Protect default branch with required status checks from GitHub Actions.
 - Require passing checks for lint, type-check, unit tests, integration tests, and security/compliance gates.
-- Run contract validation for mini-app command, access-policy, and audit schemas.
+- Run contract validation for plugin command, access-policy, and audit schemas.
 - Block deployment workflows when any required compliance check fails.
 - Enforce build/test order: `shared` gates pass before `web` and `mobile` gates.
 - Require Android release workflow to publish a signed APK to GitHub Releases.

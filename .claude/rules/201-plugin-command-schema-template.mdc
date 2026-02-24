@@ -1,10 +1,10 @@
-# Mini-App Command Schema Template
+# Plugin Command Schema Template
 
 ## Intent
-Standardize command definitions so mini-app command execution is predictable, safe, and policy-enforceable.
+Standardize command definitions so plugin command execution is predictable, safe, and policy-enforceable.
 
 ## Required Fields
-- `miniAppId`: stable unique mini-app identifier.
+- `pluginId`: stable unique plugin identifier.
 - `command`: stable command name.
 - `version`: semantic contract version.
 - `description`: concise user-facing purpose.
@@ -22,7 +22,7 @@ Standardize command definitions so mini-app command execution is predictable, sa
 
 ## Example Shape
 ```yaml
-miniAppId: chyme
+pluginId: chyme
 command: summarize_thread_mood
 version: 1.0.0
 description: Summarize emotional trend of a thread

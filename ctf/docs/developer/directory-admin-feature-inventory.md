@@ -117,7 +117,7 @@ Evidence:
 
 - `platform/shared/schema/directory/index.ts`
 - `platform/shared/schema/skills/index.ts`
-- `platform/server/storage/mini-apps/directory-storage.ts`
+- `platform/server/storage/plugins/directory-storage.ts`
 
 Dependencies:
 

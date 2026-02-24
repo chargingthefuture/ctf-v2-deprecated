@@ -1,14 +1,14 @@
 # Platform Coding Rules
 
 ## Intent
-Set implementation standards for readability, modularity, and safe feature delivery across Next.js, React Native, and shared mini-app layers.
+Set implementation standards for readability, modularity, and safe feature delivery across Next.js, React Native, and shared plugin layers.
 
 ## Mandatory
 - Keep modules small and focused; one responsibility per component/domain module.
-- Define typed contracts for API inputs/outputs and mini-app command payloads.
+- Define typed contracts for API inputs/outputs and plugin command payloads.
 - Validate all external input at boundaries (API, command bus, webhooks, queues).
 - Use explicit error categories and structured error responses.
-- Prefer configuration-driven behavior over hard-coded branching for mini-app policies.
+- Prefer configuration-driven behavior over hard-coded branching for plugin policies.
 
 ## Code Quality Rules
 - Avoid hidden side effects in shared utilities.

@@ -34,5 +34,5 @@ If two rules conflict, the stricter privacy/security requirement wins.
 
 ## Usage Contract
 - Before shipping any feature, confirm all relevant modules are satisfied.
-- For new mini-app capabilities (including messaging modules such as Chyme chat), apply baseline plus mini-app command overlays.
+- For new plugin capabilities (including messaging modules such as Chyme chat), apply baseline plus plugin command overlays.
 - Missing policy metadata, legal basis, retention class, or audit path is a release blocker.

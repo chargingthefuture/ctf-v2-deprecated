@@ -1,20 +1,20 @@
-# GentlePulse Mini-App Feature Inventory (Legacy Reference)
+# GentlePulse Plugin Feature Inventory (Legacy Reference)
 
 ## Scope
 - Source analyzed (reference-only): `platform/`
 - Rewrite target: `ctf/`
-- Mini-app name to retain: `GentlePulse`
+- Plugin name to retain: `GentlePulse`
 - Guardrail honored: no edits in `platform/` (per `.claude/rules/index.mdc` and `099-agent-scope-guardrails.mdc`)
 
 ---
 
 ## Executive Summary
-`GentlePulse` is a meditation library mini-app centered on anonymous usage patterns via client-scoped identifiers (not user profile identity). Core behavior includes:
+`GentlePulse` is a meditation library plugin centered on anonymous usage patterns via client-scoped identifiers (not user profile identity). Core behavior includes:
 - meditation browsing with sorting/tag filters,
 - play tracking,
 - anonymous ratings and favorites,
 - in-app announcements,
-- mood-check integration (from Mood mini-app endpoints),
+- mood-check integration (from Mood plugin endpoints),
 - accessibility personalization settings,
 - admin-facing meditation and announcement management UIs.
 
@@ -117,11 +117,11 @@ Implemented model:
 4. Ratings endpoint exposes only aggregate average/count in read endpoint.
 
 Note:
-- UI routes are protected (`/apps/gentlepulse/*` in `mini-app-routes.tsx`), but primary GentlePulse APIs are implemented as public/anonymous handlers. This is a design mismatch to resolve in ctf.
+- UI routes are protected (`/apps/gentlepulse/*` in `plugin-routes.tsx`), but primary GentlePulse APIs are implemented as public/anonymous handlers. This is a design mismatch to resolve in ctf.
 
 ---
 
-## 3) Mood Mini-App Integration Used by GentlePulse
+## 3) Mood Plugin Integration Used by GentlePulse
 
 Evidence:
 - `platform/client/src/pages/gentlepulse/library.tsx`
@@ -142,7 +142,7 @@ Features used by GentlePulse:
 ### 4.1 Admin Navigation and Surfaces
 Evidence:
 - `platform/client/src/pages/gentlepulse/admin.tsx`
-- `platform/client/src/routes/mini-app-routes.tsx`
+- `platform/client/src/routes/plugin-routes.tsx`
 
 Features:
 1. Admin route: `/apps/gentlepulse/admin`.
@@ -212,7 +212,7 @@ Observed implementation notes:
 
 Evidence:
 - `platform/shared/schema/gentlepulse/index.ts`
-- `platform/server/storage/mini-apps/gentlepulse-storage.ts`
+- `platform/server/storage/plugins/gentlepulse-storage.ts`
 - `platform/schema.sql`
 
 ### 6.1 Meditations
@@ -254,7 +254,7 @@ Storage behaviors:
 
 ## 7) Route Inventory (Client)
 
-Evidence: `platform/client/src/routes/mini-app-routes.tsx`
+Evidence: `platform/client/src/routes/plugin-routes.tsx`
 
 Authenticated UI routes:
 1. `/apps/gentlepulse` (library)
@@ -270,14 +270,14 @@ Authenticated UI routes:
 
 Evidence:
 - `platform/scripts/seedGentlePulse.ts`
-- `platform/scripts/seedAllMiniApps.ts`
+- `platform/scripts/seedAllPlugins.ts`
 
 Seeded scope:
 1. Meditation catalog entries with tags/duration/order.
 2. Anonymous sample ratings.
 3. Anonymous sample favorites.
 4. GentlePulse announcements.
-5. Included in aggregate mini-app seeding script.
+5. Included in aggregate plugin seeding script.
 
 ---
 
@@ -319,14 +319,14 @@ Signals:
 
 5. **Mood integration boundary**
    - GentlePulse depends on Mood endpoints for check-in behavior.
-   - Define whether ctf keeps this cross-mini-app integration or encapsulates it within GentlePulse contracts.
+   - Define whether ctf keeps this cross-plugin integration or encapsulates it within GentlePulse contracts.
 
 ---
 
 ## 11) Rewrite Guidance for ctf
 
 Per `.claude/rules/index.mdc` contract, recommended rewrite baseline for feature parity:
-1. Keep mini-app name `GentlePulse`.
+1. Keep plugin name `GentlePulse`.
 2. Preserve meditation library interactions:
    - sort/tag filtering,
    - favorites-only mode,
@@ -345,7 +345,7 @@ Per `.claude/rules/index.mdc` contract, recommended rewrite baseline for feature
 ### Server
 - `platform/server/routes/gentlepulse.routes.ts`
 - `platform/server/routes/mood.routes.ts`
-- `platform/server/storage/mini-apps/gentlepulse-storage.ts`
+- `platform/server/storage/plugins/gentlepulse-storage.ts`
 - `platform/server/storage/types/gentlepulse-storage.interface.ts`
 
 ### Shared/Data
@@ -364,12 +364,12 @@ Per `.claude/rules/index.mdc` contract, recommended rewrite baseline for feature
 - `platform/client/src/components/gentlepulse/desktop-nav.tsx`
 - `platform/client/src/components/mood/mood-check-dialog.tsx`
 - `platform/client/src/hooks/useClientId.ts`
-- `platform/client/src/routes/mini-app-routes.tsx`
+- `platform/client/src/routes/plugin-routes.tsx`
 - `platform/client/src/index.css`
 
 ### Scripts/Tests
 - `platform/scripts/seedGentlePulse.ts`
-- `platform/scripts/seedAllMiniApps.ts`
+- `platform/scripts/seedAllPlugins.ts`
 - `platform/test/api/gentlepulse.test.ts`
 - `platform/test/e2e/gentlepulse.spec.ts`
 - `platform/test/TEST_COVERAGE.md`

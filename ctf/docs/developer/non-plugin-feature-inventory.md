@@ -1,18 +1,18 @@
-# Platform Non-Mini-App Feature Inventory (Legacy Reference)
+# Platform Non-Plugin Feature Inventory (Legacy Reference)
 
 ## Scope
 
 - **Source analyzed (reference-only):** `platform/`
 - **Rewrite target:** `ctf/`
-- **Surface inventoried:** cross-cutting platform features and shared APIs (non-mini-app)
+- **Surface inventoried:** cross-cutting platform features and shared APIs (non-plugin)
 - **Write boundary observed:** no edits in `platform/` (per `.claude/rules/index.mdc` and `099-agent-scope-guardrails.mdc`)
-- **Inclusion rule used:** include shared/global capabilities even when consumed by mini-apps; exclude mini-app-specific feature bodies already covered by mini-app inventories.
+- **Inclusion rule used:** include shared/global capabilities even when consumed by plugins; exclude plugin-specific feature bodies already covered by plugin inventories.
 
 ---
 
 ## Executive Summary
 
-Legacy `platform/` includes a substantial non-mini-app foundation that spans:
+Legacy `platform/` includes a substantial non-plugin foundation that spans:
 
 - global route shell and access control,
 - authentication/account lifecycle,
@@ -31,15 +31,15 @@ This inventory consolidates those features so rewrite planning can explicitly ch
 
 Evidence:
 
-- `platform/client/src/routes/mini-app-routes.tsx`
+- `platform/client/src/routes/plugin-routes.tsx`
 - `platform/client/src/routes/index.tsx`
 - `platform/server/routes/index.ts`
 
 Classification used:
 
-1. **Mini-app scope** = route/functionality under `/apps/{mini-app}` and mini-app-specific storage/routes/pages.
-2. **Non-mini-app scope** = platform shell, identity/access lifecycle, global admin, shared APIs/contracts, security/compliance layers, and runtime/ops.
-3. Mini-app code is referenced only when it proves cross-app shared behavior.
+1. **Plugin scope** = route/functionality under `/apps/{plugin}` and plugin-specific storage/routes/pages.
+2. **Non-plugin scope** = platform shell, identity/access lifecycle, global admin, shared APIs/contracts, security/compliance layers, and runtime/ops.
+3. Plugin code is referenced only when it proves cross-app shared behavior.
 
 ---
 
@@ -56,7 +56,7 @@ Evidence:
 
 Features:
 
-1. Split route model: public, protected, admin, mini-app route groups.
+1. Split route model: public, protected, admin, plugin route groups.
 2. Root route behavior toggles between landing and authenticated home shell.
 3. Conditional 404 strategy for unmatched client routes.
 4. Route-base allowlist pattern to avoid false 404 in shell composition.
@@ -103,7 +103,7 @@ Features:
 
 ---
 
-## 4) Global Admin Core (Non Mini-App Admin)
+## 4) Global Admin Core (Non Plugin Admin)
 
 Evidence:
 
@@ -151,7 +151,7 @@ Features:
 2. Admin CRUD for sectors.
 3. Admin CRUD for job titles.
 4. Admin CRUD for skills.
-5. Reused by multiple mini-app selectors and admin tooling.
+5. Reused by multiple plugin selectors and admin tooling.
 
 ### 5.2 Generic Messaging Surface (Legacy)
 
@@ -164,7 +164,7 @@ Features:
 
 1. Message create (`POST /api/chat/messages`).
 2. Message read (`GET /api/chat/messages`).
-3. Shared chat schema contract used outside a single mini-app namespace.
+3. Shared chat schema contract used outside a single plugin namespace.
 
 ### 5.3 Shared Storage Composition
 
@@ -199,7 +199,7 @@ Features:
 1. Central hook (`useExternalLink`) normalizes opening links in a controlled dialog flow.
 2. Dialog presents URL preview, cancel/open actions, and clipboard copy action.
 3. Internal-vs-external detection affects warning copy but still enforces deliberate open flow.
-4. Pattern reused broadly across shell/admin/page components (and within mini-app pages), making it a platform-level UX primitive suitable for ctf rewrite.
+4. Pattern reused broadly across shell/admin/page components (and within plugin pages), making it a platform-level UX primitive suitable for ctf rewrite.
 5. Dedicated hook tests exist in legacy test suite.
 
 ---
@@ -240,11 +240,11 @@ Features:
 
 1. Sentry initialization with environment/release metadata.
 2. Console capture and breadcrumb/error forwarding into Sentry.
-3. Health endpoint matrix including app-level and mini-app-specific health checks:
+3. Health endpoint matrix including app-level and plugin-specific health checks:
    - `GET /api/health`
    - `GET /api/health/all`
    - `GET /api/health/database`
-   - mini-app health endpoints under `/api/health/*`
+   - plugin health endpoints under `/api/health/*`
 4. Health check limiter support.
 5. Unhandled rejection and uncaught exception capture path in server bootstrap.
 
@@ -272,7 +272,7 @@ Features:
 
 ---
 
-## 10) API Surface (Non-Mini-App Consolidated)
+## 10) API Surface (Non-Plugin Consolidated)
 
 ### 10.1 Identity and Account
 
@@ -315,7 +315,7 @@ Features:
 - `GET /api/health`
 - `GET /api/health/all`
 - `GET /api/health/database`
-- `GET /api/health/{mini-app-slug}` (existing legacy health matrix)
+- `GET /api/health/{plugin-slug}` (existing legacy health matrix)
 
 ---
 
@@ -347,7 +347,7 @@ This section explicitly separates direct evidence from inferred risks.
    - `platform/server/index.ts` maps `VITE_CLERK_PUBLISHABLE_KEY` into `CLERK_PUBLISHABLE_KEY` at runtime as a defensive fallback; rewrite should formalize env contract.
 
 2. **Policy drift risk for chat naming/positioning**
-   - Legacy exposes generic `/api/chat/*` while ctf product rules require mini-app contextualized chat framing.
+   - Legacy exposes generic `/api/chat/*` while ctf product rules require plugin contextualized chat framing.
 
 3. **Test confidence gap for release readiness**
    - Combined disabled e2e default and high skip density implies limited confidence from automated end-to-end coverage.
@@ -357,10 +357,10 @@ This section explicitly separates direct evidence from inferred risks.
 ## 12) Ambiguities and Rewrite Decisions Needed
 
 1. **Generic chat route strategy**
-   - Keep as shared API, or split/reframe strictly by mini-app context in ctf contracts?
+   - Keep as shared API, or split/reframe strictly by plugin context in ctf contracts?
 
 2. **Skills service ownership model**
-   - Keep one global taxonomy service, or derive mini-app bounded projections with explicit ownership?
+   - Keep one global taxonomy service, or derive plugin bounded projections with explicit ownership?
 
 3. **Global admin scope in ctf**
    - Preserve all legacy global admin panels vs. reduce to minimal operational set for MVP.
@@ -375,7 +375,7 @@ This section explicitly separates direct evidence from inferred risks.
 
 ## 13) Rewrite Decision Matrix (Planning Aid)
 
-Use this matrix to choose retention strategy for each non-mini-app capability cluster.
+Use this matrix to choose retention strategy for each non-plugin capability cluster.
 
 | Capability Cluster | Current Legacy Status | Suggested ctf Decision Options |
 | --- | --- | --- |
@@ -383,7 +383,7 @@ Use this matrix to choose retention strategy for each non-mini-app capability cl
 | Auth/account lifecycle | Implemented with Clerk coupling | Keep, formalize env + contract boundaries |
 | Global admin core | Implemented, broad scope | Keep core subset first, phase advanced panels |
 | Shared skills service | Implemented, heavily reused | Keep as shared service with explicit contract versioning |
-| Generic chat API | Implemented but naming tension vs ctf rule | Reframe by mini-app context or decompose |
+| Generic chat API | Implemented but naming tension vs ctf rule | Reframe by plugin context or decompose |
 | External-link safety UX (`useExternalLink`) | Implemented and broadly reused | Keep/rebuild as shared primitive across web/mobile |
 | Security middleware stack | Implemented and layered | Keep baseline; verify parity in Next/Expo architecture |
 | Sentry + health operations | Implemented | Keep baseline with clearer SLO-driven ownership |

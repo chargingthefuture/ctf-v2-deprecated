@@ -122,7 +122,7 @@ Dependencies:
 1. `users` (new users, totals, verification/approval stats)
 2. `payments` (weekly revenue, MRR/ARR, churn, CLV)
 3. `loginEvents` (DAU/MAU calculations)
-4. Default Alive/Dead EBITDA snapshot via composed storage mini-app adapter
+4. Default Alive/Dead EBITDA snapshot via composed storage plugin adapter
 
 ---
 

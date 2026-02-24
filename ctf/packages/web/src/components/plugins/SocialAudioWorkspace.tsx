@@ -119,7 +119,7 @@ export function SocialAudioWorkspace(props: SocialAudioWorkspaceProps) {
     <div className="workspace">
       <header className="workspace-header">
         <div>
-          <p className="workspace-service-tag">Mini-App: Chyme</p>
+          <p className="workspace-service-tag">Plugin: Chyme</p>
           <h2>Chyme Social Audio Room</h2>
           <p className="workspace-subtitle">Simple clubhouse-style audio with low distraction.</p>
         </div>

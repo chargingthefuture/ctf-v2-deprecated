@@ -13,7 +13,7 @@ Ensure compliance controls are demonstrable through durable evidence artifacts.
 
 ## Operational Rules
 - Evidence artifacts must have owner, timestamp, and retention policy.
-- Evidence must be discoverable by mini-app/command surface and release version.
+- Evidence must be discoverable by plugin/command surface and release version.
 
 ## Release Blockers
 - Missing evidence for any required control domain.

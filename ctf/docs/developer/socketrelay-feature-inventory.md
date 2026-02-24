@@ -1,17 +1,17 @@
-# SocketRelay Mini-App Feature Inventory (Legacy Reference)
+# SocketRelay Plugin Feature Inventory (Legacy Reference)
 
 ## Scope
 
 - Source analyzed (reference-only): `platform/`
 - Rewrite target: `ctf/`
-- Mini-app name to retain: `SocketRelay`
+- Plugin name to retain: `SocketRelay`
 - Guardrail honored: no edits in `platform/`
 
 ---
 
 ## Executive Summary
 
-`SocketRelay` is a request-and-fulfillment mini-app with:
+`SocketRelay` is a request-and-fulfillment plugin with:
 
 - authenticated profile CRUD,
 - request lifecycle management,
@@ -207,7 +207,7 @@ Features:
 Evidence:
 
 - `platform/shared/schema/socketrelay/index.ts`
-- `platform/server/storage/mini-apps/socketrelay-storage.ts`
+- `platform/server/storage/plugins/socketrelay-storage.ts`
 - `platform/schema.sql`
 
 Core entities:
@@ -249,7 +249,7 @@ Implemented controls:
 
 Evidence:
 
-- `platform/client/src/routes/mini-app-routes.tsx`
+- `platform/client/src/routes/plugin-routes.tsx`
 - `platform/client/src/routes/public-routes.tsx`
 
 Protected routes:
@@ -307,6 +307,6 @@ Before implementing ctf SocketRelay, lock these decisions:
 
 1. Canonical schema source of truth across shared schema, SQL migrations, and seed payloads.
 2. Public response DTO privacy contract (field-level projection).
-3. Module ownership boundaries (SocketRelay-only routes vs cross-mini-app route placement).
+3. Module ownership boundaries (SocketRelay-only routes vs cross-plugin route placement).
 4. Test strategy uplift from mock-shape assertions to contract/integration confidence.
 5. CSRF policy baseline for state-changing endpoints.

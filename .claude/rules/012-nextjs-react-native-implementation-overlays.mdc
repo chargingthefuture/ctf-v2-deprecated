@@ -13,7 +13,7 @@ Apply baseline controls consistently to rewrite targets: Next.js web and React N
 - Avoid PHI/personal data in device logs, crash payloads, and analytics events.
 - Require certificate pinning strategy and secure network configuration for production.
 
-## Mini-App Command Overlay
-- Every mini-app command/action must declare data access scope, purpose, and retention class.
-- Mini-app command execution must go through centralized policy enforcement and audit hooks.
-- Disable mini-app command execution when consent/policy prerequisites are not met.
+## Plugin Command Overlay
+- Every plugin command/action must declare data access scope, purpose, and retention class.
+- Plugin command execution must go through centralized policy enforcement and audit hooks.
+- Disable plugin command execution when consent/policy prerequisites are not met.

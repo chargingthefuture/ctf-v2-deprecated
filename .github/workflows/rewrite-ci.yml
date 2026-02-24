@@ -51,10 +51,10 @@ jobs:
             ".claude/rules/109-sentry-implementation-rules.mdc"
             ".claude/rules/110-stream-maker-tier-rules.mdc"
             ".claude/rules/111-deployment-topology-rules.mdc"
-            ".claude/rules/200-mini-app-command-contract-templates.mdc"
-            ".claude/rules/201-mini-app-command-schema-template.mdc"
-            ".claude/rules/202-mini-app-access-policy-schema-template.mdc"
-            ".claude/rules/203-mini-app-audit-schema-template.mdc"
+            ".claude/rules/200-plugin-command-contract-templates.mdc"
+            ".claude/rules/201-plugin-command-schema-template.mdc"
+            ".claude/rules/202-plugin-access-policy-schema-template.mdc"
+            ".claude/rules/203-plugin-audit-schema-template.mdc"
           )
 
           for file in "${required[@]}"; do
@@ -64,8 +64,8 @@ jobs:
             fi
           done
 
-  mini-app-contract-templates:
-    name: Mini-App Contract Templates
+  plugin-contract-templates:
+    name: Plugin Contract Templates
     runs-on: ubuntu-latest
     needs: rules-integrity
     steps:
@@ -76,12 +76,12 @@ jobs:
         run: |
           set -euo pipefail
 
-          grep -q "miniAppId" .claude/rules/201-mini-app-command-schema-template.mdc
-          grep -q "inputSchema" .claude/rules/201-mini-app-command-schema-template.mdc
-          grep -q "requiredRoles" .claude/rules/202-mini-app-access-policy-schema-template.mdc
-          grep -q "consentRequirements" .claude/rules/202-mini-app-access-policy-schema-template.mdc
-          grep -q "eventId" .claude/rules/203-mini-app-audit-schema-template.mdc
-          grep -q "policyDecision" .claude/rules/203-mini-app-audit-schema-template.mdc
+          grep -q "pluginId" .claude/rules/201-plugin-command-schema-template.mdc
+          grep -q "inputSchema" .claude/rules/201-plugin-command-schema-template.mdc
+          grep -q "requiredRoles" .claude/rules/202-plugin-access-policy-schema-template.mdc
+          grep -q "consentRequirements" .claude/rules/202-plugin-access-policy-schema-template.mdc
+          grep -q "eventId" .claude/rules/203-plugin-audit-schema-template.mdc
+          grep -q "policyDecision" .claude/rules/203-plugin-audit-schema-template.mdc
 
   rules-link-coverage:
     name: Rules Link Coverage
@@ -284,7 +284,7 @@ jobs:
     name: Rewrite Quality Gates
     runs-on: ubuntu-latest
     needs:
-      - mini-app-contract-templates
+      - plugin-contract-templates
       - rules-link-coverage
       - formatting-eof
       - file-size-budget
@@ -294,7 +294,7 @@ jobs:
       - pr-parity-status
     if: |
       always() &&
-      needs.mini-app-contract-templates.result == 'success' &&
+      needs.plugin-contract-templates.result == 'success' &&
       needs.rules-link-coverage.result == 'success' &&
       needs.formatting-eof.result == 'success' &&
       needs.file-size-budget.result == 'success' &&

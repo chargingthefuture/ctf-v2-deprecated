@@ -5,7 +5,7 @@ Require traceable mapping from each data field to purpose and legal authority.
 
 ## Mandatory
 - Tag each personal/health data field with: category, sensitivity, purpose, legal basis, source, retention class, owner.
-- Maintain machine-readable processing records for each mini-app and mini-app command surface.
+- Maintain machine-readable processing records for each plugin and plugin command surface.
 - Enforce data minimization at schema and API boundaries.
 - For high-risk processing, complete DPIA before release.
 

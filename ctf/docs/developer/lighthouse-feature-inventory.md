@@ -1,17 +1,17 @@
-# LightHouse Mini-App Feature Inventory (Legacy Reference)
+# LightHouse Plugin Feature Inventory (Legacy Reference)
 
 ## Scope
 
 - Source analyzed (reference-only): `platform/`
 - Rewrite target: `ctf/`
-- Mini-app name to retain: `LightHouse`
+- Plugin name to retain: `LightHouse`
 - Guardrail honored: no edits in `platform/`
 
 ---
 
 ## Executive Summary
 
-`LightHouse` is a housing coordination mini-app for survivors and hosts. It includes:
+`LightHouse` is a housing coordination plugin for survivors and hosts. It includes:
 
 - authenticated profile management for seekers and hosts,
 - host property listing management,
@@ -123,7 +123,7 @@ Evidence:
 
 - `platform/client/src/pages/lighthouse/matches.tsx`
 - `platform/server/routes/lighthouse/lighthouse-match.routes.ts`
-- `platform/server/storage/mini-apps/lighthouse-storage.ts`
+- `platform/server/storage/plugins/lighthouse-storage.ts`
 
 Features:
 
@@ -264,7 +264,7 @@ Features:
 Evidence:
 
 - `platform/shared/schema/lighthouse/index.ts`
-- `platform/server/storage/mini-apps/lighthouse-storage.ts`
+- `platform/server/storage/plugins/lighthouse-storage.ts`
 - `platform/schema.sql`
 
 Core entities:
@@ -312,7 +312,7 @@ Observed note:
 
 Evidence:
 
-- `platform/client/src/routes/mini-app-routes.tsx`
+- `platform/client/src/routes/plugin-routes.tsx`
 
 Discovered app routes:
 

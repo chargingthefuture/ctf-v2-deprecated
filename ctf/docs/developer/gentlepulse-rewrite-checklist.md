@@ -5,7 +5,7 @@
   - Acceptance criteria:
     - Decision note links each retained behavior to a ctf contract or task.
     - No implementation task points to editing platform code.
-- [ ] Freeze mini-app scope for v1 parity.
+- [ ] Freeze plugin scope for v1 parity.
   - Acceptance criteria:
     - Included: library browse, sort/tag filter, favorites, ratings, play tracking, announcements, settings, support, admin management, mood check trigger.
     - Excluded (unless approved): net-new features, redesign-only changes, non-critical analytics additions.

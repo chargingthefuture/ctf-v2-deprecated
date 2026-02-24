@@ -1,6 +1,6 @@
 # Chyme First Test Pass
 
-This checklist validates Chyme before adding new mini-apps.
+This checklist validates Chyme before adding new plugins.
 
 ## 0) Prerequisites
 

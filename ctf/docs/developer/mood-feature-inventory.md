@@ -1,17 +1,17 @@
-# Mood Mini-App Feature Inventory (Legacy Reference)
+# Mood Plugin Feature Inventory (Legacy Reference)
 
 ## Scope
 
 - Source analyzed (reference-only): `platform/`
 - Rewrite target: `ctf/`
-- Mini-app name to retain: `Mood`
+- Plugin name to retain: `Mood`
 - Guardrail honored: no edits in `platform/`
 
 ---
 
 ## Executive Summary
 
-`Mood` is a lightweight anonymous mood-check mini-app with:
+`Mood` is a lightweight anonymous mood-check plugin with:
 
 - anonymous mood check capture,
 - eligibility gating (once every 7 days),
@@ -80,7 +80,7 @@ Note:
 Evidence:
 
 - `platform/client/src/pages/mood/admin.tsx`
-- `platform/client/src/routes/mini-app-routes.tsx`
+- `platform/client/src/routes/plugin-routes.tsx`
 
 Features:
 
@@ -133,7 +133,7 @@ Features:
 Evidence:
 
 - `platform/shared/schema/mood/index.ts`
-- `platform/server/storage/mini-apps/mood-storage.ts`
+- `platform/server/storage/plugins/mood-storage.ts`
 - `platform/schema.sql`
 
 Entities:
@@ -155,7 +155,7 @@ Evidence:
 
 - `platform/server/routes/mood.routes.ts`
 - `platform/server/rateLimiter.ts`
-- `platform/client/src/routes/mini-app-routes.tsx`
+- `platform/client/src/routes/plugin-routes.tsx`
 
 Implemented controls:
 
@@ -174,7 +174,7 @@ Observed policy gap:
 
 Evidence:
 
-- `platform/client/src/routes/mini-app-routes.tsx`
+- `platform/client/src/routes/plugin-routes.tsx`
 
 Discovered routes:
 
@@ -183,7 +183,7 @@ Discovered routes:
 3. `/apps/mood/admin`
 4. `/apps/mood/admin/announcements`
 
-Cross-mini-app usage:
+Cross-plugin usage:
 
 1. Mood check dialog is invoked in GentlePulse (`/apps/gentlepulse`).
 
@@ -194,13 +194,13 @@ Cross-mini-app usage:
 Evidence:
 
 - `platform/scripts/seedMood.ts`
-- `platform/scripts/seedAllMiniApps.ts`
+- `platform/scripts/seedAllPlugins.ts`
 - `platform/test/`
 
 Observed:
 
 1. Dedicated mood seed script exists (`seedMood.ts`).
-2. `seedAllMiniApps.ts` does not include `seedMood.ts` in the master list.
+2. `seedAllPlugins.ts` does not include `seedMood.ts` in the master list.
 3. No dedicated mood API/e2e test files were found under `platform/test`.
 
 ---
@@ -214,7 +214,7 @@ Observed:
 3. **Analytics surface appears scaffolded/incomplete:**
    - “Mood Analytics” admin page presents high-level copy and link-outs, but no real analytics API wiring.
 4. **Coverage gap risk:**
-   - Mood mini-app has no dedicated API/E2E test files discovered.
+   - Mood plugin has no dedicated API/E2E test files discovered.
 5. **Seed workflow gap:**
    - Mood seed exists but is excluded from master seed script, reducing parity confidence in shared seed workflows.
 6. **Privacy-contract ambiguity:**

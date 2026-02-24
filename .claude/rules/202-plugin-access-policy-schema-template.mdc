@@ -1,10 +1,10 @@
-# Mini-App Access Policy Schema Template
+# Plugin Access Policy Schema Template
 
 ## Intent
-Define explicit authorization, consent, and policy requirements per mini-app command.
+Define explicit authorization, consent, and policy requirements per plugin command.
 
 ## Required Fields
-- `miniAppId`
+- `pluginId`
 - `command`
 - `version`
 - `requiredRoles`: RBAC requirements.
@@ -21,7 +21,7 @@ Define explicit authorization, consent, and policy requirements per mini-app com
 
 ## Example Shape
 ```yaml
-miniAppId: chyme
+pluginId: chyme
 command: summarize_thread_mood
 version: 1.0.0
 requiredRoles:

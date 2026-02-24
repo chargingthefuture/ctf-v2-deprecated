@@ -14,7 +14,7 @@ Standardize `packages/mobile` for React Native with Android production focus.
 - Keep architecture modular so high-load paths can be replaced with native modules without large rewrites.
 
 ## Performance Rules
-- Use optimized list rendering patterns for mini-app conversation timelines (including Chyme chat) (`FlatList` tuning or equivalent virtualization strategy).
+- Use optimized list rendering patterns for plugin conversation timelines (including Chyme chat) (`FlatList` tuning or equivalent virtualization strategy).
 - Keep message row components lightweight and avoid expensive re-renders in long conversation threads.
 - Apply throttling/debouncing and interval controls for realtime updates to protect JS thread performance.
 

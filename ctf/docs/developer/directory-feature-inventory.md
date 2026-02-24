@@ -1,17 +1,17 @@
-# Directory Mini-App Feature Inventory (Legacy Reference)
+# Directory Plugin Feature Inventory (Legacy Reference)
 
 ## Scope
 
 - **Source analyzed (reference-only):** `platform/`
 - **Rewrite target:** `ctf/`
-- **Mini-app name to retain:** `Directory`
+- **Plugin name to retain:** `Directory`
 - **Write boundary observed:** no edits in `platform/` (per `.claude/rules/index.mdc` and `099-agent-scope-guardrails.mdc`)
 
 ---
 
 ## Executive Summary
 
-`Directory` is a profile-and-discovery mini-app for skill exchange. It supports:
+`Directory` is a profile-and-discovery plugin for skill exchange. It supports:
 
 - authenticated profile CRUD,
 - public profile discovery,
@@ -286,7 +286,7 @@ Features:
 Evidence:
 
 - `platform/shared/schema/directory/index.ts`
-- `platform/server/storage/mini-apps/directory-storage.ts`
+- `platform/server/storage/plugins/directory-storage.ts`
 - `platform/schema.sql`
 
 ### 5.1 Directory Profile Fields
@@ -320,13 +320,13 @@ Evidence:
 
 - `platform/scripts/seedDirectory.ts`
 - `platform/scripts/backfillDirectoryCoordinates.ts`
-- `platform/scripts/seedAllMiniApps.ts`
+- `platform/scripts/seedAllPlugins.ts`
 
 Features:
 
 1. Directory seed script for profiles, skills table, and announcements.
 2. Coordinates backfill script for existing profiles lacking lat/long.
-3. Multi-mini-app seeding includes Directory.
+3. Multi-plugin seeding includes Directory.
 
 ---
 
@@ -334,7 +334,7 @@ Features:
 
 ### 7.1 Authenticated UI Routes
 
-Evidence: `platform/client/src/routes/mini-app-routes.tsx`
+Evidence: `platform/client/src/routes/plugin-routes.tsx`
 
 - `/apps/directory`
 - `/apps/directory/profile`
@@ -402,7 +402,7 @@ Covered/indicated behaviors:
 
 Per `.claude/rules/index.mdc`:
 
-1. Keep `Directory` as mini-app-first flow with shared contracts and web/mobile parity.
+1. Keep `Directory` as plugin-first flow with shared contracts and web/mobile parity.
 2. Treat `platform/` behavior as reference baseline, not direct copy target.
 3. Re-implement with explicit command/policy contracts under ctf architecture.
 4. Preserve core functional parity:
@@ -426,7 +426,7 @@ Per `.claude/rules/index.mdc`:
 - `platform/server/rateLimiter.ts`
 - `platform/server/antiScraping.ts`
 - `platform/server/dataObfuscation.ts`
-- `platform/server/storage/mini-apps/directory-storage.ts`
+- `platform/server/storage/plugins/directory-storage.ts`
 
 ### Shared/Data
 
@@ -449,14 +449,14 @@ Per `.claude/rules/index.mdc`:
 - `platform/client/src/pages/directory/admin/components/DirectoryAdminJobTitlesSelector.tsx`
 - `platform/client/src/pages/directory/admin/hooks/useDirectoryAdminProfiles.ts`
 - `platform/client/src/pages/directory/admin/hooks/useDirectoryAdminSkills.ts`
-- `platform/client/src/routes/mini-app-routes.tsx`
+- `platform/client/src/routes/plugin-routes.tsx`
 - `platform/client/src/routes/public-routes.tsx`
 
 ### Scripts/Tests/Guides
 
 - `platform/scripts/seedDirectory.ts`
 - `platform/scripts/backfillDirectoryCoordinates.ts`
-- `platform/scripts/seedAllMiniApps.ts`
+- `platform/scripts/seedAllPlugins.ts`
 - `platform/test/api/directory.test.ts`
 - `platform/test/e2e/directory.spec.ts`
 - `platform/test/client/pages/directory/profile.test.tsx`

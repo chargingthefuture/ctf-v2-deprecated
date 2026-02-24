@@ -1,25 +1,25 @@
-# Mini-App Profile and Deletion Contract Template
+# Plugin Profile and Deletion Contract Template
 
-Use this for every new mini-app (for example Chyme, Transport, Stays).
+Use this for every new plugin (for example Chyme, Transport, Stays).
 
-## 1) Mini-App Metadata
+## 1) Plugin Metadata
 
-- Mini-App Name:
+- Plugin Name:
 - Service Key (lowercase, stable):
 - Owner Team:
 - Rollout Stage:
 
 ## 2) Canonical Profile Usage
 
-List only canonical fields consumed (read/write) by this mini-app.
+List only canonical fields consumed (read/write) by this plugin.
 
 - Read fields:
 - Write fields:
 - Why canonical fields are needed:
 
-## 3) Mini-App Extension Fields
+## 3) Plugin Extension Fields
 
-Define the extension fields added by this mini-app (not global identity fields).
+Define the extension fields added by this plugin (not global identity fields).
 
 - Storage location (table or json path):
 - Fields:
@@ -28,9 +28,9 @@ Define the extension fields added by this mini-app (not global identity fields).
   - nullable/default:
   - purpose:
 
-## 4) Domain Data Owned by Mini-App
+## 4) Domain Data Owned by Plugin
 
-List transactional/domain tables owned by this mini-app.
+List transactional/domain tables owned by this plugin.
 
 - Table/entity:
 - Contains personal data? (yes/no):
@@ -39,7 +39,7 @@ List transactional/domain tables owned by this mini-app.
 
 ## 5) Service-Scoped Deletion Contract
 
-When user deletes this mini-app usage only:
+When user deletes this plugin usage only:
 
 - Delete immediately:
 - Anonymize/pseudonymize:
@@ -57,7 +57,7 @@ When user requests full account deletion:
 
 ## 7) Rejoin/Re-enable Behavior
 
-If user returns to this mini-app after service-scoped deletion:
+If user returns to this plugin after service-scoped deletion:
 
 - Recreated defaults:
 - Data that is not restored:

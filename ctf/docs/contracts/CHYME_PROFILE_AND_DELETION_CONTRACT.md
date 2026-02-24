@@ -2,9 +2,9 @@
 
 This is the first completed draft using `MINI_APP_PROFILE_AND_DELETION_CONTRACT_TEMPLATE.md`.
 
-## 1) Mini-App Metadata
+## 1) Plugin Metadata
 
-- Mini-App Name: Chyme
+- Plugin Name: Chyme
 - Service Key (lowercase, stable): `chyme`
 - Owner Team: TBD
 - Rollout Stage: MVP (internal/private)
@@ -20,9 +20,9 @@ Current implementation reads user identity from Clerk server user context.
   - none currently written to canonical profile by Chyme routes
 - Why canonical fields are needed:
   - show consistent participant identity in room roster/chat
-  - avoid separate mini-app identity records
+  - avoid separate plugin identity records
 
-## 3) Mini-App Extension Fields
+## 3) Plugin Extension Fields
 
 - Storage location (table or json path): `chyme_service_profiles`
 - Fields:
@@ -34,7 +34,7 @@ Current implementation reads user identity from Clerk server user context.
 - Purpose:
   - service-scoped activation/deletion lifecycle for Chyme without deleting account-level profile
 
-## 4) Domain Data Owned by Mini-App
+## 4) Domain Data Owned by Plugin
 
 - Table/entity: `chyme_rooms`
   - Contains personal data? no (room metadata only)
@@ -77,9 +77,9 @@ When user requests full account deletion (`DELETE /api/account/full-account`):
 - Additional records removed vs service-scoped deletion:
   - currently none immediately; request is recorded only
 - Cross-service dependencies:
-  - requires global account deletion orchestrator across all mini-app domains
+  - requires global account deletion orchestrator across all plugin domains
 - Final expected state:
-  - target state (TBD in orchestrator): account and all mini-app data deleted/anonymized per policy
+  - target state (TBD in orchestrator): account and all plugin data deleted/anonymized per policy
 
 ## 7) Rejoin/Re-enable Behavior
 

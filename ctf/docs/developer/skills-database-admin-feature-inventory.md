@@ -13,7 +13,7 @@
 
 `Skills Database Admin` is a shared taxonomy management surface for sectors, job titles, and skills.
 
-This is a high-risk admin surface because it affects multiple mini-apps (including Directory and Workforce Recruiter), so preserving rich in-app safety and context is important for rewrite.
+This is a high-risk admin surface because it affects multiple plugins (including Directory and Workforce Recruiter), so preserving rich in-app safety and context is important for rewrite.
 
 ---
 
@@ -38,7 +38,7 @@ Evidence:
 
 - `platform/client/src/pages/admin/skills.tsx`
 - `platform/server/routes/skills.routes.ts`
-- `platform/server/storage/mini-apps/skills-storage.ts`
+- `platform/server/storage/plugins/skills-storage.ts`
 
 Features:
 
@@ -52,7 +52,7 @@ Evidence:
 
 - `platform/client/src/pages/admin/skills.tsx`
 - `platform/server/routes/skills.routes.ts`
-- `platform/server/storage/mini-apps/skills-storage.ts`
+- `platform/server/storage/plugins/skills-storage.ts`
 
 Features:
 
@@ -66,7 +66,7 @@ Evidence:
 
 - `platform/client/src/pages/admin/skills.tsx`
 - `platform/server/routes/skills.routes.ts`
-- `platform/server/storage/mini-apps/skills-storage.ts`
+- `platform/server/storage/plugins/skills-storage.ts`
 
 Features:
 
@@ -79,7 +79,7 @@ Features:
 Evidence:
 
 - `platform/server/routes/skills.routes.ts`
-- `platform/server/storage/mini-apps/skills-storage.ts`
+- `platform/server/storage/plugins/skills-storage.ts`
 
 Features:
 
@@ -120,7 +120,7 @@ Features:
 Evidence:
 
 - `platform/shared/schema/skills/index.ts`
-- `platform/server/storage/mini-apps/skills-storage.ts`
+- `platform/server/storage/plugins/skills-storage.ts`
 
 Dependencies:
 
@@ -150,7 +150,7 @@ Controls:
 ## 5) UX Complexity and Operator Risk
 
 1. Hierarchical CRUD requires context-aware operations (parent-child correctness).
-2. Delete actions can have large downstream impact across dependent mini-apps.
+2. Delete actions can have large downstream impact across dependent plugins.
 3. Operator safety depends on clear hierarchy visibility and confirmation prompts.
 4. Direct DB editing is materially riskier than this structured admin UI.
 

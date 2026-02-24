@@ -143,6 +143,6 @@
 - [ ] Public DTO field-level privacy contract.
   - Acceptance criteria:
     - Product/security approved and testable.
-- [ ] Cross-mini-app route ownership cleanup strategy.
+- [ ] Cross-plugin route ownership cleanup strategy.
   - Acceptance criteria:
     - SocketRelay module only owns SocketRelay routes in ctf.

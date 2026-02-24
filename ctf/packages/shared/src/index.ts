@@ -2,7 +2,7 @@ export * from "./types";
 export * from "./models/user";
 export * from "./models/message";
 export * from "./models/channel";
-export * from "./models/miniAppProfile";
+export * from "./models/pluginProfile";
 export * from "./models/chyme";
 export * from "./api/httpClient";
 export * from "./api/streamClient";

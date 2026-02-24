@@ -21,17 +21,18 @@
 - [111-deployment-topology-rules.mdc](111-deployment-topology-rules.mdc)
 - [112-platform-architecture-rules.mdc](112-platform-architecture-rules.mdc)
 - [113-platform-coding-rules.mdc](113-platform-coding-rules.mdc)
-- [114-single-profile-and-miniapp-extension-rules.mdc](114-single-profile-and-miniapp-extension-rules.mdc)
+- [114-single-profile-and-plugin-extension-rules.mdc](114-single-profile-and-plugin-extension-rules.mdc)
 - [115-neon-migration-delivery-rules.mdc](115-neon-migration-delivery-rules.mdc)
 - [116-file-size-and-modularity-rules.mdc](116-file-size-and-modularity-rules.mdc)
 - [117-agent-readability-and-cost-rules.mdc](117-agent-readability-and-cost-rules.mdc)
 - [118-platform-testing-and-release-rules.mdc](118-platform-testing-and-release-rules.mdc)
 - [119-github-actions-ci-rules.mdc](119-github-actions-ci-rules.mdc)
-- [120-mini-app-feature-inventory-lifecycle-rules.mdc](120-mini-app-feature-inventory-lifecycle-rules.mdc)
-- [200-mini-app-command-contract-templates.mdc](200-mini-app-command-contract-templates.mdc)
-- [201-mini-app-command-schema-template.mdc](201-mini-app-command-schema-template.mdc)
-- [202-mini-app-access-policy-schema-template.mdc](202-mini-app-access-policy-schema-template.mdc)
-- [203-mini-app-audit-schema-template.mdc](203-mini-app-audit-schema-template.mdc)
+- [120-plugin-feature-inventory-lifecycle-rules.mdc](120-plugin-feature-inventory-lifecycle-rules.mdc)
+- [121-canonical-metric-registry-rules.mdc](121-canonical-metric-registry-rules.mdc)
+- [200-plugin-command-contract-templates.mdc](200-plugin-command-contract-templates.mdc)
+- [201-plugin-command-schema-template.mdc](201-plugin-command-schema-template.mdc)
+- [202-plugin-access-policy-schema-template.mdc](202-plugin-access-policy-schema-template.mdc)
+- [203-plugin-audit-schema-template.mdc](203-plugin-audit-schema-template.mdc)
 - [014-compliance-rules-index.mdc](014-compliance-rules-index.mdc)
 
 ## Precedence
@@ -41,7 +42,7 @@
 4. Platform coding rules
 5. Testing and release rules
 6. GitHub Actions CI rules
-7. Mini-app feature rules
+7. Plugin feature rules
 
 If two rules conflict, choose the stricter rule and document the decision.
 
@@ -52,8 +53,8 @@ If two rules conflict, choose the stricter rule and document the decision.
 - When unclear, prefer broader safety/compliance and boundary rules over feature-level rules.
 
 ## CTF Contract
-- Build mini-app-first user flows as the baseline UX.
-- Implement capabilities as mini-app commands/actions that execute through policy-controlled interfaces.
+- Build plugin-first user flows as the baseline UX.
+- Implement capabilities as plugin commands/actions that execute through policy-controlled interfaces.
 - Keep web and mobile behavior parity through shared contracts and shared compliance controls.
-- Refer to chat functionality by mini-app context (for example, Chyme chat), not as a standalone generic product surface.
+- Refer to chat functionality by plugin context (for example, Chyme chat), not as a standalone generic product surface.
 - Block release when architecture, quality, or compliance rules are unmet.

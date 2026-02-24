@@ -1,130 +1,31 @@
 {
-    // Theme
     "workbench.colorTheme": "High Contrast Dark",
-  
-    // Font & UI
-    "editor.fontSize": 14,
+    
+    "editor.fontSize": 16,
     "editor.fontFamily": "Consolas, 'Courier New', monospace",
-    "editor.lineHeight": 22,
-    "editor.cursorBlinking": "blink",
-  
-    // Accessibility & contrast tweaks
-    "workbench.colorCustomizations": {
-      // Ensure strong contrast for editor background and foreground
-      "editor.background": "#000000",
-      "editorLineNumber.foreground": "#8A8A8A",
-      "editorLineNumber.activeForeground": "#FFFFFF",
-      "editorCursor.foreground": "#FFFFFF",
-      "editor.selectionBackground": "#264F78",
-      "editor.linkedEditingBackground": "#003A6D33",
-     // Dark gray instead of pure black
-"editor.foreground": "#e0e0e0",        // Off-white instead of pure white
-"statusBar.background": "#1e1e1e",
-"statusBar.foreground": "#e0e0e0",
-"titleBar.activeBackground": "#1e1e1e",
-"titleBar.activeForeground": "#e0e0e0",
-"sideBar.background": "#1b1616",
-"sideBar.foreground": "#e0e0e0",
-"activityBar.background": "#121010",
-"terminal.integrated.background": "#1e1e1e",
-"terminal.integrated.foreground": "#d0d0d0"
-    },
-    // High contrast editor token colors (improves syntax readability)
-    "editor.tokenColorCustomizations": {
-      "textMateRules": [
-        {
-          "scope": [
-            "comment",
-            "punctuation.definition.comment"
-          ],
-          "settings": {
-            "foreground": "#6A9955",
-            "fontStyle": "italic"
-          }
-        },
-        {
-          "scope": [
-            "string",
-            "constant.other.symbol"
-          ],
-          "settings": {
-            "foreground": "#CE9178"
-          }
-        },
-        {
-          "scope": [
-            "constant.numeric",
-            "constant.language.boolean"
-          ],
-          "settings": {
-            "foreground": "#B5CEA8"
-          }
-        },
-        {
-          "scope": [
-            "keyword",
-            "storage.type"
-          ],
-          "settings": {
-            "foreground": "#C586C0",
-            "fontStyle": "bold"
-          }
-        },
-        {
-          "scope": [
-            "variable",
-            "identifier"
-          ],
-          "settings": {
-            "foreground": "#9CDCFE"
-          }
-        },
-        {
-          "scope": [
-            "entity.name.function",
-            "support.function"
-          ],
-          "settings": {
-            "foreground": "#DCDCAA"
-          }
-        },
-        {
-          "scope": [
-            "invalid",
-            "invalid.broken"
-          ],
-          "settings": {
-            "foreground": "#FFFFFF",
-            "background": "#FF0000"
-          }
-        }
-      ]
-    },
-  
-    // Editor accessibility
-    "editor.accessibilitySupport": "on",
-    "editor.minimap.enabled": false,
+    "editor.lineHeight": 24,
+    "editor.cursorBlinking": "phase",
+    
     "editor.renderWhitespace": "none",
-    "editor.cursorStyle": "line",
-    "editor.hover.enabled": "on",
-  
-    // File icon & contrast
-    "workbench.iconTheme": "vscode-icons",
-    "workbench.tree.indent": 20,
-  
-    // Terminal
-    "terminal.integrated.cursorStyle": "block",
-    "terminal.integrated.fontFamily": "Consolas, 'Courier New', monospace",
-    "terminal.integrated.background": "#000000",
-    "terminal.integrated.foreground": "#CCCCCC",
-  
-    // Other helpful settings
-    "editor.suggestSelection": "first",
-    "explorer.compactFolders": false,
-    "window.zoomLevel": 0,
-    "python-envs.defaultEnvManager": "ms-python.python:system",
-    "python-envs.pythonProjects": [],
-    "python.analysis.typeCheckingMode": "strict",
-    "chat.useAgentsMdFile": true
-  }
-  
+    "editor.bracketPairColorization.enabled": false,
+    "editor.minimap.enabled": false,
+    "editor.scrollbar.vertical": "hidden",
+    "editor.wordWrap": "on",
+    "editor.smoothScrolling": true,
+    
+    "workbench.colorCustomizations": {
+        "editor.background": "#1a1515",
+        "editor.foreground": "#d4d4d4",
+        "editorLineNumber.foreground": "#8A8A8A",
+        "editorLineNumber.activeForeground": "#FFFFFF",
+        "editorCursor.foreground": "#cccccc",
+        "editor.selectionBackground": "#264F78",
+        "editor.linkedEditingBackground": "#003A6D33",
+        "statusBar.background": "#1e1e1e",
+        "statusBar.foreground": "#d4d4d4",
+        "titleBar.activeBackground": "#1e1e1e",
+        "titleBar.activeForeground": "#d4d4d4",
+        "sideBar.background": "#1b1616",
+        "sideBar.foreground": "#d4d4d4"
+    }
+}

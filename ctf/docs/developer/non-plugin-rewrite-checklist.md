@@ -1,17 +1,17 @@
-# Non-Mini-App Rewrite Checklist
+# Non-Plugin Rewrite Checklist
 
 ## Scope & Decisions
 
-- [ ] Confirm ctf scope for non-mini-app platform surfaces.
+- [ ] Confirm ctf scope for non-plugin platform surfaces.
   - Acceptance criteria:
     - Includes: routing shell, auth/account lifecycle, onboarding/approval/terms gating, global admin core, shared skills/chat APIs, security/compliance middleware, observability/health, runtime/ops.
-    - Excludes: mini-app feature bodies tracked in mini-app inventories.
+    - Excludes: plugin feature bodies tracked in plugin inventories.
 - [ ] Freeze v1 parity scope for cross-cutting features.
   - Acceptance criteria:
-    - Keep/defer/drop decision recorded for each cluster in `non-mini-app-feature-inventory.md` matrix.
-- [ ] Lock chat naming/contract policy to mini-app context.
+    - Keep/defer/drop decision recorded for each cluster in `non-plugin-feature-inventory.md` matrix.
+- [ ] Lock chat naming/contract policy to plugin context.
   - Acceptance criteria:
-    - Generic chat semantics are resolved to ctf-compliant mini-app contextualized contracts.
+    - Generic chat semantics are resolved to ctf-compliant plugin contextualized contracts.
 - [ ] Lock shared taxonomy ownership model.
   - Acceptance criteria:
     - Single shared service vs bounded projections is decided and documented.
@@ -53,7 +53,7 @@
     - Hierarchy/flattened/admin CRUD contracts are stable for downstream consumers.
 - [ ] Define chat contracts under ctf naming constraints.
   - Acceptance criteria:
-    - Route/domain naming and payload contracts align with mini-app contextualization rule.
+    - Route/domain naming and payload contracts align with plugin contextualization rule.
 - [ ] Define health/observability contracts.
   - Acceptance criteria:
     - Health endpoint matrix, error envelopes, and operational metadata are documented.
@@ -95,7 +95,7 @@
 
 - [ ] Reuse shared contracts across web/mobile.
   - Acceptance criteria:
-    - No client-specific schema forks for core non-mini-app contracts.
+    - No client-specific schema forks for core non-plugin contracts.
 - [ ] Decide mobile scope for global admin and shared ops surfaces.
   - Acceptance criteria:
     - Inclusion/exclusion decisions are explicit and reflected in navigation/permissions.
@@ -114,7 +114,7 @@
 
 ## Testing & Validation
 
-- [ ] Add contract tests for non-mini-app APIs.
+- [ ] Add contract tests for non-plugin APIs.
   - Acceptance criteria:
     - Success/validation/authz/forbidden/conflict/not-found paths are covered.
 - [ ] Add integration tests for middleware + policy stack.
@@ -132,7 +132,7 @@
 - [ ] Launch with staged enablement and fallback plan.
   - Acceptance criteria:
     - Operator verification and rollback steps are documented and tested.
-- [ ] Publish non-mini-app operational runbook.
+- [ ] Publish non-plugin operational runbook.
   - Acceptance criteria:
     - Includes env contract, incident handling, and admin policy controls.
 - [ ] Confirm production observability dashboards/alerts.

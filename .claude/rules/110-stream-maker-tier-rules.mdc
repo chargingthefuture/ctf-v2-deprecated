@@ -19,18 +19,18 @@ These are hard limits and must be treated as non-burstable ceilings in feature d
 - Apply Stream React Native performance guidance defaults for interval tuning and heavy-feature controls.
 
 ## Budgeting and Threshold Rules
-- Define monthly budgets per capability and reserve headroom for critical mini-app messaging paths (including Chyme chat).
+- Define monthly budgets per capability and reserve headroom for critical plugin messaging paths (including Chyme chat).
 - Implement threshold states for each meter:
   - Green: 0–70% budget used.
   - Yellow: 70–85% budget used.
   - Orange: 85–95% budget used.
   - Red: 95–100% budget used.
 - At Yellow and above, reduce non-essential traffic (polling frequency, background refresh, non-critical feed enrichment).
-- At Orange and above, disable or queue non-critical mini-app command actions that consume Stream quotas.
+- At Orange and above, disable or queue non-critical plugin command actions that consume Stream quotas.
 - At Red, preserve baseline chat reliability first; non-core features must degrade gracefully.
 
 ## UX Degradation Rules
-- Always prioritize send/receive/read messaging flows in active mini-apps over optional enhancements.
+- Always prioritize send/receive/read messaging flows in active plugins over optional enhancements.
 - Show clear user messaging when optional features are temporarily limited.
 - Prefer temporary deferral/queueing over hard failure where possible.
 - Do not expose internal quota details that could reveal security-sensitive operational posture.
@@ -51,7 +51,7 @@ These are hard limits and must be treated as non-burstable ceilings in feature d
 - Emit usage metrics and alerts at threshold transitions (70/85/95/100).
 - Track feature-level contribution to quota consumption.
 - Keep monthly usage dashboards for product and engineering planning.
-- Add early instrumentation for end-to-end latency, JS thread load, and memory usage on mobile mini-app messaging surfaces.
+- Add early instrumentation for end-to-end latency, JS thread load, and memory usage on mobile plugin messaging surfaces.
 
 ## CI and Release Gates
 - Any Stream-consuming feature must include:
@@ -72,5 +72,5 @@ These are hard limits and must be treated as non-burstable ceilings in feature d
 
 ## Prohibited
 - Launching Stream-dependent features without budget allocation.
-- Allowing optional mini-app automations to consume quotas without rate limits.
+- Allowing optional plugin automations to consume quotas without rate limits.
 - Coupling critical authentication or authorization flows to non-critical Stream features.

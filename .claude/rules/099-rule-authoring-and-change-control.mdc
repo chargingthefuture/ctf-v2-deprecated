@@ -7,7 +7,7 @@ Keep the compliance rule system modular, stable, and auditable as the product ev
 - Every rule change must include rationale, scope impact, and effective date.
 - Changes weakening controls require explicit risk acceptance record and approver.
 - Keep rules atomic: one concern per file, linked from `index.mdc`.
-- Preserve backward compatibility notes for active mini-app/command surfaces.
+- Preserve backward compatibility notes for active plugin/command surfaces.
 
 ## Rule File Naming Convention
 - Use numeric prefixes for predictable ordering and easier agent/tool context loading.

@@ -1,0 +1,69 @@
+canonical_metrics:
+  - id: weekly_active_users
+    name: Weekly Active Users
+    description: Count of distinct users with at least one authenticated app session within the week window.
+    owner: analytics-owner@chargingthefuture.org
+    data_type: integer
+    unit: users
+    calculation: |
+      SELECT COUNT(DISTINCT user_id)
+      FROM login_events
+      WHERE occurred_at >= :week_start
+        AND occurred_at < :week_end
+        AND is_test_user = FALSE
+        AND deleted_at IS NULL;
+    inputs:
+      - name: login_events.user_id
+        type: uuid
+      - name: login_events.occurred_at
+        type: datetime
+      - name: users.is_test_user
+        type: boolean
+      - name: users.deleted_at
+        type: datetime|null
+    example_values:
+      - 1820345
+      - 1932210
+    last_updated: "2026-02-24T00:00:00Z"
+    update_cadence: weekly
+    retention: 24 months
+    allowed_thresholds:
+      min: 0
+      alert_rules:
+        - "alert_if_7d_drop_percent >= 15"
+
+  - id: median_real_wage_growth_rate
+    name: Median Real Wage Growth Rate
+    description: Median percentage change in inflation-adjusted wages for active users over a rolling 30-day window.
+    owner: econ-metrics@chargingthefuture.org
+    data_type: percent
+    unit: percent
+    calculation: |
+      WITH wages AS (
+        SELECT user_id,
+               current_real_wage,
+               prior_real_wage
+        FROM user_economic_snapshots
+        WHERE snapshot_date = :as_of_date
+      )
+      SELECT PERCENTILE_CONT(0.5)
+             WITHIN GROUP (ORDER BY ((current_real_wage - prior_real_wage) / NULLIF(prior_real_wage, 0)) * 100)
+      FROM wages;
+    inputs:
+      - name: user_economic_snapshots.current_real_wage
+        type: currency
+      - name: user_economic_snapshots.prior_real_wage
+        type: currency
+      - name: user_economic_snapshots.snapshot_date
+        type: datetime
+    example_values:
+      - 1.8
+      - 2.3
+    last_updated: "2026-02-24T00:00:00Z"
+    update_cadence: daily
+    retention: 36 months
+    allowed_thresholds:
+      min: -100
+      max: 100
+      alert_rules:
+        - "alert_if_value < -2"

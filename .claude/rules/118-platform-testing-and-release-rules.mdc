@@ -5,8 +5,8 @@ Define minimum quality and safety gates before code reaches users.
 
 ## Mandatory
 - Every feature must include automated tests at the right layer (unit/integration/e2e as applicable).
-- Mini-app commands and permission checks must have positive and negative tests.
-- Critical mini-app messaging workflows (including Chyme chat) must have regression coverage on web and mobile clients.
+- Plugin commands and permission checks must have positive and negative tests.
+- Critical plugin messaging workflows (including Chyme chat) must have regression coverage on web and mobile clients.
 - Security/privacy gates must run in GitHub Actions and block promotion on failure.
 - Rollout plans must include monitoring, rollback criteria, and owner assignment.
 

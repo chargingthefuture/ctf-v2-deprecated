@@ -24,7 +24,7 @@ This surface is practical to operate in-app because it includes domain-specific 
 Evidence:
 
 - `platform/client/src/pages/workforce-recruiter/admin.tsx`
-- `platform/client/src/routes/mini-app-routes.tsx`
+- `platform/client/src/routes/plugin-routes.tsx`
 
 Features:
 
@@ -66,7 +66,7 @@ Evidence:
 - `platform/client/src/pages/workforce-recruiter/reports.tsx`
 - `platform/client/src/pages/workforce-recruiter/skill-level-detail.tsx`
 - `platform/server/routes/workforce-recruiter.routes.ts`
-- `platform/server/storage/mini-apps/workforce-recruiter/reports.ts`
+- `platform/server/storage/plugins/workforce-recruiter/reports.ts`
 
 Features:
 
@@ -120,8 +120,8 @@ Features:
 Evidence:
 
 - `platform/shared/schema/workforcerecruitertracker/index.ts`
-- `platform/server/storage/mini-apps/workforce-recruiter-storage.ts`
-- `platform/server/storage/mini-apps/workforce-recruiter/reports.ts`
+- `platform/server/storage/plugins/workforce-recruiter-storage.ts`
+- `platform/server/storage/plugins/workforce-recruiter/reports.ts`
 
 Dependencies:
 

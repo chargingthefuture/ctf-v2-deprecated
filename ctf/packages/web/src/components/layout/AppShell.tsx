@@ -1,5 +1,5 @@
 import { LeftNavigation } from "../navigation/LeftNavigation";
-import { SocialAudioWorkspace } from "../miniapps/SocialAudioWorkspace";
+import { SocialAudioWorkspace } from "../plugins/SocialAudioWorkspace";
 import { SocialAudioChatPanel } from "../chat/SocialAudioChatPanel";
 
 interface AppShellProps {
@@ -15,7 +15,7 @@ export function AppShell(props: AppShellProps) {
         <LeftNavigation isAdmin={Boolean(props.isAdmin)} />
       </section>
 
-      <section className="shell-main" aria-label="Mini-app workspace">
+      <section className="shell-main" aria-label="Plugin workspace">
         <SocialAudioWorkspace
           streamChatMauLimit={props.streamChatMauLimit}
           observabilityProvider={props.observabilityProvider}

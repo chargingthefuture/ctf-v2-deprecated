@@ -10,7 +10,7 @@ Ensure every user-facing feature implemented in web is also implemented in Andro
 ## Mandatory
 - Any new web user-facing feature must include an Android implementation plan before merge.
 - Any new Android user-facing feature must include a web implementation plan before merge.
-- Core functional parity is required for mini-app messaging features (for example, Chyme chat), command interfaces, account settings, consent/privacy controls, and safety-critical flows.
+- Core functional parity is required for plugin messaging features (for example, Chyme chat), command interfaces, account settings, consent/privacy controls, and safety-critical flows.
 - Differences in UI layout are allowed when platform conventions require it, but behavior and outcomes must match.
 
 ## Delivery Rules

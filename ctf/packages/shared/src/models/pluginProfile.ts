@@ -1,16 +1,16 @@
-export type MiniAppName = "chyme";
+export type PluginName = "chyme";
 
-export interface MiniAppProfileRecord {
+export interface PluginProfileRecord {
   userId: string;
-  miniAppName: MiniAppName;
+  pluginName: PluginName;
   createdAtIso: string;
   updatedAtIso: string;
   deletedAtIso?: string;
 }
 
-export interface MiniAppDeletionRequest {
+export interface PluginDeletionRequest {
   userId: string;
-  miniAppName: MiniAppName;
+  pluginName: PluginName;
   reason: "user_requested" | "policy_enforcement";
   requestedAtIso: string;
 }

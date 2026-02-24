@@ -1,7 +1,7 @@
 # Web Next.js Structure Rules
 
 ## Intent
-Standardize `packages/web` for a secure, maintainable Next.js surface for mini-app experiences.
+Standardize `packages/web` for a secure, maintainable Next.js surface for plugin experiences.
 
 ## Structure Rules
 - Use Next.js App Router as default (`src/app`) unless a migration exception is documented.
@@ -16,8 +16,8 @@ Standardize `packages/web` for a secure, maintainable Next.js surface for mini-a
 
 ## Performance and Safety
 - Avoid exposing sensitive payloads via client bundles, cache keys, or query params.
-- Define explicit caching strategy for mini-app realtime endpoints (including Chyme chat) with privacy-safe boundaries.
+- Define explicit caching strategy for plugin realtime endpoints (including Chyme chat) with privacy-safe boundaries.
 
 ## Prohibited
 - Direct secret usage in client components.
-- Bypassing shared contracts for mini-app or compliance-relevant payloads.
+- Bypassing shared contracts for plugin or compliance-relevant payloads.

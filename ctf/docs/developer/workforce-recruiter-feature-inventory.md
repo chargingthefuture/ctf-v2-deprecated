@@ -1,17 +1,17 @@
-# Workforce Recruiter Mini-App Feature Inventory (Legacy Reference)
+# Workforce Recruiter Plugin Feature Inventory (Legacy Reference)
 
 ## Scope
 
 - Source analyzed (reference-only): `platform/`
 - Rewrite target: `ctf/`
-- Mini-app name to retain: `Workforce`
+- Plugin name to retain: `Workforce`
 - Guardrail honored: no edits in `platform/`
 
 ---
 
 ## Executive Summary
 
-`Workforce Recruiter` is a recruitment planning and reporting mini-app with:
+`Workforce Recruiter` is a recruitment planning and reporting plugin with:
 
 - authenticated profile flow,
 - configurable workforce assumptions,
@@ -48,7 +48,7 @@ Evidence:
 
 - `platform/client/src/pages/workforce-recruiter/profile.tsx`
 - `platform/server/routes/workforce-recruiter.routes.ts`
-- `platform/server/storage/mini-apps/workforce-recruiter-storage.ts`
+- `platform/server/storage/plugins/workforce-recruiter-storage.ts`
 
 Features:
 
@@ -107,7 +107,7 @@ Features:
 Evidence:
 
 - `platform/client/src/pages/workforce-recruiter/admin.tsx`
-- `platform/client/src/routes/mini-app-routes.tsx`
+- `platform/client/src/routes/plugin-routes.tsx`
 
 Features:
 
@@ -196,8 +196,8 @@ Features:
 Evidence:
 
 - `platform/shared/schema/workforcerecruitertracker/index.ts`
-- `platform/server/storage/mini-apps/workforce-recruiter-storage.ts`
-- `platform/server/storage/mini-apps/workforce-recruiter/reports.ts`
+- `platform/server/storage/plugins/workforce-recruiter-storage.ts`
+- `platform/server/storage/plugins/workforce-recruiter/reports.ts`
 - `platform/schema.sql`
 
 Core entities:
@@ -221,7 +221,7 @@ Evidence:
 
 - `platform/server/routes/workforce-recruiter.routes.ts`
 - `platform/server/auth.ts`
-- `platform/client/src/routes/mini-app-routes.tsx`
+- `platform/client/src/routes/plugin-routes.tsx`
 
 Implemented controls:
 
@@ -241,7 +241,7 @@ Observed policy gap:
 
 Evidence:
 
-- `platform/client/src/routes/mini-app-routes.tsx`
+- `platform/client/src/routes/plugin-routes.tsx`
 
 Discovered routes:
 
@@ -268,7 +268,7 @@ Evidence:
 - `platform/test/client/pages/workforce-recruiter/profile.test.tsx`
 - `platform/test/integration/storage.test.ts`
 - `platform/scripts/seedWorkforceRecruiter.ts`
-- `platform/scripts/seedAllMiniApps.ts`
+- `platform/scripts/seedAllPlugins.ts`
 
 Observed:
 
@@ -290,7 +290,7 @@ Observed:
    - Admin routes are protected by auth-only wrapper, not explicit admin wrapper.
 4. **Scaffold/incomplete indicators in UI/storage:**
    - Admin occupations and occupation detail include event-related artifacts that are not wired to complete feature flows.
-   - Storage module header references signups, but no signup model/routes are present in this mini-app.
+   - Storage module header references signups, but no signup model/routes are present in this plugin.
 5. **Report metric-definition ambiguity:**
    - “Recruited” semantics vary by report context and should be normalized for ctf parity.
 6. **Performance risk in list queries:**

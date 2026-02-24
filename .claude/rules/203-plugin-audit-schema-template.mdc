@@ -1,13 +1,13 @@
-# Mini-App Audit Schema Template
+# Plugin Audit Schema Template
 
 ## Intent
-Standardize audit records for mini-app command execution and policy decisions.
+Standardize audit records for plugin command execution and policy decisions.
 
 ## Required Fields
 - `eventId`: unique immutable identifier.
 - `timestamp`: RFC3339 timestamp.
 - `actorId`: user or service principal.
-- `miniAppId`
+- `pluginId`
 - `command`
 - `commandVersion`
 - `purpose`
@@ -27,7 +27,7 @@ Standardize audit records for mini-app command execution and policy decisions.
 eventId: 6f2f5ec1-8d3a-4bd6-a566-4f3b9180358f
 timestamp: 2026-02-19T12:04:26Z
 actorId: user_123
-miniAppId: chyme
+pluginId: chyme
 command: summarize_thread_mood
 commandVersion: 1.0.0
 purpose: conversation_support

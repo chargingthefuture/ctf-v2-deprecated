@@ -13,7 +13,7 @@
 - [ ] Lock route/module ownership for Directory admin APIs.
   - Acceptance criteria:
     - Directory admin announcements routes are owned by Directory module boundaries.
-    - No cross-mini-app route ownership ambiguity remains.
+    - No cross-plugin route ownership ambiguity remains.
 - [ ] Lock claimed/unclaimed profile behavior as policy contract.
   - Acceptance criteria:
     - Unclaimed-only delete rule is enforced by server and reflected in UI guardrails.
