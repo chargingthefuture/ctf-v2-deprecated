@@ -41,7 +41,7 @@ Planning constraints applied:
 
 ### 1.2 Entry Submission Experience
 
-1. Submit `displayName`, `bio`, Quora profile URL, skills, and claimed professions.
+1. Submit `first_name`, `bio`, Quora profile URL, skills, and claimed professions.
 2. Enforce URL normalization and Quora profile pattern validation.
 3. Prevent duplicate submissions in a round by normalized URL + skills signature.
 4. Enforce rolling submission cap per user.
