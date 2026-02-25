@@ -1,9 +1,4 @@
-# Mood Rewrite Checklist (Legacy Reference)
-
-> Canonical CTF rewrite source of truth moved to:
->
-> - `ctf/docs/developer/ctf-plugin-feature-inventories/ctf-mood-feature-inventory.md`
-> - `ctf/docs/developer/ctf-plugin-feature-inventories/ctf-mood-rewrite-checklist.md`
+# Mood Rewrite Checklist
 
 ## Scope & Decisions
 
@@ -139,8 +134,3 @@
 - [ ] Final privacy/retention policy for mood client IDs and logs.
   - Acceptance criteria:
     - Policy is documented and testable.
-
----
-Legacy note:
-
-- This checklist is retained for historical planning context and is not the authoritative implementation checklist for CTF rewrite delivery.

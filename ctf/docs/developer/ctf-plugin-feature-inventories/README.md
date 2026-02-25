@@ -39,5 +39,11 @@ Examples:
 - [GentlePulse rewrite checklist](./ctf-gentlepulse-rewrite-checklist.md)
 - [Mood feature inventory](./ctf-mood-feature-inventory.md)
 - [Mood rewrite checklist](./ctf-mood-rewrite-checklist.md)
+- [SocketRelay feature inventory](./ctf-socketrelay-feature-inventory.md)
+- [SocketRelay rewrite checklist](./ctf-socketrelay-rewrite-checklist.md)
+- [Weekly Performance feature inventory](./ctf-weekly-performance-feature-inventory.md)
+- [Weekly Performance rewrite checklist](./ctf-weekly-performance-rewrite-checklist.md)
+- [Skills Taxonomy feature inventory](./ctf-skills-taxonomy-feature-inventory.md)
+- [Skills Taxonomy rewrite checklist](./ctf-skills-taxonomy-rewrite-checklist.md)
 
 Legacy reference inventories remain in `ctf/docs/developer/` and should include `(Legacy Reference)` in the title.
