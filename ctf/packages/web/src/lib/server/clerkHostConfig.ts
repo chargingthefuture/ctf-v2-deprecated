@@ -26,7 +26,13 @@ const normalizeHost = (input: string | null | undefined): string | null => {
   }
 
   const colonIndex = first.indexOf(":");
-  return colonIndex > -1 ? first.slice(0, colonIndex) : first;
+  const normalized = colonIndex > -1 ? first.slice(0, colonIndex) : first;
+
+  return normalized.endsWith(".") ? normalized.slice(0, -1) : normalized;
+};
+
+const isRailwayPreviewHost = (host: string): boolean => {
+  return host.endsWith(".up.railway.app") || host.endsWith(".railway.app");
 };
 
 const getFirstConfiguredEnv = (names: string[]): { name: string; value: string } => {
@@ -100,7 +106,26 @@ const resolveHostEnvNames = (host: string | null): {
     };
   }
 
-  throw new Error(`Clerk host mapping is not configured for host: ${host}`);
+  if (isRailwayPreviewHost(host)) {
+    return {
+      publishableKeyEnv: [
+        "RAILWAY_STAGING_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
+        "RAILWAY_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
+      ],
+      secretKeyEnv: [
+        "RAILWAY_STAGING_CLERK_SECRET_KEY",
+        "RAILWAY_CLERK_SECRET_KEY",
+      ],
+      signInUrlEnv: [
+        "RAILWAY_STAGING_CLERK_SIGN_IN_URL",
+        "RAILWAY_CLERK_SIGN_IN_URL",
+      ],
+    };
+  }
+
+  throw new Error(
+    `Clerk host mapping is not configured for host: ${host}. Expected one of the-comic.net, the-comic.com, chargingthefuture.com, or a Railway preview domain.`,
+  );
 };
 
 export const resolveClerkRuntimeConfig = (reader: HeaderReader): ClerkRuntimeConfig => {

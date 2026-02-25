@@ -17,6 +17,9 @@ Examples:
 
 - [CTF plugin coding readiness matrix](./ctf-plugin-coding-readiness-matrix.md)
 
+- [Chyme feature inventory](./ctf-chyme-feature-inventory.md)
+- [Chyme rewrite checklist](./ctf-chyme-rewrite-checklist.md)
+
 - [TrustTransport feature inventory](./ctf-trusttransport-feature-inventory.md)
 - [TrustTransport rewrite checklist](./ctf-trusttransport-rewrite-checklist.md)
 - [Feed feature inventory](./ctf-feed-feature-inventory.md)

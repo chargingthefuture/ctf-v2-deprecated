@@ -1,0 +1,74 @@
+contracts:
+  - pluginId: directory
+    command: directory.profile.upsert
+    version: 1.0.0
+    description: Create or update authenticated user profile within directory policy constraints.
+    inputSchema:
+      profile:
+        type: object
+        required: true
+      isPublic:
+        type: boolean
+        required: true
+    outputSchema:
+      profileId:
+        type: string
+      status:
+        type: string
+      updatedAt:
+        type: string
+    dataAccess:
+      - directory_profiles
+      - directory_profile_change_events
+    purpose: profile_management
+    retentionClass: transactional_long_lived
+    idempotency: true
+
+  - pluginId: directory
+    command: directory.list.fetch
+    version: 1.0.0
+    description: Fetch directory list with selector filters and pagination.
+    inputSchema:
+      filters:
+        type: object
+        required: false
+      page:
+        type: integer
+        required: false
+      pageSize:
+        type: integer
+        required: false
+    outputSchema:
+      items:
+        type: array
+      total:
+        type: integer
+    dataAccess:
+      - directory_profiles
+      - directory_profile_tags
+    purpose: directory_discovery
+    retentionClass: derived_short_lived
+    idempotency: true
+
+  - pluginId: directory
+    command: directory.admin.announcement.upsert
+    version: 1.0.0
+    description: Create or update a directory announcement from the role-gated admin controls.
+    inputSchema:
+      announcementId:
+        type: string
+        required: false
+      payload:
+        type: object
+        required: true
+    outputSchema:
+      announcementId:
+        type: string
+      status:
+        type: string
+    dataAccess:
+      - directory_announcements
+      - directory_profile_change_events
+    purpose: admin_communications
+    retentionClass: audit_long_lived
+    idempotency: true

@@ -28,6 +28,10 @@ const clerkHostMiddleware = (request: NextRequest, event: NextFetchEvent) => {
     clerkConfig = resolveClerkRuntimeConfig(request.headers);
   } catch (error) {
     const message = error instanceof Error ? error.message : "Clerk host mapping error";
+    console.error("[clerk-host-middleware]", {
+      message,
+      host: request.headers.get("x-forwarded-host") ?? request.headers.get("host"),
+    });
     return new NextResponse(message, { status: 500 });
   }
 

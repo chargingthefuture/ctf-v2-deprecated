@@ -1,0 +1,80 @@
+contracts:
+  - pluginId: announcements
+    command: announcements.draft.create
+    version: 1.0.0
+    description: Create an announcement draft with targeting metadata and scheduling window.
+    inputSchema:
+      title:
+        type: string
+        required: true
+      body:
+        type: string
+        required: true
+      targeting:
+        type: object
+        required: true
+      scheduleAt:
+        type: string
+        required: false
+    outputSchema:
+      announcementId:
+        type: string
+      status:
+        type: string
+      createdAt:
+        type: string
+    dataAccess:
+      - announcements
+      - announcement_revisions
+      - announcement_targets
+    purpose: broadcast_authoring
+    retentionClass: transactional_long_lived
+    idempotency: true
+
+  - pluginId: announcements
+    command: announcements.publish
+    version: 1.0.0
+    description: Publish a draft announcement and trigger fan-out projection.
+    inputSchema:
+      announcementId:
+        type: string
+        required: true
+      publishAt:
+        type: string
+        required: false
+      idempotencyKey:
+        type: string
+        required: true
+    outputSchema:
+      announcementId:
+        type: string
+      status:
+        type: string
+      publishedAt:
+        type: string
+    dataAccess:
+      - announcements
+      - announcement_delivery_events
+      - announcement_admin_audit_trail
+    purpose: broadcast_delivery
+    retentionClass: transactional_long_lived
+    idempotency: true
+
+  - pluginId: announcements
+    command: announcements.read.mark
+    version: 1.0.0
+    description: Mark an announcement as read for the requesting user.
+    inputSchema:
+      announcementId:
+        type: string
+        required: true
+    outputSchema:
+      announcementId:
+        type: string
+      readAt:
+        type: string
+    dataAccess:
+      - announcement_user_state
+    purpose: acknowledgement_tracking
+    retentionClass: derived_short_lived
+    idempotency: true

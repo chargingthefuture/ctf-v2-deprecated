@@ -1,0 +1,86 @@
+contracts:
+  - pluginId: workforce
+    command: workforce.dashboard.fetch
+    version: 1.0.0
+    description: Fetch workforce dashboard metrics and current-state summaries.
+    inputSchema:
+      scope:
+        type: object
+        required: false
+    outputSchema:
+      summary:
+        type: object
+      generatedAt:
+        type: string
+    dataAccess:
+      - workforce_report_snapshots
+      - canonical_metrics_registry
+    purpose: workforce_visibility
+    retentionClass: derived_short_lived
+    idempotency: true
+
+  - pluginId: workforce
+    command: workforce.profile.update
+    version: 1.0.0
+    description: Update workforce extension profile fields permitted by policy.
+    inputSchema:
+      profile:
+        type: object
+        required: true
+    outputSchema:
+      profileId:
+        type: string
+      updatedAt:
+        type: string
+    dataAccess:
+      - workforce_profiles
+      - workforce_admin_audit_trail
+    purpose: workforce_profile_management
+    retentionClass: transactional_long_lived
+    idempotency: true
+
+  - pluginId: workforce
+    command: workforce.export.job.create
+    version: 1.0.0
+    description: Create asynchronous export job for authorized workforce reports.
+    inputSchema:
+      exportType:
+        type: string
+        required: true
+      filters:
+        type: object
+        required: false
+    outputSchema:
+      jobId:
+        type: string
+      status:
+        type: string
+    dataAccess:
+      - workforce_report_snapshots
+      - workforce_export_jobs
+    purpose: workforce_reporting_exports
+    retentionClass: operational_medium_lived
+    idempotency: true
+
+  - pluginId: workforce
+    command: workforce.admin.config.update
+    version: 1.0.0
+    description: Update workforce planning configuration and policy flags.
+    inputSchema:
+      config:
+        type: object
+        required: true
+      idempotencyKey:
+        type: string
+        required: true
+    outputSchema:
+      configVersion:
+        type: string
+      updatedAt:
+        type: string
+    dataAccess:
+      - workforce_config
+      - workforce_admin_audit_trail
+    purpose: workforce_governance
+    retentionClass: audit_long_lived
+    idempotency: true

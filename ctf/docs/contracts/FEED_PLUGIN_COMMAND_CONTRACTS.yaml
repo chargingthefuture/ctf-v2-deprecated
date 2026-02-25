@@ -1,0 +1,69 @@
+contracts:
+  - pluginId: feed
+    command: feed.timeline.fetch
+    version: 1.0.0
+    description: Fetch feed timeline items with policy-compliant ranking and filtering.
+    inputSchema:
+      cursor:
+        type: string
+        required: false
+      pageSize:
+        type: integer
+        required: false
+      filters:
+        type: object
+        required: false
+    outputSchema:
+      items:
+        type: array
+      nextCursor:
+        type: string
+    dataAccess:
+      - feed_items
+      - feed_item_targets
+      - feed_render_config
+    purpose: timeline_discovery
+    retentionClass: derived_short_lived
+    idempotency: true
+
+  - pluginId: feed
+    command: feed.item.read.mark
+    version: 1.0.0
+    description: Mark a feed item as read for the current actor.
+    inputSchema:
+      itemId:
+        type: string
+        required: true
+    outputSchema:
+      itemId:
+        type: string
+      readAt:
+        type: string
+    dataAccess:
+      - feed_user_read_state
+    purpose: read_state_management
+    retentionClass: transactional_long_lived
+    idempotency: true
+
+  - pluginId: feed
+    command: feed.admin.config.update
+    version: 1.0.0
+    description: Update feed rendering and announcement display settings.
+    inputSchema:
+      config:
+        type: object
+        required: true
+      idempotencyKey:
+        type: string
+        required: true
+    outputSchema:
+      configVersion:
+        type: string
+      updatedAt:
+        type: string
+    dataAccess:
+      - feed_render_config
+      - feed_admin_audit_trail
+    purpose: feed_governance
+    retentionClass: audit_long_lived
+    idempotency: true

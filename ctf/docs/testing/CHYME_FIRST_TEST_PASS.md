@@ -9,10 +9,10 @@ This checklist validates Chyme before adding new plugins.
 - Create local env file:
   - `cp packages/web/.env.local.example packages/web/.env.local`
 - Fill required values in `packages/web/.env.local`:
-  - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
-  - `CLERK_SECRET_KEY`
+  - `RAILWAY_STAGING_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `RAILWAY_STAGING_CLERK_SECRET_KEY` for `the-comic.com`
+  - `RAILWAY_PROD_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `RAILWAY_PROD_CLERK_SECRET_KEY` for `chargingthefuture.com`
+  - `RAILWAY_STAGING_CLERK_SIGN_IN_URL` and `RAILWAY_PROD_CLERK_SIGN_IN_URL`
   - `DATABASE_URL`
-  - `NEXT_PUBLIC_STREAM_API_KEY`
   - `STREAM_API_KEY`
   - `STREAM_API_SECRET`
 
