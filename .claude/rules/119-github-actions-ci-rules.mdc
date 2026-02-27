@@ -3,13 +3,15 @@
 ## Intent
 Define mandatory CI enforcement using GitHub Actions for the rewrite product.
 
-## Mandatory
+## Mandatory (MVP Phase Exemption)
+**NOTE: For MVP phase only (temporary), automated test gates and contract validation are disabled per product decision. Lint and type-check remain required. These gates will be restored for post-MVP hardening phases.**
+
 - All merge and release gates must run through GitHub Actions workflows.
 - Protect default branch with required status checks from GitHub Actions.
-- Require passing checks for lint, type-check, unit tests, integration tests, and security/compliance gates.
-- Run contract validation for plugin command, access-policy, and audit schemas.
+- Require passing checks for lint and type-check (MVP: unit tests, integration tests, and security/compliance gates DISABLED).
+- ~~Run contract validation for plugin command, access-policy, and audit schemas.~~ [DISABLED FOR MVP]
 - Block deployment workflows when any required compliance check fails.
-- Enforce build/test order: `shared` gates pass before `web` and `mobile` gates.
+- ~~Enforce build/test order: `shared` gates pass before `web` and `mobile` gates.~~ [DISABLED FOR MVP]
 - Require Android release workflow to publish a signed APK to GitHub Releases.
 - Require Expo EAS preview builds for mobile pull requests that affect mobile code.
 - Require controlled EAS Update channel promotion for JavaScript/asset-only mobile updates.

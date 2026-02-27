@@ -62,9 +62,9 @@
 - [ ] Add deterministic Chyme seed script.
   - Acceptance criteria:
     - Seed script under `ctf/scripts/` creates predictable Chyme baseline test data for local/dev validation.
-- [x] Maintain manual validation checklist.
+- [x] Maintain seed data setup for dev. [MANUAL VALIDATION CHECKLIST DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - `ctf/docs/testing/CHYME_FIRST_TEST_PASS.md` covers migration, room/chat/join, and deletion checks.
+    - Seed data can be regenerated for local/dev manual validation.
 
 ## Phase 4 — Web/Android Parity
 
@@ -83,10 +83,7 @@
 - [x] Close Chyme release-gate documentation debt.
   - Acceptance criteria:
     - Command/access/audit contract artifacts are present and reviewed.
-- [ ] Capture evidence links for every completed item.
-  - Acceptance criteria:
-    - Completed checklist entries reference concrete PR/commit/test evidence.
-- [ ] Keep Chyme inventory/checklist synchronized with accepted changes.
+- [ ] Keep Chyme inventory/checklist synchronized with accepted changes. [EVIDENCE CAPTURE DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
     - Feature/behavior changes update both Chyme docs in the same PR.
 

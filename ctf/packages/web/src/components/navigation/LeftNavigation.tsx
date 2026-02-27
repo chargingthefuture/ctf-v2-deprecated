@@ -4,12 +4,9 @@ import { useUser } from "@clerk/nextjs";
 
 const navItems = [
   { key: "home", label: "Home" },
-  { key: "chyme", label: "Chyme" },
-  { key: "services", label: "Services" },
-  { key: "settings", label: "Settings" },
 ];
 
-export function LeftNavigation({ isAdmin }: { isAdmin: boolean }) {
+export function LeftNavigation() {
   const { user, isLoaded } = useUser();
   const displayName = user?.firstName ?? user?.username ?? "Member";
 
@@ -36,20 +33,13 @@ export function LeftNavigation({ isAdmin }: { isAdmin: boolean }) {
           <li key={item.key}>
             <button
               type="button"
-              className={item.key === "chyme" ? "left-nav-item active" : "left-nav-item"}
-              aria-current={item.key === "chyme" ? "page" : undefined}
+              className="left-nav-item"
+              aria-current="page"
             >
               {item.label}
             </button>
           </li>
         ))}
-        {isAdmin ? (
-          <li>
-            <a href="/admin/users" className="left-nav-item-link">
-              Admin approvals
-            </a>
-          </li>
-        ) : null}
       </ul>
 
       <div className="left-nav-footer">

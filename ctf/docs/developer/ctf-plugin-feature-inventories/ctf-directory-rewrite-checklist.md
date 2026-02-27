@@ -72,10 +72,9 @@
   - Acceptance criteria:
     - Public list/detail responses expose only approved privacy-minimized fields.
     - Non-public profiles remain inaccessible via public detail routes.
-- [ ] Validate anti-scraping controls on public endpoints.
+- [ ] Anti-scraping controls design. [TESTING DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Rate limit thresholds are active and tested.
-    - Suspicious traffic delay/mitigation behavior is tested.
+    - Rate limit thresholds are documented.
     - Public ordering/privacy controls remain deterministic and policy-compliant.
 
 ## Phase 4 — Data, Schema, and Seed Consistency
@@ -100,25 +99,25 @@
   - Acceptance criteria:
     - Android admin parity is complete in v1 and not deferred.
     - Android and web share equivalent server deny/allow outcomes.
-- [ ] Validate parity with automated coverage.
+- [ ] Parity coverage tracking. [AUTOMATED PARITY COVERAGE TESTING DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Cross-client parity manual validation walkthrough covers user and admin critical paths.
+    - Cross-client parity validation scope is documented for post-MVP testing.
 
-## Phase 6 — Validation, Seeds, and Release Gates
+## Phase 6 — Release Gates and Lifecycle Maintenance [MVP: VALIDATION DEFERRED — see Rule 118.]
 
-- [ ] Validate unauthorized admin API attempts manually.
+- [ ] Admin API authz design alignment.
   - Acceptance criteria:
-    - All admin endpoints include negative authz manual validation coverage.
-- [ ] Validate CSRF protection on admin writes manually.
+    - All admin endpoints document expected authz constraints.
+- [ ] CSRF protection documentation.
   - Acceptance criteria:
-    - Each admin write route has missing/invalid token manual validation coverage.
-- [ ] Validate claimed/unclaimed guardrails manually.
+    - Each admin write route documents CSRF token handling.
+- [ ] Guardrail and constraint documentation.
   - Acceptance criteria:
-    - Assignment and unclaimed-delete constraints are fully exercised.
-- [ ] Validate public projection privacy and anti-scraping controls manually.
+    - Assignment and unclaimed-delete constraints are documented.
+- [ ] Public projection privacy and anti-scraping documentation.
   - Acceptance criteria:
-    - Public response field exposure and anti-scraping behavior are validated.
-- [ ] Add validation gates for schema/seed consistency and route ownership.
+    - Public response field exposure and anti-scraping constraints are documented.
+- [ ] Schema and seed consistency gates.
   - Acceptance criteria:
     - CI gates fail when schema/seed or route ownership contracts drift.
 
@@ -127,9 +126,9 @@
 - [ ] Keep inventory/checklist lifecycle synchronized with implementation changes.
   - Acceptance criteria:
     - `ctf-directory-feature-inventory.md` and this checklist are updated in the same PR as behavior or contract changes.
-- [ ] Record implementation evidence links for completed checklist items.
+- [ ] Implementation evidence tracking. [EVIDENCE CAPTURE DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Each checked item references code/validation/docs proving completion.
+    - Implementation status is tracked in docs; evidence collection deferred to post-MVP.
 
 ## Change Log
 

@@ -39,7 +39,7 @@ Require a living feature inventory artifact for every plugin implemented in `ctf
 - API surface and route map.
 - Data model and storage contracts.
 - Security/compliance controls.
-- Seed coverage status with deterministic plugin seed script requirement for manual plugin validation in dev environments.
+- Seed coverage status with deterministic plugin seed script requirement for manual plugin validation in dev environments. (Test evidence summary DEFERRED FOR MVP — see Rule 118.)
 - Gaps/ambiguities and known technical debt.
 - Change log section with date-stamped entries.
 

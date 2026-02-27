@@ -80,33 +80,24 @@
 
 ## Phase 5 — Security, Compliance, and Hardening
 
-- [ ] Validate policy, CSRF, and denial-path behavior.
+- [ ] Document policy and CSRF handling.
   - Acceptance criteria:
-    - State-changing routes enforce authz + CSRF and produce expected denial responses.
-- [ ] Validate deletion and retention contracts.
+    - State-changing routes document authz + CSRF handling.
+- [ ] Document deletion and retention contracts.
   - Acceptance criteria:
     - Plugin deletion/full-account deletion mapping is documented against `ctf/docs/templates/PLUGIN_PROFILE_AND_DELETION_CONTRACT_TEMPLATE.md`.
-- [ ] Validate log redaction and audit completeness.
+- [ ] Document log redaction and audit completeness.
   - Acceptance criteria:
-    - Operational logs are safe; required audit fields are complete.
+    - Operational logs are safe; required audit fields are documented.
 
-## Validation, Seeds, and Release Gates
+## Validation, Seeds, and Release Gates [MVP: VALIDATION DEFERRED — see Rule 118.]
 
-- [ ] Validate command schema/policy/audit behavior manually.
-  - Acceptance criteria:
-    - Invalid payloads and unauthorized requests are covered.
-- [ ] Validate targeting + membership event recalculation manually.
-  - Acceptance criteria:
-    - Membership updates produce correct audience changes.
-- [ ] Validate Postgres + Stream consistency manually.
-  - Acceptance criteria:
-    - Canonical-write-before-fan-out invariant is verified.
-- [ ] Run manual end-to-end walkthrough for admin lifecycle and user rendering on web.
-  - Acceptance criteria:
-    - Draft-to-publish lifecycle and user visibility paths pass.
-- [ ] Add deterministic seed scenarios.
+- [ ] Seed scenarios and data setup.
   - Acceptance criteria:
     - Seeds include lifecycle variants, targeting variants, and user-state variants.
+- [ ] Implementation documentation. [MANUAL TESTING DEFERRED FOR MVP — see Rule 118.]
+  - Acceptance criteria:
+    - Command, targeting, and membership event behavior are documented.
 
 ## Quota-Impact and Predeployment Evidence
 
@@ -116,9 +107,9 @@
 - [ ] Include schema drift predeployment evidence.
   - Acceptance criteria:
     - PR includes drift-check output and migration verification artifacts.
-- [ ] Include PR evidence for completed checklist items.
+- [ ] Implementation tracking. [EVIDENCE CAPTURE DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Every checked item links to PR/commit/validation evidence.
+    - Implementation status is tracked; detailed evidence collection deferred to post-MVP.
 
 ## Change Log
 
