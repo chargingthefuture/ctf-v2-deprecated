@@ -9,7 +9,7 @@ import {
 import { getClerkServerModule } from "../../../../lib/server/clerkServer";
 
 export async function GET(request: Request) {
-  const { auth, currentUser } = await getClerkServerModule(request);
+  const { auth, currentUser } = await getClerkServerModule();
   const { userId } = await auth();
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -33,7 +33,7 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const { auth, currentUser } = await getClerkServerModule(request);
+  const { auth, currentUser } = await getClerkServerModule();
   const body = (await request.json()) as { text?: string };
   const safeText = (body.text ?? "").trim();
 
