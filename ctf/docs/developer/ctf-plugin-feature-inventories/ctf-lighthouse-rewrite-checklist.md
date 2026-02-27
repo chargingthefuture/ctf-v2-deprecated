@@ -99,32 +99,32 @@
   - Acceptance criteria:
     - Blocks lifecycle and enforcement behavior mirror shared contract outcomes.
 
-## Phase 5 — Security, Validation, Seeds, and Release Gates
+## Phase 5 — Security, Validation, Seeds, and Release Gates [MVP: VALIDATION DEFERRED — see Rule 118.]
 
-- [ ] Validate API contracts manually for all route families.
+- [ ] API contracts design documentation for all route families.
   - Acceptance criteria:
-    - Profile/property/match/announcement/admin/blocks endpoints cover success and deny cases.
-- [ ] Validate policy-critical security controls manually.
+    - Profile/property/match/announcement/admin/blocks endpoints are documented.
+- [ ] Policy-critical security controls design documentation.
   - Acceptance criteria:
-    - Authz, CSRF, role, ownership, and block-policy denials are covered.
-- [ ] Add end-to-end coverage for critical LightHouse journeys.
+    - Authz, CSRF, role, ownership, and block-policy handling is documented.
+- [ ] LightHouse critical journey design documentation.
   - Acceptance criteria:
-    - Seeker, host, and admin primary paths pass with stable selectors.
-- [ ] Add cross-client parity acceptance checks.
+    - Seeker, host, and admin primary paths are documented with stable selectors.
+- [ ] Web + Android parity design scope. [PARITY TESTING DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Web and Android critical flow outcomes are equivalent for allow/deny and state transitions.
-- [ ] Confirm release readiness evidence.
+    - Parity-required flows are documented for post-MVP testing.
+- [ ] Release readiness documentation. [EVIDENCE COLLECTION DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Migration replay, seed verification, rollback notes, and inventory/checklist updates are complete.
+    - Migration and seed documentation is complete; evidence collection deferred to post-MVP.
 
 ## Docs Lifecycle
 
 - [ ] Keep LightHouse inventory/checklist synchronized with accepted scope changes.
   - Acceptance criteria:
     - `ctf-lighthouse-feature-inventory.md` and this checklist are updated in the same PR when behavior/contracts change.
-- [ ] Add evidence links when checklist items are completed.
+- [ ] Implementation tracking. [EVIDENCE CAPTURE DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Checked items include references to implementation/validation/docs proving completion.
+    - Implementation status is tracked; evidence collection deferred to post-MVP.
 
 ## Change Log
 

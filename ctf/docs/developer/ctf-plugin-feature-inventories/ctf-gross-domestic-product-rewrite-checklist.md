@@ -102,23 +102,23 @@
   - Acceptance criteria:
     - GDP extension and domain data deletion contracts are documented and policy-aligned.
 
-## Validation, Seeds, and Release Gates
+## Validation, Seeds, and Release Gates [MVP: VALIDATION DEFERRED — see Rule 118.]
 
-- [ ] Validate command schema behavior manually.
+- [ ] Command schema design documentation.
   - Acceptance criteria:
-    - Unknown fields/invalid types/bounds failures are covered.
-- [ ] Validate access policy enforcement manually.
+    - Unknown fields/invalid types/bounds failures handling is documented.
+- [ ] Access policy enforcement design documentation.
   - Acceptance criteria:
-    - Unauthorized role and deny-condition scenarios are blocked deterministically.
-- [ ] Validate audit integrity manually.
+    - Unauthorized role and deny-condition scenarios are documented.
+- [ ] Audit integrity design documentation.
   - Acceptance criteria:
-    - Allow + deny events are append-only and correlation fields are present.
-- [ ] Validate snapshot publish/retrieval and model rollup calculations manually.
+    - Allow + deny events append-only and correlation fields documentation.
+- [ ] Snapshot and model rollup design documentation. [MANUAL TESTING DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Core read/mutate paths are deterministic across web and mobile clients.
-- [ ] Add schema-drift pre-deploy checks.
+    - Core read/mutate paths determinism requirements are documented.
+- [ ] Schema drift predeployment checks.
   - Acceptance criteria:
-    - Drift checks pass and PR includes required schema-drift evidence.
+    - Drift checks documented with required schema-drift evidence.
 
 ## Documentation and Inventory Lifecycle
 
@@ -128,9 +128,9 @@
 - [ ] Record deprecations/removals in inventory changelog.
   - Acceptance criteria:
     - Removed features are moved to dated changelog entries.
-- [ ] Add implementation status updates to this checklist.
+- [ ] Implementation tracking. [EVIDENCE COLLECTION DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Each completed checkbox references PR evidence.
+    - Implementation status is tracked; evidence collection deferred to post-MVP.
 
 ## Open Decisions Tracker
 

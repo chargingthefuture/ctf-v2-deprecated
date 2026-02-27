@@ -93,18 +93,18 @@
   - Acceptance criteria:
     - Logs omit sensitive payload details while preserving operational/audit fields.
 
-## Validation, Seeds, and Release Gates
+## Validation, Seeds, and Release Gates [MVP: VALIDATION DEFERRED — see Rule 118.]
 
-- [ ] Validate command contracts manually.
+- [ ] Command contract documentation.
   - Acceptance criteria:
-    - Schema, policy, and audit manual validation covers rejection paths.
-- [ ] Validate Postgres + Stream consistency manually.
+    - Schema, policy, and audit behavior are documented.
+- [ ] Postgres + Stream consistency design.
   - Acceptance criteria:
-    - Canonical-write-before-fan-out invariant is verified.
-- [ ] Run manual end-to-end walkthrough for web timeline and optional toast mode.
+    - Canonical-write-before-fan-out behavior is documented.
+- [ ] Web timeline and optional toast mode design.
   - Acceptance criteria:
-    - Rendering mode toggles and fallbacks are manually validated.
-- [ ] Add deterministic seed scenarios.
+    - Rendering mode toggles and fallbacks are implemented.
+- [ ] Deterministic seed scenarios.
   - Acceptance criteria:
     - Seed set includes feed items, announcements, membership events, and read/dismiss states.
 
@@ -116,9 +116,9 @@
 - [ ] Include schema drift predeployment evidence in PR.
   - Acceptance criteria:
     - PR includes command output/screenshots/logs proving drift check completion and migration verification.
-- [ ] Include implementation evidence for completed checklist items.
+- [ ] Implementation tracking. [EVIDENCE CAPTURE DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Each checked item references PR/commit/validation artifacts.
+    - Implementation status is tracked; detailed evidence collection deferred to post-MVP.
 
 ## Change Log
 

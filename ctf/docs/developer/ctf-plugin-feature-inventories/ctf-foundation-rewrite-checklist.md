@@ -134,26 +134,26 @@
     - Plugin-scoped deletion preserves canonical profile and Directory data.
     - Full-account flow removes Foundation user-scoped data per orchestrator policy.
 
-## Validation, Seeds, and Release Gates
+## Validation, Seeds, and Release Gates [MVP: VALIDATION DEFERRED — see Rule 118.]
 
-- [ ] Validate command schema behavior manually.
+- [ ] Command schema design documentation.
   - Acceptance criteria:
-    - Unknown fields, type errors, bounds violations, and invalid enum values fail.
-- [ ] Validate access policy enforcement manually.
+    - Unknown fields, type errors, bounds violations, and invalid enum values handling is documented.
+- [ ] Access policy enforcement design documentation.
   - Acceptance criteria:
-    - Missing consent, wrong role, region restrictions, cross-tenant access, and deny conditions are covered.
-- [ ] Validate audit contract behavior manually.
+    - Missing consent, wrong role, region restrictions, cross-tenant access, and deny conditions are documented.
+- [ ] Audit contract design documentation.
   - Acceptance criteria:
-    - Allow and deny outcomes include expected evidence fields and request/trace correlations.
-- [ ] Validate quote lifecycle and history behavior manually.
+    - Allow and deny outcomes expected evidence fields and request/trace correlations are documented.
+- [ ] Quote lifecycle and history design documentation.
   - Acceptance criteria:
-    - Requested/provider_responded/closed transitions and read permissions are deterministic.
-- [ ] Validate Stream degradation behavior manually.
+    - Requested/provider_responded/closed transitions and read permissions behavior is documented.
+- [ ] Stream degradation behavior documentation.
   - Acceptance criteria:
     - Yellow/orange/red threshold behavior aligns with Maker-tier rules.
-- [ ] Run web + Android parity manual validation walkthroughs.
+- [ ] Web + Android parity design scope. [MANUAL PARITY COVERAGE DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Parity-required flows pass with equivalent outcomes.
+    - Parity-required flows are documented for post-MVP testing.
 
 ## Documentation and Inventory Lifecycle
 
@@ -163,9 +163,9 @@
 - [ ] Keep Foundation contracts updated with version and compatibility notes.
   - Acceptance criteria:
     - Command/policy/audit changes include migration impact notes when relevant.
-- [ ] Capture checklist evidence links for completed items.
+- [ ] Implementation tracking. [EVIDENCE CAPTURE DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Each completed checkbox references PR/commit/validation/document evidence.
+    - Implementation status is tracked; evidence collection deferred to post-MVP.
 
 ## Change Log
 

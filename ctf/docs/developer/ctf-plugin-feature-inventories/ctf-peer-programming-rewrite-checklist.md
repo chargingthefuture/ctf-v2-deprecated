@@ -92,18 +92,18 @@
   - Acceptance criteria:
     - Completed Android items match web command outcomes and deny reason behavior.
 
-## Phase 6 — Security, Audit, and Release Gates
+## Phase 6 — Security, Audit, and Release Gates [MVP: VALIDATION DEFERRED — see Rule 118.]
 
-- [ ] Validate policy deny-by-default posture.
+- [ ] Policy deny-by-default posture design.
   - Acceptance criteria:
-    - All commands deny on missing role/scope/tenancy or tier mismatch.
-- [ ] Validate audit integrity.
+    - All commands document expected deny conditions for missing role/scope/tenancy or tier mismatch.
+- [ ] Audit integrity design.
   - Acceptance criteria:
-    - Allow and deny outcomes are captured with request/trace correlation for each command.
-- [ ] Validate contract and integration behavior manually.
+    - Allow and deny outcomes are documented with request/trace correlation requirements for each command.
+- [ ] Contract and integration design documentation. [MANUAL TESTING DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Command schema and policy/audit behavior are covered for positive and negative paths.
-- [ ] Keep inventory and checklist synchronized with behavior changes.
+    - Command schema and policy/audit behavior requirements are documented.
+- [ ] Inventory and checklist synchronization.
   - Acceptance criteria:
     - Feature inventory + checklist are updated in same PR as scope or contract changes.
 

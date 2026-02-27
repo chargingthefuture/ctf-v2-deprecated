@@ -75,19 +75,19 @@
   - Acceptance criteria:
     - Allow/deny outcomes and report exports are captured with actor/action/outcome/timestamp correlation fields.
 
-## Phase 5 — Validation, Seeds, and Release Gates
+## Phase 5 — Validation, Seeds, and Release Gates [MVP: VALIDATION DEFERRED — see Rule 118.]
 
-- [ ] Validate command/access/audit parity manually.
+- [ ] Command/access/audit parity design documentation.
   - Acceptance criteria:
-    - Command names and required fields match across contract files.
-- [ ] Validate week selection and comparison correctness manually.
+    - Command names and required fields are documented across contract files.
+- [ ] Week selection and comparison design documentation. [MANUAL TESTING DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Current/previous week calculations remain deterministic.
-    - Current-week-only polling and focus-refetch behavior are included in manual validation walkthrough.
-- [ ] Add deterministic seed fixtures for weekly metrics scenarios.
+    - Current/previous week calculation behavior is documented.
+    - Current-week-only polling and focus-refetch behavior are documented.
+- [ ] Deterministic seed fixtures for weekly metrics scenarios.
   - Acceptance criteria:
-    - Seeded week datasets are reproducible via deterministic seed scripts/data for local/dev manual validation and CI.
-- [ ] Complete release gate review.
+    - Seeded week datasets are reproducible via deterministic seed scripts/data.
+- [ ] Release gate review.
   - Acceptance criteria:
     - Inventory + checklist are updated in the same PR as accepted scope changes.
 

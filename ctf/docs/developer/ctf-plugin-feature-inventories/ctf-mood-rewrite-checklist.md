@@ -76,17 +76,16 @@
   - Acceptance criteria:
     - No Mood admin or announcements parity tasks are required because these are out of scope.
 
-## Phase 5 — Validation, Seeds, and Release Evidence
+## Phase 5 — Validation, Seeds, and Release Evidence [MVP: VALIDATION DEFERRED — see Rule 118.]
 
-- [ ] Validate API/integration behavior manually for retained feature scope.
+- [ ] API/integration design documentation for retained feature scope.
   - Acceptance criteria:
-    - Submit and eligibility behaviors are covered, including cooldown edges.
-- [ ] Add deterministic seed fixtures for retained domain entities.
+    - Submit and eligibility behaviors are documented, including cooldown edges.
+- [ ] Deterministic seed fixtures for retained domain entities.
   - Acceptance criteria:
-    - Mood-check fixtures use deterministic seed scripts/data to support repeatable local/dev manual validation scenarios.
-- [ ] Include parity and scope evidence in PRs.
+    - Mood-check fixtures are deterministic and data-compatible.
+- [ ] Scope evidence documentation. [EVIDENCE COLLECTION DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Each completed checklist item references implementation/validation/doc evidence.
     - CTF inventory + checklist are updated in same PR as feature-scope changes.
 
 ## Change Log

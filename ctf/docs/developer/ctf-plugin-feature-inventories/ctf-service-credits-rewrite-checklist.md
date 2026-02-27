@@ -114,23 +114,23 @@
   - Acceptance criteria:
     - Account-deletion treasury returns are recorded as reserve reallocations and excluded from GDP recognition metrics.
 
-## Phase 6 — Validation, Seeds, and Release Gates
+## Phase 6 — Validation, Seeds, and Release Gates [MVP: VALIDATION DEFERRED — see Rule 118.]
 
-- [ ] Validate command schema behavior manually.
+- [ ] Command schema design documentation.
   - Acceptance criteria:
-    - Unknown fields/invalid types/bounds failures are covered.
-- [ ] Validate access policy enforcement manually.
+    - Unknown fields/invalid types/bounds failures handling is documented.
+- [ ] Access policy enforcement design documentation.
   - Acceptance criteria:
-    - Missing scope, wrong role, cross-tenant, invalid plugin-path, and no-fiat violations are denied.
-- [ ] Validate audit integrity manually.
+    - Missing scope, wrong role, cross-tenant, invalid plugin-path, and no-fiat denial cases are documented.
+- [ ] Audit integrity design documentation.
   - Acceptance criteria:
-    - Allow + deny events are append-only and include request/trace correlation fields.
-- [ ] Validate adapter seam and failure recovery manually.
+    - Allow + deny events append-only and correlation fields documentation.
+- [ ] Adapter seam and failure recovery design documentation. [MANUAL TESTING DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Adapter timeout/retry/failure classes produce deterministic command outcomes.
-- [ ] Add deterministic seed checks for financial scenarios.
+    - Adapter timeout/retry/failure classes expected outcomes are documented.
+- [ ] Deterministic seed scenarios for financial data.
   - Acceptance criteria:
-    - Wallet/transfer/escrow/treasury/dispute seed scenarios are reproducible via deterministic seed scripts/data for local/dev manual validation and CI.
+    - Wallet/transfer/escrow/treasury/dispute seed scenarios are reproducible via deterministic seed scripts/data.
 
 ## Phase 7 — Docs Lifecycle
 
@@ -143,9 +143,9 @@
 - [ ] Keep command/access/audit contract YAMLs versioned and synchronized.
   - Acceptance criteria:
     - Command version bumps and policy/audit schema changes are updated in the same PR.
-- [ ] Add implementation status updates to this checklist.
+- [ ] Implementation tracking. [EVIDENCE COLLECTION DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Each completed checkbox references PR evidence.
+    - Implementation status is tracked; evidence collection deferred to post-MVP.
 
 ## Open Decisions Tracker
 

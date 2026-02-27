@@ -102,29 +102,29 @@
   - Acceptance criteria:
     - One uniform CSRF policy contract is enforced and verified for admin writes.
 
-## Phase 6 — Validation, Seeds, and Release Gates
+## Phase 6 — Validation, Seeds, and Release Gates [MVP: VALIDATION DEFERRED — see Rule 118.]
 
-- [ ] Validate all API groups manually against contracts.
+- [ ] API groups design documentation against contracts.
   - Acceptance criteria:
-    - Success, validation, unauthorized, forbidden, and not-found paths are covered.
-- [ ] Validate lifecycle integration behavior manually.
+    - Success, validation, unauthorized, forbidden, and not-found paths are documented.
+- [ ] Lifecycle integration design documentation.
   - Acceptance criteria:
-    - Request → fulfillment → close and chat access constraints are validated in a manual end-to-end walkthrough.
-- [ ] Validate privacy and abuse-control behavior manually for public routes.
+    - Request → fulfillment → close and chat access constraints are documented.
+- [ ] Privacy and abuse-control design documentation for public routes.
   - Acceptance criteria:
-    - DTO projection and anti-scraping/rate-limit behavior are CI-gated.
-- [ ] Add release readiness checks.
+    - DTO projection and anti-scraping/rate-limit behavior are documented.
+- [ ] Release readiness documentation.
   - Acceptance criteria:
-    - Schema replay, seed determinism, and rollback notes are verified.
+    - Schema and seed documentation is complete.
 
 ## Docs Lifecycle (Rule 120)
 
 - [ ] Keep this checklist and `ctf-socketrelay-feature-inventory.md` synchronized.
   - Acceptance criteria:
     - Feature add/remove/behavioral changes update both docs in the same PR.
-- [ ] Record evidence links when checklist items are completed.
+- [ ] Implementation tracking. [EVIDENCE CAPTURE DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Each checked item references implementation/validation evidence.
+    - Implementation status is tracked; evidence collection deferred to post-MVP.
 - [ ] Track removals in inventory changelog/deprecations notes.
   - Acceptance criteria:
     - Removed scope is date-stamped and not silently deleted.

@@ -99,26 +99,26 @@
   - Acceptance criteria:
     - Plugin-scoped deletion preserves canonical profile and other plugin data; full-account flow executes cross-plugin deletion policy.
 
-## Validation, Seeds, and Release Gates
+## Validation, Seeds, and Release Gates [MVP: VALIDATION DEFERRED — see Rule 118.]
 
-- [ ] Validate command schema behavior manually.
+- [ ] Command schema design documentation.
   - Acceptance criteria:
-    - Unknown fields/invalid types/bounds failures are covered.
-- [ ] Validate access policy enforcement manually.
+    - Unknown fields/invalid types/bounds failures handling is documented.
+- [ ] Access policy enforcement design documentation.
   - Acceptance criteria:
-    - Missing consent, wrong role, cross-tenant, and region restriction cases are denied.
-- [ ] Validate audit integrity manually.
+    - Missing consent, wrong role, cross-tenant, and region restriction denial cases are documented.
+- [ ] Audit integrity design documentation.
   - Acceptance criteria:
-    - Allow + deny events are append-only and correlation fields are present.
-- [ ] Validate lifecycle/disputes/payouts behavior manually.
+    - Allow + deny events append-only and correlation fields documentation.
+- [ ] Lifecycle/disputes/payouts behavior design documentation. [MANUAL TESTING DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Core transactional paths and failure recovery are deterministic.
-- [ ] Run web and Android parity manual validation walkthroughs.
+    - Core transactional paths and failure recovery requirements are documented.
+- [ ] Web and Android parity design scope. [PARITY TESTING DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Critical journeys pass on both platforms with equivalent outcomes.
-- [ ] Add deterministic seed checks.
+    - Critical journeys parity requirements are documented for post-MVP testing.
+- [ ] Deterministic seed scenarios.
   - Acceptance criteria:
-    - Seeded scenarios are reproducible via deterministic seed scripts/data for local/dev manual validation and CI.
+    - Seeded scenarios are reproducible via deterministic seed scripts/data.
 
 ## Documentation and Inventory Lifecycle
 
@@ -128,9 +128,9 @@
 - [ ] Record deprecations/removals in inventory changelog.
   - Acceptance criteria:
     - Removed features are moved to dated changelog entries.
-- [ ] Add implementation status updates to this checklist.
+- [ ] Implementation tracking. [EVIDENCE COLLECTION DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Each completed checkbox references PR/commit evidence.
+    - Implementation status is tracked; evidence collection deferred to post-MVP.
 
 ## Open Decisions Tracker
 

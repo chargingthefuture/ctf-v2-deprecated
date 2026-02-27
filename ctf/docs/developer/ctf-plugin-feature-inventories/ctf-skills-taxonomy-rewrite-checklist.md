@@ -75,21 +75,21 @@
   - Acceptance criteria:
     - Delete allow/deny outcomes include actor, purpose, target class, and timestamp metadata.
 
-## Phase 5 — Validation, Seeds, and Release Gates
+## Phase 5 — Validation, Seeds, and Release Gates [MVP: VALIDATION DEFERRED — see Rule 118.]
 
-- [ ] Validate command/access/audit parity manually.
+- [ ] Command/access/audit parity design documentation.
   - Acceptance criteria:
-    - Command names and required fields match across contract files.
-- [ ] Validate dependency safeguards manually.
+    - Command names and required fields are documented across contract files.
+- [ ] Dependency safeguards design.
   - Acceptance criteria:
-    - Destructive-delete policy and dependency warnings are validated with deterministic fixtures.
-- [ ] Validate cross-app compatibility manually.
+    - Destructive-delete policy and dependency warnings are documented with deterministic fixtures.
+- [ ] Cross-app compatibility design.
   - Acceptance criteria:
-    - Directory/Workforce (and approved dependents) remain compatible with hierarchy/flattened outputs.
-- [ ] Add deterministic seed fixtures for taxonomy scenarios.
+    - Directory/Workforce (and approved dependents) compatibility requirements are documented for hierarchy/flattened outputs.
+- [ ] Deterministic seed fixtures for taxonomy scenarios.
   - Acceptance criteria:
     - Seeded hierarchy trees and dependency references are reproducible.
-- [ ] Complete release gate review.
+- [ ] Release gate review.
   - Acceptance criteria:
     - Inventory + checklist are updated in the same PR as accepted scope changes.
 

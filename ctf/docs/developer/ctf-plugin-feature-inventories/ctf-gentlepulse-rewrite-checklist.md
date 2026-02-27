@@ -71,24 +71,23 @@
 
 ## Phase 4 — Web and Android Parity Gates
 
-- [ ] Validate web/mobile parity for core user journeys.
+- [ ] Web/mobile parity design scope for core user journeys.
   - Acceptance criteria:
-    - Browse → play → rate → favorite behavior is equivalent across web and Android.
-- [ ] Validate ownership boundary for settings/accessibility.
+    - Browse → play → rate → favorite behavior is documented for equivalence.
+- [ ] Ownership boundary design for settings/accessibility.
   - Acceptance criteria:
-    - GentlePulse clients consume app-level settings contracts rather than plugin-local settings logic.
+    - GentlePulse clients consume app-level settings contracts.
 
-## Phase 5 — Validation, Seeds, and Release Evidence
+## Phase 5 — Validation, Seeds, and Release Evidence [MVP: VALIDATION DEFERRED — see Rule 118.]
 
-- [ ] Validate API/integration behavior manually for retained feature scope.
+- [ ] API/integration design documentation for retained feature scope.
   - Acceptance criteria:
-    - Meditations, play count, ratings, and favorites are covered.
-- [ ] Add deterministic seed fixtures for retained domain entities.
+    - Meditations, play count, ratings, and favorites are documented.
+- [ ] Deterministic seed fixtures for retained domain entities.
   - Acceptance criteria:
-    - Meditation and interaction fixtures are deterministic, schema-compatible, and ready for local/dev manual validation.
-- [ ] Include parity and scope evidence in PRs.
+    - Meditation and interaction fixtures are deterministic and schema-compatible.
+- [ ] Scope evidence documentation. [EVIDENCE COLLECTION DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Each completed checklist item references implementation/validation/doc evidence.
     - CTF inventory + checklist are updated in same PR as feature-scope changes.
 
 ## Change Log

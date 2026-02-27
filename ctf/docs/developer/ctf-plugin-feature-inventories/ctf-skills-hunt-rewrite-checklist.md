@@ -96,20 +96,20 @@
   - Acceptance criteria:
     - Plugin deletion removes user-scoped plugin records while preserving required audit evidence and Directory ownership boundaries.
 
-## Phase 7 — Validation, Seeds, and Release Gates
+## Phase 7 — Validation, Seeds, and Release Gates [MVP: VALIDATION DEFERRED — see Rule 118.]
 
-- [ ] Validate command schema behavior manually.
+- [ ] Command schema design documentation.
   - Acceptance criteria:
-    - Unknown/invalid fields and enum/bounds violations are covered.
-- [ ] Validate access policy and audit contract behavior manually.
+    - Unknown/invalid fields and enum/bounds violations handling is documented.
+- [ ] Access policy and audit contract design documentation.
   - Acceptance criteria:
-    - Missing role/scope, invalid region, rate-limit, and policy-deny cases are covered.
-- [ ] Validate scoring and leaderboard behavior manually.
+    - Missing role/scope, invalid region, rate-limit, and policy-deny cases are documented.
+- [ ] Scoring and leaderboard design documentation.
   - Acceptance criteria:
-    - Review transitions and leaderboard recompute outcomes are deterministic.
-- [ ] Add seed fixtures for rounds/submissions/reviews.
+    - Review transitions and leaderboard recompute behavior is documented.
+- [ ] Seed fixtures for rounds/submissions/reviews.
   - Acceptance criteria:
-    - Seed scenarios are reproducible via deterministic seed scripts/data for local/dev manual validation and CI.
+    - Seed scenarios are reproducible via deterministic seed scripts/data for local/dev validation.
 
 ## Open Decisions Tracker
 

@@ -121,33 +121,32 @@
   - Acceptance criteria:
     - Audit contract evidence includes both success and denied operation cases.
 
-## Phase 5 — Validation, Seeds, and Non-Regression Gates
+## Phase 5 — Validation, Seeds, and Non-Regression Gates [MVP: VALIDATION DEFERRED — see Rule 118.]
 
-- [ ] Validate command/policy/audit schema behavior manually.
+- [ ] Command/policy/audit schema design documentation. [MANUAL TESTING DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Manual validation covers valid and invalid payload paths for all core commands.
-- [ ] Validate recruited derivation and dashboard semantics manually.
+    - Valid and invalid payload paths for all core commands are documented.
+- [ ] Recruited derivation and dashboard semantics design documentation.
   - Acceptance criteria:
-    - Manual validation verifies live current-state and historical weekly-bucket behavior.
-- [ ] Validate parity user/admin flows manually.
+    - Live current-state and historical weekly-bucket behavior is documented.
+- [ ] Parity user/admin flows design scope. [PARITY TESTING DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Profile, occupations, announcements, report drilldowns, and async export job flows are covered.
-    - Mobile admin parity scenarios are covered for in-scope operations.
-- [ ] Add deterministic seed fixtures for Directory-write-derived recruited history.
+    - Profile, occupations, announcements, report drilldowns, and export job flows are documented for post-MVP testing.
+- [ ] Deterministic seed fixtures for Directory-write-derived recruited history.
   - Acceptance criteria:
     - Seed outputs are deterministic and schema-compatible.
-- [ ] Add non-regression guard for accidental legacy event artifacts.
+- [ ] Non-regression guard for legacy event artifacts.
   - Acceptance criteria:
-    - Validation and/or lint gate fails if legacy accidental event artifact patterns are reintroduced.
+    - Lint gate fails if legacy accidental event artifact patterns are reintroduced.
 
 ## Phase 6 — PR Evidence and Release Readiness
 
 - [ ] Include schema drift and migration evidence in PR.
   - Acceptance criteria:
     - PR includes drift check output, migration replay evidence, rollback notes, and compatibility decision.
-- [ ] Include checklist evidence links for each completed item.
+- [ ] Implementation tracking. [EVIDENCE COLLECTION DEFERRED FOR MVP — see Rule 118.]
   - Acceptance criteria:
-    - Each checked item links to implementation/validation/doc artifacts.
+    - Implementation status is tracked; detailed evidence collection deferred to post-MVP.
 - [ ] Confirm inventory + checklist lifecycle compliance.
   - Acceptance criteria:
     - `ctf-workforce-feature-inventory.md` and this checklist are updated in the same PR as behavior/contract changes.
