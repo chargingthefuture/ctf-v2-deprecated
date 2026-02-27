@@ -30,6 +30,7 @@
 - [120-plugin-feature-inventory-lifecycle-rules.mdc](120-plugin-feature-inventory-lifecycle-rules.mdc)
 - [121-canonical-metric-registry-rules.mdc](121-canonical-metric-registry-rules.mdc)
 - [122-schema-drift-predeployment-rules.mdc](122-schema-drift-predeployment-rules.mdc)
+- [123-environment-configuration-rules.mdc](123-environment-configuration-rules.mdc)
 - [200-plugin-command-contract-templates.mdc](200-plugin-command-contract-templates.mdc)
 - [201-plugin-command-schema-template.mdc](201-plugin-command-schema-template.mdc)
 - [202-plugin-access-policy-schema-template.mdc](202-plugin-access-policy-schema-template.mdc)
@@ -38,12 +39,13 @@
 
 ## Precedence
 1. Product safety/compliance constraints
-2. Monorepo and boundary rules
-3. Platform architecture rules
-4. Platform coding rules
-5. Testing and release rules
-6. GitHub Actions CI rules
-7. Plugin feature rules
+2. Environment configuration rules (integral to Clerk auth functioning)
+3. Monorepo and boundary rules
+4. Platform architecture rules
+5. Platform coding rules
+6. Testing and release rules
+7. GitHub Actions CI rules
+8. Plugin feature rules
 
 If two rules conflict, choose the stricter rule and document the decision.
 
