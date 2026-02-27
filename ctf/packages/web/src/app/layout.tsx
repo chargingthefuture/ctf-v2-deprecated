@@ -1,7 +1,12 @@
-import { ClerkProvider } from "@clerk/nextjs";
-import { headers } from "next/headers";
 import type { Metadata } from "next";
-import { resolveClerkRuntimeConfig } from "../lib/server/clerkHostConfig";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -9,23 +14,27 @@ export const metadata: Metadata = {
   description: "A trauma-informed skills economy for survivors.",
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const requestHeaders = await headers();
-  const { host, publishableKey, signInUrl } = resolveClerkRuntimeConfig(requestHeaders);
-  const appUrl = `https://${host}`;
-
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en">
-      <body>
-        <ClerkProvider
-          publishableKey={publishableKey}
-          signInUrl={signInUrl}
-          afterSignOutUrl={signInUrl}
-          signInFallbackRedirectUrl={`${appUrl}/`}
-        >
+    <ClerkProvider>
+      <html lang="en">
+        <body>
+          <header>
+            <SignedOut>
+              <SignInButton />
+              <SignUpButton />
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </header>
           {children}
-        </ClerkProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

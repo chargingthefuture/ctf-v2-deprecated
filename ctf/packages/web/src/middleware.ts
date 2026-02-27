@@ -1,53 +1,12 @@
-import type { NextRequest } from "next/server";
-import { clerkMiddleware } from "@clerk/nextjs/server";
-import { NextResponse } from "next/server";
-import type { NextFetchEvent } from "next/server";
-import { resolveClerkRuntimeConfig } from "./lib/server/clerkHostConfig";
+import { clerkMiddleware } from '@clerk/nextjs/server'
 
-const scannerPathPattern =
-  /(wp-admin|wp-login|xmlrpc\.php|phpmyadmin|\.env|\.git|cgi-bin|boaform|hnap1|vendor\/phpunit|\.aws|id_rsa|autodiscover|\.svn|\.DS_Store|\.php$|\.asp$|\.aspx$)/i;
-
-const scannerUserAgentPattern =
-  /(python-requests|curl|wget|sqlmap|nikto|nmap|masscan|zgrab|go-http-client|scrapy|crawler|scanner|bot)/i;
-
-const scannerProtectionMiddleware = (request: NextRequest) => {
-  const pathname = request.nextUrl.pathname;
-  const userAgent = request.headers.get("user-agent") ?? "";
-
-  if (scannerPathPattern.test(pathname) || scannerUserAgentPattern.test(userAgent)) {
-    return new NextResponse("Not Found", { status: 404 });
-  }
-
-  return NextResponse.next();
-};
-
-const clerkHostMiddleware = (request: NextRequest, event: NextFetchEvent) => {
-  let clerkConfig;
-
-  try {
-    clerkConfig = resolveClerkRuntimeConfig(request.headers);
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "Clerk host mapping error";
-    console.error("[clerk-host-middleware]", {
-      message,
-      host: request.headers.get("x-forwarded-host") ?? request.headers.get("host"),
-    });
-    return new NextResponse(message, { status: 500 });
-  }
-
-  const middleware = clerkMiddleware(
-    (_auth, innerRequest) => scannerProtectionMiddleware(innerRequest),
-    {
-      secretKey: clerkConfig.secretKey,
-      publishableKey: clerkConfig.publishableKey,
-    },
-  );
-
-  return middleware(request, event);
-};
-
-export default clerkHostMiddleware;
+export default clerkMiddleware()
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
-};
+  matcher: [
+    // Skip Next.js internals and all static files, unless found in search params
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Always run for API routes
+    '/(api|trpc)(.*)',
+  ],
+}

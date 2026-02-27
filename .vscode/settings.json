@@ -27,5 +27,6 @@
         "titleBar.activeForeground": "#d4d4d4",
         "sideBar.background": "#1b1616",
         "sideBar.foreground": "#d4d4d4"
-    }
+    },
+    "python-envs.defaultEnvManager": "ms-python.python:system"
 }
