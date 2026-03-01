@@ -1,7 +1,0 @@
-[build]
-# Build from workspace root for deterministic lockfile resolution.
-command = "corepack enable && corepack prepare pnpm@9.12.0 --activate && pnpm install --frozen-lockfile --prod=false && pnpm --filter @ctf/web build"
-
-[start]
-# Start only the web package app.
-command = "corepack enable && corepack prepare pnpm@9.12.0 --activate && pnpm --filter @ctf/web start"
