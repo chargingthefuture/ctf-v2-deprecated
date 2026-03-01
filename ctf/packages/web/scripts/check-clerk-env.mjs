@@ -52,4 +52,57 @@ if (missingGroups.length > 0) {
   process.exit(1);
 }
 
+function pickEnv(...keys) {
+  for (const key of keys) {
+    if (process.env[key]) {
+      return process.env[key];
+    }
+  }
+
+  return undefined;
+}
+
+function parseUrl(value) {
+  if (!value) {
+    return null;
+  }
+
+  try {
+    return new URL(value);
+  } catch {
+    return null;
+  }
+}
+
+const appUrl = pickEnv('NEXT_PUBLIC_APP_URL', 'RAILWAY_NEXT_PUBLIC_APP_URL', 'VERCEL_NEXT_PUBLIC_APP_URL');
+const signInUrl = pickEnv(
+  'CLERK_SIGN_IN_URL',
+  'RAILWAY_STAGING_CLERK_SIGN_IN_URL',
+  'VERCEL_CLERK_SIGN_IN_URL',
+  'RAILWAY_PROD_CLERK_SIGN_IN_URL',
+);
+
+const parsedAppUrl = parseUrl(appUrl);
+
+if (appUrl && !parsedAppUrl) {
+  console.error(`Invalid app URL format: ${appUrl}`);
+  process.exit(1);
+}
+
+if (signInUrl && !signInUrl.startsWith('/')) {
+  const parsedSignInUrl = parseUrl(signInUrl);
+
+  if (!parsedSignInUrl) {
+    console.error(`Invalid sign-in URL format: ${signInUrl}`);
+    process.exit(1);
+  }
+
+  if (parsedAppUrl && parsedSignInUrl.host !== parsedAppUrl.host) {
+    console.error(
+      `Sign-in URL host mismatch. signIn=${parsedSignInUrl.host} app=${parsedAppUrl.host}.`,
+    );
+    process.exit(1);
+  }
+}
+
 console.log(`Clerk environment validation passed for target: ${ENV_TARGET}`);
