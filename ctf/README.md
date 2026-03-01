@@ -40,6 +40,11 @@ This folder contains the rewrite monorepo scaffold for:
 - Access stays pending until an admin approves them.
 - Admins (existing `users.is_admin = true`) can review and approve users at `/admin/users`.
 
+## Auth Foundation Baseline (BF-01)
+
+- Clerk foundation implementation notes: `ctf/docs/developer/CLERK_FOUNDATION_BASELINE_BF01.md`
+- Plugin deny taxonomy baseline: `ctf/docs/contracts/PLUGIN_AUTH_DENY_TAXONOMY_BASELINE.md`
+
 ## Prompt Leak Protection
 
 - This repository includes git hooks that block committing/pushing AI prompt text patterns.

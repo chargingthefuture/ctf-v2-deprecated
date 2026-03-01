@@ -28,5 +28,10 @@
         "sideBar.background": "#1b1616",
         "sideBar.foreground": "#d4d4d4"
     },
-    "python-envs.defaultEnvManager": "ms-python.python:system"
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+      // Prevent Copilot (Agent mode) from automatically opening files it creates or edits
+  "github.copilot.agent.openFilesOnChange": false,
+
+  // (optional) also stop the initial “create file” tab from opening
+  "github.copilot.agent.openFilesOnCreate": false
 }

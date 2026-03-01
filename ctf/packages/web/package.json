@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p ${PORT:-3000}",
-    "lint": "eslint src --max-warnings 0"
+    "lint": "eslint src --max-warnings 0",
+    "check:clerk-env": "node ./scripts/check-clerk-env.mjs"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.0.0",
