@@ -104,6 +104,24 @@ jobs:
           set -euo pipefail
           [ -n "$RAILWAY_TOKEN" ] || { echo "Missing RAILWAY_TOKEN"; exit 1; }
 
+      - name: Validate Clerk env contract for Railway target
+        working-directory: ctf
+        env:
+          CLERK_ENV_TARGET: ${{ github.ref == 'refs/heads/main' && 'railway-production' || 'railway-staging' }}
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+          CLERK_SIGN_IN_URL: ${{ secrets.CLERK_SIGN_IN_URL }}
+          RAILWAY_NEXT_PUBLIC_APP_URL: ${{ secrets.RAILWAY_NEXT_PUBLIC_APP_URL }}
+          RAILWAY_STAGING_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.RAILWAY_STAGING_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+          RAILWAY_STAGING_CLERK_SECRET_KEY: ${{ secrets.RAILWAY_STAGING_CLERK_SECRET_KEY }}
+          RAILWAY_STAGING_CLERK_SIGN_IN_URL: ${{ secrets.RAILWAY_STAGING_CLERK_SIGN_IN_URL }}
+          RAILWAY_PROD_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.RAILWAY_PROD_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+          RAILWAY_PROD_CLERK_SECRET_KEY: ${{ secrets.RAILWAY_PROD_CLERK_SECRET_KEY }}
+          RAILWAY_PROD_CLERK_SIGN_IN_URL: ${{ secrets.RAILWAY_PROD_CLERK_SIGN_IN_URL }}
+        run: |
+          set -euo pipefail
+          corepack pnpm --filter @ctf/web run check:clerk-env
+
       - name: Deploy to Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
