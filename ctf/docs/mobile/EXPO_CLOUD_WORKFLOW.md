@@ -7,8 +7,13 @@ This project uses cloud-first mobile delivery so development can proceed without
 Configure in repository settings:
 
 - `EXPO_TOKEN` (GitHub secret): token for EAS CLI auth.
-- `MOBILE_PROJECT_ID` (GitHub variable or environment variable): Expo project identifier used by `app.config.ts`.
-- `MOBILE_UPDATES_URL` (GitHub variable or environment variable): EAS updates URL for the project.
+- `EXPO_MOBILE_PROJECT_ID` (GitHub variable): Expo project identifier used by `app.config.ts`.
+- `EXPO_MOBILE_UPDATES_URL` (GitHub variable): EAS updates URL for the project.
+
+Compatibility fallback keys are still accepted by CI/config resolver:
+
+- `MOBILE_PROJECT_ID`
+- `MOBILE_UPDATES_URL`
 
 ## Branch to Channel Mapping
 
@@ -40,24 +45,29 @@ Before shipping additional features, verify these first:
 
 1. **Environment variables** are configured for mobile runtime:
 
-- `MOBILE_CLERK_PUBLISHABLE_KEY_STAGING` (Expo Go/dev)
-- `MOBILE_CLERK_PUBLISHABLE_KEY_PRODUCTION` (APK/release)
+- `MOBILE_CLERK_PUBLISHABLE_KEY_STAGING` (Expo Go/dev and non-production EAS profiles)
+- `MOBILE_CLERK_PUBLISHABLE_KEY_PRODUCTION` (production APK/release)
 - `MOBILE_APP_URL` (base URL of the deployed web/API host, no trailing slash)
 - `MOBILE_OBSERVABILITY_PROVIDER`
 - `MOBILE_SENTRY_DSN` (when using Sentry)
 
-2. **Type safety** passes:
+2. **CI preflight env gate** passes in Expo workflows:
+
+- `pnpm --filter @ctf/mobile run check:mobile-env`
+- Validates profile-sensitive env contract before EAS build/update steps.
+
+3. **Type safety** passes:
 
 - `pnpm --filter @ctf/mobile typecheck`
 
-3. **Invite-only flow smoke test** on a preview APK:
+4. **Invite-only flow smoke test** on a preview APK:
 
 - Signed-out user sees sign-in form.
 - Signed-in, unapproved user is prompted for Quora URL.
 - After saving Quora URL, user sees pending approval state.
 - After admin approval (`users.is_approved = true`), user can access approved app shell.
 
-4. **Cloud build path** succeeds:
+5. **Cloud build path** succeeds:
 
 - `preview` build via `.github/workflows/expo-preview.yml`
 - install and launch generated APK on Android device.

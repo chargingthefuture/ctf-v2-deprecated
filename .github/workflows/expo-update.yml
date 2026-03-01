@@ -82,6 +82,22 @@ jobs:
           echo "branch_name=$branch_name" >> "$GITHUB_OUTPUT"
           echo "channel=$channel" >> "$GITHUB_OUTPUT"
 
+      - name: Validate mobile env contract
+        if: ${{ steps.expo_token.outputs.has_token == 'true' }}
+        env:
+          MOBILE_ENV_TARGET: ${{ steps.target.outputs.channel }}
+          EXPO_MOBILE_PROJECT_ID: ${{ vars.EXPO_MOBILE_PROJECT_ID }}
+          MOBILE_PROJECT_ID: ${{ vars.MOBILE_PROJECT_ID }}
+          EXPO_MOBILE_UPDATES_URL: ${{ vars.EXPO_MOBILE_UPDATES_URL }}
+          MOBILE_UPDATES_URL: ${{ vars.MOBILE_UPDATES_URL }}
+          MOBILE_APP_URL: ${{ vars.MOBILE_APP_URL }}
+          MOBILE_CLERK_PUBLISHABLE_KEY_STAGING: ${{ secrets.MOBILE_CLERK_PUBLISHABLE_KEY_STAGING }}
+          MOBILE_CLERK_PUBLISHABLE_KEY_PRODUCTION: ${{ secrets.MOBILE_CLERK_PUBLISHABLE_KEY_PRODUCTION }}
+        run: |
+          set -euo pipefail
+          cd packages/mobile
+          pnpm run check:mobile-env
+
       - name: Detect native-affecting mobile changes
         if: ${{ steps.expo_token.outputs.has_token == 'true' }}
         id: native_changes

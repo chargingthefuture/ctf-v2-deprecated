@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import { SignInButton, SignedIn, SignedOut, UserButton, useUser } from '@clerk/nextjs';
 import {
   baselinePluginCount,
@@ -18,9 +19,24 @@ const members = [
   'Jordan P. · Safety specialist',
 ];
 
+function getPluginHref(pluginId: string): string {
+  return `/plugin?plugin=${encodeURIComponent(pluginId)}`;
+}
+
 export function CommunityShell() {
   const [query, setQuery] = useState('');
+  const searchParams = useSearchParams();
   const { isLoaded, user } = useUser();
+  const selectedPluginId = useMemo(() => {
+    const requestedPluginId = searchParams.get('plugin');
+
+    if (!requestedPluginId) {
+      return 'chyme';
+    }
+
+    const isKnownPlugin = nonBaselinePlugins.some((plugin) => plugin.id === requestedPluginId);
+    return isKnownPlugin ? requestedPluginId : 'chyme';
+  }, [searchParams]);
 
   const normalizedQuery = query.trim().toLowerCase();
   const filteredPlugins = useMemo(() => {
@@ -68,12 +84,12 @@ export function CommunityShell() {
             <ul className={styles.pluginList}>
               {sidebarPlugins.map((plugin) => (
                 <li key={plugin.id}>
-                  <button
+                  <Link
                     className={`${styles.pluginButton}${plugin.id === selectedPluginId ? ` ${styles.pluginButtonActive}` : ''}`}
-                    type="button"
+                    href={getPluginHref(plugin.id)}
                   >
                     {plugin.name}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -129,6 +145,9 @@ export function CommunityShell() {
                 <h3>{plugin.name}</h3>
                 <p>{plugin.summary}</p>
                 <p>{plugin.startGate}</p>
+                <Link className={styles.cardAction} href={getPluginHref(plugin.id)}>
+                  Open plugin
+                </Link>
               </article>
             ))}
           </section>
@@ -149,6 +168,9 @@ export function CommunityShell() {
                 <h3>{plugin.name}</h3>
                 <p>{plugin.summary}</p>
                 <p>{plugin.startGate}</p>
+                <Link className={styles.cardAction} href={getPluginHref(plugin.id)}>
+                  Open plugin
+                </Link>
               </article>
             ))}
           </section>

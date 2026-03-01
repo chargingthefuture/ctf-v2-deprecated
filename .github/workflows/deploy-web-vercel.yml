@@ -8,12 +8,35 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: deploy-web-vercel-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  actions-budget-gate:
+    name: Actions Budget Gate
+    runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.budget.outputs.status }}
+      enforce_block: ${{ steps.budget.outputs.enforce_block }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Evaluate GitHub Actions budget
+        id: budget
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTIONS_MONITOR_TOKEN: ${{ secrets.GH_ACTIONS_BILLING_TOKEN }}
+          GITHUB_ACTIONS_MONITOR_SCOPE: org
+          GITHUB_ACTIONS_BUDGET_MINUTES: "2000"
+          GITHUB_ACTIONS_BUDGET_ARTIFACT_MB: "500"
+          GITHUB_ACTIONS_BUDGET_CACHE_GB: "10"
+          GITHUB_ACTIONS_BUDGET_THRESHOLDS: "60,80,90"
+        run: node ctf/scripts/githubActionsBudgetMonitor.mjs
+
   quality-gate:
     name: Quality Gate
     runs-on: ubuntu-latest
@@ -82,7 +105,8 @@ jobs:
   vercel-deploy:
     name: Vercel Deploy
     runs-on: ubuntu-latest
-    needs: [quality-gate, schema-drift-gate]
+    needs: [actions-budget-gate, quality-gate, schema-drift-gate]
+    if: ${{ needs.actions-budget-gate.outputs.enforce_block != 'true' && needs.quality-gate.result == 'success' && needs.schema-drift-gate.result == 'success' }}
     environment: vercel-design
     # Required secrets in GitHub environment `vercel-design`:
     # - VERCEL_TOKEN

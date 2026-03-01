@@ -27,6 +27,8 @@ Use this checklist to configure repository branch protection for `main` so CI an
 - [ ] Add these required checks from workflow [security-compliance.yml](workflows/security-compliance.yml):
   - `Secret Scanning`
   - `Compliance Artifacts`
+- [ ] Add this operational monitor check if desired for visibility (not required for PR merge by default):
+  - `Actions Budget Monitor` from [github-actions-budget-monitor.yml](workflows/github-actions-budget-monitor.yml)
 
 Note: `Dependency Review (PR)` only runs on pull requests. Add it as a required check if it appears in your check list and you want dependency policy enforcement on all PRs.
 
@@ -52,3 +54,4 @@ Note: `Dependency Review (PR)` only runs on pull requests. Add it as a required 
 
 - [ ] Revisit required checks when workflow job names change.
 - [ ] Revalidate branch protection quarterly with compliance rule review.
+- [ ] Reconfirm budget thresholds (60/80/90) and deploy-block policy against current GitHub plan limits.

@@ -226,6 +226,16 @@
   color: #cbd5e1;
 }
 
+.cardAction {
+  display: inline-block;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  padding: 6px 10px;
+  font-size: 12px;
+  color: #cbd5e1;
+}
+
 .rightRail {
   padding: 16px;
   display: flex;

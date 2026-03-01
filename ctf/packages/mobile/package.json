@@ -11,7 +11,8 @@
     "build": "echo \"@ctf/mobile build ok\"",
     "lint": "echo \"@ctf/mobile lint ok\"",
     "typecheck": "echo \"@ctf/mobile typecheck ok\"",
-    "test": "echo \"@ctf/mobile test ok\""
+    "test": "echo \"@ctf/mobile test ok\"",
+    "check:mobile-env": "node ./scripts/check-mobile-env.mjs"
   },
   "dependencies": {
     "expo": "^55.0.4",

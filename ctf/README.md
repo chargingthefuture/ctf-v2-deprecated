@@ -52,6 +52,21 @@ This folder contains the rewrite monorepo scaffold for:
 - One-time setup (run from repository root): `git config core.hooksPath .githooks`
 - Store temporary prompt drafts in `.ai/` (already ignored by git).
 
+## GitHub Actions Budget Monitoring
+
+- Monitor workflow: `.github/workflows/github-actions-budget-monitor.yml`
+- Token reminder workflow: `.github/workflows/github-actions-billing-token-reminder.yml`
+- Evaluator script: `ctf/scripts/githubActionsBudgetMonitor.mjs`
+- Token setup + rotation runbook: `ctf/docs/developer/GITHUB_ACTIONS_BILLING_TOKEN_RUNBOOK.md`
+- Budget thresholds (GitHub Free):
+  - Warning: 60%
+  - Critical: 80%
+  - Blocked: 90% (deploy workflows are blocked)
+- Alert channel: GitHub issue titled `GitHub Actions Budget Monitor` (label: `ci-budget-monitor`)
+- Secrets:
+  - Required for org-scope monitoring: `GH_ACTIONS_BILLING_TOKEN`
+  - Fallback token: default `GITHUB_TOKEN` (repo-level estimates, potentially degraded)
+
 ## Metric Definition and Confirmation (MDC)
 
 - Canonical metric source is `ctf/config/canonical_metrics.yaml` (override with `CANONICAL_METRICS_PATH`).
