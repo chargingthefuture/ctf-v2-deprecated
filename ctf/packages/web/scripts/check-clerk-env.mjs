@@ -1,4 +1,23 @@
-const ENV_TARGET = process.env.CLERK_ENV_TARGET;
+function inferRailwayTarget() {
+  const railwayEnvironment = (
+    process.env.RAILWAY_ENVIRONMENT_NAME ||
+    process.env.RAILWAY_ENVIRONMENT ||
+    process.env.RAILWAY_DEPLOYMENT_ENVIRONMENT ||
+    ''
+  ).toLowerCase();
+
+  if (!railwayEnvironment) {
+    return null;
+  }
+
+  if (railwayEnvironment.includes('prod')) {
+    return 'railway-production';
+  }
+
+  return 'railway-staging';
+}
+
+const ENV_TARGET = process.env.CLERK_ENV_TARGET || inferRailwayTarget();
 
 const targetDefinitions = {
   'railway-staging': [
@@ -32,7 +51,7 @@ const targetDefinitions = {
 
 if (!ENV_TARGET || !(ENV_TARGET in targetDefinitions)) {
   console.error(
-    'Missing or invalid CLERK_ENV_TARGET. Use one of: railway-staging, vercel-staging, railway-production.',
+    'Missing or invalid CLERK_ENV_TARGET. Use one of: railway-staging, vercel-staging, railway-production. On Railway, this is auto-inferred from RAILWAY_ENVIRONMENT_NAME when available.',
   );
   process.exit(1);
 }
@@ -74,7 +93,11 @@ function parseUrl(value) {
   }
 }
 
-const appUrl = pickEnv('NEXT_PUBLIC_APP_URL', 'RAILWAY_NEXT_PUBLIC_APP_URL', 'VERCEL_NEXT_PUBLIC_APP_URL');
+const appUrl = pickEnv(
+  'NEXT_PUBLIC_APP_URL',
+  'RAILWAY_NEXT_PUBLIC_APP_URL',
+  'VERCEL_NEXT_PUBLIC_APP_URL',
+);
 const signInUrl = pickEnv(
   'CLERK_SIGN_IN_URL',
   'RAILWAY_STAGING_CLERK_SIGN_IN_URL',

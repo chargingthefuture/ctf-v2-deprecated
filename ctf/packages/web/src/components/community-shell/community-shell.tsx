@@ -1,35 +1,15 @@
+"use client";
+
+import { useMemo, useState } from 'react';
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import {
+  baselinePluginCount,
+  nonBaselinePlugins,
+  pluginCatalog,
+} from '@/src/lib/plugins/plugin-catalog';
 import styles from './community-shell.module.css';
 
-type PluginItem = {
-  name: string;
-  description: string;
-  active?: boolean;
-};
-
-const plugins: PluginItem[] = [
-  {
-    name: 'Safe Housing',
-    description: 'Trusted shelter pathways and rapid placement support.',
-    active: true,
-  },
-  {
-    name: 'Legal Aid',
-    description: 'Case triage and rights guidance with verified advocates.',
-  },
-  {
-    name: 'Healing Circle',
-    description: 'Peer support rooms moderated by trauma-informed teams.',
-  },
-  {
-    name: 'Job Bridge',
-    description: 'Career readiness tracks and vetted employment pathways.',
-  },
-  {
-    name: 'Safety Check',
-    description: 'Privacy-first check-ins and trusted contact escalation.',
-  },
-];
+const selectedPluginId = 'chyme';
 
 const members = [
   'Amina J. · Support navigator',
@@ -38,26 +18,25 @@ const members = [
   'Jordan P. · Safety specialist',
 ];
 
-const featuredSpaces = [
-  {
-    name: 'Emergency Safe Stay',
-    description: 'Immediate placement and survivor-led orientation.',
-  },
-  {
-    name: 'Recovery & Wellness',
-    description: 'Counseling, care plans, and long-term support circles.',
-  },
-  {
-    name: 'Education & Skills',
-    description: 'Scholarships, training cohorts, and tutoring pathways.',
-  },
-  {
-    name: 'Employment Launch',
-    description: 'Interview preparation and fair-work onboarding.',
-  },
-];
-
 export function CommunityShell() {
+  const [query, setQuery] = useState('');
+
+  const normalizedQuery = query.trim().toLowerCase();
+  const filteredPlugins = useMemo(() => {
+    if (!normalizedQuery) {
+      return nonBaselinePlugins;
+    }
+
+    return nonBaselinePlugins.filter((plugin) => {
+      const haystack = `${plugin.name} ${plugin.summary} ${plugin.phase} ${plugin.startGate}`.toLowerCase();
+      return haystack.includes(normalizedQuery);
+    });
+  }, [normalizedQuery]);
+
+  const sidebarPlugins = filteredPlugins.slice(0, 8);
+  const featuredPlugins = filteredPlugins.slice(0, 4);
+  const pluginActivity = filteredPlugins.slice(4, 8);
+
   return (
     <div className={styles.shell}>
       <div className={styles.frame}>
@@ -85,10 +64,10 @@ export function CommunityShell() {
           <div>
             <p className={styles.sectionTitle}>Plugins</p>
             <ul className={styles.pluginList}>
-              {plugins.map((plugin) => (
-                <li key={plugin.name}>
+              {sidebarPlugins.map((plugin) => (
+                <li key={plugin.id}>
                   <button
-                    className={`${styles.pluginButton}${plugin.active ? ` ${styles.pluginButtonActive}` : ''}`}
+                    className={`${styles.pluginButton}${plugin.id === selectedPluginId ? ` ${styles.pluginButtonActive}` : ''}`}
                     type="button"
                   >
                     {plugin.name}
@@ -99,6 +78,7 @@ export function CommunityShell() {
           </div>
           <div className={styles.statusCard}>
             <p>Designed for scale: 5M survivors, one secure community surface.</p>
+            <p>{pluginCatalog.length} planned workstreams · {baselinePluginCount} baseline gates.</p>
           </div>
         </aside>
 
@@ -113,6 +93,8 @@ export function CommunityShell() {
               name="communitySearch"
               placeholder="Search plugins, spaces, and support resources"
               type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
             />
             <button className={styles.toolbarButton} type="button">
               Explore
@@ -128,27 +110,35 @@ export function CommunityShell() {
           </section>
 
           <div className={styles.sectionHeader}>
-            <h2>Featured Community Spaces</h2>
+            <h2>Featured Plugin Streams</h2>
             <button type="button">See all</button>
           </div>
           <section className={styles.cardGrid}>
-            {featuredSpaces.map((space) => (
-              <article className={styles.featureCard} key={space.name}>
-                <h3>{space.name}</h3>
-                <p>{space.description}</p>
+            {featuredPlugins.map((plugin) => (
+              <article className={styles.featureCard} key={plugin.id}>
+                <h3>{plugin.name}</h3>
+                <p>{plugin.summary}</p>
+                <p>{plugin.startGate}</p>
               </article>
             ))}
           </section>
+          {featuredPlugins.length === 0 ? (
+            <section className={styles.featureCard}>
+              <h3>No matching plugin streams</h3>
+              <p>Try a different search term to explore planned plugin workstreams.</p>
+            </section>
+          ) : null}
 
           <div className={styles.sectionHeader}>
             <h2>Plugin Activity</h2>
             <button type="button">View timeline</button>
           </div>
           <section className={styles.cardGrid}>
-            {plugins.slice(0, 4).map((plugin) => (
-              <article className={styles.featureCard} key={plugin.name}>
+            {pluginActivity.map((plugin) => (
+              <article className={styles.featureCard} key={plugin.id}>
                 <h3>{plugin.name}</h3>
-                <p>{plugin.description}</p>
+                <p>{plugin.summary}</p>
+                <p>{plugin.startGate}</p>
               </article>
             ))}
           </section>
@@ -158,7 +148,7 @@ export function CommunityShell() {
           <section className={styles.profileCard}>
             <p className={styles.sectionTitle}>Coordinator</p>
             <p className={styles.profileName}>Community Operations</p>
-            <p className={styles.profileMeta}>Safety-first mode · Dark theme enabled</p>
+            <p className={styles.profileMeta}>Safety-first mode · Dark theme enabled · {pluginCatalog.length} plugins mapped</p>
           </section>
 
           <section>
