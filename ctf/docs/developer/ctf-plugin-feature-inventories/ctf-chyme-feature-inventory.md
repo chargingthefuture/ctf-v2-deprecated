@@ -79,9 +79,9 @@ Canonical migration target: Chyme core tables under `ctf/migrations/` aligned to
 
 ## Web and Android Delivery Status
 
-1. Web implementation is required for room/chat/join/deletion workflows in Phase 0.
-2. Android parity should be delivered or explicitly deferred with owner/date and milestone.
-3. Current parity status is **fresh-start pending implementation**.
+1. Web implementation is delivered for room/chat/join/deletion workflows in Phase 0.
+2. Android parity is deferred with explicit owner/date evidence in checklist (`mobile-phase2-chyme`, target milestone `2026-04-15`).
+3. Current parity status is **web complete, Android deferred**.
 
 ## Seed Coverage Status
 
@@ -117,3 +117,4 @@ Current status:
 - 2026-02-25: Added Chyme command/access/audit YAML triplet references and removed contract-triplet gap from known technical debt.
 - 2026-03-01: Reframed inventory for fresh-start implementation sequencing and removed implemented-baseline assumptions.
 - 2026-03-01: Added canonical Clerk username handle decision for Chyme/plugin identity parity.
+- 2026-03-01: Recorded Phase 0 delivery status (API + policy + audit + migration + deterministic seed) and Android deferment details.

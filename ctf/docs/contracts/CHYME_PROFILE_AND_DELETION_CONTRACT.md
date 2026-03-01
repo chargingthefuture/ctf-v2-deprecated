@@ -1,12 +1,10 @@
-# Chyme Profile and Deletion Contract (Draft)
-
-This is the first completed draft using `PLUGIN_PROFILE_AND_DELETION_CONTRACT_TEMPLATE.md`.
+# Chyme Profile and Deletion Contract
 
 ## 1) Plugin Metadata
 
 - Plugin Name: Chyme
 - Service Key (lowercase, stable): `chyme`
-- Owner Team: TBD
+- Owner Team: Plugin Phase-0 Stream (agent-00-chyme-core)
 - Rollout Stage: MVP (internal/private)
 
 ## 2) Canonical Profile Usage
@@ -88,7 +86,7 @@ When user requests full account deletion (`DELETE /api/account/full-account`):
   - requires global account deletion orchestrator across all plugin domains
   - Service Credits reclaim/finalization is required before account deletion can be marked `completed`
 - Final expected state:
-  - target state (TBD in orchestrator): account and all plugin data deleted/anonymized per policy
+  - account-scope request remains `requested` until global orchestrator transitions to `processing` then terminal state (`completed`/`failed`)
 
 ## 7) Rejoin/Re-enable Behavior
 
@@ -100,7 +98,7 @@ If user returns to Chyme after service-scoped deletion:
 - Data that is not restored:
   - prior deleted chat messages and membership history
 - Re-consent required? (yes/no):
-  - currently no explicit re-consent gate; policy decision pending
+  - no (MVP policy), with future consent-policy revision owned by compliance stream
 
 ## 8) Audit and Events
 
@@ -111,7 +109,7 @@ If user returns to Chyme after service-scoped deletion:
 - Who can trigger deletion:
   - authenticated end user for own account
 - Alerting/monitoring requirement:
-  - TODO: add dashboard/alert on deletion failure rates and unusual spike patterns
+  - route-level audit events are emitted; dashboard aggregation is a post-MVP operational item
 
 ## 9) API and UX Surface
 
@@ -123,12 +121,12 @@ If user returns to Chyme after service-scoped deletion:
   - currently synchronous `ok` response for service delete
   - full-account currently `requested` only (needs async orchestrator states)
 - User-facing copy reviewed by:
-  - TBD (Product + Compliance)
+  - pending formal product/compliance copy review in post-MVP hardening
 
 ## 10) Migration and Rollback
 
 - Migration file(s):
-  - `ctf/migrations/2026-02-19-create-chyme-core-tables.sql`
+  - `ctf/migrations/2026-03-01-chyme-core-phase0.sql`
 - Rollback approach:
   - drop Chyme-only tables/indexes in reverse dependency order if needed:
     - `chyme_messages`
@@ -145,4 +143,4 @@ If user returns to Chyme after service-scoped deletion:
 - [ ] Engineering reviewed schema boundaries
 - [ ] Compliance/privacy reviewed retention and deletion
 - [ ] Observability added (without sensitive payloads)
-- [ ] Web and Android parity confirmed
+- [ ] Web and Android parity confirmed (Android deferred; see phase-0 handoff)

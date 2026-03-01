@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { SignInButton, SignedIn, SignedOut, UserButton, useUser } from '@clerk/nextjs';
 import {
   baselinePluginCount,
@@ -9,8 +10,6 @@ import {
   pluginCatalog,
 } from '@/src/lib/plugins/plugin-catalog';
 import styles from './community-shell.module.css';
-
-const selectedPluginId = 'chyme';
 
 const members = [
   'Amina J. · Support navigator',

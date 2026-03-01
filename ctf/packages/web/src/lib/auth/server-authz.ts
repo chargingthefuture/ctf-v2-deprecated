@@ -5,6 +5,9 @@ export type AllowDecision = {
   allowed: true;
   userId: string;
   username: string | null;
+  role: string | null;
+  isAdmin: boolean;
+  isApproved: boolean;
 };
 
 export type PluginAuthDecision = AllowDecision | PluginDenyResponse;
@@ -12,6 +15,7 @@ export type PluginAuthDecision = AllowDecision | PluginDenyResponse;
 type EvaluatePluginAccessOptions = {
   requiredRoles?: string[];
   requireUsername?: boolean;
+  requireApprovedUserOrAdmin?: boolean;
 };
 
 function normalizeUsername(username: string | null | undefined): string | null {
@@ -23,11 +27,19 @@ function normalizeUsername(username: string | null | undefined): string | null {
   return trimmedUsername.length > 0 ? trimmedUsername : null;
 }
 
-function buildAllowDecision(userId: string, username: string | null): AllowDecision {
+function buildAllowDecision(
+  userId: string,
+  username: string | null,
+  role: string | null,
+  isApproved: boolean,
+): AllowDecision {
   return {
     allowed: true,
     userId,
     username,
+    role,
+    isAdmin: role === 'admin',
+    isApproved,
   };
 }
 
@@ -79,10 +91,69 @@ function extractRole(claims: unknown): string | null {
   return null;
 }
 
+function parseApprovedValue(approvedCandidate: unknown): boolean {
+  if (typeof approvedCandidate === 'boolean') {
+    return approvedCandidate;
+  }
+
+  if (typeof approvedCandidate === 'string') {
+    const normalized = approvedCandidate.trim().toLowerCase();
+    return normalized === 'true' || normalized === '1' || normalized === 'yes';
+  }
+
+  if (typeof approvedCandidate === 'number') {
+    return approvedCandidate === 1;
+  }
+
+  return false;
+}
+
+function getApprovedCandidate(user: unknown): unknown {
+  if (!user || typeof user !== 'object') {
+    return null;
+  }
+
+  const typedUser = user as {
+    publicMetadata?: { approved?: unknown };
+    privateMetadata?: { approved?: unknown };
+    unsafeMetadata?: { approved?: unknown };
+  };
+
+  return (
+    typedUser.publicMetadata?.approved
+    ?? typedUser.privateMetadata?.approved
+    ?? typedUser.unsafeMetadata?.approved
+  );
+}
+
+function isApprovedFromUser(user: unknown): boolean {
+  return parseApprovedValue(getApprovedCandidate(user));
+}
+
+function denyIfApprovalMissing(
+  requireApprovedUserOrAdmin: boolean,
+  role: string | null,
+  isApproved: boolean,
+): PluginDenyResponse | null {
+  if (!requireApprovedUserOrAdmin) {
+    return null;
+  }
+
+  if (role === 'admin' || isApproved) {
+    return null;
+  }
+
+  return pluginAuthDeny.forbiddenPolicy('policy_denied');
+}
+
 export async function evaluatePluginAccess(
   options: EvaluatePluginAccessOptions = {},
 ): Promise<PluginAuthDecision> {
-  const { requiredRoles, requireUsername = false } = options;
+  const {
+    requiredRoles,
+    requireUsername = false,
+    requireApprovedUserOrAdmin = false,
+  } = options;
   const session = await auth();
 
   if (!session.userId) {
@@ -91,6 +162,8 @@ export async function evaluatePluginAccess(
 
   const user = await currentUser();
   const username = normalizeUsername(user?.username);
+  const role = extractRole(session.sessionClaims);
+  const isApproved = isApprovedFromUser(user);
 
   const usernameDenyDecision = denyIfUsernameRequired(requireUsername, username);
   if (usernameDenyDecision) {
@@ -102,5 +175,10 @@ export async function evaluatePluginAccess(
     return roleDenyDecision;
   }
 
-  return buildAllowDecision(session.userId, username);
+  const approvalDenyDecision = denyIfApprovalMissing(requireApprovedUserOrAdmin, role, isApproved);
+  if (approvalDenyDecision) {
+    return approvalDenyDecision;
+  }
+
+  return buildAllowDecision(session.userId, username, role, isApproved);
 }

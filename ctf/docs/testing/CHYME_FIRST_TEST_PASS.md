@@ -34,7 +34,7 @@ Expected:
 
 Run SQL in Neon console:
 
-- `ctf/migrations/2026-02-19-create-chyme-core-tables.sql`
+- `ctf/migrations/2026-03-01-chyme-core-phase0.sql`
 
 Expected tables:
 
@@ -43,6 +43,10 @@ Expected tables:
 - `chyme_room_members`
 - `chyme_messages`
 - `chyme_deletion_events`
+
+Run deterministic seed script:
+
+- `node ctf/scripts/seedChymePhase0.mjs`
 
 ## 3) Start Web App
 
