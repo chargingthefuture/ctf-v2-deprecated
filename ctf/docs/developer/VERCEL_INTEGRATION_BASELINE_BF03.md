@@ -18,12 +18,14 @@ Scope: Vercel staging frontend integration for `ctf/packages/web`
 ## Environment isolation assumptions
 
 ### Vercel staging frontend
+
 - `VERCEL_NEXT_PUBLIC_APP_URL` = Vercel custom staging domain
 - `VERCEL_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
 - `VERCEL_CLERK_SECRET_KEY`
 - `VERCEL_CLERK_SIGN_IN_URL`
 
 ### Railway backend (shared by Vercel staging)
+
 - `RAILWAY_NEXT_PUBLIC_APP_URL` remains Railway runtime domain contract for Railway-hosted frontend/backend baseline.
 - Railway Clerk keys remain isolated from Vercel Clerk keys.
 

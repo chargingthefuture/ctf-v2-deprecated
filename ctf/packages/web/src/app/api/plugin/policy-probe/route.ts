@@ -5,7 +5,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const adminOnly = searchParams.get('adminOnly') === 'true';
   const requiredRoles = adminOnly ? ['admin'] : undefined;
-  const decision = await evaluatePluginAccess(requiredRoles);
+  const decision = await evaluatePluginAccess({ requiredRoles });
 
   if (!decision.allowed) {
     return NextResponse.json(decision, { status: decision.status });

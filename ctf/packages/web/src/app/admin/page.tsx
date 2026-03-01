@@ -1,7 +1,7 @@
 import { evaluatePluginAccess } from '@/src/lib/auth/server-authz';
 
 export default async function AdminPage() {
-  const decision = await evaluatePluginAccess(['admin']);
+  const decision = await evaluatePluginAccess({ requiredRoles: ['admin'] });
 
   if (!decision.allowed) {
     return (

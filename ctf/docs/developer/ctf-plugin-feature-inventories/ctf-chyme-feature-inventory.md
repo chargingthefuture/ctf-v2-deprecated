@@ -49,9 +49,9 @@ Current command-contract note:
 
 - Chyme should be delivered as route + repository flows aligned to plugin command/access/audit contracts.
 - Plugin command/access/audit YAML triplet artifacts are present:
-   - `ctf/docs/contracts/CHYME_PLUGIN_COMMAND_CONTRACTS.yaml`
-   - `ctf/docs/contracts/CHYME_PLUGIN_ACCESS_POLICY_CONTRACTS.yaml`
-   - `ctf/docs/contracts/CHYME_PLUGIN_AUDIT_CONTRACTS.yaml`
+  - `ctf/docs/contracts/CHYME_PLUGIN_COMMAND_CONTRACTS.yaml`
+  - `ctf/docs/contracts/CHYME_PLUGIN_ACCESS_POLICY_CONTRACTS.yaml`
+  - `ctf/docs/contracts/CHYME_PLUGIN_AUDIT_CONTRACTS.yaml`
 
 ## Data Model and Storage Contracts (Target)
 

@@ -58,11 +58,11 @@ This folder contains the rewrite monorepo scaffold for:
 - Before any metric-related changes (alerts, ETL/transforms, schema, dashboards, docs), call `check_metric_defined` / `checkMetricDefined`.
 - If a metric is undefined or ambiguous, implementation is blocked and you must open a definition request using `ctf/docs/templates/canonical-metric-template.md`.
 - The definition request must include these exact questions:
-   - a. Confirm exact metric name and any aliases.
-   - b. Give a precise human-readable description.
-   - c. Specify data_type and unit.
-   - d. Provide calculation logic (SQL, formula, or pseudocode) and required inputs.
-   - e. Provide example inputs with expected output.
-   - f. Specify owner/contact and acceptable thresholds/alerts.
-   - g. Indicate update cadence and retention.
+  - a. Confirm exact metric name and any aliases.
+  - b. Give a precise human-readable description.
+  - c. Specify data_type and unit.
+  - d. Provide calculation logic (SQL, formula, or pseudocode) and required inputs.
+  - e. Provide example inputs with expected output.
+  - f. Specify owner/contact and acceptable thresholds/alerts.
+  - g. Indicate update cadence and retention.
 - Each metric check writes structured JSON audit logs with `timestamp`, `caller`, `metric_identifier`, `result`, and `canonical_id` (when found).

@@ -23,8 +23,12 @@ Provide a deterministic deny contract for plugin routes and APIs when authentica
 ### 3) Authenticated but blocked by policy adapter
 - HTTP status: `403`
 - Code: `AUTH_FORBIDDEN_POLICY`
-- Reason: `policy_denied`
+- Reason: `policy_denied` or `missing_username`
 - Meaning: user is signed in but plugin policy adapter disallows operation.
+
+`missing_username` baseline meaning:
+- request is authenticated but route requires canonical Clerk `username` and none is currently set.
+- client guidance should direct user to open Clerk profile/avatar and choose username update.
 
 ## Baseline API Evidence
 - API route: `GET /api/plugin/policy-probe`

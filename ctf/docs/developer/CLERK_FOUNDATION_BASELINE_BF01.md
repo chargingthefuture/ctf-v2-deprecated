@@ -75,6 +75,11 @@ Resolution order per key family:
    - use Clerk `username` for handle semantics,
    - if username is missing, use non-handle display fallback and avoid synthetic `@username` creation.
 
+### Username-required route behavior
+- Plugin routes that require a canonical handle can enforce `username` presence server-side.
+- Missing username now maps to deny taxonomy reason `missing_username` under `AUTH_FORBIDDEN_POLICY`.
+- UX guidance for signed-in users: open profile/avatar and choose username update.
+
 ## Validation Evidence
 
 ### Automated

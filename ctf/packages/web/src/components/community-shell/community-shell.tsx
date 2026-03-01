@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from 'react';
-import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { SignInButton, SignedIn, SignedOut, UserButton, useUser } from '@clerk/nextjs';
 import {
   baselinePluginCount,
   nonBaselinePlugins,
@@ -20,6 +20,7 @@ const members = [
 
 export function CommunityShell() {
   const [query, setQuery] = useState('');
+  const { isLoaded, user } = useUser();
 
   const normalizedQuery = query.trim().toLowerCase();
   const filteredPlugins = useMemo(() => {
@@ -36,6 +37,7 @@ export function CommunityShell() {
   const sidebarPlugins = filteredPlugins.slice(0, 8);
   const featuredPlugins = filteredPlugins.slice(0, 4);
   const pluginActivity = filteredPlugins.slice(4, 8);
+  const requiresUsername = Boolean(isLoaded && user && (!user.username || user.username.trim().length === 0));
 
   return (
     <div className={styles.shell}>
@@ -83,6 +85,14 @@ export function CommunityShell() {
         </aside>
 
         <main className={`${styles.panel} ${styles.content}`}>
+          <SignedIn>
+            {requiresUsername ? (
+              <section className={styles.usernameAlert} role="alert">
+                Username required: open your profile avatar and choose Update username to continue using username-required plugins.
+              </section>
+            ) : null}
+          </SignedIn>
+
           <div className={styles.toolbar}>
             <label className={styles.visuallyHidden} htmlFor="community-search">
               Search survivors, plugins, and spaces

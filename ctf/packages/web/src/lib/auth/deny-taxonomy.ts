@@ -6,7 +6,8 @@ export type PluginDenyCode =
 export type PluginDenyReason =
   | 'no_active_session'
   | 'missing_required_role'
-  | 'policy_denied';
+  | 'policy_denied'
+  | 'missing_username';
 
 export type PluginDenyResponse = {
   allowed: false;
@@ -34,12 +35,12 @@ export const pluginAuthDeny = {
       requiredRoles,
     };
   },
-  forbiddenPolicy(): PluginDenyResponse {
+  forbiddenPolicy(reason: PluginDenyReason = 'policy_denied'): PluginDenyResponse {
     return {
       allowed: false,
       status: 403,
       code: 'AUTH_FORBIDDEN_POLICY',
-      reason: 'policy_denied',
+      reason,
     };
   },
 } as const;
