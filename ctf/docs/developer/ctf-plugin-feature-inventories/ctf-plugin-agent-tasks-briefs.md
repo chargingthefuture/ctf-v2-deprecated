@@ -5,9 +5,13 @@ Date: 2026-03-01
 Use these prompts to dispatch background agents.
 
 Dispatch note:
+
 - This repository is a fresh-start rewrite from boilerplate. Do not assume prior plugin implementation exists unless explicitly stated in a prompt.
 - Baseline foundation prompts are mandatory before broad plugin parallelization.
 - Required baseline order: Clerk integration → Railway deployment baseline → Vercel deployment integration → Expo deployment baseline.
+- Mandatory for every prompt in this document: before implementation, the agent must ask clarifying questions until requirements are unambiguous, wait for answers, and then proceed.
+- Mandatory for every prompt in this document: scaffold-only output is not acceptable; agent must either deliver completion-grade implementation evidence or provide an explicit blocked-by list with owner and date.
+- Completion-status reconciliation rule: before marking any phase complete, verify both handoff docs and assignment matrix status are aligned; if they differ, mark as "needs reconciliation" and resolve before next dispatch.
 
 ---
 
@@ -33,6 +37,8 @@ Scope:
 
 Must follow:
 - Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
 - Environment/auth constraints in Rule 123; do not rename env variables without explicit approval.
 
 Deliverables:
@@ -69,6 +75,8 @@ Scope:
 
 Must follow:
 - Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
 - Deployment topology constraints from Rule 111 and env constraints from Rule 123.
 
 Deliverables:
@@ -105,6 +113,8 @@ Scope:
 
 Must follow:
 - Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
 - Keep backend runtime canonical on Railway and avoid Vercel backend drift.
 
 Deliverables:
@@ -143,6 +153,8 @@ Scope:
 
 Must follow:
 - Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
 - Expo channel/profile governance and CI requirements.
 
 Deliverables:
@@ -181,6 +193,8 @@ Scope:
 
 Must follow:
 - Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
 - Plugin command/access/audit templates (201/202/203).
 
 Deliverables:
@@ -218,6 +232,8 @@ Scope:
 
 Must follow:
 - Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
 - Plugin command/access/audit templates (201/202/203).
 
 Deliverables:
@@ -255,6 +271,8 @@ Scope:
 
 Must follow:
 - Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
 - Single-profile/plugin-extension boundaries.
 
 Deliverables:
@@ -298,6 +316,8 @@ Scope:
 
 Must follow:
 - Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
 - Keep feed+announcements contracts aligned and avoid split ownership drift.
 
 Deliverables:
@@ -335,6 +355,8 @@ Scope:
 
 Must follow:
 - Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
 - Canonical metric registry requirements.
 
 Deliverables:
@@ -372,6 +394,8 @@ Scope:
 
 Must follow:
 - Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
 - Do not bypass Directory policy controls.
 
 Deliverables:
@@ -409,6 +433,8 @@ Scope:
 
 Must follow:
 - Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
 - Enforce no-write boundary to Directory.
 
 Deliverables:
@@ -446,6 +472,8 @@ Scope:
 
 Must follow:
 - Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
 - Blocks are required in v1 parity scope.
 
 Deliverables:
@@ -482,6 +510,8 @@ Scope:
 
 Must follow:
 - Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
 - Preserve privacy-minimized public DTO projection contracts.
 
 Deliverables:
@@ -518,6 +548,8 @@ Scope:
 
 Must follow:
 - Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
 - Preserve trauma-informed and safety-first constraints.
 
 Deliverables:
@@ -554,6 +586,8 @@ Scope:
 
 Must follow:
 - Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
 - Preserve deterministic cohort and fallback-open behaviors.
 
 Deliverables:
@@ -591,6 +625,8 @@ Scope:
 
 Must follow:
 - Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
 - Preserve authenticated routes with anonymous `clientId` persistence contract.
 
 Deliverables:
@@ -628,6 +664,8 @@ Scope:
 
 Must follow:
 - Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
 - Keep app-level settings ownership outside plugin scope.
 
 Deliverables:
@@ -664,6 +702,8 @@ Scope:
 
 Must follow:
 - Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
 - Keep non-financial metric scope.
 
 Deliverables:
@@ -700,6 +740,8 @@ Scope:
 
 Must follow:
 - Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
 - Preserve DP/suppression and lawful-basis controls.
 
 Deliverables:
@@ -736,6 +778,8 @@ Scope:
 
 Must follow:
 - Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
 - Preserve non-GDP accounting treatment for deletion reclaim outcomes.
 
 Deliverables:
@@ -749,4 +793,165 @@ Handoff output:
 - List changed files
 - Accounting semantics verification notes
 - Open adapter/compliance risks
+```
+
+---
+
+## Prompt BF-01 v2 — `agent-bf-01-clerk-foundation-v2`
+
+```text
+Read this first: #file:index.mdc
+Then read:
+- #file:.github/instructions/107-integration-stack-rules.mdc
+- #file:.github/instructions/111-deployment-topology-rules.mdc
+- #file:.github/instructions/123-environment-configuration-rules.mdc
+- #file:.github/instructions/103-web-nextjs-structure-rules.mdc
+- #file:ctf/README.md
+- #file:ctf/docs/developer/BASELINE_HANDOFF_BF01_BF04.md
+
+You are `agent-bf-01-clerk-foundation-v2` working only under `ctf/`.
+Start gate:
+- Baseline v2 pass — run only after reviewing BF-01 handoff evidence and identifying unresolved/partial items.
+
+Scope:
+- Perform a second pass for BF-01 to close incomplete implementation and remove scaffold-only behavior.
+- Re-validate Clerk App Router integration, server-side authz checks, deny taxonomy behavior, and env-contract determinism.
+- Convert any placeholder/scaffold outputs into production-ready baseline implementation artifacts.
+
+Must follow:
+- Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
+- Environment/auth constraints in Rule 123; do not rename env variables without explicit approval.
+
+Deliverables:
+1) Delta report vs prior BF-01 handoff (what was incomplete, what is now closed)
+2) Completion-grade Clerk/auth implementation updates
+3) Updated validation evidence (manual + automated where available)
+4) Remaining blockers (if any) with owner/date and concrete next action
+5) Completion status recommendation: complete / needs reconciliation / blocked
+
+Handoff output:
+- List changed files
+- Clarifying questions asked and answers received
+- Closed items from BF-01 and remaining decisions (if any)
+```
+
+## Prompt BF-02 v2 — `agent-bf-02-railway-baseline-v2`
+
+```text
+Read this first: #file:index.mdc
+Then read:
+- #file:.github/instructions/111-deployment-topology-rules.mdc
+- #file:.github/instructions/123-environment-configuration-rules.mdc
+- #file:.github/instructions/119-github-actions-ci-rules.mdc
+- #file:ctf/railway.toml
+- #file:ctf/docs/developer/BASELINE_HANDOFF_BF01_BF04.md
+
+You are `agent-bf-02-railway-baseline-v2` working only under `ctf/`.
+Start gate:
+- Baseline v2 pass — run only after reviewing BF-02 handoff evidence and identifying unresolved/partial items.
+
+Scope:
+- Perform a second pass for BF-02 to close incomplete implementation and remove scaffold-only behavior.
+- Re-validate Railway canonical runtime baseline, startup preflight checks, env injection, deploy readiness, and diagnostics.
+- Convert any placeholder/scaffold outputs into production-ready baseline implementation artifacts.
+
+Must follow:
+- Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
+- Deployment topology constraints from Rule 111 and env constraints from Rule 123.
+
+Deliverables:
+1) Delta report vs prior BF-02 handoff (what was incomplete, what is now closed)
+2) Completion-grade Railway baseline updates
+3) Updated runtime/deploy validation evidence
+4) Remaining blockers (if any) with owner/date and concrete next action
+5) Completion status recommendation: complete / needs reconciliation / blocked
+
+Handoff output:
+- List changed files
+- Clarifying questions asked and answers received
+- Closed items from BF-02 and unresolved risks (if any)
+```
+
+## Prompt BF-03 v2 — `agent-bf-03-vercel-integration-v2`
+
+```text
+Read this first: #file:index.mdc
+Then read:
+- #file:.github/instructions/111-deployment-topology-rules.mdc
+- #file:.github/instructions/123-environment-configuration-rules.mdc
+- #file:.github/instructions/119-github-actions-ci-rules.mdc
+- #file:ctf/packages/web/vercel.json
+- #file:ctf/docs/developer/BASELINE_HANDOFF_BF01_BF04.md
+
+You are `agent-bf-03-vercel-integration-v2` working only under `ctf/`.
+Start gate:
+- Baseline v2 pass — run only after reviewing BF-03 handoff evidence and identifying unresolved/partial items.
+
+Scope:
+- Perform a second pass for BF-03 to close incomplete implementation and remove scaffold-only behavior.
+- Re-validate Vercel staging frontend integration against Railway canonical backend, including env isolation and Clerk domain/key separation.
+- Convert any placeholder/scaffold outputs into production-ready baseline implementation artifacts.
+
+Must follow:
+- Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
+- Keep backend runtime canonical on Railway and avoid Vercel backend drift.
+
+Deliverables:
+1) Delta report vs prior BF-03 handoff (what was incomplete, what is now closed)
+2) Completion-grade Vercel staging integration updates
+3) Updated validation evidence (preview + smoke checks)
+4) Remaining blockers (if any) with owner/date and concrete next action
+5) Completion status recommendation: complete / needs reconciliation / blocked
+
+Handoff output:
+- List changed files
+- Clarifying questions asked and answers received
+- Closed items from BF-03 and remaining staging risks (if any)
+```
+
+## Prompt BF-04 v2 — `agent-bf-04-expo-baseline-v2`
+
+```text
+Read this first: #file:index.mdc
+Then read:
+- #file:.github/instructions/104-mobile-react-native-android-rules.mdc
+- #file:.github/instructions/106-expo-eas-mobile-workflow-rules.mdc
+- #file:.github/instructions/111-deployment-topology-rules.mdc
+- #file:.github/instructions/123-environment-configuration-rules.mdc
+- #file:.github/instructions/119-github-actions-ci-rules.mdc
+- #file:ctf/docs/mobile/EXPO_CLOUD_WORKFLOW.md
+- #file:ctf/docs/developer/BASELINE_HANDOFF_BF01_BF04.md
+
+You are `agent-bf-04-expo-baseline-v2` working only under `ctf/`.
+Start gate:
+- Baseline v2 pass — run only after reviewing BF-04 handoff evidence and identifying unresolved/partial items.
+
+Scope:
+- Perform a second pass for BF-04 to close incomplete implementation and remove scaffold-only behavior.
+- Re-validate Expo/EAS Android deployment baseline (preview/staging/production profile readiness), env propagation, and release workflow readiness.
+- Convert any placeholder/scaffold outputs into production-ready baseline implementation artifacts.
+
+Must follow:
+- Rule precedence from #file:index.mdc.
+- Before implementation, ask clarifying questions until requirements are unambiguous; wait for answers before coding.
+- Do not stop at scaffold code; complete implementation or provide explicit blocked-by owner/date.
+- Maintain Expo channel/profile governance and CI requirements.
+
+Deliverables:
+1) Delta report vs prior BF-04 handoff (what was incomplete, what is now closed)
+2) Completion-grade Expo/EAS baseline updates
+3) Updated validation evidence (preview/build/test runs)
+4) Remaining blockers (if any) with owner/date and concrete next action
+5) Completion status recommendation: complete / needs reconciliation / blocked
+
+Handoff output:
+- List changed files
+- Clarifying questions asked and answers received
+- Closed items from BF-04 and remaining blockers (if any)
 ```
