@@ -159,11 +159,10 @@ export function CommunityShell({ initialPlugins }: CommunityShellProps) {
   }, [normalizedQuery, plugins]);
 
   const sidebarPlugins = filteredPlugins.slice(0, 8);
-  const featuredPlugins = filteredPlugins.slice(0, 4);
-  const pluginActivity = filteredPlugins.slice(4, 8);
+  const featuredPlugins = filteredPlugins;
+  const pluginActivity = filteredPlugins.filter((plugin) => plugin.availabilityState === 'implemented_shell');
   const activePlugins = filteredPlugins.filter((plugin) => plugin.availabilityState === 'implemented_shell').slice(0, 4);
   const requiresUsername = Boolean(isLoaded && user && (!user.username || user.username.trim().length === 0));
-  const selectedPluginSlug = 'chyme';
   const defaultPluginHref = featuredPlugins[0] ? getPluginHref(featuredPlugins[0].slug) : '/apps/chyme';
   const implementedPlugins = plugins.filter((plugin) => plugin.availabilityState === 'implemented_shell').length;
 
@@ -179,7 +178,7 @@ export function CommunityShell({ initialPlugins }: CommunityShellProps) {
             <ul className={styles.pluginList}>
               {sidebarPlugins.map((plugin) => (
                 <li key={plugin.slug}>
-                  <Link className={`${styles.pluginButton}${plugin.slug === selectedPluginSlug ? ` ${styles.pluginButtonActive}` : ''}`} href={getPluginHref(plugin.slug)}>
+                  <Link className={styles.pluginButton} href={getPluginHref(plugin.slug)}>
                     {plugin.name}
                   </Link>
                 </li>
@@ -218,7 +217,7 @@ export function CommunityShell({ initialPlugins }: CommunityShellProps) {
             <p>Discord-style collaboration for support, healing, and opportunity through plugins.</p>
           </section>
 
-          <PluginCardsSection title="Featured Plugin Streams" actionLabel="See all" actionHref={defaultPluginHref} plugins={featuredPlugins} />
+          <PluginCardsSection title="All Plugin Streams" actionLabel="Open first" actionHref={defaultPluginHref} plugins={featuredPlugins} />
           {featuredPlugins.length === 0 ? (
             <section className={styles.featureCard}>
               <h3>No matching plugin streams</h3>
@@ -226,7 +225,7 @@ export function CommunityShell({ initialPlugins }: CommunityShellProps) {
             </section>
           ) : null}
 
-          <PluginCardsSection title="Plugin Activity" actionLabel="View timeline" actionHref="/admin/feed-announcements" plugins={pluginActivity} />
+          <PluginCardsSection title="Implemented Now" actionLabel="View timeline" actionHref="/admin/feed-announcements" plugins={pluginActivity} />
         </main>
 
         <RightRail implementedPlugins={implementedPlugins} activePlugins={activePlugins} />

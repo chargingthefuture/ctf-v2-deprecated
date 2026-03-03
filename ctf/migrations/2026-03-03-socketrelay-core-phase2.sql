@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS socketrelay_user_extension (
 );
 
 CREATE TABLE IF NOT EXISTS socketrelay_requests (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
   owner_user_id TEXT NOT NULL,
   title TEXT NOT NULL,
   details TEXT NOT NULL,
@@ -24,15 +24,15 @@ CREATE TABLE IF NOT EXISTS socketrelay_requests (
   status TEXT NOT NULL DEFAULT 'open' CHECK (status IN ('open', 'claimed', 'closed', 'cancelled')),
   idempotency_key TEXT NOT NULL,
   reopened_count INTEGER NOT NULL DEFAULT 0,
-  claimed_fulfillment_id UUID NULL,
+  claimed_fulfillment_id TEXT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   UNIQUE (owner_user_id, idempotency_key)
 );
 
 CREATE TABLE IF NOT EXISTS socketrelay_request_events (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  request_id UUID NOT NULL REFERENCES socketrelay_requests(id) ON DELETE CASCADE,
+  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+  request_id TEXT NOT NULL REFERENCES socketrelay_requests(id) ON DELETE CASCADE,
   actor_user_id TEXT NOT NULL,
   event_name TEXT NOT NULL,
   metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
@@ -40,8 +40,8 @@ CREATE TABLE IF NOT EXISTS socketrelay_request_events (
 );
 
 CREATE TABLE IF NOT EXISTS socketrelay_fulfillments (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  request_id UUID NOT NULL REFERENCES socketrelay_requests(id) ON DELETE CASCADE,
+  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+  request_id TEXT NOT NULL REFERENCES socketrelay_requests(id) ON DELETE CASCADE,
   requester_user_id TEXT NOT NULL,
   fulfiller_user_id TEXT NOT NULL,
   status TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'closed', 'cancelled')),
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS socketrelay_fulfillments (
 );
 
 CREATE TABLE IF NOT EXISTS socketrelay_fulfillment_participants (
-  fulfillment_id UUID NOT NULL REFERENCES socketrelay_fulfillments(id) ON DELETE CASCADE,
+  fulfillment_id TEXT NOT NULL REFERENCES socketrelay_fulfillments(id) ON DELETE CASCADE,
   user_id TEXT NOT NULL,
   participant_role TEXT NOT NULL CHECK (participant_role IN ('requester', 'fulfiller')),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -60,8 +60,8 @@ CREATE TABLE IF NOT EXISTS socketrelay_fulfillment_participants (
 );
 
 CREATE TABLE IF NOT EXISTS socketrelay_messages (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  fulfillment_id UUID NOT NULL REFERENCES socketrelay_fulfillments(id) ON DELETE CASCADE,
+  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+  fulfillment_id TEXT NOT NULL REFERENCES socketrelay_fulfillments(id) ON DELETE CASCADE,
   sender_user_id TEXT NOT NULL,
   message_text TEXT NOT NULL,
   client_message_id TEXT NOT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS socketrelay_messages (
 );
 
 CREATE TABLE IF NOT EXISTS socketrelay_admin_audit_trail (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
   actor_id TEXT NOT NULL,
   command TEXT NOT NULL,
   policy_status TEXT NOT NULL CHECK (policy_status IN ('allow', 'deny')),
