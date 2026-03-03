@@ -64,16 +64,26 @@ export async function PUT(request: Request) {
     );
   }
 
+  const validatedPayload = payload as {
+    maxActiveThreadsPerUser: number;
+    maxMessagesPerMinute: number;
+    maxSearchesPerMinute: number;
+    maxQuoteTransitionsPerMinute: number;
+    maxCallDurationMinutes: number;
+    quotaState: 'green' | 'yellow' | 'orange' | 'red';
+    killSwitchEnabled: boolean;
+  };
+
   try {
     const policy = await updateCapacityPolicy({
       actorUserId: gate.auth.userId,
-      maxActiveThreadsPerUser: payload.maxActiveThreadsPerUser,
-      maxMessagesPerMinute: payload.maxMessagesPerMinute,
-      maxSearchesPerMinute: payload.maxSearchesPerMinute,
-      maxQuoteTransitionsPerMinute: payload.maxQuoteTransitionsPerMinute,
-      maxCallDurationMinutes: payload.maxCallDurationMinutes,
-      quotaState: payload.quotaState,
-      killSwitchEnabled: payload.killSwitchEnabled,
+      maxActiveThreadsPerUser: validatedPayload.maxActiveThreadsPerUser,
+      maxMessagesPerMinute: validatedPayload.maxMessagesPerMinute,
+      maxSearchesPerMinute: validatedPayload.maxSearchesPerMinute,
+      maxQuoteTransitionsPerMinute: validatedPayload.maxQuoteTransitionsPerMinute,
+      maxCallDurationMinutes: validatedPayload.maxCallDurationMinutes,
+      quotaState: validatedPayload.quotaState,
+      killSwitchEnabled: validatedPayload.killSwitchEnabled,
     });
 
     await insertFoundationAudit({

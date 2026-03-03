@@ -15,6 +15,11 @@ This folder contains the rewrite monorepo scaffold for:
 3. Run mobile app (cloud-first Expo workflow)
    - `pnpm run dev:mobile`
 
+## Codespaces Workspace
+
+- For consistent editor behavior across fresh Codespaces, open the repository workspace file at `chargingthefuture.code-workspace` (repo root).
+- This ensures the shared tab/preview settings are applied from one place for the whole repo.
+
 ## Mobile Cloud Workflow
 
 - Preview Android builds: GitHub Actions workflow `Expo Preview Build`

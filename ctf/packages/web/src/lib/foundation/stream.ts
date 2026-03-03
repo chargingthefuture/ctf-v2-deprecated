@@ -107,12 +107,10 @@ export async function sendFoundationStreamMessage(input: {
 
   try {
     await channel.watch();
-    const result = await channel.sendMessage(
-      {
-        text: input.messageText,
-      },
-      streamUserId,
-    );
+    const result = await channel.sendMessage({
+      text: input.messageText,
+      user_id: streamUserId,
+    });
 
     return result.message?.id ?? null;
   } catch {
