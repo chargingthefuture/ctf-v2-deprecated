@@ -97,8 +97,8 @@ Status legend:
 | `agent-04-workforce`                | Phase 1   | Done        | 2026-03-03 |       |           | Yes              |
 | `agent-05-skills-hunt`              | Phase 1   | Done        | 2026-03-03 |       |           | Yes              |
 | `agent-06-foundation`               | Phase 1   | Done        | 2026-03-03 |       |           | Yes              |
-| `agent-07-lighthouse`               | Phase 2   | Not started |            |       |           | No               |
-| `agent-08-socketrelay`              | Phase 2   | Not started |            |       |           | No               |
+| `agent-07-lighthouse`               | Phase 2   | Done        | 2026-03-03 |       |           | Yes              |
+| `agent-08-socketrelay`              | Phase 2   | Done        | 2026-03-03 |       |           | Yes              |
 | `agent-09-trusttransport`           | Phase 2   | Not started |            |       |           | No               |
 | `agent-10-peer-programming`         | Phase 2   | Not started |            |       |           | No               |
 | `agent-11-mood`                     | Phase 2   | Not started |            |       |           | No               |

@@ -53,7 +53,7 @@ export default async function AdminPage() {
         </div>
       </dl>
       <p className="text-sm">
-        <Link className="underline underline-offset-4" href="/plugin">Open plugin route</Link>
+        <Link className="underline underline-offset-4" href="/apps/chyme">Open plugin route</Link>
       </p>
     </main>
   );

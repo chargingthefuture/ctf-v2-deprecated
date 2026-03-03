@@ -6,11 +6,11 @@ import { getDashboard, getWorkforceConfig } from '@/src/lib/workforce/repository
 export default async function WorkforceAdminPage() {
   const access = await evaluatePluginAccess({ requireUsername: false });
   if (!access.allowed) {
-    redirect('/plugin?plugin=workforce');
+    redirect('/apps/workforce');
   }
 
   if (!access.isAdmin) {
-    redirect('/plugin?plugin=workforce');
+    redirect('/apps/workforce');
   }
 
   const [dashboard, config] = await Promise.all([
@@ -58,7 +58,7 @@ export default async function WorkforceAdminPage() {
       </section>
 
       <p className="text-sm">
-        <Link className="underline underline-offset-4" href="/plugin?plugin=workforce">Open workforce plugin view</Link>
+        <Link className="underline underline-offset-4" href="/apps/workforce">Open workforce plugin view</Link>
       </p>
     </main>
   );

@@ -87,6 +87,56 @@ This folder contains the rewrite monorepo scaffold for:
   - `POST /api/foundation/admin/rate-limits/evaluate`
   - `GET /api/foundation/admin/audit-events`
 
+## Lighthouse Phase-2 Baseline
+
+- User APIs:
+  - `GET/PUT/DELETE /api/lighthouse/profile`
+  - `GET/POST /api/lighthouse/properties`
+  - `GET/PATCH/DELETE /api/lighthouse/properties/:propertyId`
+  - `GET /api/lighthouse/my-properties`
+  - `GET/POST /api/lighthouse/matches`
+  - `PATCH /api/lighthouse/matches/:matchId`
+  - `GET /api/lighthouse/announcements`
+  - `GET/POST /api/lighthouse/blocks`
+  - `DELETE /api/lighthouse/blocks/:blockedUserId`
+  - `GET /api/lighthouse/blocks/check?blockedUserId=<id>`
+- Admin APIs:
+  - `GET /api/lighthouse/admin/stats`
+  - `GET /api/lighthouse/admin/profiles`
+  - `GET /api/lighthouse/admin/seekers`
+  - `GET /api/lighthouse/admin/hosts`
+  - `GET /api/lighthouse/admin/properties`
+  - `PATCH/DELETE /api/lighthouse/admin/properties/:propertyId`
+  - `GET /api/lighthouse/admin/matches`
+  - `PATCH /api/lighthouse/admin/matches/:matchId`
+  - `GET/POST /api/lighthouse/admin/announcements`
+  - `PATCH/DELETE /api/lighthouse/admin/announcements/:announcementId`
+  - `GET /api/lighthouse/admin/audit-events`
+
+## SocketRelay Phase-2 Baseline
+
+- User APIs:
+  - `GET/POST/PUT/DELETE /api/socketrelay/profile`
+  - `GET/POST /api/socketrelay/requests`
+  - `GET/PUT /api/socketrelay/requests/:id`
+  - `POST /api/socketrelay/requests/:id/repost`
+  - `POST /api/socketrelay/requests/:id/fulfill`
+  - `GET /api/socketrelay/my-requests`
+  - `GET /api/socketrelay/fulfillments/:id`
+  - `POST /api/socketrelay/fulfillments/:id/close`
+  - `GET/POST /api/socketrelay/fulfillments/:id/messages`
+  - `GET /api/socketrelay/my-fulfillments`
+  - `GET /api/socketrelay/announcements`
+- Public APIs:
+  - `GET /api/socketrelay/public`
+  - `GET /api/socketrelay/public/:id`
+- Admin APIs:
+  - `GET /api/socketrelay/admin/requests`
+  - `DELETE /api/socketrelay/admin/requests/:id`
+  - `GET /api/socketrelay/admin/fulfillments`
+  - `GET/POST /api/socketrelay/admin/announcements`
+  - `PUT/DELETE /api/socketrelay/admin/announcements/:id`
+
 ## Prompt Leak Protection
 
 - This repository includes git hooks that block committing/pushing AI prompt text patterns.

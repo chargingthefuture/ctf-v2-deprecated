@@ -6,7 +6,7 @@ import { getFeatureRewardCard, getSkillsHuntDashboard, listRounds } from '@/src/
 export default async function SkillsHuntAdminPage() {
   const access = await evaluatePluginAccess({ requireUsername: false });
   if (!access.allowed || !access.isAdmin) {
-    redirect('/plugin?plugin=skills-hunt');
+    redirect('/apps/skills-hunt');
   }
 
   const [dashboard, card, rounds] = await Promise.all([
@@ -66,7 +66,7 @@ export default async function SkillsHuntAdminPage() {
       </section>
 
       <p className="text-sm">
-        <Link className="underline underline-offset-4" href="/plugin?plugin=skills-hunt">Open skills-hunt plugin view</Link>
+        <Link className="underline underline-offset-4" href="/apps/skills-hunt">Open skills-hunt plugin view</Link>
       </p>
     </main>
   );

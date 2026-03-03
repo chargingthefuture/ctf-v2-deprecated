@@ -6,7 +6,7 @@ import { getCapacityPolicy, getFoundationDashboard } from '@/src/lib/foundation/
 export default async function FoundationAdminPage() {
   const access = await evaluatePluginAccess({ requireUsername: false });
   if (!access.allowed || !access.isAdmin) {
-    redirect('/plugin?plugin=foundation');
+    redirect('/apps/foundation');
   }
 
   const [dashboard, policy] = await Promise.all([
@@ -54,7 +54,7 @@ export default async function FoundationAdminPage() {
       </section>
 
       <p className="text-sm">
-        <Link className="underline underline-offset-4" href="/plugin?plugin=foundation">Open foundation plugin view</Link>
+        <Link className="underline underline-offset-4" href="/apps/foundation">Open foundation plugin view</Link>
       </p>
     </main>
   );
