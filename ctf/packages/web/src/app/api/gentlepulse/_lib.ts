@@ -1,20 +1,27 @@
 import { NextResponse } from 'next/server';
-import { evaluatePluginAccess } from '@/src/lib/auth/server-authz';
+import { evaluatePluginAccess, type AllowDecision } from '@/src/lib/auth/server-authz';
 import { getAppUrl } from '@/src/lib/auth/clerk-env';
-import { auth } from '@clerk/nextjs/server';
 
-export async function requireGentlePulseReadAccess() {
-  const session = await auth();
-  return { allowed: true as const, auth: { userId: session.userId ?? null } };
-}
+export type GentlePulseApiGate =
+  | { allowed: true; auth: AllowDecision }
+  | { allowed: false; response: NextResponse };
 
-export async function requireGentlePulseWriteAccess() {
+export async function requireGentlePulseReadAccess(): Promise<GentlePulseApiGate> {
   const decision = await evaluatePluginAccess({ requireApprovedUserOrAdmin: false, requireUsername: false });
   if (!decision.allowed) {
-    return { allowed: false as const, response: NextResponse.json(decision, { status: decision.status }) };
+    return { allowed: false, response: NextResponse.json(decision, { status: decision.status }) };
   }
 
-  return { allowed: true as const, auth: decision };
+  return { allowed: true, auth: decision };
+}
+
+export async function requireGentlePulseWriteAccess(): Promise<GentlePulseApiGate> {
+  const decision = await evaluatePluginAccess({ requireApprovedUserOrAdmin: false, requireUsername: false });
+  if (!decision.allowed) {
+    return { allowed: false, response: NextResponse.json(decision, { status: decision.status }) };
+  }
+
+  return { allowed: true, auth: decision };
 }
 
 export function ensureMutationCsrf(request: Request): NextResponse | null {

@@ -3,7 +3,7 @@ import { requireGentlePulseReadAccess } from '@/src/app/api/gentlepulse/_lib';
 
 export async function GET() {
   const gate = await requireGentlePulseReadAccess();
-  if (!gate.allowed) {
+  if ('response' in gate) {
     return gate.response;
   }
 

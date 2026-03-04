@@ -8,7 +8,7 @@ type ItemParams = {
 
 export async function GET(_request: Request, context: ItemParams) {
   const gate = await requireGentlePulseReadAccess();
-  if (!gate.allowed) {
+  if ('response' in gate) {
     return gate.response;
   }
 

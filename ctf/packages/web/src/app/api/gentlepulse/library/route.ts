@@ -4,7 +4,7 @@ import { listLibraryItems } from '@/src/lib/gentlepulse/repository';
 
 export async function GET() {
   const gate = await requireGentlePulseReadAccess();
-  if (!gate.allowed) {
+  if ('response' in gate) {
     return gate.response;
   }
 

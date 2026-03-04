@@ -59,6 +59,12 @@ Use the monorepo scripts which mirror upstream standalone compose behavior.
 
 ## Railway Staging Deployment (Concrete)
 
+Command reference for bootstrap and verification:
+
+- `ctf/docs/developer/FORMANCE_LEDGER_RAILWAY_CURL_COMMANDS.md`
+- Shortcut wrapper from repo root: `pnpm -C ctf run formance:bootstrap:railway`
+- If already inside `ctf/`: `pnpm run formance:bootstrap:railway`
+
 ### A. Provision Formance service
 
 1. Create Railway service: `formance-ledger`.
@@ -79,7 +85,7 @@ Use the monorepo scripts which mirror upstream standalone compose behavior.
 
 ### C. Bootstrap ledger namespace
 
-Run once against the Railway Formance URL:
+Run once against the Railway Formance URL (copy-paste commands are in the command reference above):
 
 1. `http POST <FORMANCE_API_URL>/api/ledger/v2/<FORMANCE_LEDGER>`
 2. Verify: `http GET <FORMANCE_API_URL>/api/ledger/v2`

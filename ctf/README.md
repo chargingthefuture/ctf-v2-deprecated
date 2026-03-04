@@ -164,6 +164,7 @@ This folder contains the rewrite monorepo scaffold for:
 
 - Service Credits value-moving transfer flows require Formance ledger posting.
 - Self-host operational runbook: `ctf/docs/developer/FORMANCE_LEDGER_SELF_HOST_RUNBOOK.md`
+- Railway curl bootstrap/verification commands: `ctf/docs/developer/FORMANCE_LEDGER_RAILWAY_CURL_COMMANDS.md`
 - Railway staging deployment recipe (service/image/start/bootstrap) is documented in that runbook.
 - Upstream production recommendation boundary is k8s operator; Railway path here is for CTF staging/runtime support.
 - Current pinned Formance image: `ghcr.io/formancehq/ledger:v2.3.15-dev.1.g1077fe2@sha256:5c280c2b1b397c6d910e88d7f1719666fadf3b2be18ab6dad31a905dee876db7`
