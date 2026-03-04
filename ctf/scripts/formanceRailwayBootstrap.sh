@@ -16,6 +16,14 @@ LEDGER_NAME="${FORMANCE_LEDGER}"
 AUTH_HEADER="Authorization: Bearer ${FORMANCE_API_TOKEN}"
 REQUEST_ID="$(date +%s)"
 
+if [[ "${BASE_URL}" == *".railway.internal"* ]]; then
+  if ! getent hosts "${BASE_URL#http://}" >/dev/null 2>&1 && ! getent hosts "${BASE_URL#https://}" >/dev/null 2>&1; then
+    echo "${BASE_URL} is a Railway private hostname and is not resolvable from this shell."
+    echo "Use https://<service>.up.railway.app when running bootstrap locally, or run this script inside Railway runtime."
+    exit 1
+  fi
+fi
+
 echo "[1/4] Bootstrapping ledger namespace: ${LEDGER_NAME}"
 bootstrap_status="$(curl -sS -o /tmp/formance-bootstrap-response.json -w "%{http_code}" \
   -X POST \
