@@ -46,11 +46,21 @@ jobs:
         uses: actions/github-script@v7
         env:
           BUDGET_STATUS: ${{ steps.budget.outputs.status }}
-          BUDGET_SUMMARY: ${{ steps.budget.outputs.summary_markdown }}
+          BUDGET_JSON_PATH: ${{ runner.temp }}/github-actions-budget.json
         with:
           script: |
+            const fs = require('node:fs');
             const status = process.env.BUDGET_STATUS || 'unknown';
-            const summary = process.env.BUDGET_SUMMARY || 'No budget summary generated.';
+            let summary = 'No budget summary generated.';
+            try {
+              const raw = fs.readFileSync(process.env.BUDGET_JSON_PATH, 'utf8');
+              const parsed = JSON.parse(raw);
+              if (typeof parsed.summaryMarkdown === 'string' && parsed.summaryMarkdown.trim().length > 0) {
+                summary = parsed.summaryMarkdown;
+              }
+            } catch {
+              // keep fallback summary
+            }
             const owner = context.repo.owner;
             const repo = context.repo.repo;
             const issueTitle = 'GitHub Actions Budget Monitor';

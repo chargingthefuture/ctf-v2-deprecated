@@ -93,6 +93,12 @@ function toStepOutput(name, value) {
   }
 
   const serialized = typeof value === "string" ? value : JSON.stringify(value);
+  if (serialized.includes("\n")) {
+    const delimiter = `EOF_${name}_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+    fs.appendFileSync(outputPath, `${name}<<${delimiter}\n${serialized}\n${delimiter}\n`, "utf8");
+    return;
+  }
+
   fs.appendFileSync(outputPath, `${name}=${serialized}\n`, "utf8");
 }
 
@@ -371,7 +377,6 @@ async function main() {
   toStepOutput("scope", scope);
   toStepOutput("owner", owner);
   toStepOutput("repository", repository || "");
-  toStepOutput("summary_markdown", summaryMarkdown);
   toStepOutput("json", JSON.stringify(result));
 
   appendStepSummary(summaryMarkdown);

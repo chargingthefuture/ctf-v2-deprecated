@@ -27,15 +27,15 @@ jobs:
       run:
         working-directory: ctf
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Validate EXPO_TOKEN presence
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
           set -euo pipefail
           [ -n "$EXPO_TOKEN" ] || { echo "Missing EXPO_TOKEN"; exit 1; }
-
-      - name: Checkout
-        uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -112,7 +112,6 @@ jobs:
         id: buildmeta
         run: |
           set -euo pipefail
-          cd ctf
 
           BUILD_URL=$(node -e "const fs=require('fs'); const j=JSON.parse(fs.readFileSync('android-preview-build.json','utf8')); const arr=Array.isArray(j)?j:[j]; const candidate=arr.find(x=>x?.platform==='ANDROID'||x?.platform==='android')||arr[0]; const url=candidate?.artifacts?.buildUrl||candidate?.artifacts?.applicationArchiveUrl||''; process.stdout.write(url);")
           BUILD_ID=$(node -e "const fs=require('fs'); const j=JSON.parse(fs.readFileSync('android-preview-build.json','utf8')); const arr=Array.isArray(j)?j:[j]; const candidate=arr.find(x=>x?.platform==='ANDROID'||x?.platform==='android')||arr[0]; process.stdout.write(candidate?.id||'');")

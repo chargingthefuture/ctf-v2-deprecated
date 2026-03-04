@@ -18,15 +18,15 @@ jobs:
       run:
         working-directory: ctf
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Validate EXPO_TOKEN presence
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
           set -euo pipefail
           [ -n "$EXPO_TOKEN" ] || { echo "Missing EXPO_TOKEN"; exit 1; }
-
-      - name: Checkout
-        uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -78,25 +78,23 @@ jobs:
       - name: Resolve APK URL
         run: |
           set -euo pipefail
-          cd ..
           BUILD_URL=$(node -e "const fs=require('fs'); const j=JSON.parse(fs.readFileSync('android-build.json','utf8')); const arr=Array.isArray(j)?j:[j]; const candidate=arr.find(x=>x?.platform==='ANDROID'||x?.platform==='android')||arr[0]; const url=candidate?.artifacts?.buildUrl||candidate?.artifacts?.applicationArchiveUrl||''; if(!url){process.exit(1);} process.stdout.write(url);")
           echo "BUILD_URL=$BUILD_URL" >> "$GITHUB_ENV"
 
       - name: Download APK artifact
         run: |
           set -euo pipefail
-          cd ..
           curl -fsSL "$BUILD_URL" -o ti-skills-economy-android.apk
 
       - name: Upload APK artifact to workflow
         uses: actions/upload-artifact@v4
         with:
           name: ti-skills-economy-android-apk
-          path: ti-skills-economy-android.apk
+          path: ctf/ti-skills-economy-android.apk
 
       - name: Publish GitHub Release (tag builds)
         if: ${{ startsWith(github.ref, 'refs/tags/mobile-v') }}
         uses: softprops/action-gh-release@v2
         with:
-          files: ti-skills-economy-android.apk
+          files: ctf/ti-skills-economy-android.apk
           generate_release_notes: true
