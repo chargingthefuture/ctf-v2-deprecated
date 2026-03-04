@@ -87,8 +87,8 @@ Command reference for bootstrap and verification:
 
 Run once against the Railway Formance URL (copy-paste commands are in the command reference above):
 
-1. `http POST <FORMANCE_API_URL>/api/ledger/v2/<FORMANCE_LEDGER>`
-2. Verify: `http GET <FORMANCE_API_URL>/api/ledger/v2`
+1. `http POST <FORMANCE_API_URL>/v2/<FORMANCE_LEDGER>`
+2. Verify: `http GET <FORMANCE_API_URL>/v2`
 
 ### D. Smoke check from CTF path
 

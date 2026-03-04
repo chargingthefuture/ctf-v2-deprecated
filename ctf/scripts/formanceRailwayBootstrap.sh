@@ -28,9 +28,15 @@ echo "[1/4] Bootstrapping ledger namespace: ${LEDGER_NAME}"
 bootstrap_status="$(curl -sS -o /tmp/formance-bootstrap-response.json -w "%{http_code}" \
   -X POST \
   -H "$AUTH_HEADER" \
-  "${BASE_URL}/api/ledger/v2/${LEDGER_NAME}")"
+  "${BASE_URL}/v2/${LEDGER_NAME}")"
 
-if [[ "$bootstrap_status" != "201" && "$bootstrap_status" != "409" ]]; then
+bootstrap_body="$(cat /tmp/formance-bootstrap-response.json 2>/dev/null || true)"
+already_exists_v2="false"
+if [[ "$bootstrap_status" == "400" ]] && [[ "$bootstrap_body" == *"LEDGER_ALREADY_EXISTS"* ]]; then
+  already_exists_v2="true"
+fi
+
+if [[ "$bootstrap_status" != "201" && "$bootstrap_status" != "409" && "$already_exists_v2" != "true" ]]; then
   echo "Bootstrap failed with HTTP ${bootstrap_status}"
   cat /tmp/formance-bootstrap-response.json
   exit 1
@@ -38,6 +44,8 @@ fi
 
 if [[ "$bootstrap_status" == "201" ]]; then
   echo "Ledger namespace created."
+elif [[ "$already_exists_v2" == "true" ]]; then
+  echo "Ledger namespace already exists (HTTP 400 LEDGER_ALREADY_EXISTS)."
 else
   echo "Ledger namespace already exists (HTTP 409)."
 fi
@@ -45,7 +53,7 @@ fi
 echo "[2/4] Listing ledgers"
 curl -sS \
   -H "$AUTH_HEADER" \
-  "${BASE_URL}/api/ledger/v2" || true
+  "${BASE_URL}/v2" || true
 echo
 
 echo "[3/4] Posting smoke transaction"
@@ -53,7 +61,7 @@ curl -sS -o /tmp/formance-smoke-response.json -w "%{http_code}" \
   -X POST \
   -H "$AUTH_HEADER" \
   -H "Content-Type: application/json" \
-  "${BASE_URL}/api/ledger/${LEDGER_NAME}/transactions" \
+  "${BASE_URL}/v2/${LEDGER_NAME}/transactions" \
   -d "{\"reference\":\"bootstrap-smoke-${REQUEST_ID}\",\"postings\":[{\"source\":\"world\",\"destination\":\"wallet:test-user\",\"amount\":100,\"asset\":\"SERVICE_CREDITS\"}],\"metadata\":{\"plugin\":\"service-credits\",\"flow\":\"bootstrap_smoke\"}}" >/tmp/formance-smoke-status.txt
 
 smoke_status="$(cat /tmp/formance-smoke-status.txt)"
@@ -66,7 +74,7 @@ fi
 echo "[4/4] Fetching transactions"
 curl -sS \
   -H "$AUTH_HEADER" \
-  "${BASE_URL}/api/ledger/${LEDGER_NAME}/transactions" || true
+  "${BASE_URL}/v2/${LEDGER_NAME}/transactions" || true
 echo
 
 echo "Formance Railway bootstrap + smoke completed successfully."

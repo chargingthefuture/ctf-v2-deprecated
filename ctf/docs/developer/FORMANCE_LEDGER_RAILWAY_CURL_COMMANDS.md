@@ -38,7 +38,7 @@ This runs bootstrap + ledger list + smoke transaction + transaction fetch using 
 ```bash
 curl -sS -i -X POST \
   -H "Authorization: Bearer ${FORMANCE_API_TOKEN}" \
-  "${FORMANCE_API_URL}/api/ledger/v2/${FORMANCE_LEDGER}"
+  "${FORMANCE_API_URL}/v2/${FORMANCE_LEDGER}"
 ```
 
 Expected outcomes:
@@ -51,7 +51,7 @@ Expected outcomes:
 ```bash
 curl -sS \
   -H "Authorization: Bearer ${FORMANCE_API_TOKEN}" \
-  "${FORMANCE_API_URL}/api/ledger/v2" | jq .
+  "${FORMANCE_API_URL}/v2" | jq .
 ```
 
 If `jq` is unavailable:
@@ -59,7 +59,7 @@ If `jq` is unavailable:
 ```bash
 curl -sS \
   -H "Authorization: Bearer ${FORMANCE_API_TOKEN}" \
-  "${FORMANCE_API_URL}/api/ledger/v2"
+  "${FORMANCE_API_URL}/v2"
 ```
 
 ## 4) Write a test transaction
@@ -68,7 +68,7 @@ curl -sS \
 curl -sS -i -X POST \
   -H "Authorization: Bearer ${FORMANCE_API_TOKEN}" \
   -H "Content-Type: application/json" \
-  "${FORMANCE_API_URL}/api/ledger/${FORMANCE_LEDGER}/transactions" \
+  "${FORMANCE_API_URL}/v2/${FORMANCE_LEDGER}/transactions" \
   -d '{
     "reference": "bootstrap-smoke-001",
     "postings": [
@@ -91,7 +91,7 @@ curl -sS -i -X POST \
 ```bash
 curl -sS \
   -H "Authorization: Bearer ${FORMANCE_API_TOKEN}" \
-  "${FORMANCE_API_URL}/api/ledger/${FORMANCE_LEDGER}/transactions" | jq .
+  "${FORMANCE_API_URL}/v2/${FORMANCE_LEDGER}/transactions" | jq .
 ```
 
 ## 6) Common failure checks
