@@ -34,6 +34,10 @@ type DirectoryProfileRow = {
   is_active: boolean;
   created_at: Date;
   updated_at: Date;
+    venmo_address: string | null;
+    monero_address: string | null;
+    bitcoin_address: string | null;
+    service_credits_address: string | null;
 };
 
 type DirectorySkillRow = {
@@ -134,6 +138,10 @@ async function mapProfileRow(client: PoolClient, row: DirectoryProfileRow): Prom
     isActive: row.is_active,
     createdAtIso: toIso(row.created_at),
     updatedAtIso: toIso(row.updated_at),
+      venmoAddress: row.venmo_address,
+      moneroAddress: row.monero_address,
+      bitcoinAddress: row.bitcoin_address,
+      serviceCreditsAddress: row.service_credits_address,
   };
 }
 
@@ -347,6 +355,10 @@ export async function upsertOwnProfile(userId: string, input: DirectoryProfileIn
         ON CONFLICT (user_id)
         DO UPDATE SET
           profile_visibility = EXCLUDED.profile_visibility,
+                        venmo_address = $9,
+                        monero_address = $10,
+                        bitcoin_address = $11,
+                        service_credits_address = $12,
           service_deleted_at = NULL,
           updated_at = NOW()
       `,

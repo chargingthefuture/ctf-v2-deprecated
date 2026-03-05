@@ -14,6 +14,10 @@ export type DirectoryProfile = {
   isActive: boolean;
   createdAtIso: string;
   updatedAtIso: string;
+  venmoAddress?: string | null;
+  moneroAddress?: string | null;
+  bitcoinAddress?: string | null;
+  serviceCreditsAddress?: string | null;
 };
 
 export type DirectoryAnnouncement = {
@@ -44,6 +48,10 @@ export type DirectoryProfileInput = {
   sectorId?: string | null;
   jobTitleId?: string | null;
   skillIds?: string[];
+  venmoAddress?: string | null;
+  moneroAddress?: string | null;
+  bitcoinAddress?: string | null;
+  serviceCreditsAddress?: string | null;
 };
 
 export type DirectoryAnnouncementInput = {

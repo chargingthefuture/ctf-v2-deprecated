@@ -19,6 +19,10 @@ function toProfileInput(body: ProfileBody): DirectoryProfileInput {
     skillIds: Array.isArray(body.skillIds)
       ? body.skillIds.filter((value): value is string => typeof value === 'string')
       : [],
+    venmoAddress: typeof body.venmoAddress === 'string' ? body.venmoAddress : null,
+    moneroAddress: typeof body.moneroAddress === 'string' ? body.moneroAddress : null,
+    bitcoinAddress: typeof body.bitcoinAddress === 'string' ? body.bitcoinAddress : null,
+    serviceCreditsAddress: typeof body.serviceCreditsAddress === 'string' ? body.serviceCreditsAddress : null,
   };
 }
 

@@ -2,7 +2,7 @@
 
 ## Scope
 - Applies to the rewrite web/Android product under `ctf/`.
-- There is one Legacy folder in this mono-repository (`platform/`) which is for reference-only during its migration to the `ctf/` folder.
+- The `/platform` folder is strictly for reference-only during migration and must never be referenced, deployed, or used for routing or domain configuration unless explicitly requested.
 - Governs architecture, coding standards, delivery quality, and compliance.
 
 ## Product Rule Modules
