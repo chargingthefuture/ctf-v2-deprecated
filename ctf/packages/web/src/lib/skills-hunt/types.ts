@@ -1,3 +1,20 @@
+// Service Credits Transaction Types
+export type SkillsHuntServiceCreditsTransaction = {
+  id: string;
+  fromUserId: string;
+  toUserId: string;
+  amount: number;
+  reason: string | null;
+  submissionId: string | null; // If tied to a submission reward
+  createdAtIso: string;
+};
+
+export type SkillsHuntServiceCreditsTransactionInput = {
+  toUserId: string;
+  amount: number;
+  reason?: string | null;
+  submissionId?: string | null;
+};
 export type SkillsHuntRoundStatus = 'draft' | 'active' | 'closed' | 'archived';
 export type SkillsHuntSubmissionStatus = 'pending' | 'accepted' | 'rejected' | 'flagged';
 export type SkillsHuntReviewAction = 'accept' | 'reject' | 'edit' | 'flag';

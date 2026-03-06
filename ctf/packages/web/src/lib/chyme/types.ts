@@ -1,3 +1,13 @@
+// Service Credits transaction support
+export type ChymeServiceCreditsTransaction = {
+  id: string;
+  fromUserId: string;
+  toUserId: string;
+  amount: number;
+  message?: string;
+  createdAtIso: string;
+  status: 'pending' | 'completed' | 'failed';
+};
 export type ChymeRole = 'speaker' | 'listener';
 
 export type ChymeParticipant = {

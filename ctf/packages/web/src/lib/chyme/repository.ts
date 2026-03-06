@@ -1,3 +1,32 @@
+// Service Credits transaction logic
+import { createServiceCreditsTransaction } from '@/src/lib/service-credits/ledger';
+
+export async function sendServiceCredits(
+  fromUserId: string,
+  toUserId: string,
+  amount: number,
+  message?: string,
+): Promise<ChymeServiceCreditsTransaction> {
+  // This function should call the Formance ledger or service credits backend
+  // and record the transaction in a chyme_service_credits_transactions table (to be created)
+  // For now, just call the shared ledger logic and return a stub
+  const tx = await createServiceCreditsTransaction({
+    fromUserId,
+    toUserId,
+    amount,
+    context: 'chyme',
+    message,
+  });
+  return {
+    id: tx.id,
+    fromUserId,
+    toUserId,
+    amount,
+    message,
+    createdAtIso: new Date().toISOString(),
+    status: tx.status,
+  };
+}
 import type { PoolClient } from 'pg';
 import {
   CHYME_DEFAULT_MESSAGES_LIMIT,

@@ -25,6 +25,48 @@ export async function TrustTransportShell({ userId, isAdmin }: TrustTransportShe
         </p>
       </header>
 
+      {/* Service Credits Section */}
+      <section className="rounded-lg border bg-card p-5 text-sm space-y-2">
+        <h2 className="text-lg font-medium">Send Service Credits</h2>
+        <form
+          className="space-y-2"
+          action="/api/trusttransport/service-credits"
+          method="POST"
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const form = e.currentTarget;
+            const toUserId = form.toUserId.value;
+            const amount = Number(form.amount.value);
+            const reason = form.reason.value;
+            const res = await fetch('/api/trusttransport/service-credits', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ toUserId, amount, reason }),
+            });
+            if (res.ok) {
+              alert('Service credits sent!');
+              form.reset();
+            } else {
+              const data = await res.json();
+              alert(data.message || 'Failed to send service credits.');
+            }
+          }}
+        >
+          <div>
+            <label htmlFor="toUserId" className="block font-medium">Recipient User ID</label>
+            <input name="toUserId" id="toUserId" required className="border rounded px-2 py-1 w-full" />
+          </div>
+          <div>
+            <label htmlFor="amount" className="block font-medium">Amount</label>
+            <input name="amount" id="amount" type="number" min="1" required className="border rounded px-2 py-1 w-full" />
+          </div>
+          <div>
+            <label htmlFor="reason" className="block font-medium">Reason (optional)</label>
+            <input name="reason" id="reason" className="border rounded px-2 py-1 w-full" />
+          </div>
+          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">Send</button>
+        </form>
+      </section>
       <section className="grid gap-4 md:grid-cols-3">
         <article className="rounded-lg border bg-card p-4">
           <p className="text-xs text-muted-foreground">My requests</p>

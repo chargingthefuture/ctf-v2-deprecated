@@ -117,6 +117,18 @@ async function main() {
       [seedRequestId, seedFulfillmentId],
     );
 
+    // Seed a service credits transaction for SocketRelay
+    await client.query(
+      `
+        INSERT INTO socketrelay_service_credits_transactions
+          (from_user_id, to_user_id, amount, reason, fulfillment_id, created_at)
+        VALUES
+          ('seed-socketrelay-owner-01', 'seed-socketrelay-fulfiller-01', 6, 'Seed SocketRelay service credits', $1::uuid, NOW())
+        ON CONFLICT DO NOTHING
+      `,
+      [seedFulfillmentId],
+    );
+
     await client.query('COMMIT');
     console.log('SocketRelay phase-2 seed fixtures applied.');
   } catch (error) {

@@ -138,6 +138,18 @@ async function main() {
       `,
     );
 
+    // Seed a service credits transaction tied to the accepted submission
+    await client.query(
+      `
+        INSERT INTO skills_hunt_service_credits_transactions
+          (from_user_id, to_user_id, amount, reason, submission_id, created_at)
+        VALUES
+          ('seed-moderator', 'seed-user-01', 10, 'Seed reward for accepted submission', $1::uuid, NOW())
+        ON CONFLICT DO NOTHING
+      `,
+      [submissionId],
+    );
+
     await client.query('COMMIT');
     console.log('Skills Hunt phase-1 seed fixtures applied.');
   } catch (error) {
