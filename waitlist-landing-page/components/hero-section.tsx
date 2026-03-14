@@ -89,7 +89,7 @@ function WaitlistCount() {
 
   return (
     <span className="font-[var(--font-inter)] text-xs sm:text-sm text-vibrant-mint font-medium">
-      {count !== null ? `${count.toLocaleString()} new people joined the waitlist!` : "Waitlist loading..."}
+      {count !== null ? `${count.toLocaleString()} new people waitlisted! 60 spots already filled.` : "Waitlist loading..."}
     </span>
   )
 }
