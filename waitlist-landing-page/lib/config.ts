@@ -15,6 +15,7 @@ export const config = {
     signalGroup: "https://signal.group/#CjQKILHj7074l2Kl-oYy0qGSFdydXbtu0Pf66Z_88K9IlSCtEhDDdqV_BFAW2qm2EiTGEaNs",
     terms: "https://app.chargingthefuture.com/terms",
     privacy: "https://app.chargingthefuture.com/privacy",
+    blog: "https://github.com/chargingthefuture/chargingthefuture/wiki",
   },
 } as const
 
