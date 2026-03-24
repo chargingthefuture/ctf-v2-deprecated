@@ -51,6 +51,48 @@ migration_sql_changed=false
 seed_changed=false
 contract_changed=false
 versioning_note_changed=false
+contract_schema_failed=false
+
+validate_contract_file() {
+  local file="$1"
+
+  if [[ ! -f "$file" ]]; then
+    echo "Schema drift gate failed: changed contract file not found: $file" >&2
+    contract_schema_failed=true
+    return
+  fi
+
+  if ! grep -Eq '^[[:space:]]*pluginId[[:space:]]*:' "$file"; then
+    echo "Schema drift gate failed: missing 'pluginId' in contract file: $file" >&2
+    contract_schema_failed=true
+  fi
+
+  if ! grep -Eq '^[[:space:]]*contractVersion[[:space:]]*:' "$file"; then
+    echo "Schema drift gate failed: missing 'contractVersion' in contract file: $file" >&2
+    contract_schema_failed=true
+  fi
+
+  if [[ "$file" =~ _PLUGIN_COMMAND_CONTRACTS\.ya?ml$ ]]; then
+    if ! grep -Eq '^[[:space:]]*commandId[[:space:]]*:' "$file"; then
+      echo "Schema drift gate failed: missing 'commandId' in command contract file: $file" >&2
+      contract_schema_failed=true
+    fi
+  fi
+
+  if [[ "$file" =~ _PLUGIN_ACCESS_POLICY_CONTRACTS\.ya?ml$ ]]; then
+    if ! grep -Eq '^[[:space:]]*requiredRoles[[:space:]]*:' "$file"; then
+      echo "Schema drift gate failed: missing 'requiredRoles' in access-policy contract file: $file" >&2
+      contract_schema_failed=true
+    fi
+  fi
+
+  if [[ "$file" =~ _PLUGIN_AUDIT_CONTRACTS\.ya?ml$ ]]; then
+    if ! grep -Eq '^[[:space:]]*eventId[[:space:]]*:' "$file"; then
+      echo "Schema drift gate failed: missing 'eventId' in audit contract file: $file" >&2
+      contract_schema_failed=true
+    fi
+  fi
+}
 
 for file in "${files[@]}"; do
   [[ -z "$file" ]] && continue
@@ -92,14 +134,18 @@ for file in "${files[@]}"; do
   if [[ "$file" =~ ^ctf/packages/ ]] && [[ "$file_lc" =~ contract|schema|command|access-policy|audit ]]; then
     contract_changed=true
   fi
-  if [[ "$file" =~ ^\.claude/rules/20[0-9].*\.mdc$ ]]; then
+  if [[ "$file" =~ ^ctf/docs/contracts/.*_PLUGIN_(COMMAND|ACCESS_POLICY|AUDIT)_CONTRACTS\.ya?ml$ ]]; then
+    contract_changed=true
+    validate_contract_file "$file"
+  fi
+  if [[ "$file" =~ ^\.github/instructions/20[0-9].*\.mdc$ ]]; then
     contract_changed=true
   fi
 
   if [[ "$file" =~ ^ctf/docs/developer/ ]]; then
     versioning_note_changed=true
   fi
-  if [[ "$file" == ".claude/rules/122-schema-drift-predeployment-rules.mdc" ]]; then
+  if [[ "$file" == ".github/instructions/122-schema-drift-predeployment-rules.mdc" ]]; then
     versioning_note_changed=true
   fi
 done
@@ -117,7 +163,11 @@ if [[ "$seed_changed" == true && "$migration_sql_changed" != true ]]; then
 fi
 
 if [[ "$contract_changed" == true && "$migration_sql_changed" != true && "$versioning_note_changed" != true ]]; then
-  echo "Schema drift gate failed: contract/schema command or policy changes require versioning evidence (ctf/docs/developer/**, .claude/rules/122-schema-drift-predeployment-rules.mdc, or a migration SQL change)." >&2
+  echo "Schema drift gate failed: contract/schema command or policy changes require versioning evidence (ctf/docs/developer/**, .github/instructions/122-schema-drift-predeployment-rules.mdc, or a migration SQL change)." >&2
+  failed=1
+fi
+
+if [[ "$contract_schema_failed" == true ]]; then
   failed=1
 fi
 

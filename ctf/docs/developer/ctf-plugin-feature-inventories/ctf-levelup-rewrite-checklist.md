@@ -45,7 +45,11 @@
 
 - [x] Add deterministic seed script for sample users/cohort/milestones.
 - [ ] Android parity implementation (follow-up required before GA).
-- [ ] Observability KPI finalization for non-placeholder admin metrics.
+  - Ticket: `PARITY-LEVELUP-ANDROID-001` (placeholder)
+  - Owner: Mobile plugin parity owner (TBD)
+  - Deadline: Before LevelUp GA release
+  - Risk note: Web-only critical training flow until parity closes
+- [x] Observability KPI finalization for non-placeholder admin metrics.
 
 ## MVP Testing Note
 

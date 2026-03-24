@@ -1168,9 +1168,16 @@ export async function getAdminPanelData() {
     queryDb<{ total: string }>(`SELECT COUNT(*)::text AS total FROM levelup_enrollments`),
     queryDb<{ total: string }>(`SELECT COUNT(*)::text AS total FROM levelup_enrollments WHERE status = 'completed'`),
     queryDb<{ avg_days: string }>(
-      `SELECT COALESCE(AVG(EXTRACT(EPOCH FROM (updated_at - enrolled_at)) / 86400), 0)::text AS avg_days
-       FROM levelup_enrollments
-       WHERE status = 'completed'`,
+      `WITH first_trainer_payout AS (
+         SELECT enrollment_id, MIN(created_at) AS first_payout_at
+         FROM levelup_disbursements
+         WHERE disbursement_type = 'trainer_payout'
+         GROUP BY enrollment_id
+       )
+       SELECT COALESCE(AVG(EXTRACT(EPOCH FROM (f.first_payout_at - e.enrolled_at)) / 86400), 0)::text AS avg_days
+       FROM levelup_enrollments e
+       JOIN first_trainer_payout f ON f.enrollment_id = e.id
+       WHERE f.first_payout_at >= e.enrolled_at`,
     ),
   ]);
 
@@ -1178,7 +1185,7 @@ export async function getAdminPanelData() {
     kpis: {
       enrollments: Number(enrollments.rows[0]?.total ?? '0'),
       completions: Number(completions.rows[0]?.total ?? '0'),
-      avgTimeToFirstBillableHourDaysPlaceholder: roundCurrency(Number(avgLeadDays.rows[0]?.avg_days ?? '0')),
+      avgDaysToFirstTrainerPayout: roundCurrency(Number(avgLeadDays.rows[0]?.avg_days ?? '0')),
     },
   };
 }

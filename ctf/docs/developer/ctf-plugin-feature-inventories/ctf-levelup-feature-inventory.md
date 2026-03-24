@@ -25,7 +25,7 @@
 
 1. Admin credit adjustment endpoint (`mint`/`adjustment` path).
 2. Dispute resolution endpoint with optional adjustment transfer.
-3. Admin panel with KPI placeholders (enrollments, completions, time-to-first-billable-hour placeholder).
+3. Admin panel with operational KPIs (enrollments, completions, avg days to first trainer payout).
 
 ## API Surface and Route Map
 
@@ -93,8 +93,9 @@ Seed content:
 
 1. Automated test suites are intentionally deferred for MVP (Rule 118).
 2. Android parity implementation is not included in this web-first pass; follow-up parity ticket required before GA.
-3. KPI fields in admin panel remain placeholders pending analytics contract finalization.
-4. Dispute attachment storage uses URL metadata only; secure storage integration remains a follow-up.
+   - Tracking ticket placeholder: `PARITY-LEVELUP-ANDROID-001`
+   - Required status before GA: closed
+3. Dispute attachment storage uses URL metadata only; secure storage integration remains a follow-up.
 
 ## Change Log
 

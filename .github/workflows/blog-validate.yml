@@ -31,8 +31,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: "pnpm"
-          cache-dependency-path: wiki-blog/pnpm-lock.yaml
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -65,5 +63,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: blog-dist
-          path: artifacts/blog/dist/public/
+          path: wiki-blog/artifacts/blog/dist/public
           retention-days: 7

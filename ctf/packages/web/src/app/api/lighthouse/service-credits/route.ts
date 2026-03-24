@@ -1,11 +1,17 @@
 import { NextResponse } from 'next/server';
-import { requireLighthouseUserAccess, ensureMutationCsrf } from '../../_lib';
-import { sendLighthouseServiceCredits } from '@/src/lib/lighthouse/repository';
+import { requireLighthouseReadAccess, ensureMutationCsrf } from '../_lib';
+import { createTransfer } from '@/src/lib/service-credits/repository';
 import { LIGHTHOUSE_ERROR_CODE } from '@/src/lib/lighthouse/constants';
-import type { LighthouseServiceCreditsSendInput } from '@/src/lib/lighthouse/types';
+
+type LighthouseServiceCreditsSendInput = {
+  toUserId: string;
+  amount: number;
+  message?: string;
+  idempotencyKey?: string;
+};
 
 export async function POST(request: Request) {
-  const gate = await requireLighthouseUserAccess();
+  const gate = await requireLighthouseReadAccess();
   if (!gate.allowed) {
     return gate.response;
   }
@@ -19,13 +25,30 @@ export async function POST(request: Request) {
   try {
     input = await request.json();
   } catch {
-    return NextResponse.json({ ok: false, code: LIGHTHOUSE_ERROR_CODE.invalidInput, message: 'Invalid JSON.' }, { status: 400 });
+    return NextResponse.json({ ok: false, code: LIGHTHOUSE_ERROR_CODE.invalidPayload, message: 'Invalid JSON.' }, { status: 400 });
+  }
+
+  if (!input.toUserId || typeof input.amount !== 'number' || input.amount <= 0) {
+    return NextResponse.json({ ok: false, code: LIGHTHOUSE_ERROR_CODE.invalidPayload, message: 'Invalid payload.' }, { status: 400 });
   }
 
   try {
-    const tx = await sendLighthouseServiceCredits(input, gate.userId);
+    const idempotencyKey =
+      typeof input.idempotencyKey === 'string' && input.idempotencyKey.trim().length > 0
+        ? input.idempotencyKey.trim()
+        : `lighthouse-${gate.auth.userId}-${Date.now()}`;
+
+    const tx = await createTransfer({
+      senderUserId: gate.auth.userId,
+      recipientUserId: input.toUserId,
+      amount: input.amount,
+      idempotencyKey,
+      originPlugin: 'lighthouse',
+      reasonCode: 'lighthouse.transfer',
+    });
+
     return NextResponse.json({ ok: true, transaction: tx }, { status: 200 });
-  } catch (e) {
+  } catch {
     return NextResponse.json({ ok: false, code: LIGHTHOUSE_ERROR_CODE.persistenceUnavailable, message: 'Unable to send service credits.' }, { status: 503 });
   }
 }

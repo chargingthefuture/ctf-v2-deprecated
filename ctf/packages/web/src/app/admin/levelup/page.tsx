@@ -28,8 +28,8 @@ export default async function LevelupAdminPage() {
           <p className="text-lg font-semibold">{panel.kpis.completions}</p>
         </article>
         <article className="rounded border p-3">
-          <p className="text-xs text-muted-foreground">Avg time-to-first-billable-hour (placeholder)</p>
-          <p className="text-lg font-semibold">{panel.kpis.avgTimeToFirstBillableHourDaysPlaceholder} days</p>
+          <p className="text-xs text-muted-foreground">Avg days to first trainer payout</p>
+          <p className="text-lg font-semibold">{panel.kpis.avgDaysToFirstTrainerPayout} days</p>
         </article>
       </section>
 

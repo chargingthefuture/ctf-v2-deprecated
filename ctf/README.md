@@ -180,6 +180,26 @@ This folder contains the rewrite monorepo scaffold for:
   - `SERVICE_CREDITS_INTERNAL_TOKEN` (required for internal deletion reclaim route)
 - When Formance is not configured or unavailable, `POST /api/service-credits/transfers` returns a deterministic 503 deny code.
 
+## LevelUp Plugin (Phase 3)
+
+- Plugin shell route: `/apps/levelup`
+- Admin route: `/admin/levelup`
+- Primary migration: `ctf/migrations/2026-03-24-levelup-core-phase3.sql`
+- Deterministic seed script: `pnpm run seed:levelup`
+
+### LevelUp environment variables
+
+- `LEVELUP_STARTER_CREDITS` default: `500`
+- `LEVELUP_ENROLL_RATE_LIMIT_WINDOW_MS` default: `60000`
+- `LEVELUP_ENROLL_RATE_LIMIT_MAX` default: `6`
+- `LEVELUP_MILESTONE_RATE_LIMIT_WINDOW_MS` default: `60000`
+- `LEVELUP_MILESTONE_RATE_LIMIT_MAX` default: `20`
+
+### MVP testing posture
+
+- Automated test suites are deferred for MVP per Rule 118.
+- LevelUp release readiness currently relies on migration/application validation, seed validation, audit/contract checks, and parity tracking artifacts.
+
 ## Prompt Leak Protection
 
 - This repository includes git hooks that block committing/pushing AI prompt text patterns.

@@ -9,8 +9,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "build": "echo \"@ctf/mobile build ok\"",
-    "lint": "echo \"@ctf/mobile lint ok\"",
-    "typecheck": "echo \"@ctf/mobile typecheck ok\"",
+    "lint": "pnpm exec eslint --config eslint.config.mjs App.tsx src --max-warnings 0",
+    "typecheck": "pnpm exec tsc --noEmit -p tsconfig.json",
     "test": "echo \"@ctf/mobile test ok\"",
     "check:mobile-env": "node ./scripts/check-mobile-env.mjs"
   },
