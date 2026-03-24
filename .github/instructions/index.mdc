@@ -31,6 +31,7 @@
 - [121-canonical-metric-registry-rules.mdc](121-canonical-metric-registry-rules.mdc)
 - [122-schema-drift-predeployment-rules.mdc](122-schema-drift-predeployment-rules.mdc)
 - [123-environment-configuration-rules.mdc](123-environment-configuration-rules.mdc)
+- [124-brand-voice-and-language-rules.mdc](124-brand-voice-and-language-rules.mdc)
 - [200-plugin-command-contract-templates.mdc](200-plugin-command-contract-templates.mdc)
 - [201-plugin-command-schema-template.mdc](201-plugin-command-schema-template.mdc)
 - [202-plugin-access-policy-schema-template.mdc](202-plugin-access-policy-schema-template.mdc)
@@ -52,6 +53,7 @@ If two rules conflict, choose the stricter rule and document the decision.
 ## Agent Startup Read Order
 - On each new task, read this `index.mdc` first.
 - Then read directly relevant modules before editing code (architecture, coding, testing/release, and domain-specific rules).
+- For user-facing copy changes, read `124-brand-voice-and-language-rules.mdc` and `ctf/docs/BRAND_VOICE_LEXICON.md` before editing content.
 - For modularity governance checks, consult `116-file-size-and-modularity-rules.mdc`, including responsibility boundaries and complexity indicators.
 - When unclear, prefer broader safety/compliance and boundary rules over feature-level rules.
 

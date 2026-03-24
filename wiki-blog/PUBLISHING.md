@@ -11,6 +11,7 @@ This document is the operator runbook for every publishing scenario.
    The URL slug (`My-Page-Title`) becomes the `slug` field.
 
 2. Add an entry to `content-index.yaml`:
+
    ```yaml
    - slug: "My-Page-Title"
      title: "My Page Title"
@@ -21,6 +22,7 @@ This document is the operator runbook for every publishing scenario.
    ```
 
 3. Validate, sync, and preview:
+
    ```bash
    pnpm blog:validate
    pnpm blog:sync
@@ -45,20 +47,24 @@ This document is the operator runbook for every publishing scenario.
    ```bash
    pnpm blog:convert:quora /tmp/quora-export /tmp/quora-md --category=Stories
    ```
+
    - If Quora gives you a single `answers.html` file, pass that directly:
      ```bash
      pnpm blog:convert:quora /tmp/quora-export/answers.html /tmp/quora-md
      ```
 4. Review the generated `.md` files — fix slugs, clean up any formatting artefacts.
 5. Push markdown files to GitHub Wiki:
+
    ```bash
    cp /tmp/quora-md/*.md /path/to/your/wiki-clone/
    cd /path/to/your/wiki-clone
    git add . && git commit -m "feat: add Quora answers" && git push
    ```
-   *(See "Pushing to GitHub Wiki" section below.)*
+
+   _(See "Pushing to GitHub Wiki" section below.)_
 
 6. Append the generated manifest into `content-index.yaml`:
+
    ```bash
    cat /tmp/quora-md/_manifest.yaml   # review entries first
    # Open content-index.yaml and paste the entries under the 'articles:' key
@@ -72,6 +78,7 @@ This document is the operator runbook for every publishing scenario.
    ```
 
 **Tips:**
+
 - Set the correct date per answer in `_manifest.yaml` before copying — the converter infers it from HTML but it may be wrong.
 - Quora slugs are auto-generated from question titles; check for near-duplicates.
 - Category `Stories` is the right default for personal answers.
@@ -83,12 +90,14 @@ This document is the operator runbook for every publishing scenario.
 You have saved your Discourse pages as HTML files (browser save or export tool).
 
 1. Put all `.html` files into a staging folder:
+
    ```bash
    mkdir /tmp/discourse-html
    # copy .html files there
    ```
 
 2. Run the converter (from `wiki-blog`):
+
    ```bash
    pnpm blog:convert:discourse /tmp/discourse-html /tmp/discourse-md --category=Community
    ```
@@ -148,22 +157,42 @@ pnpm blog:preview         # local dev server at http://localhost:5000
 
 ```bash
 pnpm blog:build           # produces static files in artifacts/blog/dist/public/
+pnpm blog:build:pages     # GitHub Pages build with /chargingthefuture/ base path + 404.html fallback
 ```
 
 Deploy `artifacts/blog/dist/public/` to:
+
 - **Railway**: configured in `railway.toml` — `railway up` from within `artifacts/blog/`.
-- **GitHub Pages**: push `dist/public/` contents to the `gh-pages` branch, or configure the Pages deploy action.
+- **GitHub Pages**: use the workflow in [.github/workflows/deploy-blog-gh-pages.yml](../.github/workflows/deploy-blog-gh-pages.yml).
+
+### GitHub Pages Setup
+
+GitHub Pages is configured mostly in code now.
+
+You still need one setting in GitHub.com:
+
+1. Open the repository settings.
+2. Go to **Pages**.
+3. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+
+After that, pushes to `main` or `v3` that touch `wiki-blog/**` will build and deploy automatically.
+
+Notes:
+
+- The workflow builds with `BASE_PATH=/chargingthefuture/`, which matches the default repo Pages URL.
+- It also copies `index.html` to `404.html` so deep links like `/article/...` still work on GitHub Pages.
+- If you later move to a custom domain or user/org Pages site, update the `blog:build:pages` script in [wiki-blog/package.json](package.json).
 
 ---
 
 ## Rollback
 
-| Scenario | Fix |
-|----------|-----|
-| Bad entry in `content-index.yaml` | Remove/revert the entry, re-run `blog:sync`, rebuild. |
-| Article renders badly | Edit the wiki markdown page directly (no rebuild needed; the renderer fetches live). |
-| Bad `articles.ts` committed | `git revert` the commit that changed it, or re-run `blog:sync` after fixing the YAML. |
-| Bad deploy | Re-deploy the last good build, or re-run `blog:build` after reverting the source. |
+| Scenario                          | Fix                                                                                   |
+| --------------------------------- | ------------------------------------------------------------------------------------- |
+| Bad entry in `content-index.yaml` | Remove/revert the entry, re-run `blog:sync`, rebuild.                                 |
+| Article renders badly             | Edit the wiki markdown page directly (no rebuild needed; the renderer fetches live).  |
+| Bad `articles.ts` committed       | `git revert` the commit that changed it, or re-run `blog:sync` after fixing the YAML. |
+| Bad deploy                        | Re-deploy the last good build, or re-run `blog:build` after reverting the source.     |
 
 ---
 
@@ -182,21 +211,21 @@ Images in converted posts may not display correctly. Use this checklist:
 
 ## Valid Categories
 
-| Category | Use For |
-|----------|---------|
-| `Foundation` | Core platform concepts, origin story |
-| `Updates` | Weekly/monthly state-of-the-platform posts |
-| `Guides` | How-to and onboarding content |
-| `Platform` | Technical service documentation |
-| `Philosophy` | Ideology, worldview, manifestos |
-| `Community` | Community organizing, groups, Discourse threads |
-| `Security` | Safety, verification, privacy |
-| `Resources` | External resources, tools, links |
-| `Services` | Specific platform service docs |
-| `Events` | Meetups, calls, live events |
-| `Stories` | Personal stories, Quora answers, testimonials |
-| `Technical` | Technical deep-dives, architecture |
-| `Advocacy` | Outreach, activism, policy |
+| Category     | Use For                                         |
+| ------------ | ----------------------------------------------- |
+| `Foundation` | Core platform concepts, origin story            |
+| `Updates`    | Weekly/monthly state-of-the-platform posts      |
+| `Guides`     | How-to and onboarding content                   |
+| `Platform`   | Technical service documentation                 |
+| `Philosophy` | Ideology, worldview, manifestos                 |
+| `Community`  | Community organizing, groups, Discourse threads |
+| `Security`   | Safety, verification, privacy                   |
+| `Resources`  | External resources, tools, links                |
+| `Services`   | Specific platform service docs                  |
+| `Events`     | Meetups, calls, live events                     |
+| `Stories`    | Personal stories, Quora answers, testimonials   |
+| `Technical`  | Technical deep-dives, architecture              |
+| `Advocacy`   | Outreach, activism, policy                      |
 
 ---
 
