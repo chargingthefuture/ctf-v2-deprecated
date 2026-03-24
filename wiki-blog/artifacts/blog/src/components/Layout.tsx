@@ -102,7 +102,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <p className="text-gray-400 mb-6 font-sans">
                 Ready to exit their economy and exit the psyop?
               </p>
-              <Button onClick={() => window.location.href = "https://app.chargingthefuture.com"} variant="accent" className="w-full">
+              <Button onClick={() => window.location.href = "https://chargingthefuture.com"} variant="accent" className="w-full">
                 Apply For Access
               </Button>
             </div>

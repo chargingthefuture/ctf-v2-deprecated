@@ -5,9 +5,35 @@ import { cn } from '@/lib/utils';
 interface MarkdownRendererProps {
   content: string;
   className?: string;
+  repo?: string;
 }
 
-export function MarkdownRenderer({ content, className }: MarkdownRendererProps) {
+export function MarkdownRenderer({ content, className, repo }: MarkdownRendererProps) {
+  /**
+   * Converts relative wiki image paths to absolute GitHub raw content URLs.
+   * Examples:
+   *   /uploads/xxx/image.png → https://raw.githubusercontent.com/wiki/chargingthefuture/chargingthefuture/uploads/xxx/image.png
+   *   Already absolute URLs are returned as-is
+   */
+  function resolveImageUrl(url: string): string {
+    if (!url) return url;
+    
+    // If already absolute, return as-is
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return url;
+    }
+    
+    // Determine the full repo path
+    const fullRepo = repo === 'mono' ? 'chargingthefuture/mono' : 'chargingthefuture/chargingthefuture';
+    
+    // If relative path (starts with /), convert to GitHub wiki raw content URL
+    if (url.startsWith('/')) {
+      return `https://raw.githubusercontent.com/wiki/${fullRepo}${url}`;
+    }
+    
+    return url;
+  }
+
   // Pre-process markdown to fix common wiki artifacts if necessary
   const processedContent = content
     // Remove the generic wiki "Jump to bottom" or "Skip to content" stuff
@@ -21,22 +47,26 @@ export function MarkdownRenderer({ content, className }: MarkdownRendererProps) 
         remarkPlugins={[remarkGfm]}
         components={{
           // Customizing components to ensure they fit the aesthetic and don't break
-          img: ({ node, ...props }) => (
-            <span className="block relative my-12 bg-black border-4 border-black comic-shadow-primary overflow-hidden p-2 group">
-              <span className="absolute inset-0 bg-halftone opacity-20 group-hover:opacity-0 transition-opacity z-10 pointer-events-none"></span>
-              <img 
-                {...props} 
-                className="w-full h-auto relative z-20 grayscale-[20%] contrast-125 hover:grayscale-0 transition-all duration-500" 
-                loading="lazy"
-                onError={(e) => {
-                  // Fallback for broken GitHub private images
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                  target.parentElement?.classList.add('broken-image-fallback');
-                }}
-              />
-            </span>
-          ),
+          img: ({ node, ...props }) => {
+            const resolvedSrc = resolveImageUrl(props.src || '');
+            return (
+              <span className="block relative my-12 bg-black border-4 border-black comic-shadow-primary overflow-hidden p-2 group">
+                <span className="absolute inset-0 bg-halftone opacity-20 group-hover:opacity-0 transition-opacity z-10 pointer-events-none"></span>
+                <img 
+                  {...props}
+                  src={resolvedSrc}
+                  className="w-full h-auto relative z-20 grayscale-[20%] contrast-125 hover:grayscale-0 transition-all duration-500" 
+                  loading="lazy"
+                  onError={(e) => {
+                    // Fallback for broken GitHub private images
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    target.parentElement?.classList.add('broken-image-fallback');
+                  }}
+                />
+              </span>
+            );
+          },
           a: ({ node, ...props }) => {
             // Check if link is internal wiki link to rewrite it
             const href = props.href || '';
