@@ -90,12 +90,37 @@ const missingGroups = requiredKeys.filter((group) => {
   return !group.some((key) => Boolean(process.env[key]));
 });
 
+function getEnvState(key) {
+  if (!(key in process.env)) {
+    return 'missing';
+  }
+
+  const value = process.env[key];
+
+  if (typeof value !== 'string') {
+    return 'missing';
+  }
+
+  if (value.length === 0) {
+    return 'empty';
+  }
+
+  if (value.trim().length === 0) {
+    return 'whitespace-only';
+  }
+
+  return 'set';
+}
+
 if (missingGroups.length > 0) {
   console.error(
     'Clerk environment validation failed. Missing one key from each required group:',
   );
   for (const group of missingGroups) {
     console.error(`- one of: ${group.join(' | ')}`);
+    for (const key of group) {
+      console.error(`  ${key}: ${getEnvState(key)}`);
+    }
   }
   process.exit(1);
 }

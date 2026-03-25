@@ -24,6 +24,7 @@ This guarantees Railway won't start with misconfigured Clerk domain/env values.
 - Required auth vars:
   - `RAILWAY_STAGING_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` or `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
   - `RAILWAY_STAGING_CLERK_SECRET_KEY` or `CLERK_SECRET_KEY`
+  - `CLERK_ENCRYPTION_KEY`
   - `RAILWAY_STAGING_CLERK_SIGN_IN_URL` or `CLERK_SIGN_IN_URL`
 - Required app URL var:
   - `RAILWAY_NEXT_PUBLIC_APP_URL`
@@ -32,6 +33,7 @@ This guarantees Railway won't start with misconfigured Clerk domain/env values.
 - Required auth vars:
   - `RAILWAY_PROD_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` or `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
   - `RAILWAY_PROD_CLERK_SECRET_KEY` or `CLERK_SECRET_KEY`
+  - `CLERK_ENCRYPTION_KEY`
   - `RAILWAY_PROD_CLERK_SIGN_IN_URL` or `CLERK_SIGN_IN_URL`
 - Required app URL var:
   - `RAILWAY_NEXT_PUBLIC_APP_URL`
