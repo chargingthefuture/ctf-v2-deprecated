@@ -55,6 +55,9 @@ export default async function AdminPage() {
       <p className="text-sm">
         <Link className="underline underline-offset-4" href="/apps/chyme">Open plugin route</Link>
       </p>
+      <p className="text-sm">
+        <Link className="underline underline-offset-4" href="/admin/unlock">Open Unlock admin queue</Link>
+      </p>
     </main>
   );
 }

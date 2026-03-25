@@ -93,6 +93,16 @@ const fallbackPluginRegistry: PluginRegistryItem[] = [
     isVisible: true,
   },
   {
+    slug: 'unlock',
+    name: 'Unlock',
+    phase: 'phase-1',
+    startGate: 'Phase 1',
+    summary: 'Internal verification queue and staged unlock orchestration for Quora URL onboarding.',
+    availabilityState: 'implemented_shell',
+    navRank: 65,
+    isVisible: false,
+  },
+  {
     slug: 'foundation',
     name: 'Foundation',
     phase: 'phase-1',
