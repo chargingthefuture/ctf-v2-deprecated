@@ -31,6 +31,5 @@
     );
     process.exit(1);
   }
-}
 
 console.log(`Clerk environment validation passed for target: ${ENV_TARGET}`);
