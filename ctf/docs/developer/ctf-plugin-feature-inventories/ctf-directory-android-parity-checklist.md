@@ -6,9 +6,9 @@ This checklist tracks Android feature parity for the Directory plugin in the CTF
 
 | Feature                                          | Android Parity Status | Notes / Ticket Link |
 | ------------------------------------------------ | --------------------- | ------------------- |
-| Authenticated dashboard/profile (CRUD)           | Not implemented       |                     |
-| Directory list and profile discovery             | Not implemented       |                     |
-| Public profile controls (isPublic)               | Not implemented       |                     |
+| Authenticated dashboard/profile (CRUD)           | Partially implemented (UI mocked; backend CRUD required) |                     |
+| Directory list and profile discovery             | Implemented (client mock list) |                     |
+| Public profile controls (isPublic)               | Partially implemented (UI shows public flag) |                     |
 | Public directory projection routes               | Not implemented       |                     |
 | Announcement consumption                         | Not implemented       |                     |
 | Validation limits (description, selectors, URL)  | Not implemented       |                     |
