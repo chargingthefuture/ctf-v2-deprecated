@@ -16,6 +16,6 @@ This checklist tracks Android feature parity for the Directory plugin in the CTF
 | Admin announcement list/create/update/deactivate | Not implemented       |                     |
 | Admin skills compatibility/selector governance   | Not implemented       |                     |
 | Claimed/unclaimed guardrails                     | Not implemented       |                     |
-| Post-create public URL display                   | Not implemented       |                     |
+| Post-create public URL display                   | Partially implemented (mock copy URL action) |                     |
 
 _Last updated: 2026-03-26_
