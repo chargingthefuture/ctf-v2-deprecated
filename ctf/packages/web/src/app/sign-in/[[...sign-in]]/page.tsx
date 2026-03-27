@@ -1,4 +1,4 @@
-import { SignIn } from '@clerk/nextjs';
+import { SignIn } from '@/src/lib/auth/clerk-wrapper';
 
 export default function SignInPage() {
   return (

@@ -189,6 +189,13 @@ export async function evaluatePluginAccess(
     requireApprovedUserOrAdmin = false,
     allowUnlockSupportOnly = false,
   } = options;
+
+  // When auth is disabled via env var, short-circuit and return a permissive mock identity
+  if (process.env.NEXT_PUBLIC_DISABLE_AUTH === 'true') {
+    // Provide an allowed decision for local/dev testing. Adjust role/approved as needed.
+    return buildAllowDecision('dev_user', 'dev', 'admin', true, null);
+  }
+
   const session = await auth();
 
   if (!session.userId) {

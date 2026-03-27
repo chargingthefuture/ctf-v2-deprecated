@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ClerkProvider } from '@clerk/nextjs';
+import { ClerkProvider } from '@/src/lib/auth/clerk-wrapper';
 import {
   getClerkPublishableKey,
   getClerkSignInUrl,

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { SignedIn } from '@clerk/nextjs';
+import { SignedIn } from '@/src/lib/auth/clerk-wrapper';
 import type { PluginRegistryItem } from '@/src/lib/plugins/repository';
 import type { ShellSection, ShellStats } from './shell-types';
 import { ShellIconRail } from './shell-icon-rail';

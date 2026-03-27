@@ -1,3 +1,5 @@
+-- GENERATED: ALL_MIGRATIONS_COMBINED.sql - concatenated on 2026-03-27T00:09:53Z
+-- ==== FILE: 2026-03-01-chyme-core-phase0.sql ====
 BEGIN;
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -20,7 +22,7 @@ ALTER TABLE IF EXISTS chyme_rooms
 
 CREATE UNIQUE INDEX IF NOT EXISTS uq_chyme_rooms_room_key ON chyme_rooms(room_key);
 
-DO $feed$
+DO $$
 BEGIN
   IF EXISTS (
     SELECT 1
@@ -139,6 +141,9 @@ END
 $$;
 
 COMMIT;
+
+
+-- ==== FILE: 2026-03-01-clerk-username-handle-baseline.sql ====
 -- Migration: Clerk username handle baseline propagation
 -- Date: 2026-03-01
 -- Scope: Shared DB used by platform + ctf (additive, idempotent)
@@ -269,6 +274,9 @@ BEGIN
   END IF;
 END
 $$;
+
+
+-- ==== FILE: 2026-03-02-directory-core-phase0.sql ====
 BEGIN;
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -475,11 +483,14 @@ BEGIN
 END $$;
 
 COMMIT;
+
+
+-- ==== FILE: 2026-03-02-feed-announcements-core-phase0.sql ====
 BEGIN;
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
-DO $$
+DO $feed$
 DECLARE
   announcements_id_type text;
 BEGIN
@@ -746,6 +757,9 @@ WHERE fi.is_active = TRUE
   AND (fi.expires_at IS NULL OR fi.expires_at > NOW());
 
 COMMIT;
+
+
+-- ==== FILE: 2026-03-02-skills-taxonomy-core-phase0.sql ====
 BEGIN;
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -873,6 +887,9 @@ FROM skills_taxonomy_consumer_bindings
 GROUP BY target_type, target_id;
 
 COMMIT;
+
+
+-- ==== FILE: 2026-03-03-foundation-core-phase1.sql ====
 BEGIN;
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -1098,6 +1115,9 @@ VALUES (
 ON CONFLICT (singleton_key) DO NOTHING;
 
 COMMIT;
+
+
+-- ==== FILE: 2026-03-03-lighthouse-core-phase2.sql ====
 BEGIN;
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -1296,6 +1316,9 @@ CREATE INDEX IF NOT EXISTS idx_lighthouse_audit_lookup
   ON lighthouse_admin_audit_trail (created_at DESC, actor_id, command);
 
 COMMIT;
+
+
+-- ==== FILE: 2026-03-03-plugin-registry-hub-phase2.sql ====
 BEGIN;
 
 CREATE TABLE IF NOT EXISTS ctf_plugin_registry (
@@ -1380,13 +1403,19 @@ SET
   is_visible = EXCLUDED.is_visible,
   updated_at = NOW();
 
-COMMIT;BEGIN;
+COMMIT;
+
+-- ==== FILE: 2026-03-03-plugin-registry-phase2-availability-update.sql ====
+BEGIN;
 
 UPDATE ctf_plugin_registry
 SET availability_state = 'implemented_shell', updated_at = NOW()
 WHERE plugin_slug IN ('lighthouse', 'socketrelay', 'trusttransport');
 
 COMMIT;
+
+
+-- ==== FILE: 2026-03-03-skills-hunt-core-phase1.sql ====
 BEGIN;
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -1554,6 +1583,9 @@ ON CONFLICT (singleton_key)
 DO NOTHING;
 
 COMMIT;
+
+
+-- ==== FILE: 2026-03-03-socketrelay-core-phase2.sql ====
 BEGIN;
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -1705,6 +1737,9 @@ CREATE INDEX IF NOT EXISTS idx_socketrelay_messages_fulfillment ON socketrelay_m
 CREATE INDEX IF NOT EXISTS idx_socketrelay_audit_created ON socketrelay_admin_audit_trail (created_at DESC, actor_id, command);
 
 COMMIT;
+
+
+-- ==== FILE: 2026-03-03-trusttransport-core-phase2.sql ====
 BEGIN;
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -1909,7 +1944,10 @@ CREATE INDEX IF NOT EXISTS idx_tt_payout_provider_requested ON trusttransport_pa
 CREATE INDEX IF NOT EXISTS idx_tt_risk_signal_resolved ON trusttransport_risk_signals (is_resolved, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_tt_audit_created_actor ON trusttransport_admin_audit_trail (created_at DESC, actor_id, command);
 
-COMMIT;BEGIN;
+COMMIT;
+
+-- ==== FILE: 2026-03-03-workforce-core-phase1.sql ====
+BEGIN;
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
@@ -2052,6 +2090,9 @@ ON CONFLICT (singleton_key)
 DO NOTHING;
 
 COMMIT;
+
+
+-- ==== FILE: 2026-03-03-workforce-incremental-sync.sql ====
 BEGIN;
 
 CREATE TABLE IF NOT EXISTS workforce_recruited_sync_cursor (
@@ -2066,6 +2107,9 @@ ON CONFLICT (singleton_key)
 DO NOTHING;
 
 COMMIT;
+
+
+-- ==== FILE: 2026-03-04-gdp-core-phase3.sql ====
 BEGIN;
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -2121,6 +2165,9 @@ CREATE INDEX IF NOT EXISTS idx_gdp_metrics_week ON gdp_metric_snapshots (week_st
 CREATE INDEX IF NOT EXISTS idx_gdp_publications_week ON gdp_publications (week_start_date, status, updated_at DESC);
 
 COMMIT;
+
+
+-- ==== FILE: 2026-03-04-gentlepulse-core-phase2.sql ====
 BEGIN;
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -2175,6 +2222,9 @@ CREATE INDEX IF NOT EXISTS idx_gentlepulse_library_active ON gentlepulse_library
 CREATE INDEX IF NOT EXISTS idx_gentlepulse_play_events_item_started ON gentlepulse_play_events (item_id, started_at DESC);
 
 COMMIT;
+
+
+-- ==== FILE: 2026-03-04-mood-core-phase2.sql ====
 BEGIN;
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -2204,6 +2254,9 @@ CREATE INDEX IF NOT EXISTS idx_mood_submissions_user_submitted ON mood_submissio
 CREATE INDEX IF NOT EXISTS idx_mood_submissions_client_submitted ON mood_submissions (client_id, submitted_at DESC);
 
 COMMIT;
+
+
+-- ==== FILE: 2026-03-04-peer-programming-core-phase2.sql ====
 BEGIN;
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -2293,6 +2346,9 @@ CREATE INDEX IF NOT EXISTS idx_pp_messages_cohort_created ON peer_programming_me
 CREATE INDEX IF NOT EXISTS idx_pp_feedback_created ON peer_programming_feedback (created_at DESC);
 
 COMMIT;
+
+
+-- ==== FILE: 2026-03-04-plugin-registry-phase3-availability-update.sql ====
 BEGIN;
 
 UPDATE ctf_plugin_registry
@@ -2307,6 +2363,9 @@ WHERE plugin_slug IN (
 );
 
 COMMIT;
+
+
+-- ==== FILE: 2026-03-04-service-credits-core-phase3.sql ====
 BEGIN;
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -2393,6 +2452,9 @@ CREATE INDEX IF NOT EXISTS idx_service_credits_transfers_sender_created ON servi
 CREATE INDEX IF NOT EXISTS idx_service_credits_disputes_status_created ON service_credits_disputes (status, created_at DESC);
 
 COMMIT;
+
+
+-- ==== FILE: 2026-03-04-service-credits-formance-adapter-phase3.sql ====
 BEGIN;
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -2508,6 +2570,9 @@ CREATE INDEX IF NOT EXISTS idx_service_credits_governance_events_created
   ON service_credits_governance_events (event_type, created_at DESC);
 
 COMMIT;
+
+
+-- ==== FILE: 2026-03-04-weekly-performance-core-phase2.sql ====
 BEGIN;
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -2552,6 +2617,9 @@ ON CONFLICT (week_start_date) DO NOTHING;
 CREATE INDEX IF NOT EXISTS idx_weekly_perf_metrics_week ON weekly_performance_metrics (week_start_date, metric_key);
 
 COMMIT;
+
+
+-- ==== FILE: 2026-03-05-chyme-service-credits.sql ====
 -- Add chyme_service_credits_transactions table for service credits support in Chyme
 CREATE TABLE IF NOT EXISTS chyme_service_credits_transactions (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -2566,6 +2634,9 @@ CREATE TABLE IF NOT EXISTS chyme_service_credits_transactions (
 
 CREATE INDEX IF NOT EXISTS idx_chyme_service_credits_from_user ON chyme_service_credits_transactions (from_user_id);
 CREATE INDEX IF NOT EXISTS idx_chyme_service_credits_to_user ON chyme_service_credits_transactions (to_user_id);
+
+
+-- ==== FILE: 2026-03-05-directory-profile-payment-addresses.sql ====
 -- Directory profile payment address fields migration
 -- Adds optional fields for Venmo, Monero, Bitcoin, and ServiceCredits addresses
 
@@ -2574,6 +2645,9 @@ ALTER TABLE directory_profiles
   ADD COLUMN monero_address TEXT NULL,
   ADD COLUMN bitcoin_address TEXT NULL,
   ADD COLUMN service_credits_address TEXT NULL;
+
+
+-- ==== FILE: 2026-03-05-skills-hunt-service-credits.sql ====
 -- Skills Hunt Service Credits Transactions Table
 CREATE TABLE IF NOT EXISTS skills_hunt_service_credits_transactions (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -2587,7 +2661,10 @@ CREATE TABLE IF NOT EXISTS skills_hunt_service_credits_transactions (
 
 CREATE INDEX IF NOT EXISTS idx_skills_hunt_service_credits_from_user ON skills_hunt_service_credits_transactions (from_user_id);
 CREATE INDEX IF NOT EXISTS idx_skills_hunt_service_credits_to_user ON skills_hunt_service_credits_transactions (to_user_id);
-CREATE INDEX IF NOT EXISTS idx_skills_hunt_service_credits_submission_id ON skills_hunt_service_credits_transactions (submission_id);BEGIN;
+CREATE INDEX IF NOT EXISTS idx_skills_hunt_service_credits_submission_id ON skills_hunt_service_credits_transactions (submission_id);
+
+-- ==== FILE: 2026-03-24-levelup-core-phase3.sql ====
+BEGIN;
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
@@ -2817,6 +2894,9 @@ CREATE INDEX IF NOT EXISTS idx_levelup_disputes_status_created ON levelup_disput
 CREATE INDEX IF NOT EXISTS idx_levelup_disbursements_enrollment_created ON levelup_disbursements (enrollment_id, created_at DESC);
 
 COMMIT;
+
+
+-- ==== FILE: 2026-03-25-legacy-profile-redirects.sql ====
 -- ========================================
 -- LEGACY PROFILE REDIRECT MAPPING TABLE
 -- ========================================
@@ -2860,3 +2940,167 @@ COMMENT ON COLUMN legacy_profile_redirects.legacy_entity_id IS
 
 COMMENT ON COLUMN legacy_profile_redirects.current_entity_id IS 
   'The corresponding new UUID in the ctf rewrite database';
+
+
+-- ==== FILE: 2026-03-25-trust-core-phase1.sql ====
+BEGIN;
+
+-- Trust plugin: user extension table
+CREATE TABLE IF NOT EXISTS trust_user_extension (
+  user_id TEXT PRIMARY KEY,
+  trust_status TEXT NOT NULL DEFAULT 'unverified' CHECK (trust_status IN ('unverified', 'verified', 'flagged')),
+  trust_evidence JSONB NOT NULL DEFAULT '[]'::jsonb,
+  trust_visibility TEXT NOT NULL DEFAULT 'public' CHECK (trust_visibility IN ('public', 'private', 'restricted')),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- Trust plugin: signal snapshots
+CREATE TABLE IF NOT EXISTS trust_signal_snapshots (
+  id BIGSERIAL PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  snapshot JSONB NOT NULL,
+  snapshot_type TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE(user_id, snapshot_type, created_at)
+);
+CREATE INDEX IF NOT EXISTS idx_trust_signal_snapshots_user ON trust_signal_snapshots (user_id, created_at DESC);
+
+-- Trust plugin: admin audit trail
+CREATE TABLE IF NOT EXISTS trust_admin_audit_trail (
+  id BIGSERIAL PRIMARY KEY,
+  actor_user_id TEXT NULL,
+  command TEXT NOT NULL,
+  policy_status TEXT NOT NULL CHECK (policy_status IN ('allow', 'deny')),
+  reason TEXT NOT NULL,
+  target_user_id TEXT NULL,
+  request_id TEXT NULL,
+  metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_trust_admin_audit_trail_target_user ON trust_admin_audit_trail (target_user_id, created_at DESC);
+
+-- Register Trust plugin in plugin registry
+INSERT INTO ctf_plugin_registry (
+  plugin_slug,
+  display_name,
+  phase,
+  start_gate,
+  summary,
+  availability_state,
+  nav_rank,
+  is_visible
+)
+VALUES (
+  'trust',
+  'Trust',
+  'phase-1',
+  'Phase 1',
+  'Privacy-first trust evidence and verification plugin.',
+  'implemented_shell',
+  70,
+  FALSE
+)
+ON CONFLICT (plugin_slug) DO UPDATE
+SET
+  display_name = EXCLUDED.display_name,
+  phase = EXCLUDED.phase,
+  start_gate = EXCLUDED.start_gate,
+  summary = EXCLUDED.summary,
+  availability_state = EXCLUDED.availability_state,
+  nav_rank = EXCLUDED.nav_rank,
+  is_visible = EXCLUDED.is_visible,
+  updated_at = NOW();
+
+COMMIT;
+
+
+-- ==== FILE: 2026-03-25-unlock-core-phase1.sql ====
+BEGIN;
+
+CREATE TABLE IF NOT EXISTS unlock_runtime_config (
+  singleton_id INTEGER PRIMARY KEY CHECK (singleton_id = 1),
+  submission_window_hours INTEGER NOT NULL DEFAULT 168,
+  reminder_schedule_hours INTEGER[] NOT NULL DEFAULT ARRAY[0, 24, 72, 168],
+  incentive_amount NUMERIC(14, 2) NOT NULL DEFAULT 100,
+  support_only_after_expiry BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+INSERT INTO unlock_runtime_config (singleton_id)
+VALUES (1)
+ON CONFLICT (singleton_id) DO NOTHING;
+
+CREATE TABLE IF NOT EXISTS unlock_verification_submissions (
+  id BIGSERIAL PRIMARY KEY,
+  user_id TEXT NOT NULL UNIQUE,
+  quora_profile_url TEXT NOT NULL,
+  quora_profile_url_normalized TEXT NOT NULL,
+  review_status TEXT NOT NULL DEFAULT 'pending' CHECK (review_status IN ('pending', 'approved', 'rejected', 'spam')),
+  access_tier TEXT NOT NULL DEFAULT 'pending_readonly' CHECK (access_tier IN ('pending_readonly', 'locked_support_only', 'approved_full')),
+  unlock_window_expires_at TIMESTAMPTZ NOT NULL,
+  reminder_stage INTEGER NOT NULL DEFAULT 0,
+  reviewed_by_user_id TEXT NULL,
+  reviewed_at TIMESTAMPTZ NULL,
+  review_note TEXT NULL,
+  incentive_granted_at TIMESTAMPTZ NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_unlock_verification_submissions_status
+  ON unlock_verification_submissions (review_status, unlock_window_expires_at DESC);
+
+CREATE INDEX IF NOT EXISTS idx_unlock_verification_submissions_access_tier
+  ON unlock_verification_submissions (access_tier);
+
+CREATE TABLE IF NOT EXISTS unlock_audit_log (
+  id BIGSERIAL PRIMARY KEY,
+  actor_user_id TEXT NULL,
+  command TEXT NOT NULL,
+  policy_status TEXT NOT NULL CHECK (policy_status IN ('allow', 'deny')),
+  reason TEXT NOT NULL,
+  target_user_id TEXT NULL,
+  request_id TEXT NULL,
+  metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_unlock_audit_log_target_user
+  ON unlock_audit_log (target_user_id, created_at DESC);
+
+INSERT INTO ctf_plugin_registry (
+  plugin_slug,
+  display_name,
+  phase,
+  start_gate,
+  summary,
+  availability_state,
+  nav_rank,
+  is_visible
+)
+VALUES (
+  'unlock',
+  'Unlock',
+  'phase-1',
+  'Phase 1',
+  'Internal verification and staged unlock orchestration for Quora URL onboarding.',
+  'implemented_shell',
+  65,
+  FALSE
+)
+ON CONFLICT (plugin_slug) DO UPDATE
+SET
+  display_name = EXCLUDED.display_name,
+  phase = EXCLUDED.phase,
+  start_gate = EXCLUDED.start_gate,
+  summary = EXCLUDED.summary,
+  availability_state = EXCLUDED.availability_state,
+  nav_rank = EXCLUDED.nav_rank,
+  is_visible = EXCLUDED.is_visible,
+  updated_at = NOW();
+
+COMMIT;
+
+

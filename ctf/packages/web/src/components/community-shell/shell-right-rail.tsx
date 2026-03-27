@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useUser } from '@clerk/nextjs';
+import { useUser } from '@/src/lib/auth/clerk-wrapper';
 import type { ShellStats } from './shell-types';
 import type { PluginRegistryItem } from '@/src/lib/plugins/repository';
 import { getPluginVisuals } from './shell-plugin-config';

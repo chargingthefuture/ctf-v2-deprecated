@@ -1,4 +1,4 @@
-import { SignUp } from '@clerk/nextjs';
+import { SignUp } from '@/src/lib/auth/clerk-wrapper';
 
 export default function SignUpPage() {
   return (
