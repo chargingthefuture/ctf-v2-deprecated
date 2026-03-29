@@ -133,7 +133,7 @@ If user returns after service-scoped deletion:
 ## 10) Migration and Rollback
 
 - Migration file(s):
-  - planned under `ctf/migrations/`
+  - All schema changes are made directly in `ctf/schema.sql` (canonical source of truth).
 - Rollback approach:
   - reverse-order rollback for SocketRelay-only extension/deletion tables
 - Backfill required? (yes/no):

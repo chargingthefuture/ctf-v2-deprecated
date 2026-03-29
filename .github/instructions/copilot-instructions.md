@@ -76,7 +76,7 @@ If two rules conflict, choose the stricter rule and document the decision.
   - Use `ALTER TABLE IF EXISTS ... ADD COLUMN IF NOT EXISTS ...` for every new/changed column, even if the column is in the CREATE TABLE above.
   - This ensures both fresh DBs and legacy DBs are always brought up to date.
 - When a table or column is renamed or removed, always use guarded DDL and provide data migration steps if needed.
-- The file `ctf/migrations/ALL_MIGRATIONS_COMBINED.sql` MUST be kept in sync with all individual migrations, so a fresh DB is always correct.
+- All database schema changes must be made directly in `ctf/schema.sql`, which is the single source of truth. Do not use or reference individual migration files.
 - When creating a new table, always include both the full CREATE TABLE and ALTER TABLE for every column, even if redundant.
 - When adding a new column, always add a new migration with ALTER TABLE ... ADD COLUMN IF NOT EXISTS ...
 - When reviewing or updating old migrations, ensure all columns are present in both CREATE TABLE and ALTER TABLE blocks.

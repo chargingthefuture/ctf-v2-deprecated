@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS chyme_service_profiles (
   deleted_at TIMESTAMPTZ NULL
 );
 CREATE TABLE IF NOT EXISTS chyme_room_members (
-  room_id TEXT NOT NULL REFERENCES chyme_rooms(id) ON DELETE CASCADE,
+  room_id UUID NOT NULL REFERENCES chyme_rooms(id) ON DELETE CASCADE,
   user_id TEXT NOT NULL,
   username TEXT NULL,
   display_name TEXT NOT NULL,
@@ -35,7 +35,7 @@ CREATE INDEX IF NOT EXISTS idx_chyme_room_members_room_id ON chyme_room_members(
 CREATE INDEX IF NOT EXISTS idx_chyme_room_members_user_id ON chyme_room_members(user_id);
 CREATE TABLE IF NOT EXISTS chyme_messages (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  room_id TEXT NOT NULL REFERENCES chyme_rooms(id) ON DELETE CASCADE,
+  room_id UUID NOT NULL REFERENCES chyme_rooms(id) ON DELETE CASCADE,
   user_id TEXT NOT NULL,
   username TEXT NULL,
   display_name TEXT NOT NULL,
@@ -56,6 +56,21 @@ CREATE TABLE IF NOT EXISTS chyme_deletion_events (
 );
 CREATE INDEX IF NOT EXISTS idx_chyme_deletion_events_user_scope ON chyme_deletion_events(user_id, scope, requested_at DESC);
 COMMIT;
+
+-- === peer-programming placeholder ===
+CREATE TABLE IF NOT EXISTS peer_programming_weekly_topics (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  week_start_date DATE NOT NULL,
+  topic TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+ALTER TABLE IF EXISTS peer_programming_weekly_topics
+  ADD COLUMN IF NOT EXISTS week_start_date DATE NOT NULL;
+ALTER TABLE IF EXISTS peer_programming_weekly_topics
+  ADD COLUMN IF NOT EXISTS topic TEXT NOT NULL;
+ALTER TABLE IF EXISTS peer_programming_weekly_topics
+  ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
 
 -- === clerk-username-handle-baseline ===
 ALTER TABLE IF EXISTS public.users ADD COLUMN IF NOT EXISTS username VARCHAR(64);

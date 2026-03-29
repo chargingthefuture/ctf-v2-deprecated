@@ -7,7 +7,7 @@ Prevent cross-scope edits, with `platform/` always treated as reference-only unl
 - If user says legacy folders are reference-only, do not write to those folders.
 - Default project scope allows edits across the monorepo except `platform/`.
 - If user narrows scope further (for example `ctf/` only), follow the narrower scope.
-- Treat `platform/` as read-only reference during migration unless user explicitly requests edits there.
+- Treat `platform/` as read-only reference unless user explicitly requests edits there.
 
 ## Mandatory Pre-Edit Check
 - Before any file edit or terminal write command, verify target path prefix is allowed by current task scope.

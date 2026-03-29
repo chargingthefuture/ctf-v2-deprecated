@@ -1,17 +1,35 @@
-name: Update Neon DB with Migrations
+      - name: Set DATABASE_URL for environment
+        id: set_db_url
+        run: |
+          if [ "$ENVIRONMENT" = "staging" ]; then
+            echo "DATABASE_URL=${{ secrets.DATABASE_URL_STAGING }}" >> $GITHUB_ENV
+          else
+            echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
+          fi
+name: Update Neon DB with schema.sql
 
 on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target environment (staging or production)"
+        required: true
+        default: production
+        type: choice
+        options:
+          - production
+          - staging
   push:
     paths:
-      - "ctf/migrations/**"
+      - "ctf/schema.sql"
       - ".github/workflows/update-neon-db.yml"
 
 jobs:
-  migrate:
+  apply-schema:
     runs-on: ubuntu-latest
+    env:
+      ENVIRONMENT: ${{ github.event.inputs.environment || 'production' }}
     steps:
-      - name: Install pnpm
-        run: npm install -g pnpm
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -25,9 +43,14 @@ jobs:
           cd ctf
           pnpm install
 
-      - name: Run Drizzle Migrations
-        env:
-          DATABASE_URL: ${{ github.ref == 'refs/heads/main' && secrets.NEON_DATABASE_URL_PROD || secrets.NEON_DATABASE_URL_STAGING }}
+      - name: Validate DATABASE_URL secret
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "Missing DATABASE_URL for $ENVIRONMENT environment."
+            exit 1
+          fi
+
+      - name: Apply schema.sql to Neon
         run: |
           cd ctf
-          pnpm drizzle-kit push:pg
+          psql "$DATABASE_URL" -f schema.sql

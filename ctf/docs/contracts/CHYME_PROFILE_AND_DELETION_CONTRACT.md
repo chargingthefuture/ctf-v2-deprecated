@@ -126,7 +126,7 @@ If user returns to Chyme after service-scoped deletion:
 ## 10) Migration and Rollback
 
 - Migration file(s):
-  - `ctf/migrations/2026-03-01-chyme-core-phase0.sql`
+  - All schema changes are made directly in `ctf/schema.sql` (canonical source of truth).
 - Rollback approach:
   - drop Chyme-only tables/indexes in reverse dependency order if needed:
     - `chyme_messages`

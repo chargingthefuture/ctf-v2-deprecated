@@ -107,7 +107,7 @@ If user returns after deletion:
 ## 10) Migration and Rollback
 
 - Migration file(s):
-  - `ctf/migrations/2026-03-25-unlock-core-phase1.sql`
+  - All schema changes are made directly in `ctf/schema.sql` (canonical source of truth).
 - Rollback approach:
   - reverse Unlock-only schema objects in migration rollback order.
 

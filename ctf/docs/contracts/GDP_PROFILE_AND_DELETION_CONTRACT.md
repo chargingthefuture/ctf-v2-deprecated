@@ -142,7 +142,7 @@ If user returns to GDP plugin after service-scoped deletion:
 ## 10) Migration and Rollback
 
 - Migration file(s):
-  - TBD in implementation phase under `ctf/migrations/`
+  - All schema changes are made directly in `ctf/schema.sql` (canonical source of truth).
 - Rollback approach:
   - reverse-order drop of GDP extension and GDP-only entities with explicit data-retention checks
 - Backfill required? (yes/no):

@@ -143,7 +143,7 @@ If user returns after service-scoped deletion:
 ## 10) Migration and Rollback
 
 - Migration file(s):
-  - planned under `ctf/migrations/` for Skills Hunt plugin entities
+  - All schema changes are made directly in `ctf/schema.sql` (canonical source of truth).
 - Rollback approach:
   - reverse-order plugin table rollback with retention safeguards
 - Backfill required? (yes/no):

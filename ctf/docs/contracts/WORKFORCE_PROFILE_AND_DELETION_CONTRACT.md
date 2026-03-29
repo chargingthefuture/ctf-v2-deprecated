@@ -131,7 +131,7 @@ If user returns after service-scoped deletion:
 ## 10) Migration and Rollback
 
 - Migration file(s):
-  - `ctf/migrations/2026-03-03-workforce-core-phase1.sql`
+  - All schema changes are made directly in `ctf/schema.sql` (canonical source of truth).
 - Rollback approach:
   - reverse-order rollback for Workforce-only extension/deletion tables
 - Backfill required? (yes/no):

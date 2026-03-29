@@ -8,19 +8,19 @@ Prevent schema and contract drift from reaching any deployment target.
 - Applies to pull requests and deployment workflows for all environments (preview, staging, production).
 
 ## Drift Classes
-- **DB-Migration Drift**: database-impacting code differs from checked-in migration artifacts under `ctf/migrations/`.
+- **DB-Migration Drift**: database-impacting code differs from the canonical schema in `ctf/schema.sql`.
 - **Contract Drift**: runtime API/plugin payloads differ from shared contract/schema definitions.
 - **Version Drift**: breaking schema/contract changes shipped without explicit versioning and compatibility notes.
 - **Seed Drift**: seed scripts or fixture payloads incompatible with current schema and constraints.
 - **Fallback Drift**: fallback/degraded response objects diverge from declared response schema.
 
 ## Source-of-Truth and Precedence
-- Migration SQL is the authoritative source for database schema evolution.
+- `ctf/schema.sql` is the authoritative source for database schema evolution.
 - If artifacts disagree, resolve to migration SQL first, then regenerate/update dependent contracts and implementation.
 - Shared schemas and plugin contract schemas must remain synchronized with migration-backed storage shape and enforced API behavior.
 
 ## Mandatory Pre-Deploy Checks
-- Run migration replay validation in CI for every PR with DB-impacting changes.
+- Run schema.sql replay validation in CI for every PR with DB-impacting changes.
 - Run schema drift detection between migration-defined shape and implementation/runtime contracts.
 - Run contract validation for plugin command, access-policy, and audit schemas when affected.
 - Run API compatibility checks for changed request/response schemas.
@@ -55,7 +55,7 @@ Prevent schema and contract drift from reaching any deployment target.
 - Any unresolved drift finding.
 - Any seed/schema mismatch.
 - Any breaking change without versioned path evidence.
-- Any missing migration artifact for DB-impacting changes.
+- Any missing update to `ctf/schema.sql` for DB-impacting changes.
 - Any missing or failed required CI drift check.
 
 ## Prohibited

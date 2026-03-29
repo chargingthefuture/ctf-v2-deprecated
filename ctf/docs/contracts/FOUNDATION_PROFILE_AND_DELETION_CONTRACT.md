@@ -167,7 +167,7 @@ If user returns to Foundation after service-scoped deletion:
 ## 10) Migration and Rollback
 
 - Migration file(s):
-  - planned under `ctf/migrations/` for Foundation extension, lifecycle, and deletion tables
+  - All schema changes are made directly in `ctf/schema.sql` (canonical source of truth).
 - Rollback approach:
   - reverse-order rollback for Foundation-only tables with explicit retention checks before destructive actions
 - Backfill required? (yes/no):

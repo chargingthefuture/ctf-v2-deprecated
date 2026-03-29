@@ -169,7 +169,7 @@ If user returns after plugin-scoped deletion:
 ## 10) Migration and Rollback
 
 - Migration file(s):
-  - planned: `ctf/migrations/2026-02-25-create-service-credits-profile-and-deletion-tables.sql`
+  - All schema changes are made directly in `ctf/schema.sql` (canonical source of truth).
 - Rollback approach:
   - reverse-order rollback for Service Credits deletion/reclaim/tombstone extension tables only, with hard stop if ledger integrity checks fail
 - Backfill required? (yes/no):
