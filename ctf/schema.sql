@@ -150,7 +150,6 @@ CREATE TABLE IF NOT EXISTS skills_hunt_notifications (
   title TEXT NOT NULL,
   body TEXT NOT NULL,
   metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
-  is_read BOOLEAN NOT NULL DEFAULT FALSE,
   read_at TIMESTAMPTZ NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -255,6 +254,30 @@ CREATE TABLE IF NOT EXISTS feed_user_read_state (
   PRIMARY KEY (user_id, item_id)
 );
 CREATE TABLE IF NOT EXISTS feed_user_dismissals (
+
+  -- === GDP Publications ===
+  CREATE TABLE IF NOT EXISTS gdp_publications (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    week_start_date DATE NOT NULL,
+    title TEXT NOT NULL,
+    summary TEXT NOT NULL,
+    status TEXT NOT NULL CHECK (status IN ('draft', 'published')),
+    created_by_user_id TEXT NOT NULL,
+    published_by_user_id TEXT,
+    published_at TIMESTAMPTZ,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  );
+
+  -- Add columns with guarded DDL for legacy DBs
+  ALTER TABLE IF EXISTS gdp_publications ADD COLUMN IF NOT EXISTS id UUID PRIMARY KEY DEFAULT gen_random_uuid();
+  ALTER TABLE IF EXISTS gdp_publications ADD COLUMN IF NOT EXISTS week_start_date DATE NOT NULL;
+  ALTER TABLE IF EXISTS gdp_publications ADD COLUMN IF NOT EXISTS title TEXT NOT NULL;
+  ALTER TABLE IF EXISTS gdp_publications ADD COLUMN IF NOT EXISTS summary TEXT NOT NULL;
+  ALTER TABLE IF EXISTS gdp_publications ADD COLUMN IF NOT EXISTS status TEXT NOT NULL CHECK (status IN ('draft', 'published'));
+  ALTER TABLE IF EXISTS gdp_publications ADD COLUMN IF NOT EXISTS created_by_user_id TEXT NOT NULL;
+  ALTER TABLE IF EXISTS gdp_publications ADD COLUMN IF NOT EXISTS published_by_user_id TEXT;
+  ALTER TABLE IF EXISTS gdp_publications ADD COLUMN IF NOT EXISTS published_at TIMESTAMPTZ;
+  ALTER TABLE IF EXISTS gdp_publications ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
   user_id TEXT NOT NULL,
   item_id UUID NOT NULL REFERENCES feed_items(id) ON DELETE CASCADE,
   dismissed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
