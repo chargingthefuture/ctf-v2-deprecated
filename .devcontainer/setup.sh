@@ -69,7 +69,19 @@ if [ -n "$DATABASE_URL" ]; then
   fi
   echo "Running Next.js build for ctf/packages/web against Neon DB..."
   pnpm --filter ./ctf/packages/web run build || {
-    echo "Next.js build failed. Check for SQL/runtime errors in your codebase.";
+    echo "Next.js build failed for ctf/packages/web. Check for SQL/runtime errors in your codebase.";
+    exit 1;
+  }
+
+  echo "Running Next.js build for landing-page against Neon DB..."
+  pnpm --filter ./landing-page run build || {
+    echo "Next.js build failed for landing-page. Check for SQL/runtime errors in your codebase.";
+    exit 1;
+  }
+
+  echo "Running Next.js build for waitlist-landing-page against Neon DB..."
+  pnpm --filter ./waitlist-landing-page run build || {
+    echo "Next.js build failed for waitlist-landing-page. Check for SQL/runtime errors in your codebase.";
     exit 1;
   }
 else
