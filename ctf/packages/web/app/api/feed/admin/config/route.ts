@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 import { ensureMutationCsrf, requireFeedAdminAccess } from '../../_lib';
-import { FEED_ERROR_CODE } from '../lib/feed/constants';
-import { getFeedConfig, updateFeedConfig, validateFeedConfigInput } from '../lib/feed/repository';
-import { logFeedAudit } from '../lib/feed/audit';
-import type { FeedConfigInput } from '../lib/feed/types';
+import { FEED_ERROR_CODE } from 'lib/feed/constants';
+import { getFeedConfig, updateFeedConfig, validateFeedConfigInput } from 'lib/feed/repository';
+import { logFeedAudit } from 'lib/feed/audit';
+import type { FeedConfigInput } from 'lib/feed/types';
 
 type ConfigBody = Partial<FeedConfigInput>;
 

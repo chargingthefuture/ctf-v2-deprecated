@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { requireFeedReadAccess } from '../_lib';
-import { FEED_ERROR_CODE } from '../lib/feed/constants';
-import { getFeedConfig } from '../lib/feed/repository';
+import { FEED_ERROR_CODE } from 'lib/feed/constants';
+import { getFeedConfig } from 'lib/feed/repository';
 
 export async function GET() {
   const gate = await requireFeedReadAccess();

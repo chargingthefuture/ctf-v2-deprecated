@@ -95,6 +95,14 @@ else
   echo "Warning: DATABASE_URL is not set. Skipping schema.sql application and build."
 fi
 
+# Ensure pre-commit hook is executable if present
+if [ -f /workspaces/chargingthefuture/.git/hooks/pre-commit ]; then
+  chmod +x /workspaces/chargingthefuture/.git/hooks/pre-commit
+  echo "Set pre-commit hook as executable."
+else
+  echo "No pre-commit hook found to set as executable."
+fi
+
 # Prompt for login if needed
 echo "If you need to log in to GitHub, Railway, or Vercel, run:"
 echo "  gh auth login"
