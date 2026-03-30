@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { DIRECTORY_ERROR_CODE } from '../lib/directory/constants';
-import { listPublicDirectory, parsePaginationParams } from '../lib/directory/repository';
+import { DIRECTORY_ERROR_CODE } from 'lib/directory/constants';
+import { listPublicDirectory, parsePaginationParams } from 'lib/directory/repository';
 
 function getFilters(url: string) {
   const params = new URL(url).searchParams;

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { requireDirectoryReadAccess } from '../_lib';
-import { DIRECTORY_ERROR_CODE } from '../lib/directory/constants';
-import { listTaxonomySkills } from '../lib/directory/repository';
+import { DIRECTORY_ERROR_CODE } from 'lib/directory/constants';
+import { listTaxonomySkills } from 'lib/directory/repository';
 
 export async function GET(request: Request) {
   const gate = await requireDirectoryReadAccess();

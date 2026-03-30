@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { ensureMutationCsrf, requireDirectoryAdminAccess } from '../../../_lib';
-import { DIRECTORY_ERROR_CODE } from '../lib/directory/constants';
-import { deactivateAnnouncement, updateAnnouncement, validateAnnouncementInput } from '../lib/directory/repository';
-import type { DirectoryAnnouncementInput } from '../lib/directory/types';
+import { DIRECTORY_ERROR_CODE } from 'lib/directory/constants';
+import { deactivateAnnouncement, updateAnnouncement, validateAnnouncementInput } from 'lib/directory/repository';
+import type { DirectoryAnnouncementInput } from 'lib/directory/types';
 
 type RouteParams = { params: Promise<{ id: string }> };
 

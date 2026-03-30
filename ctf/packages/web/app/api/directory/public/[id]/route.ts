@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { DIRECTORY_ERROR_CODE } from '../lib/directory/constants';
-import { getPublicDirectoryById } from '../lib/directory/repository';
+import { DIRECTORY_ERROR_CODE } from 'lib/directory/constants';
+import { getPublicDirectoryById } from 'lib/directory/repository';
 
 type RouteParams = { params: Promise<{ id: string }> };
 

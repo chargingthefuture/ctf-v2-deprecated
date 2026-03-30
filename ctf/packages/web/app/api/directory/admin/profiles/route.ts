@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 import { ensureMutationCsrf, requireDirectoryAdminAccess } from '../../_lib';
-import { DIRECTORY_ERROR_CODE } from '../lib/directory/constants';
-import { createAdminProfile, listAdminProfiles, parsePaginationParams, validateProfileInput } from '../lib/directory/repository';
-import { logDirectoryAudit } from '../lib/directory/audit';
-import type { DirectoryProfileInput } from '../lib/directory/types';
+import { DIRECTORY_ERROR_CODE } from 'lib/directory/constants';
+import { createAdminProfile, listAdminProfiles, parsePaginationParams, validateProfileInput } from 'lib/directory/repository';
+import { logDirectoryAudit } from 'lib/directory/audit';
+import type { DirectoryProfileInput } from 'lib/directory/types';
 
 type AdminProfileBody = Partial<DirectoryProfileInput>;
 

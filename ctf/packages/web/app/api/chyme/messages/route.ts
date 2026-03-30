@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { CHYME_DEFAULT_MESSAGES_LIMIT, CHYME_ERROR_CODE } from '../lib/chyme/constants';
-import { logChymeAudit } from '../lib/chyme/audit';
-import { listRoomMessages, sendRoomMessage, validateMessageInput } from '../lib/chyme/repository';
+import { CHYME_DEFAULT_MESSAGES_LIMIT, CHYME_ERROR_CODE } from 'lib/chyme/constants';
+import { logChymeAudit } from 'lib/chyme/audit';
+import { listRoomMessages, sendRoomMessage, validateMessageInput } from 'lib/chyme/repository';
 import { requireChymeAccess } from '../_lib';
 
 function parseLimit(url: string): number {

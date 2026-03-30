@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { requireChymeAccess } from '../_lib';
-import { sendServiceCredits } from '../lib/chyme/repository';
+import { sendServiceCredits } from 'lib/chyme/repository';
 
 export async function POST(request: Request) {
   const gate = await requireChymeAccess();

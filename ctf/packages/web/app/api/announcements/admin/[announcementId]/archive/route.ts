@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { ensureMutationCsrf, requireFeedAdminAccess } from '../../../../feed/_lib';
-import { FEED_ERROR_CODE } from '../lib/feed/constants';
-import { archiveAnnouncement } from '../lib/feed/repository';
+import { FEED_ERROR_CODE } from 'lib/feed/constants';
+import { archiveAnnouncement } from 'lib/feed/repository';
 
 type RouteParams = {
   params: Promise<{ announcementId: string }>;

@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import { CHYME_ERROR_CODE } from '../lib/chyme/constants';
-import { createStreamJoinCredentials } from '../lib/chyme/stream';
-import { getRoomState, markRoomCallJoined } from '../lib/chyme/repository';
-import { logChymeAudit } from '../lib/chyme/audit';
+import { CHYME_ERROR_CODE } from 'lib/chyme/constants';
+import { createStreamJoinCredentials } from 'lib/chyme/stream';
+import { getRoomState, markRoomCallJoined } from 'lib/chyme/repository';
+import { logChymeAudit } from 'lib/chyme/audit';
 import { requireChymeAccess } from '../_lib';
 
 export async function POST() {

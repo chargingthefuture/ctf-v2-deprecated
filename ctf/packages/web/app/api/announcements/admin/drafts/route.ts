@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { ensureMutationCsrf, requireFeedAdminAccess } from '../../../feed/_lib';
-import { FEED_ERROR_CODE } from '../lib/feed/constants';
-import { createAnnouncementDraft, validateAnnouncementDraftInput } from '../lib/feed/repository';
-import type { AnnouncementDraftInput } from '../lib/feed/types';
+import { FEED_ERROR_CODE } from 'lib/feed/constants';
+import { createAnnouncementDraft, validateAnnouncementDraftInput } from 'lib/feed/repository';
+import type { AnnouncementDraftInput } from 'lib/feed/types';
 
 type DraftBody = Partial<AnnouncementDraftInput>;
 

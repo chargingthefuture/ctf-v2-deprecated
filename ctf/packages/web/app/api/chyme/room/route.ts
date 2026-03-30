@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { CHYME_ERROR_CODE } from '../lib/chyme/constants';
-import { logChymeAudit } from '../lib/chyme/audit';
-import { getRoomState } from '../lib/chyme/repository';
+import { CHYME_ERROR_CODE } from 'lib/chyme/constants';
+import { logChymeAudit } from 'lib/chyme/audit';
+import { getRoomState } from 'lib/chyme/repository';
 import { requireChymeAccess } from '../_lib';
 
 export async function GET() {

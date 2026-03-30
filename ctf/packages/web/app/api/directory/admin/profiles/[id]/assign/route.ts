@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { ensureMutationCsrf, requireDirectoryAdminAccess } from '../../../../_lib';
-import { DIRECTORY_ERROR_CODE } from '../lib/directory/constants';
-import { assignAdminProfile } from '../lib/directory/repository';
+import { DIRECTORY_ERROR_CODE } from 'lib/directory/constants';
+import { assignAdminProfile } from 'lib/directory/repository';
 
 type RouteParams = { params: Promise<{ id: string }> };
 
