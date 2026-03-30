@@ -284,6 +284,7 @@ CREATE TABLE IF NOT EXISTS gdp_publications (
   published_by_user_id TEXT,
   published_at TIMESTAMPTZ,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  ,host_user_id TEXT
 );
 
 -- Add columns with guarded DDL for legacy DBs
@@ -296,6 +297,7 @@ ALTER TABLE IF EXISTS gdp_publications ADD COLUMN IF NOT EXISTS created_by_user_
 ALTER TABLE IF EXISTS gdp_publications ADD COLUMN IF NOT EXISTS published_by_user_id TEXT;
 ALTER TABLE IF EXISTS gdp_publications ADD COLUMN IF NOT EXISTS published_at TIMESTAMPTZ;
 ALTER TABLE IF EXISTS gdp_publications ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+ALTER TABLE IF EXISTS gdp_publications ADD COLUMN IF NOT EXISTS host_user_id TEXT;
 CREATE TABLE IF NOT EXISTS feed_membership_events (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   actor_id TEXT NOT NULL,
