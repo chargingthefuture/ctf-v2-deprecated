@@ -1,4 +1,26 @@
 {
-  "name": "ChargingTheFuture Codespace",
-  "postCreateCommand": "bash .devcontainer/setup.sh"
+  "name": "ChargingTheFuture",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:20-bullseye",
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli": {}
+  },
+  "forwardPorts": [3000, 8081, 19000, 19001],
+  "portsAttributes": {
+    "3000": {
+      "label": "Web App",
+      "onAutoForward": "notify"
+    },
+    "8081": {
+      "label": "Metro Bundler",
+      "onAutoForward": "notify"
+    },
+    "19000": {
+      "label": "Expo",
+      "onAutoForward": "notify"
+    },
+    "19001": {
+      "label": "Expo DevTools",
+      "onAutoForward": "notify"
+    }
+  }
 }
