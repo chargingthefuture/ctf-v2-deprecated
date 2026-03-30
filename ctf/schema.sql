@@ -269,7 +269,6 @@ CREATE INDEX IF NOT EXISTS idx_skills_hunt_service_credits_from_user ON skills_h
 CREATE INDEX IF NOT EXISTS idx_skills_hunt_service_credits_to_user ON skills_hunt_service_credits_transactions (to_user_id);
 CREATE INDEX IF NOT EXISTS idx_skills_hunt_service_credits_submission_id ON skills_hunt_service_credits_transactions (submission_id);
 
--- === feed tables ===
 CREATE TABLE IF NOT EXISTS feed_render_config (
   singleton_key BOOLEAN PRIMARY KEY DEFAULT TRUE,
   render_mode TEXT NOT NULL,
@@ -296,6 +295,21 @@ CREATE TABLE IF NOT EXISTS feed_items (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+-- === foundation_quote_requests ===
+CREATE TABLE IF NOT EXISTS foundation_quote_requests (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id TEXT NOT NULL,
+  request_text TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'pending',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+ALTER TABLE IF EXISTS foundation_quote_requests ADD COLUMN IF NOT EXISTS id UUID PRIMARY KEY DEFAULT gen_random_uuid();
+ALTER TABLE IF EXISTS foundation_quote_requests ADD COLUMN IF NOT EXISTS user_id TEXT NOT NULL;
+ALTER TABLE IF EXISTS foundation_quote_requests ADD COLUMN IF NOT EXISTS request_text TEXT NOT NULL;
+ALTER TABLE IF EXISTS foundation_quote_requests ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'pending';
+ALTER TABLE IF EXISTS foundation_quote_requests ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+ALTER TABLE IF EXISTS foundation_quote_requests ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
 CREATE TABLE IF NOT EXISTS feed_item_targets (
   item_id UUID NOT NULL REFERENCES feed_items(id) ON DELETE CASCADE,
   target_role TEXT,
