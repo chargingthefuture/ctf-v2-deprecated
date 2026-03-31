@@ -1,4 +1,3 @@
-
 # Codespaces Environment Notice
 
 - The primary development environment is GitHub Codespaces.
@@ -86,3 +85,12 @@ If two rules conflict, choose the stricter rule and document the decision.
 - When creating a new table, always include both the full CREATE TABLE and ALTER TABLE for every column, even if redundant.
 - When adding a new column, always add a new migration with ALTER TABLE ... ADD COLUMN IF NOT EXISTS ...
 - When reviewing or updating old migrations, ensure all columns are present in both CREATE TABLE and ALTER TABLE blocks.
+
+## TypeScript Type Safety Policy (Critical)
+
+- All code changes (human or AI) must pass a full TypeScript typecheck (tsc --noEmit or pnpm typecheck) in every package under ctf/packages/ before commit or PR merge.
+- The /platform directory is strictly excluded from typecheck enforcement.
+- A pre-commit hook must run typecheck for all relevant packages and block the commit if any errors are found.
+- AI agents must not mark work as complete or submit PRs unless typecheck passes for all affected packages.
+- CI must also run typecheck for all packages, but local/typecheck failure must block code before CI.
+- This policy is mandatory and must be enforced by all agents and contributors.

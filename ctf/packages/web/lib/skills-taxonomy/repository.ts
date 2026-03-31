@@ -1,5 +1,5 @@
 import type { PoolClient } from 'pg';
-import { queryDb, withDbTransaction } from '../lib/db/postgres';
+import { queryDb, withDbTransaction } from 'lib/db/postgres';
 import {
   SKILLS_TAXONOMY_ALIASES_MAX_LENGTH,
   SKILLS_TAXONOMY_DELETE_REASON_MAX_LENGTH,

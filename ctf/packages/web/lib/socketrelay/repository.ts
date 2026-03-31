@@ -1,4 +1,4 @@
-import { queryDb, withDbTransaction } from '../lib/db/postgres';
+import { queryDb, withDbTransaction } from 'lib/db/postgres';
 import {
   SOCKETRELAY_DEFAULT_PAGE,
   SOCKETRELAY_DEFAULT_PAGE_SIZE,
@@ -25,8 +25,8 @@ import {
   listFeedTimeline,
   publishAnnouncement,
   updateAnnouncementDraft,
-} from '../lib/feed/repository';
-import type { Announcement, AnnouncementDraftInput } from '../lib/feed/types';
+} from 'lib/feed/repository';
+import type { Announcement, AnnouncementDraftInput } from 'lib/feed/types';
 
 type CountRow = { total: string };
 

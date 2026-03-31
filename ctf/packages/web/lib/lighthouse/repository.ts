@@ -1006,7 +1006,7 @@ export async function listAnnouncementsForLighthouseUser(input: {
     { pluginId: 'lighthouse' },
   );
 
-  const items = timeline.items.filter((item) => item.itemType === 'announcement');
+  const items = timeline.items.filter((item: FeedTimelineItem) => item.itemType === 'announcement');
 
   return {
     items,
@@ -1021,7 +1021,7 @@ export async function listAnnouncementsForLighthouseUser(input: {
 export async function listLighthouseAdminAnnouncements(): Promise<Announcement[]> {
   const items = await listAnnouncements(true);
 
-  return items.filter((item) => {
+  return items.filter((item: Announcement) => {
     const plugins = item.targeting?.plugins;
     if (!plugins || plugins.length === 0) {
       return true;
@@ -1284,7 +1284,7 @@ export async function listLighthouseAuditEvents(limit = 100): Promise<Array<{
     [boundedLimit],
   );
 
-  return result.rows.map((row) => ({
+  return result.rows.map((row: any) => ({
     actorId: row.actor_id,
     command: row.command,
     policyStatus: row.policy_status,

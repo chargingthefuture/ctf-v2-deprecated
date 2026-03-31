@@ -56,7 +56,7 @@ export async function getSkillsHuntServiceCreditsTransactionsForUser(
 }
 import { createHash } from 'crypto';
 import type { PoolClient } from 'pg';
-import { queryDb, withDbTransaction } from '../lib/db/postgres';
+import { queryDb, withDbTransaction } from 'lib/db/postgres';
 import {
   SKILLS_HUNT_DEFAULT_PAGE,
   SKILLS_HUNT_DEFAULT_PAGE_SIZE,
