@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import { evaluatePluginAccess, type AllowDecision } from '../lib/auth/server-authz';
-import { ensureDirectoryAdmin } from '../lib/directory/policy';
-import { DIRECTORY_ERROR_CODE } from '../lib/directory/constants';
-import { getAppUrl } from '../lib/auth/clerk-env';
+import { evaluatePluginAccess, type AllowDecision } from 'lib/auth/server-authz';
+import { ensureDirectoryAdmin } from 'lib/directory/policy';
+import { DIRECTORY_ERROR_CODE } from 'lib/directory/constants';
+import { getAppUrl } from 'lib/auth/clerk-env';
 
 export type DirectoryApiGate =
   | {

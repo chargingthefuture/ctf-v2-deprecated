@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { currentUser } from '@clerk/nextjs/server';
-import { evaluatePluginAccess, type AllowDecision } from '../lib/auth/server-authz';
+import { evaluatePluginAccess, type AllowDecision } from 'lib/auth/server-authz';
 
 export type ChymeApiIdentity = {
   userId: string;

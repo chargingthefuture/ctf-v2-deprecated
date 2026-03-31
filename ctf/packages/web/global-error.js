@@ -1,2 +1,3 @@
-// This file is now global-error.ts for Next.js App Router global error handling.
-// Please use global-error.ts instead.
+// Proxy to TypeScript global error handler for Sentry/Next.js detection
+module.exports = require('./global-error.ts');
+
