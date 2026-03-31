@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getLatestPublication } from '../lib/gdp/repository';
+import { getLatestPublication } from 'lib/gdp/repository';
 
 type GdpShellProps = {
   isAdmin: boolean;

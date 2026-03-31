@@ -7,7 +7,7 @@ import {
   listMatches,
   listMyProperties,
   listProperties,
-} from '../lib/lighthouse/repository';
+} from 'lib/lighthouse/repository';
 
 type LighthouseShellProps = {
   userId: string;

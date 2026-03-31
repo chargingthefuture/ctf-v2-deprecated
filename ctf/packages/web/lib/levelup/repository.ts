@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 import type { PoolClient } from 'pg';
-import { queryDb, withDbTransaction } from '../lib/db/postgres';
+import { queryDb, withDbTransaction } from 'lib/db/postgres';
 import {
   applyDisputeAdjustment,
   createEscrowHold,
@@ -9,7 +9,7 @@ import {
   mintGrant,
   refundEscrow,
   releaseEscrow,
-} from '../lib/service-credits/repository';
+} from 'lib/service-credits/repository';
 import { LEVELUP_DEFAULT_TRAINER_SPLIT_PERCENT, LEVELUP_PLUGIN_SLUG } from '../lib/levelup/constants';
 
 function toNumber(value: string | number): number {
@@ -495,7 +495,7 @@ export async function enrollInCohort(input: {
       [enrollmentId, input.cohortId, input.actorId, Math.max(depositRequested, 0), input.assignedTrainerId ?? null],
     );
 
-    const milestones = await client.query<{ id: string; percent_release: string; sequence_no: number }>(
+    const milestones = await client.query(
       `SELECT id::text, percent_release::text, sequence_no
        FROM levelup_milestones
        WHERE cohort_id = $1::uuid
@@ -507,7 +507,7 @@ export async function enrollInCohort(input: {
       enrollmentId,
       status: 'enrolled',
       depositRequested,
-      milestones: milestones.rows.map((row) => ({
+      milestones: milestones.rows.map((row: any) => ({
         id: row.id,
         percentRelease: toNumber(row.percent_release),
         sequenceNo: row.sequence_no,
@@ -598,7 +598,7 @@ export async function validateMilestone(input: {
   validationNote?: string;
   idempotencyKey: string;
 }) {
-  return withDbTransaction(async (client) => {
+  return withDbTransaction(async (client: any) => {
     const existing = await readCommandIdempotency<{ validationId: string; status: 'validated' }>(
       client,
       input.actorId,
@@ -680,8 +680,8 @@ export async function releaseMilestoneCredits(input: {
     return existingRelease.rows[0].response_payload;
   }
 
-  const releaseDraft = await withDbTransaction(async (client) => {
-    const validation = await client.query<{ status: string }>(
+  const releaseDraft = await withDbTransaction(async (client: any) => {
+    const validation = await client.query(
       `SELECT status
        FROM levelup_milestone_validations
        WHERE enrollment_id = $1::uuid AND milestone_id = $2::uuid
@@ -701,12 +701,7 @@ export async function releaseMilestoneCredits(input: {
       throw new Error('invalid_state');
     }
 
-    const enrollment = await client.query<{
-      user_id: string;
-      assigned_trainer_id: string | null;
-      cohort_id: string;
-      status: string;
-    }>(
+    const enrollment = await client.query(
       `SELECT user_id, assigned_trainer_id, cohort_id::text, status
        FROM levelup_enrollments
        WHERE id = $1::uuid
@@ -718,7 +713,7 @@ export async function releaseMilestoneCredits(input: {
       throw new Error('not_found');
     }
 
-    const escrow = await client.query<{ escrow_id: string; held_amount: string; release_status: string }>(
+    const escrow = await client.query(
       `SELECT escrow_id::text, held_amount::text, release_status
        FROM levelup_enrollment_milestone_escrows
        WHERE enrollment_id = $1::uuid AND milestone_id = $2::uuid
@@ -734,7 +729,7 @@ export async function releaseMilestoneCredits(input: {
       throw new Error('invalid_state');
     }
 
-    const cohort = await client.query<{ trainer_split_percent: string; completion_bonus_credits: string }>(
+    const cohort = await client.query(
       `SELECT trainer_split_percent::text, completion_bonus_credits::text
        FROM levelup_cohorts
        WHERE id = $1::uuid
@@ -750,7 +745,7 @@ export async function releaseMilestoneCredits(input: {
     const trainerSplitPercent = toNumber(cohort.rows[0].trainer_split_percent);
     const trainerPayoutAmount = calculateTrainerPayout(heldAmount, trainerSplitPercent);
 
-    const allMilestones = await client.query<{ total: string; released: string }>(
+    const allMilestones = await client.query(
       `SELECT
          COUNT(*)::text AS total,
          COUNT(*) FILTER (WHERE v.status = 'released')::text AS released
@@ -818,7 +813,7 @@ export async function releaseMilestoneCredits(input: {
     completionBonusGovernanceId = bonus.governanceEventId;
   }
 
-  const response = await withDbTransaction(async (client) => {
+  const response = await withDbTransaction(async (client: any) => {
     await client.query(
       `UPDATE levelup_enrollment_milestone_escrows
        SET release_status = 'released', updated_at = NOW()
@@ -887,7 +882,7 @@ export async function openDispute(input: {
   attachments?: string[];
   idempotencyKey: string;
 }) {
-  return withDbTransaction(async (client) => {
+  return withDbTransaction(async (client: any) => {
     const existing = await readCommandIdempotency<{ disputeId: string }>(client, input.actorId, 'levelup.dispute.open', input.idempotencyKey);
     if (existing) {
       return existing;
@@ -948,7 +943,7 @@ export async function resolveDispute(input: {
     });
   }
 
-  return withDbTransaction(async (client) => {
+  return withDbTransaction(async (client: any) => {
     const existing = await readCommandIdempotency<{
       disputeId: string;
       adjustmentId: string | null;
@@ -959,7 +954,7 @@ export async function resolveDispute(input: {
       return existing;
     }
 
-    const dispute = await client.query<{ enrollment_id: string; milestone_id: string | null }>(
+    const dispute = await client.query(
       `UPDATE levelup_disputes
        SET status = 'resolved', resolution_comment = $2, resolved_by_user_id = $3, resolved_at = NOW(), updated_at = NOW()
        WHERE id = $1::uuid
@@ -1080,7 +1075,7 @@ export async function getUserDashboardData(userId: string) {
 
   return {
     wallet,
-    activeEnrollments: enrollments.rows.map((row) => ({
+    activeEnrollments: enrollments.rows.map((row: any) => ({
       id: row.id,
       cohortId: row.cohort_id,
       title: row.title,
@@ -1089,7 +1084,7 @@ export async function getUserDashboardData(userId: string) {
       progress: toNumber(row.progress_percent),
       assignedTrainerId: row.assigned_trainer_id,
     })),
-    recentTransactions: transactions.rows.map((row) => ({
+    recentTransactions: transactions.rows.map((row: any) => ({
       id: row.id,
       type: row.entry_type,
       amount: toNumber(row.amount),
@@ -1140,21 +1135,21 @@ export async function getTrainerDashboardData(trainerUserId: string) {
 
   return {
     cohorts: cohorts.rows,
-    pendingValidations: pendingValidations.rows.map((row) => ({
+    pendingValidations: pendingValidations.rows.map((row: any) => ({
       enrollmentId: row.enrollment_id,
       milestoneId: row.milestone_id,
       title: row.title,
       milestoneName: row.milestone_name,
       validatedAtIso: row.validated_at.toISOString(),
     })),
-    trainees: trainees.rows.map((row) => ({
+    trainees: trainees.rows.map((row: any) => ({
       enrollmentId: row.enrollment_id,
       userId: row.user_id,
       cohortTitle: row.title,
       status: row.status,
       progress: toNumber(row.progress_percent),
     })),
-    payoutLedger: payouts.rows.map((row) => ({
+    payoutLedger: payouts.rows.map((row: any) => ({
       id: row.id,
       amount: toNumber(row.amount),
       metadata: JSON.parse(row.metadata),
@@ -1216,7 +1211,7 @@ export async function listEnrollmentMilestones(enrollmentId: string) {
     [enrollmentId],
   );
 
-  return milestones.rows.map((row) => ({
+  return milestones.rows.map((row: any) => ({
     milestoneId: row.milestone_id,
     name: row.name,
     percentRelease: toNumber(row.percent_release),

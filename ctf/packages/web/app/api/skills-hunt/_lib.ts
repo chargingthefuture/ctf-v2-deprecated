@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { evaluatePluginAccess, type AllowDecision } from '../lib/auth/server-authz';
-import { getAppUrl } from '../lib/auth/clerk-env';
-import { ensureSkillsHuntAdmin, ensureSkillsHuntModeratorOrAdmin } from '../lib/skills-hunt/policy';
+import { evaluatePluginAccess, type AllowDecision } from 'lib/auth/server-authz';
+import { getAppUrl } from 'lib/auth/clerk-env';
+import { ensureSkillsHuntAdmin, ensureSkillsHuntModeratorOrAdmin } from 'lib/skills-hunt/policy';
 import { SKILLS_HUNT_ERROR_CODE } from 'lib/skills-hunt/constants';
 
 export type SkillsHuntApiGate =

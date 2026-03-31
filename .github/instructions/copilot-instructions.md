@@ -11,6 +11,7 @@
 - The `/platform` folder is strictly for reference-only during migration and must never be referenced, deployed, or used for routing or domain configuration unless explicitly requested.
 - Governs architecture, coding standards, delivery quality, and compliance.
 
+
 ## Product Rule Modules
 
 - [099-agent-scope-guardrails.mdc](099-agent-scope-guardrails.mdc)
@@ -44,6 +45,11 @@
 - [202-plugin-access-policy-schema-template.mdc](202-plugin-access-policy-schema-template.mdc)
 - [203-plugin-audit-schema-template.mdc](203-plugin-audit-schema-template.mdc)
 - [014-compliance-rules-index.mdc](014-compliance-rules-index.mdc)
+
+# Supabase Instructions
+
+- For any Supabase-related development, always consult the `/github/instructions/supabase/` folder for the latest rules and best practices.
+- Supabase is ONLY to be used for document storage at this time. Do not use Supabase for authentication, user profiles, or any other features unless explicitly authorized in future instructions.
 
 ## Precedence
 

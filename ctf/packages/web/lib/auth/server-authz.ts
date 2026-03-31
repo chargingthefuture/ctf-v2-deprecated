@@ -1,6 +1,6 @@
 import { auth, currentUser } from '@clerk/nextjs/server';
-import { getEffectiveUnlockAccessTier } from '../lib/unlock/repository';
-import type { UnlockAccessTier } from '../lib/unlock/types';
+import { getEffectiveUnlockAccessTier } from 'lib/unlock/repository';
+import type { UnlockAccessTier } from 'lib/unlock/types';
 import { pluginAuthDeny, type PluginDenyResponse } from './deny-taxonomy';
 
 export type AllowDecision = {

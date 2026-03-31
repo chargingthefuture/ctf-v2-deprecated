@@ -1,4 +1,4 @@
-import { queryDb, withDbTransaction } from '../lib/db/postgres';
+import { queryDb, withDbTransaction } from 'lib/db/postgres';
 import {
   LIGHTHOUSE_DEFAULT_PAGE,
   LIGHTHOUSE_DEFAULT_PAGE_SIZE,
@@ -26,8 +26,8 @@ import {
   listFeedTimeline,
   publishAnnouncement,
   updateAnnouncementDraft,
-} from '../lib/feed/repository';
-import type { Announcement, AnnouncementDraftInput, FeedTimelineItem } from '../lib/feed/types';
+} from 'lib/feed/repository';
+import type { Announcement, AnnouncementDraftInput, FeedTimelineItem } from 'lib/feed/types';
 
 type CountRow = { total: string };
 
@@ -310,8 +310,8 @@ export async function getProfile(userId: string): Promise<LighthouseProfile | nu
 }
 
 export async function upsertProfile(actorUserId: string, input: LighthouseProfileInput, isAdmin: boolean): Promise<LighthouseProfile> {
-  return withDbTransaction(async (client) => {
-    const existing = await client.query<{ profile_type: LighthouseProfileType }>(
+  return withDbTransaction(async (client: PoolClient) => {
+    const existing = await client.query(
       `
         SELECT profile_type
         FROM lighthouse_profiles
@@ -325,7 +325,7 @@ export async function upsertProfile(actorUserId: string, input: LighthouseProfil
       throw new Error('policy_denied');
     }
 
-    const upserted = await client.query<LighthouseProfileRow>(
+    const upserted = await client.query(
       `
         INSERT INTO lighthouse_profiles
           (user_id, profile_type, bio, phone_number, signal_url, is_active, has_property, housing_needs, desired_move_in_date, budget_min, budget_max, desired_country, updated_at)
@@ -383,7 +383,7 @@ export async function upsertProfile(actorUserId: string, input: LighthouseProfil
 }
 
 export async function deleteProfile(userId: string): Promise<void> {
-  await withDbTransaction(async (client) => {
+  await withDbTransaction(async (client: PoolClient) => {
     await client.query(
       `
         INSERT INTO lighthouse_user_extension (user_id, service_deleted_at, updated_at)
@@ -536,8 +536,8 @@ export async function listMyProperties(userId: string): Promise<LighthouseProper
 }
 
 export async function createProperty(actorUserId: string, input: LighthousePropertyInput): Promise<LighthouseProperty> {
-  return withDbTransaction(async (client) => {
-    const hostProfile = await client.query<{ id: string }>(
+  return withDbTransaction(async (client: PoolClient) => {
+    const hostProfile = await client.query(
       `
         SELECT id
         FROM lighthouse_profiles
@@ -553,7 +553,7 @@ export async function createProperty(actorUserId: string, input: LighthousePrope
       throw new Error('policy_denied');
     }
 
-    const created = await client.query<LighthousePropertyRow>(
+    const created = await client.query(
       `
         INSERT INTO lighthouse_properties
           (host_user_id, title, description, property_type, address_line, city, state, country, zip_code, bedrooms, bathrooms, monthly_rent, available_from, amenities, house_rules, photos, airbnb_profile_url, is_active, created_by_user_id, updated_by_user_id)
@@ -608,8 +608,8 @@ export async function createProperty(actorUserId: string, input: LighthousePrope
 }
 
 export async function updateProperty(actorUserId: string, propertyId: string, input: LighthousePropertyInput, isAdmin: boolean): Promise<LighthouseProperty> {
-  return withDbTransaction(async (client) => {
-    const existing = await client.query<{ host_user_id: string }>(
+  return withDbTransaction(async (client: PoolClient) => {
+    const existing = await client.query(
       `
         SELECT host_user_id
         FROM lighthouse_properties
@@ -627,7 +627,7 @@ export async function updateProperty(actorUserId: string, propertyId: string, in
       throw new Error('not_owner');
     }
 
-    const updated = await client.query<LighthousePropertyRow>(
+    const updated = await client.query(
       `
         UPDATE lighthouse_properties
         SET
@@ -701,8 +701,8 @@ export async function updateProperty(actorUserId: string, propertyId: string, in
 }
 
 export async function deleteProperty(actorUserId: string, propertyId: string, isAdmin: boolean): Promise<boolean> {
-  return withDbTransaction(async (client) => {
-    const existing = await client.query<{ host_user_id: string }>(
+  return withDbTransaction(async (client: PoolClient) => {
+    const existing = await client.query(
       `
         SELECT host_user_id
         FROM lighthouse_properties
@@ -748,10 +748,10 @@ export async function createMatchRequest(input: {
   desiredMoveInDateIso?: string | null;
   idempotencyKey: string;
 }): Promise<{ match: LighthouseMatch; streamApiKey: string | null; streamUserId: string | null; streamToken: string | null }> {
-  return withDbTransaction(async (client) => {
+  return withDbTransaction(async (client: PoolClient) => {
     void input.idempotencyKey;
 
-    const seeker = await client.query<{ id: string }>(
+    const seeker = await client.query(
       `
         SELECT id
         FROM lighthouse_profiles
@@ -767,7 +767,7 @@ export async function createMatchRequest(input: {
       throw new Error('policy_denied');
     }
 
-    const property = await client.query<{ id: string; host_user_id: string }>(
+    const property = await client.query(
       `
         SELECT id::text AS id, host_user_id
         FROM lighthouse_properties
@@ -784,7 +784,7 @@ export async function createMatchRequest(input: {
 
     const hostUserId = property.rows[0].host_user_id;
 
-    const blocked = await client.query<{ found: number }>(
+    const blocked = await client.query(
       `
         SELECT 1 AS found
         FROM lighthouse_blocks
@@ -799,7 +799,7 @@ export async function createMatchRequest(input: {
       throw new Error('blocked_pair');
     }
 
-    const duplicate = await client.query<{ id: string }>(
+    const duplicate = await client.query(
       `
         SELECT id::text AS id
         FROM lighthouse_matches
@@ -815,7 +815,7 @@ export async function createMatchRequest(input: {
       throw new Error('duplicate_match');
     }
 
-    const created = await client.query<LighthouseMatchRow>(
+    const created = await client.query(
       `
         INSERT INTO lighthouse_matches
           (property_id, seeker_user_id, host_user_id, message, proposed_move_in_date, status, stream_channel_id)
@@ -854,7 +854,7 @@ export async function createMatchRequest(input: {
     });
 
     const streamChannelId = ensuredChannelId ?? fallbackChannelId;
-    const updated = await client.query<LighthouseMatchRow>(
+    const updated = await client.query(
       `
         UPDATE lighthouse_matches
         SET stream_channel_id = $2, updated_at = NOW()
@@ -911,6 +911,8 @@ export async function listMatches(actorUserId: string): Promise<LighthouseMatch[
   return result.rows.map(mapMatch);
 }
 
+import type { PoolClient } from 'pg';
+
 export async function updateMatch(input: {
   actorUserId: string;
   matchId: string;
@@ -918,8 +920,8 @@ export async function updateMatch(input: {
   hostResponse?: string | null;
   isAdmin: boolean;
 }): Promise<LighthouseMatch> {
-  return withDbTransaction(async (client) => {
-    const existing = await client.query<LighthouseMatchRow>(
+  return withDbTransaction(async (client: PoolClient) => {
+    const existing = await (client as PoolClient).query<LighthouseMatchRow>(
       `
         SELECT
           id,
@@ -964,7 +966,7 @@ export async function updateMatch(input: {
       ? match.host_response
       : normalizeNullableText(input.hostResponse);
 
-    const updated = await client.query<LighthouseMatchRow>(
+    const updated = await (client as PoolClient).query<LighthouseMatchRow>(
       `
         UPDATE lighthouse_matches
         SET

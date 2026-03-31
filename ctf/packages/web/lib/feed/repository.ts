@@ -1,5 +1,5 @@
 import type { PoolClient } from 'pg';
-import { queryDb, withDbTransaction } from '../lib/db/postgres';
+import { queryDb, withDbTransaction } from 'lib/db/postgres';
 import {
   FEED_DEFAULT_PAGE,
   FEED_DEFAULT_PAGE_SIZE,

@@ -5,7 +5,7 @@ import {
   listNotificationEvents,
   listQuoteHistory,
   searchProviders,
-} from '../lib/foundation/repository';
+} from 'lib/foundation/repository';
 
 type FoundationShellProps = {
   userId: string;

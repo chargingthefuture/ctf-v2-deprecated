@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import { evaluatePluginAccess, type AllowDecision } from '../lib/auth/server-authz';
-import { getAppUrl } from '../lib/auth/clerk-env';
+import { evaluatePluginAccess, type AllowDecision } from 'lib/auth/server-authz';
+import { getAppUrl } from 'lib/auth/clerk-env';
 import { PEER_PROGRAMMING_ERROR_CODE } from '../lib/peer-programming/constants';
-import { ensurePeerProgrammingAdmin } from '../lib/peer-programming/policy';
+import { ensurePeerProgrammingAdmin } from 'lib/peer-programming/policy';
 
 export type PeerProgrammingApiGate =
   | { allowed: true; auth: AllowDecision }

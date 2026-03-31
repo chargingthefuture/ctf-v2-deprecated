@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import { evaluatePluginAccess, type AllowDecision } from '../lib/auth/server-authz';
-import { ensureFeedAdmin } from '../lib/feed/policy';
-import { FEED_ERROR_CODE } from '../lib/feed/constants';
-import { getAppUrl } from '../lib/auth/clerk-env';
+import { evaluatePluginAccess, type AllowDecision } from 'lib/auth/server-authz';
+import { ensureFeedAdmin } from 'lib/feed/policy';
+import { FEED_ERROR_CODE } from 'lib/feed/constants';
+import { getAppUrl } from 'lib/auth/clerk-env';
 
 export type FeedApiGate =
   | {

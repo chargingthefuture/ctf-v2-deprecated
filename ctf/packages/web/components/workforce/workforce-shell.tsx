@@ -6,7 +6,7 @@ import {
   getDashboard,
   listAnnouncements,
   listOccupations,
-} from '../lib/workforce/repository';
+} from 'lib/workforce/repository';
 
 type WorkforceShellProps = {
   isAdmin: boolean;

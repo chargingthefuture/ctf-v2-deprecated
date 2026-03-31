@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { queryDb } from '../lib/db/postgres';
+import { queryDb } from 'lib/db/postgres';
 
 type PublicationRow = {
   id: string;

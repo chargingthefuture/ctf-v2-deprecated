@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import { evaluatePluginAccess, type AllowDecision } from '../lib/auth/server-authz';
-import { SKILLS_TAXONOMY_ERROR_CODE } from '../lib/skills-taxonomy/constants';
-import { ensureTaxonomyAdmin } from '../lib/skills-taxonomy/policy';
-import { getAppUrl } from '../lib/auth/clerk-env';
+import { evaluatePluginAccess, type AllowDecision } from 'lib/auth/server-authz';
+import { SKILLS_TAXONOMY_ERROR_CODE } from 'lib/skills-taxonomy/constants';
+import { ensureTaxonomyAdmin } from 'lib/skills-taxonomy/policy';
+import { getAppUrl } from 'lib/auth/clerk-env';
 
 export type SkillsTaxonomyApiGate =
   | {

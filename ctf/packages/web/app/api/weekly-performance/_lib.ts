@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { evaluatePluginAccess } from '../lib/auth/server-authz';
-import { getAppUrl } from '../lib/auth/clerk-env';
-import { ensureWeeklyPerformanceAdmin } from '../lib/weekly-performance/policy';
+import { evaluatePluginAccess } from 'lib/auth/server-authz';
+import { getAppUrl } from 'lib/auth/clerk-env';
+import { ensureWeeklyPerformanceAdmin } from 'lib/weekly-performance/policy';
 
 export async function requireWeeklyPerformanceReadAccess() {
   const decision = await evaluatePluginAccess({ requireApprovedUserOrAdmin: true, requireUsername: false });

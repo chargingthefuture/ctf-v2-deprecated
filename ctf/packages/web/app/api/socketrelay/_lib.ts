@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import { evaluatePluginAccess, type AllowDecision } from '../lib/auth/server-authz';
-import { getAppUrl } from '../lib/auth/clerk-env';
-import { ensureSocketRelayAdmin } from '../lib/socketrelay/policy';
-import { SOCKETRELAY_ERROR_CODE } from '../lib/socketrelay/constants';
+import { evaluatePluginAccess, type AllowDecision } from 'lib/auth/server-authz';
+import { getAppUrl } from 'lib/auth/clerk-env';
+import { ensureSocketRelayAdmin } from 'lib/socketrelay/policy';
+import { SOCKETRELAY_ERROR_CODE } from 'lib/socketrelay/constants';
 
 export type SocketRelayApiGate =
   | { allowed: true; auth: AllowDecision }

@@ -4,8 +4,8 @@ import {
   listAdminProfiles,
   listDirectoryAnnouncements,
   listDirectoryForMember,
-} from '../lib/directory/repository';
-import type { DirectoryAnnouncement, DirectoryProfile } from '../lib/directory/types';
+} from 'lib/directory/repository';
+import type { DirectoryAnnouncement, DirectoryProfile } from 'lib/directory/types';
 
 type DirectoryShellProps = {
   userId: string;

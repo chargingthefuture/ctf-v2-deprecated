@@ -1,4 +1,4 @@
-import { queryDb } from '../lib/db/postgres';
+import { queryDb } from 'lib/db/postgres';
 
 export async function getActiveUserIdsLastDays(days: number): Promise<string[]> {
   const safeDays = Number.isFinite(days) && days > 0 ? Math.floor(days) : 7;

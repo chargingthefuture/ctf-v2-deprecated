@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { evaluatePluginAccess } from '../lib/auth/server-authz';
+import { evaluatePluginAccess } from 'lib/auth/server-authz';
 import { ensureUnlockAdmin } from '../lib/unlock/policy';
 
 export async function requireUnlockUserAccess() {

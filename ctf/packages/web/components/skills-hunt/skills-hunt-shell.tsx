@@ -6,7 +6,7 @@ import {
   listNotifications,
   listRounds,
   listSubmissions,
-} from '../lib/skills-hunt/repository';
+} from 'lib/skills-hunt/repository';
 
 type SkillsHuntShellProps = {
   userId: string;

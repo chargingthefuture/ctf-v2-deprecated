@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 import type { PoolClient } from 'pg';
-import { queryDb, withDbTransaction } from '../lib/db/postgres';
+import { queryDb, withDbTransaction } from 'lib/db/postgres';
 import {
   FOUNDATION_DEFAULT_PAGE,
   FOUNDATION_DEFAULT_PAGE_SIZE,

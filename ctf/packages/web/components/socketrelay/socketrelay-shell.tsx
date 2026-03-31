@@ -4,7 +4,7 @@ import {
   listAnnouncementsForSocketRelayUser,
   listMyFulfillments,
   listRequests,
-} from '../lib/socketrelay/repository';
+} from 'lib/socketrelay/repository';
 
 type SocketRelayShellProps = {
   userId: string;

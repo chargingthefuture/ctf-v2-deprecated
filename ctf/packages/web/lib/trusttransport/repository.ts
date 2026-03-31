@@ -1,4 +1,4 @@
-import { queryDb, withDbTransaction } from '../lib/db/postgres';
+import { queryDb, withDbTransaction } from 'lib/db/postgres';
 import {
   TRUSTTRANSPORT_DEFAULT_PAGE,
   TRUSTTRANSPORT_DEFAULT_PAGE_SIZE,

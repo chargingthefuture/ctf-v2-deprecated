@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getCurrentWeek, listWeeks } from '../lib/weekly-performance/repository';
+import { getCurrentWeek, listWeeks } from 'lib/weekly-performance/repository';
 
 type WeeklyPerformanceShellProps = {
   isAdmin: boolean;

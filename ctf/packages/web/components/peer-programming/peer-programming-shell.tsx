@@ -1,4 +1,4 @@
-import { getMyCohort, getPublishedWeeklyTopic, listMessages } from '../lib/peer-programming/repository';
+import { getMyCohort, getPublishedWeeklyTopic, listMessages } from 'lib/peer-programming/repository';
 
 type PeerProgrammingShellProps = {
   userId: string;

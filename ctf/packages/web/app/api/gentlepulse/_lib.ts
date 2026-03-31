@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { evaluatePluginAccess, type AllowDecision } from '../lib/auth/server-authz';
-import { getAppUrl } from '../lib/auth/clerk-env';
+import { evaluatePluginAccess, type AllowDecision } from 'lib/auth/server-authz';
+import { getAppUrl } from 'lib/auth/clerk-env';
 
 export type GentlePulseApiGate =
   | { allowed: true; auth: AllowDecision }

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { listLibraryItems } from '../lib/gentlepulse/repository';
+import { listLibraryItems } from 'lib/gentlepulse/repository';
 
 export async function GentlePulseShell() {
   const items = await listLibraryItems();

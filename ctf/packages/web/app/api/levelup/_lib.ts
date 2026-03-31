@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { evaluatePluginAccess } from '../lib/auth/server-authz';
-import { getAppUrl } from '../lib/auth/clerk-env';
-import { ensureLevelupAdmin } from '../lib/levelup/policy';
+import { evaluatePluginAccess } from 'lib/auth/server-authz';
+import { getAppUrl } from 'lib/auth/clerk-env';
+import { ensureLevelupAdmin } from 'lib/levelup/policy';
 
 export async function requireLevelupReadAccess() {
   const decision = await evaluatePluginAccess({ requireApprovedUserOrAdmin: true, requireUsername: false });

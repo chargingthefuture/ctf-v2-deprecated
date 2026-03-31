@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { evaluatePluginAccess, type AllowDecision } from '../lib/auth/server-authz';
-import { getAppUrl } from '../lib/auth/clerk-env';
-import { ensureFoundationAdmin } from '../lib/foundation/policy';
+import { evaluatePluginAccess, type AllowDecision } from 'lib/auth/server-authz';
+import { getAppUrl } from 'lib/auth/clerk-env';
+import { ensureFoundationAdmin } from 'lib/foundation/policy';
 import { FOUNDATION_ERROR_CODE } from 'lib/foundation/constants';
 
 export type FoundationApiGate =

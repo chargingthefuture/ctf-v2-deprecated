@@ -1,4 +1,4 @@
-import { createTransfer } from '../lib/service-credits/repository';
+import { createTransfer } from 'lib/service-credits/repository';
 import type { ChymeServiceCreditsTransaction } from './types';
 
 export async function sendServiceCredits(
@@ -42,7 +42,7 @@ import type {
   ChymeParticipant,
   ChymeRoomResponse,
 } from './types';
-import { queryDb, withDbTransaction } from '../lib/db/postgres';
+import { queryDb, withDbTransaction } from 'lib/db/postgres';
 
 type IdentityInput = {
   userId: string;

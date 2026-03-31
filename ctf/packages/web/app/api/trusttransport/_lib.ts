@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import { evaluatePluginAccess, type AllowDecision } from '../lib/auth/server-authz';
-import { getAppUrl } from '../lib/auth/clerk-env';
-import { TRUSTTRANSPORT_ERROR_CODE } from '../lib/trusttransport/constants';
-import { ensureTrustTransportAdmin, ensureTrustTransportProviderRole } from '../lib/trusttransport/policy';
+import { evaluatePluginAccess, type AllowDecision } from 'lib/auth/server-authz';
+import { getAppUrl } from 'lib/auth/clerk-env';
+import { TRUSTTRANSPORT_ERROR_CODE } from 'lib/trusttransport/constants';
+import { ensureTrustTransportAdmin, ensureTrustTransportProviderRole } from 'lib/trusttransport/policy';
 
 export type TrustTransportApiGate =
   | { allowed: true; auth: AllowDecision }

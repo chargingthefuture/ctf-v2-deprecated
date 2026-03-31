@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getOrCreateWallet, getTreasuryConfig } from '../lib/service-credits/repository';
+import { getOrCreateWallet, getTreasuryConfig } from 'lib/service-credits/repository';
 
 type ServiceCreditsShellProps = {
   userId: string;

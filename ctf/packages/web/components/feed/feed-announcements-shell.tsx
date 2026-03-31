@@ -3,8 +3,8 @@ import {
   getFeedConfig,
   listAnnouncements,
   listFeedTimeline,
-} from '../lib/feed/repository';
-import type { Announcement, FeedTimelineItem } from '../lib/feed/types';
+} from 'lib/feed/repository';
+import type { Announcement, FeedTimelineItem } from 'lib/feed/types';
 
 type FeedAnnouncementsShellProps = {
   userId: string;

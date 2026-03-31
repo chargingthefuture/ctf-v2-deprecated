@@ -1,11 +1,11 @@
 import Link from 'next/link';
-import { AdminPanel } from '../components/levelup/AdminPanel';
-import { CohortDetail } from '../components/levelup/CohortDetail';
-import { CohortList } from '../components/levelup/CohortList';
-import { EnrollModal } from '../components/levelup/EnrollModal';
-import { TrainerDashboard } from '../components/levelup/TrainerDashboard';
-import { UserDashboard } from '../components/levelup/UserDashboard';
-import { getAdminPanelData, getCohortDetail, getTrainerDashboardData, getUserDashboardData, listCohorts } from '../lib/levelup/repository';
+import { AdminPanel } from 'components/levelup/AdminPanel';
+import { CohortDetail } from 'components/levelup/CohortDetail';
+import { CohortList } from 'components/levelup/CohortList';
+import { EnrollModal } from 'components/levelup/EnrollModal';
+import { TrainerDashboard } from 'components/levelup/TrainerDashboard';
+import { UserDashboard } from 'components/levelup/UserDashboard';
+import { getAdminPanelData, getCohortDetail, getTrainerDashboardData, getUserDashboardData, listCohorts } from 'lib/levelup/repository';
 
 type LevelupShellProps = {
   userId: string;

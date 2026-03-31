@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getMarketConfig, listIncidents, listMyPayouts, listRequests } from '../lib/trusttransport/repository';
+import { getMarketConfig, listIncidents, listMyPayouts, listRequests } from 'lib/trusttransport/repository';
 
 type TrustTransportShellProps = {
   userId: string;

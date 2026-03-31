@@ -1,4 +1,4 @@
-import { queryDb } from '../lib/db/postgres';
+import { queryDb } from 'lib/db/postgres';
 import type {
   CreateUnlockSubmissionInput,
   ReviewUnlockSubmissionInput,

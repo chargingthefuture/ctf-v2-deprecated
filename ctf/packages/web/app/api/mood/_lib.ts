@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { evaluatePluginAccess } from '../lib/auth/server-authz';
-import { getAppUrl } from '../lib/auth/clerk-env';
-import { MOOD_ERROR_CODE } from '../lib/mood/constants';
+import { evaluatePluginAccess } from 'lib/auth/server-authz';
+import { getAppUrl } from 'lib/auth/clerk-env';
+import { MOOD_ERROR_CODE } from 'lib/mood/constants';
 
 export async function requireMoodAccess() {
   const decision = await evaluatePluginAccess({ requireApprovedUserOrAdmin: true, requireUsername: false });
