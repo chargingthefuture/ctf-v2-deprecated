@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { requireTrustTransportReadAccess, trustTransportErrorResponse } from '../app/api/trusttransport/_lib';
-import { getRequestById, listOffersForRequest } from '../lib/trusttransport/repository';
-import { TRUSTTRANSPORT_ERROR_CODE } from '../lib/trusttransport/constants';
+import { requireTrustTransportReadAccess, trustTransportErrorResponse } from 'lib/trusttransport/_lib';
+import { getRequestById, listOffersForRequest } from 'lib/trusttransport/repository';
+import { TRUSTTRANSPORT_ERROR_CODE } from 'lib/trusttransport/constants';
 
 type RouteProps = {
   params: Promise<{ requestId: string }>;

@@ -1,12 +1,8 @@
 import { NextResponse } from 'next/server';
-import {
-  ensureMutationCsrf,
-  requireTrustTransportReadAccess,
-  trustTransportErrorResponse,
-} from '../app/api/trusttransport/_lib';
-import { TRUSTTRANSPORT_ERROR_CODE } from '../lib/trusttransport/constants';
-import { updateTripStatus } from '../lib/trusttransport/repository';
-import type { TrustTransportTripStatus } from '../lib/trusttransport/types';
+import { ensureMutationCsrf, requireTrustTransportReadAccess, trustTransportErrorResponse } from 'lib/trusttransport/_lib';
+import { TRUSTTRANSPORT_ERROR_CODE } from 'lib/trusttransport/constants';
+import { updateTripStatus } from 'lib/trusttransport/repository';
+import type { TrustTransportTripStatus } from 'lib/trusttransport/types';
 
 type RouteProps = {
   params: Promise<{ tripId: string }>;

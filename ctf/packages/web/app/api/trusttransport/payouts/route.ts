@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { requireTrustTransportProviderAccess, trustTransportErrorResponse } from '../app/api/trusttransport/_lib';
-import { listMyPayouts } from '../lib/trusttransport/repository';
+import { requireTrustTransportProviderAccess, trustTransportErrorResponse } from 'lib/trusttransport/_lib';
+import { listMyPayouts } from 'lib/trusttransport/repository';
 
 export async function GET() {
   const gate = await requireTrustTransportProviderAccess();

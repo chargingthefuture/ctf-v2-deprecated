@@ -1,10 +1,6 @@
 import { NextResponse } from 'next/server';
-import {
-  ensureMutationCsrf,
-  requireTrustTransportReadAccess,
-  trustTransportErrorResponse,
-} from '../app/api/trusttransport/_lib';
-import { cancelOrder } from '../lib/trusttransport/repository';
+import { ensureMutationCsrf, requireTrustTransportReadAccess, trustTransportErrorResponse } from 'lib/trusttransport/_lib';
+import { cancelOrder } from 'lib/trusttransport/repository';
 
 type RouteProps = {
   params: Promise<{ orderId: string }>;

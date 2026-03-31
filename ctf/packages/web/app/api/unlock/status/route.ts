@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { requireUnlockUserAccess } from '../app/api/unlock/_lib';
-import { getUnlockStatusForUser, insertUnlockAudit } from '../lib/unlock/repository';
+import { requireUnlockUserAccess } from 'lib/unlock/_lib';
+import { getUnlockStatusForUser, insertUnlockAudit } from 'lib/unlock/repository';
 
 export async function GET() {
   const gate = await requireUnlockUserAccess();

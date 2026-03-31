@@ -1,5 +1,5 @@
 import type { NextRequest } from 'next/server';
-import { getTrustUserExtension } from '../lib/trust/repository';
+import { getTrustUserExtension } from 'lib/trust/repository';
 
 // GET /api/trust/user/self
 export async function GET(req: NextRequest) {

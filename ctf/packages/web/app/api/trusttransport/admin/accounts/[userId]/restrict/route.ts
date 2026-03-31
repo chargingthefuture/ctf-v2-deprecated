@@ -1,10 +1,6 @@
 import { NextResponse } from 'next/server';
-import {
-  ensureMutationCsrf,
-  requireTrustTransportAdminAccess,
-  trustTransportErrorResponse,
-} from '../app/api/trusttransport/_lib';
-import { insertTrustTransportAudit, restrictAccount } from '../lib/trusttransport/repository';
+import { ensureMutationCsrf, requireTrustTransportAdminAccess, trustTransportErrorResponse } from 'lib/trusttransport/_lib';
+import { insertTrustTransportAudit, restrictAccount } from 'lib/trusttransport/repository';
 
 type RouteProps = {
   params: Promise<{ userId: string }>;

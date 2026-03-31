@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { requireTrustTransportAdminAccess, trustTransportErrorResponse } from '../app/api/trusttransport/_lib';
-import { listIncidents } from '../lib/trusttransport/repository';
+import { requireTrustTransportAdminAccess, trustTransportErrorResponse } from 'lib/trusttransport/_lib';
+import { listIncidents } from 'lib/trusttransport/repository';
 
 export async function GET() {
   const gate = await requireTrustTransportAdminAccess();

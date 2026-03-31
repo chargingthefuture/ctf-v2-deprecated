@@ -1,12 +1,8 @@
 import { NextResponse } from 'next/server';
-import {
-  ensureMutationCsrf,
-  requireTrustTransportAdminAccess,
-  trustTransportErrorResponse,
-} from '../app/api/trusttransport/_lib';
-import { TRUSTTRANSPORT_ERROR_CODE } from '../lib/trusttransport/constants';
-import { getMarketConfig, insertTrustTransportAudit, updateMarketConfig } from '../lib/trusttransport/repository';
-import type { TrustTransportMarketConfig } from '../lib/trusttransport/types';
+import { ensureMutationCsrf, requireTrustTransportAdminAccess, trustTransportErrorResponse } from 'lib/trusttransport/_lib';
+import { TRUSTTRANSPORT_ERROR_CODE } from 'lib/trusttransport/constants';
+import { getMarketConfig, insertTrustTransportAudit, updateMarketConfig } from 'lib/trusttransport/repository';
+import type { TrustTransportMarketConfig } from 'lib/trusttransport/types';
 
 function parseMarketConfig(body: Record<string, unknown>): TrustTransportMarketConfig {
   return {

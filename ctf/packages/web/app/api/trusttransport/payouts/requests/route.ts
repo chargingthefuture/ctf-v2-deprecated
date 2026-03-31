@@ -1,11 +1,7 @@
 import { NextResponse } from 'next/server';
-import {
-  ensureMutationCsrf,
-  requireTrustTransportProviderAccess,
-  trustTransportErrorResponse,
-} from '../app/api/trusttransport/_lib';
-import { TRUSTTRANSPORT_ERROR_CODE } from '../lib/trusttransport/constants';
-import { requestPayout } from '../lib/trusttransport/repository';
+import { ensureMutationCsrf, requireTrustTransportProviderAccess, trustTransportErrorResponse } from 'lib/trusttransport/_lib';
+import { TRUSTTRANSPORT_ERROR_CODE } from 'lib/trusttransport/constants';
+import { requestPayout } from 'lib/trusttransport/repository';
 
 export async function POST(request: Request) {
   const csrfDeny = ensureMutationCsrf(request);

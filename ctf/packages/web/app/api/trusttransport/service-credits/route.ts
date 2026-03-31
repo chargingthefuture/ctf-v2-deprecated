@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { requireTrustTransportReadAccess, ensureMutationCsrf } from '../_lib';
-import { createTransfer } from '../lib/service-credits/repository';
-import { TRUSTTRANSPORT_ERROR_CODE } from '../lib/trusttransport/constants';
+import { requireTrustTransportReadAccess, ensureMutationCsrf } from 'lib/trusttransport/_lib';
+import { createTransfer } from 'lib/service-credits/repository';
+import { TRUSTTRANSPORT_ERROR_CODE } from 'lib/trusttransport/constants';
 
 type TrustTransportServiceCreditsSendInput = {
   toUserId: string;
