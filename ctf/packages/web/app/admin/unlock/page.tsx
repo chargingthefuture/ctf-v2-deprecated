@@ -1,5 +1,5 @@
-import { evaluatePluginAccess } from '../lib/auth/server-authz';
-import { getUnlockDashboardSnapshot, listUnlockSubmissions } from '../lib/unlock/repository';
+import { evaluatePluginAccess } from 'lib/auth/server-authz';
+import { getUnlockDashboardSnapshot, listUnlockSubmissions } from 'lib/unlock/repository';
 import { redirect } from 'next/navigation';
 
 export default async function UnlockAdminPage() {

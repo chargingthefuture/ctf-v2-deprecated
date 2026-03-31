@@ -1,5 +1,5 @@
-import { evaluatePluginAccess } from '../lib/auth/server-authz';
-import { canonicalizePluginSlug, getPluginBySlug } from '../lib/plugins/repository';
+import { evaluatePluginAccess } from 'lib/auth/server-authz';
+import { canonicalizePluginSlug, getPluginBySlug } from 'lib/plugins/repository';
 import { ChymeShell } from '../components/chyme/chyme-shell';
 import { DirectoryShell } from '../components/directory/directory-shell';
 import { FeedAnnouncementsShell } from '../components/feed/feed-announcements-shell';

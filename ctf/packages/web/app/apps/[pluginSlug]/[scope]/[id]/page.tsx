@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { queryDb } from '../lib/db/postgres';
+import { queryDb } from 'lib/db/postgres';
 
 type LegacyProfileRedirectProps = {
   params: Promise<{

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { evaluatePluginAccess } from '../lib/auth/server-authz';
-import { getDashboard, getWorkforceConfig } from '../lib/workforce/repository';
+import { evaluatePluginAccess } from 'lib/auth/server-authz';
+import { getDashboard, getWorkforceConfig } from 'lib/workforce/repository';
 
 export default async function WorkforceAdminPage() {
   const access = await evaluatePluginAccess({ requireUsername: false });

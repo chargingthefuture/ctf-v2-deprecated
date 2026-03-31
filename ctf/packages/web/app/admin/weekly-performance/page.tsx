@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { evaluatePluginAccess } from '../lib/auth/server-authz';
-import { getCurrentWeek, listWeeks } from '../lib/weekly-performance/repository';
+import { evaluatePluginAccess } from 'lib/auth/server-authz';
+import { getCurrentWeek, listWeeks } from 'lib/weekly-performance/repository';
 
 export default async function WeeklyPerformanceAdminPage() {
   const decision = await evaluatePluginAccess({ requireApprovedUserOrAdmin: true, requireUsername: false });

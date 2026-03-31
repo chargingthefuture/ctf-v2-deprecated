@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { evaluatePluginAccess } from '../lib/auth/server-authz';
-import { getMarketConfig, listAuditEvents, listIncidents } from '../lib/trusttransport/repository';
+import { evaluatePluginAccess } from 'lib/auth/server-authz';
+import { getMarketConfig, listAuditEvents, listIncidents } from 'lib/trusttransport/repository';
 
 export default async function TrustTransportAdminPage() {
   const access = await evaluatePluginAccess({ requireUsername: false });

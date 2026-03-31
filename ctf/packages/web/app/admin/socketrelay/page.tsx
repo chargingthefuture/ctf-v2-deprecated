@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { evaluatePluginAccess } from '../lib/auth/server-authz';
+import { evaluatePluginAccess } from 'lib/auth/server-authz';
 import {
   listAdminFulfillments,
   listAdminRequests,
   listSocketRelayAdminAnnouncements,
-} from '../lib/socketrelay/repository';
+} from 'lib/socketrelay/repository';
 
 export default async function SocketRelayAdminPage() {
   const access = await evaluatePluginAccess({ requireUsername: false });

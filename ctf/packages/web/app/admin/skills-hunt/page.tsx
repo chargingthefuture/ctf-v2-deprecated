@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { evaluatePluginAccess } from '../lib/auth/server-authz';
-import { getFeatureRewardCard, getSkillsHuntDashboard, listRounds } from '../lib/skills-hunt/repository';
+import { evaluatePluginAccess } from 'lib/auth/server-authz';
+import { getFeatureRewardCard, getSkillsHuntDashboard, listRounds } from 'lib/skills-hunt/repository';
 
 export default async function SkillsHuntAdminPage() {
   const access = await evaluatePluginAccess({ requireUsername: false });
