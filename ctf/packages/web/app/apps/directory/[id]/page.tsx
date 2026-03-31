@@ -1,8 +1,8 @@
 
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getPublicDirectoryById } from '../lib/directory/repository';
-import { TrustDirectoryProfilePanel } from '../components/trust/TrustDirectoryProfilePanel';
+import { getPublicDirectoryById } from 'lib/directory/repository';
+import { TrustDirectoryProfilePanel } from '@/components/trust/TrustDirectoryProfilePanel';
 import type { TrustUserExtension } from '../lib/trust/types';
 
 type DirectoryProfilePageProps = {

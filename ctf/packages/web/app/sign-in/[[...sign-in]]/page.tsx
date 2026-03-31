@@ -1,4 +1,4 @@
-import { SignIn } from '../lib/auth/clerk-wrapper';
+import { SignIn } from 'lib/auth/clerk-wrapper';
 
 export default function SignInPage() {
   return (

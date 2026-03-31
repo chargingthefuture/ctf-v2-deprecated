@@ -1,6 +1,6 @@
 'use client';
 
-import { SignedIn, SignedOut, SignInButton, UserButton } from '../lib/auth/clerk-wrapper';
+import { SignedIn, SignedOut, SignInButton, UserButton } from 'lib/auth/clerk-wrapper';
 import { MessageSquare, Zap, Bell, Settings, User } from 'lucide-react';
 import type { ShellSection } from './shell-types';
 import styles from './community-shell.module.css';

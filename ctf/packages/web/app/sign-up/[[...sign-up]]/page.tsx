@@ -1,4 +1,4 @@
-import { SignUp } from '../lib/auth/clerk-wrapper';
+import { SignUp } from 'lib/auth/clerk-wrapper';
 
 export default function SignUpPage() {
   return (

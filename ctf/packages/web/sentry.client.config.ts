@@ -1,13 +1,1 @@
-import * as Sentry from '@sentry/nextjs';
-import { resolveWebSentryDsn } from './src/lib/observability/sentry-config';
-
-const dsn = resolveWebSentryDsn();
-
-if (dsn) {
-  Sentry.init({
-    dsn,
-    sendDefaultPii: false,
-    tracesSampleRate: 0,
-    environment: process.env.NODE_ENV,
-  });
-}
+// DEPRECATED: Sentry client config has been moved to instrumentation-client.ts per Next.js 15+ recommendations.

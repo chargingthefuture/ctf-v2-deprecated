@@ -1,4 +1,4 @@
-import { getObservabilityReporter } from '@/src/lib/observability/provider';
+import { getObservabilityReporter } from 'lib/observability/provider';
 
 const WORKFORCE_INCREMENTAL_SYNC_MONITOR_SLUG = 'workforce-incremental-sync';
 

@@ -1,14 +1,23 @@
+
 import * as Sentry from '@sentry/nextjs';
 
-// Instrument the onRequestError hook for Sentry per Next.js 15+ requirements
-export function onRequestError(error: unknown, context: any) {
-  Sentry.captureException(error, {
-    mechanism: {
-      handled: false,
-      type: 'auto.function.nextjs.on_request_error',
-    },
-    extra: context,
-  });
+// Sentry navigation instrumentation for Next.js 15+
+export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;
+
+
+// Sentry client config (migrated from sentry.client.config.ts)
+import { resolveWebSentryDsn } from './src/lib/observability/sentry-config';
+
+const dsn = resolveWebSentryDsn();
+
+if (dsn) {
+	Sentry.init({
+		dsn,
+		sendDefaultPii: false,
+		tracesSampleRate: 0,
+		environment: process.env.NODE_ENV,
+	});
 }
+// ...existing code...
 
 // Optionally, you can export other hooks or setup as needed

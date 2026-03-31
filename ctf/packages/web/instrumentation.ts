@@ -1,3 +1,15 @@
+// Sentry onRequestError hook for Next.js 15+
+import * as Sentry from '@sentry/nextjs';
+
+export function onRequestError(error: unknown, context: any) {
+  Sentry.captureException(error, {
+    mechanism: {
+      handled: false,
+      type: 'auto.function.nextjs.on_request_error',
+    },
+    extra: context,
+  });
+}
 import { initializeCronJobs } from './src/cron/init-cron';
 
 export async function register(): Promise<void> {

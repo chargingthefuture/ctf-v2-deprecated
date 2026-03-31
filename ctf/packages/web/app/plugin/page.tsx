@@ -1,4 +1,4 @@
-import { canonicalizePluginSlug } from '../lib/plugins/repository';
+import { canonicalizePluginSlug } from 'lib/plugins/repository';
 import { redirect } from 'next/navigation';
 
 type LegacyPluginPageProps = {
