@@ -100,8 +100,8 @@ https://u.expo.dev/<EXPO_MOBILE_PROJECT_ID>
 Use rewrite backend base URL (Railway canonical host for rewrite), no trailing slash.
 
 Examples:
-- `https://staging.the-comic.com`
-- `https://the-comic.com`
+- `https://beta.chargingthefuture.com`
+- `https://chargingthefuture.com`
 
 ### 6) Clerk publishable keys
 
@@ -143,7 +143,7 @@ Run from repo root:
 cd /workspaces/chargingthefuture/ctf
 EXPO_MOBILE_PROJECT_ID=proj_123 \
 EXPO_MOBILE_UPDATES_URL=https://u.expo.dev/proj_123 \
-MOBILE_APP_URL=https://staging.the-comic.com \
+MOBILE_APP_URL=https://beta.chargingthefuture.com \
 MOBILE_CLERK_PUBLISHABLE_KEY_STAGING=pk_test_staging \
 MOBILE_ENV_TARGET=preview \
 pnpm --filter @ctf/mobile run check:mobile-env
@@ -155,7 +155,7 @@ Production-mode validation:
 cd /workspaces/chargingthefuture/ctf
 EXPO_MOBILE_PROJECT_ID=proj_123 \
 EXPO_MOBILE_UPDATES_URL=https://u.expo.dev/proj_123 \
-MOBILE_APP_URL=https://the-comic.com \
+MOBILE_APP_URL=https://chargingthefuture.com \
 MOBILE_CLERK_PUBLISHABLE_KEY_PRODUCTION=pk_live_production \
 MOBILE_ENV_TARGET=production \
 pnpm --filter @ctf/mobile run check:mobile-env
