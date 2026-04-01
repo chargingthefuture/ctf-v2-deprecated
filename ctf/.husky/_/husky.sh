@@ -1,13 +1,16 @@
 #!/bin/sh
-# Husky shell helper (copied from Husky's default template)
+# Husky shell helper with standard behavior: only skip when explicitly disabled.
 if [ -z "$husky_skip_init" ]; then
   debug () {
     [ "$HUSKY_DEBUG" = "1" ] && echo "husky (debug) - $*"
   }
+
   readonly hook_name="$(basename "$0")"
   debug "starting $hook_name..."
-  if [ -z "$HUSKY" ]; then
-    echo "Can't run $hook_name: HUSKY env variable not set. Did you install Husky?"
-    exit 1
+
+  # Husky uses HUSKY=0 to disable hooks; unset is a normal state.
+  if [ "$HUSKY" = "0" ]; then
+    debug "HUSKY=0, skipping $hook_name"
+    exit 0
   fi
 fi

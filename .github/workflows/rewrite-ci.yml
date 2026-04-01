@@ -356,7 +356,7 @@ jobs:
         run: pnpm --dir ctf run typecheck
 
       - name: Run web production build gate
-        run: pnpm --dir ctf --filter @ctf/web run build
+        run: pnpm --dir ctf --filter @ctf/web run build:ci
 
       - name: Run Android export build gate
         run: pnpm --dir ctf --filter @ctf/mobile run build:android:ci

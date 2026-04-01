@@ -56,6 +56,8 @@ const ENV_TARGET = process.env.CLERK_ENV_TARGET || (() => {
     const appUrl = process.env.NEXT_PUBLIC_APP_URL;
     if (appUrl) {
       const host = new URL(appUrl).host;
+      if (host === 'beta.chargingthefuture.com') return 'railway-staging';
+      if (host === 'chargingthefuture.com' || host === 'www.chargingthefuture.com') return 'railway-production';
       if (host.includes('staging')) return 'railway-staging';
       if (host.includes('railway')) return 'railway-production';
     }
