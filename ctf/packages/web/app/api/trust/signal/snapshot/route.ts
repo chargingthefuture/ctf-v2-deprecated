@@ -1,7 +1,7 @@
-import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 // POST /api/trust/signal/snapshot
-export async function POST(req: NextRequest) {
+export async function POST() {
   // TODO: Implement trust signal snapshot refresh logic
-  return Response.json({ ok: true, message: 'Trust signal snapshot refresh not yet implemented.' });
+  return NextResponse.json({ ok: true, message: 'Trust signal snapshot refresh not yet implemented.' });
 }

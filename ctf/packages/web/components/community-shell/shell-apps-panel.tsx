@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import type { PluginRegistryItem } from '../lib/plugins/repository';
+import type { PluginRegistryItem } from '../../lib/plugins/repository';
 import { getPluginVisuals } from './shell-plugin-config';
 import styles from './community-shell.module.css';
 

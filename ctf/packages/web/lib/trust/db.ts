@@ -1,4 +1,3 @@
-import type { PoolClient } from 'pg';
 import { queryDb } from 'lib/db/postgres';
 import type { TrustUserExtension } from './types';
 

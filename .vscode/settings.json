@@ -27,7 +27,7 @@
     "workbench.sideBar.location": "left",
     // Lower tab close delay
     "workbench.editor.closeOnFileDelete": true,
-    "workbench.colorTheme": "Default Dark+",
+    "workbench.colorTheme": "Dark+",
     "editor.fontSize": 18,
     "editor.fontFamily": "Fira Code, Menlo, Monaco, 'Courier New', monospace",
     "editor.lineHeight": 26,

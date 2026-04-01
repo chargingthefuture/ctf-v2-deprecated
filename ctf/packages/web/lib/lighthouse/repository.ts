@@ -1286,7 +1286,7 @@ export async function listLighthouseAuditEvents(limit = 100): Promise<Array<{
     [boundedLimit],
   );
 
-  return result.rows.map((row: any) => ({
+  return result.rows.map((row) => ({
     actorId: row.actor_id,
     command: row.command,
     policyStatus: row.policy_status,

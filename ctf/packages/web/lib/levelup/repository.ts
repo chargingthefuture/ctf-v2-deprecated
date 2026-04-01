@@ -507,7 +507,7 @@ export async function enrollInCohort(input: {
       enrollmentId,
       status: 'enrolled',
       depositRequested,
-      milestones: milestones.rows.map((row: any) => ({
+      milestones: milestones.rows.map((row) => ({
         id: row.id,
         percentRelease: toNumber(row.percent_release),
         sequenceNo: row.sequence_no,
@@ -598,7 +598,7 @@ export async function validateMilestone(input: {
   validationNote?: string;
   idempotencyKey: string;
 }) {
-  return withDbTransaction(async (client: any) => {
+  return withDbTransaction(async (client: PoolClient) => {
     const existing = await readCommandIdempotency<{ validationId: string; status: 'validated' }>(
       client,
       input.actorId,
@@ -680,7 +680,7 @@ export async function releaseMilestoneCredits(input: {
     return existingRelease.rows[0].response_payload;
   }
 
-  const releaseDraft = await withDbTransaction(async (client: any) => {
+  const releaseDraft = await withDbTransaction(async (client: PoolClient) => {
     const validation = await client.query(
       `SELECT status
        FROM levelup_milestone_validations
@@ -813,7 +813,7 @@ export async function releaseMilestoneCredits(input: {
     completionBonusGovernanceId = bonus.governanceEventId;
   }
 
-  const response = await withDbTransaction(async (client: any) => {
+  const response = await withDbTransaction(async (client: PoolClient) => {
     await client.query(
       `UPDATE levelup_enrollment_milestone_escrows
        SET release_status = 'released', updated_at = NOW()
@@ -882,7 +882,7 @@ export async function openDispute(input: {
   attachments?: string[];
   idempotencyKey: string;
 }) {
-  return withDbTransaction(async (client: any) => {
+  return withDbTransaction(async (client: PoolClient) => {
     const existing = await readCommandIdempotency<{ disputeId: string }>(client, input.actorId, 'levelup.dispute.open', input.idempotencyKey);
     if (existing) {
       return existing;
@@ -943,7 +943,7 @@ export async function resolveDispute(input: {
     });
   }
 
-  return withDbTransaction(async (client: any) => {
+  return withDbTransaction(async (client: PoolClient) => {
     const existing = await readCommandIdempotency<{
       disputeId: string;
       adjustmentId: string | null;
@@ -1075,7 +1075,7 @@ export async function getUserDashboardData(userId: string) {
 
   return {
     wallet,
-    activeEnrollments: enrollments.rows.map((row: any) => ({
+    activeEnrollments: enrollments.rows.map((row) => ({
       id: row.id,
       cohortId: row.cohort_id,
       title: row.title,
@@ -1084,7 +1084,7 @@ export async function getUserDashboardData(userId: string) {
       progress: toNumber(row.progress_percent),
       assignedTrainerId: row.assigned_trainer_id,
     })),
-    recentTransactions: transactions.rows.map((row: any) => ({
+    recentTransactions: transactions.rows.map((row) => ({
       id: row.id,
       type: row.entry_type,
       amount: toNumber(row.amount),
@@ -1135,21 +1135,21 @@ export async function getTrainerDashboardData(trainerUserId: string) {
 
   return {
     cohorts: cohorts.rows,
-    pendingValidations: pendingValidations.rows.map((row: any) => ({
+    pendingValidations: pendingValidations.rows.map((row) => ({
       enrollmentId: row.enrollment_id,
       milestoneId: row.milestone_id,
       title: row.title,
       milestoneName: row.milestone_name,
       validatedAtIso: row.validated_at.toISOString(),
     })),
-    trainees: trainees.rows.map((row: any) => ({
+    trainees: trainees.rows.map((row) => ({
       enrollmentId: row.enrollment_id,
       userId: row.user_id,
       cohortTitle: row.title,
       status: row.status,
       progress: toNumber(row.progress_percent),
     })),
-    payoutLedger: payouts.rows.map((row: any) => ({
+    payoutLedger: payouts.rows.map((row) => ({
       id: row.id,
       amount: toNumber(row.amount),
       metadata: JSON.parse(row.metadata),
@@ -1211,7 +1211,7 @@ export async function listEnrollmentMilestones(enrollmentId: string) {
     [enrollmentId],
   );
 
-  return milestones.rows.map((row: any) => ({
+  return milestones.rows.map((row) => ({
     milestoneId: row.milestone_id,
     name: row.name,
     percentRelease: toNumber(row.percent_release),

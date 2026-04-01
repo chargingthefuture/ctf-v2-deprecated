@@ -58,12 +58,12 @@ export function peerProgrammingErrorResponse(error: unknown, fallbackMessage: st
   const code = error instanceof Error ? error.message : '';
   if (code === 'assignment_not_found') {
     return NextResponse.json(
-      { ok: false, code: PEER_PROGRAMMING_ERROR_CODE.assignmentNotFound, message: 'Assignment not found.' },
+      { ok: false, code: PEER_PROGRAMMING_ERROR_CODE.notFound, message: 'Assignment not found.' },
       { status: 404 },
     );
   }
   return NextResponse.json(
-    { ok: false, code: PEER_PROGRAMMING_ERROR_CODE.unknown, message: fallbackMessage },
-    { status: 500 },
+    { ok: false, code: PEER_PROGRAMMING_ERROR_CODE.persistenceUnavailable, message: fallbackMessage },
+    { status: 503 },
   );
 }

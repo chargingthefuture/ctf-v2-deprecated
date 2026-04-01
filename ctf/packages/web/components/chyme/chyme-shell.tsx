@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from 'react';
-import type { ChymeMessage, ChymeParticipant, ChymeRoomResponse } from '../lib/chyme/types';
+import type { ChymeMessage, ChymeParticipant, ChymeRoomResponse } from 'lib/chyme/types';
 
 type RequestState = 'idle' | 'loading' | 'success' | 'error';
 

@@ -3,11 +3,10 @@
 import Link from 'next/link';
 import { useUser } from 'lib/auth/clerk-wrapper';
 import type { ShellStats } from './shell-types';
-import type { PluginRegistryItem } from '../lib/plugins/repository';
+import type { PluginRegistryItem } from '../../lib/plugins/repository';
 import { getPluginVisuals } from './shell-plugin-config';
 
 import { TrustRightRailCard } from '../trust/TrustRightRailCard';
-import { getTrustUserExtension } from '../../lib/trust/repository';
 import type { TrustUserExtension } from '../../lib/trust/types';
 import styles from './community-shell.module.css';
 

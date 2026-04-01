@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { evaluatePluginAccess, type AllowDecision } from '../auth/server-authz';
-import { getAppUrl } from '../auth/clerk-env';
 import { ensureLighthouseAdmin } from './policy';
 import { LIGHTHOUSE_ERROR_CODE } from './constants';
 

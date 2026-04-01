@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import type { ShellStats, ChatMessage } from './shell-types';
-import type { PluginRegistryItem } from '../lib/plugins/repository';
+import type { PluginRegistryItem } from '../../lib/plugins/repository';
 import styles from './community-shell.module.css';
 
 const INITIAL_MESSAGES: ChatMessage[] = [

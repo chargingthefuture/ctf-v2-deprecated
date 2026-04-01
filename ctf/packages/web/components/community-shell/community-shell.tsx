@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { SignedIn } from 'lib/auth/clerk-wrapper';
-import type { PluginRegistryItem } from '../lib/plugins/repository';
+import type { PluginRegistryItem } from '../../lib/plugins/repository';
 import type { ShellSection, ShellStats } from './shell-types';
 import { ShellIconRail } from './shell-icon-rail';
 import { ShellSidebar } from './shell-sidebar';

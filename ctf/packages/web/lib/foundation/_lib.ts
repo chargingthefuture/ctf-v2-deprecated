@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { evaluatePluginAccess, type AllowDecision } from '../auth/server-authz';
-import { getAppUrl } from '../auth/clerk-env';
 import { ensureFoundationAdmin } from './policy';
 import { FOUNDATION_ERROR_CODE } from './constants';
 
