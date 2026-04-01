@@ -809,3 +809,199 @@ CREATE TABLE IF NOT EXISTS service_credits_disputes (
   reason TEXT NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+-- === lighthouse-core ===
+CREATE TABLE IF NOT EXISTS lighthouse_user_extension (
+  user_id TEXT PRIMARY KEY,
+  service_deleted_at TIMESTAMPTZ NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS lighthouse_profiles (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id TEXT NOT NULL UNIQUE,
+  profile_type TEXT NOT NULL CHECK (profile_type IN ('seeker', 'host')),
+  bio TEXT NULL,
+  phone_number TEXT NULL,
+  signal_url TEXT NULL,
+  is_active BOOLEAN NOT NULL DEFAULT TRUE,
+  has_property BOOLEAN NOT NULL DEFAULT FALSE,
+  housing_needs TEXT NULL,
+  desired_move_in_date DATE NULL,
+  budget_min NUMERIC NULL,
+  budget_max NUMERIC NULL,
+  desired_country TEXT NULL,
+  service_deleted_at TIMESTAMPTZ NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS lighthouse_properties (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  host_user_id TEXT NOT NULL,
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  property_type TEXT NULL,
+  address_line TEXT NULL,
+  city TEXT NULL,
+  state TEXT NULL,
+  country TEXT NULL,
+  zip_code TEXT NULL,
+  bedrooms INTEGER NULL,
+  bathrooms NUMERIC NULL,
+  monthly_rent NUMERIC NULL,
+  available_from DATE NULL,
+  amenities JSONB NOT NULL DEFAULT '[]'::jsonb,
+  house_rules JSONB NOT NULL DEFAULT '[]'::jsonb,
+  photos JSONB NOT NULL DEFAULT '[]'::jsonb,
+  airbnb_profile_url TEXT NULL,
+  is_active BOOLEAN NOT NULL DEFAULT TRUE,
+  created_by_user_id TEXT NOT NULL,
+  updated_by_user_id TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS lighthouse_matches (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  property_id UUID NOT NULL REFERENCES lighthouse_properties(id) ON DELETE CASCADE,
+  seeker_user_id TEXT NOT NULL,
+  host_user_id TEXT NOT NULL,
+  message TEXT NULL,
+  proposed_move_in_date DATE NULL,
+  host_response TEXT NULL,
+  status TEXT NOT NULL CHECK (status IN ('pending', 'accepted', 'rejected', 'cancelled', 'completed')),
+  stream_channel_id TEXT NOT NULL DEFAULT 'pending',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS lighthouse_blocks (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  blocker_user_id TEXT NOT NULL,
+  blocked_user_id TEXT NOT NULL,
+  reason TEXT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE (blocker_user_id, blocked_user_id),
+  CHECK (blocker_user_id <> blocked_user_id)
+);
+
+CREATE TABLE IF NOT EXISTS lighthouse_admin_audit_trail (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  actor_id TEXT NOT NULL,
+  command TEXT NOT NULL,
+  policy_status TEXT NOT NULL CHECK (policy_status IN ('allow', 'deny')),
+  reason TEXT NOT NULL,
+  target_type TEXT NOT NULL,
+  target_id TEXT NOT NULL,
+  metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+ALTER TABLE IF EXISTS lighthouse_user_extension
+  ADD COLUMN IF NOT EXISTS user_id TEXT,
+  ADD COLUMN IF NOT EXISTS service_deleted_at TIMESTAMPTZ NULL,
+  ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+
+ALTER TABLE IF EXISTS lighthouse_profiles
+  ADD COLUMN IF NOT EXISTS id UUID,
+  ADD COLUMN IF NOT EXISTS user_id TEXT,
+  ADD COLUMN IF NOT EXISTS profile_type TEXT,
+  ADD COLUMN IF NOT EXISTS bio TEXT NULL,
+  ADD COLUMN IF NOT EXISTS phone_number TEXT NULL,
+  ADD COLUMN IF NOT EXISTS signal_url TEXT NULL,
+  ADD COLUMN IF NOT EXISTS is_active BOOLEAN NOT NULL DEFAULT TRUE,
+  ADD COLUMN IF NOT EXISTS has_property BOOLEAN NOT NULL DEFAULT FALSE,
+  ADD COLUMN IF NOT EXISTS housing_needs TEXT NULL,
+  ADD COLUMN IF NOT EXISTS desired_move_in_date DATE NULL,
+  ADD COLUMN IF NOT EXISTS budget_min NUMERIC NULL,
+  ADD COLUMN IF NOT EXISTS budget_max NUMERIC NULL,
+  ADD COLUMN IF NOT EXISTS desired_country TEXT NULL,
+  ADD COLUMN IF NOT EXISTS service_deleted_at TIMESTAMPTZ NULL,
+  ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1
+    FROM information_schema.columns
+    WHERE table_schema = 'public'
+      AND table_name = 'lighthouse_profiles'
+      AND column_name = 'move_in_date'
+  ) THEN
+    EXECUTE '
+      UPDATE lighthouse_profiles
+      SET desired_move_in_date = COALESCE(desired_move_in_date, move_in_date::date)
+      WHERE move_in_date IS NOT NULL
+    ';
+  END IF;
+END
+$$;
+
+ALTER TABLE IF EXISTS lighthouse_properties
+  ADD COLUMN IF NOT EXISTS id UUID,
+  ADD COLUMN IF NOT EXISTS host_user_id TEXT,
+  ADD COLUMN IF NOT EXISTS title TEXT,
+  ADD COLUMN IF NOT EXISTS description TEXT,
+  ADD COLUMN IF NOT EXISTS property_type TEXT NULL,
+  ADD COLUMN IF NOT EXISTS address_line TEXT NULL,
+  ADD COLUMN IF NOT EXISTS city TEXT NULL,
+  ADD COLUMN IF NOT EXISTS state TEXT NULL,
+  ADD COLUMN IF NOT EXISTS country TEXT NULL,
+  ADD COLUMN IF NOT EXISTS zip_code TEXT NULL,
+  ADD COLUMN IF NOT EXISTS bedrooms INTEGER NULL,
+  ADD COLUMN IF NOT EXISTS bathrooms NUMERIC NULL,
+  ADD COLUMN IF NOT EXISTS monthly_rent NUMERIC NULL,
+  ADD COLUMN IF NOT EXISTS available_from DATE NULL,
+  ADD COLUMN IF NOT EXISTS amenities JSONB NOT NULL DEFAULT '[]'::jsonb,
+  ADD COLUMN IF NOT EXISTS house_rules JSONB NOT NULL DEFAULT '[]'::jsonb,
+  ADD COLUMN IF NOT EXISTS photos JSONB NOT NULL DEFAULT '[]'::jsonb,
+  ADD COLUMN IF NOT EXISTS airbnb_profile_url TEXT NULL,
+  ADD COLUMN IF NOT EXISTS is_active BOOLEAN NOT NULL DEFAULT TRUE,
+  ADD COLUMN IF NOT EXISTS created_by_user_id TEXT,
+  ADD COLUMN IF NOT EXISTS updated_by_user_id TEXT,
+  ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+
+ALTER TABLE IF EXISTS lighthouse_matches
+  ADD COLUMN IF NOT EXISTS id UUID,
+  ADD COLUMN IF NOT EXISTS property_id UUID,
+  ADD COLUMN IF NOT EXISTS seeker_user_id TEXT,
+  ADD COLUMN IF NOT EXISTS host_user_id TEXT,
+  ADD COLUMN IF NOT EXISTS message TEXT NULL,
+  ADD COLUMN IF NOT EXISTS proposed_move_in_date DATE NULL,
+  ADD COLUMN IF NOT EXISTS host_response TEXT NULL,
+  ADD COLUMN IF NOT EXISTS status TEXT,
+  ADD COLUMN IF NOT EXISTS stream_channel_id TEXT NOT NULL DEFAULT 'pending',
+  ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+
+ALTER TABLE IF EXISTS lighthouse_blocks
+  ADD COLUMN IF NOT EXISTS id UUID,
+  ADD COLUMN IF NOT EXISTS blocker_user_id TEXT,
+  ADD COLUMN IF NOT EXISTS blocked_user_id TEXT,
+  ADD COLUMN IF NOT EXISTS reason TEXT NULL,
+  ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+
+ALTER TABLE IF EXISTS lighthouse_admin_audit_trail
+  ADD COLUMN IF NOT EXISTS id UUID,
+  ADD COLUMN IF NOT EXISTS actor_id TEXT,
+  ADD COLUMN IF NOT EXISTS command TEXT,
+  ADD COLUMN IF NOT EXISTS policy_status TEXT,
+  ADD COLUMN IF NOT EXISTS reason TEXT,
+  ADD COLUMN IF NOT EXISTS target_type TEXT,
+  ADD COLUMN IF NOT EXISTS target_id TEXT,
+  ADD COLUMN IF NOT EXISTS metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
+  ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+
+CREATE INDEX IF NOT EXISTS idx_lighthouse_profiles_profile_type ON lighthouse_profiles(profile_type);
+CREATE INDEX IF NOT EXISTS idx_lighthouse_profiles_updated_at ON lighthouse_profiles(updated_at DESC);
+CREATE INDEX IF NOT EXISTS idx_lighthouse_properties_host_user_id ON lighthouse_properties(host_user_id);
+CREATE INDEX IF NOT EXISTS idx_lighthouse_properties_updated_at ON lighthouse_properties(updated_at DESC);
+CREATE INDEX IF NOT EXISTS idx_lighthouse_matches_property_id ON lighthouse_matches(property_id);
+CREATE INDEX IF NOT EXISTS idx_lighthouse_matches_seeker_user_id ON lighthouse_matches(seeker_user_id);
+CREATE INDEX IF NOT EXISTS idx_lighthouse_matches_host_user_id ON lighthouse_matches(host_user_id);
+CREATE INDEX IF NOT EXISTS idx_lighthouse_matches_status ON lighthouse_matches(status);
+CREATE INDEX IF NOT EXISTS idx_lighthouse_matches_updated_at ON lighthouse_matches(updated_at DESC);
+CREATE INDEX IF NOT EXISTS idx_lighthouse_admin_audit_trail_created_at ON lighthouse_admin_audit_trail(created_at DESC);

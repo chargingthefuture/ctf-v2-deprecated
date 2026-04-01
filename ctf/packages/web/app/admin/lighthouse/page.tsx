@@ -9,6 +9,8 @@ import {
   listLighthouseProfiles,
 } from 'lib/lighthouse/repository';
 
+export const dynamic = 'force-dynamic';
+
 export default async function LighthouseAdminPage() {
   const access = await evaluatePluginAccess({ requireUsername: false });
   if (!access.allowed || !access.isAdmin) {

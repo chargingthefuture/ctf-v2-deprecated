@@ -357,3 +357,9 @@ jobs:
 
       - name: Run web production build gate
         run: pnpm --dir ctf --filter @ctf/web run build
+
+      - name: Run Android export build gate
+        run: pnpm --dir ctf --filter @ctf/mobile run build:android:ci
+
+      - name: Run web-android parity gate
+        run: node ctf/scripts/check-web-android-parity.mjs

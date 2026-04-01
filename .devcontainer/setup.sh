@@ -103,6 +103,14 @@ else
   echo "No pre-commit hook found to set as executable."
 fi
 
+# Configure repo-level Husky hooks path for ctf rewrite workspace
+if [ -d /workspaces/chargingthefuture/.git ] && [ -d /workspaces/chargingthefuture/ctf/.husky ]; then
+  git -C /workspaces/chargingthefuture config core.hooksPath ctf/.husky
+  chmod +x /workspaces/chargingthefuture/ctf/.husky/pre-commit || true
+  chmod +x /workspaces/chargingthefuture/ctf/.husky/pre-push || true
+  echo "Configured git hooksPath to ctf/.husky"
+fi
+
 # Prompt for login if needed
 echo "If you need to log in to GitHub, Railway, or Vercel, run:"
 echo "  gh auth login"
