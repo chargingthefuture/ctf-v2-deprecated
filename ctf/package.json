@@ -6,6 +6,8 @@
     "build": "pnpm -r --if-present run build",
     "lint": "pnpm -r --if-present run lint",
     "typecheck": "pnpm -r --if-present run typecheck",
+    "verify:web": "pnpm run lint && pnpm run typecheck && pnpm --filter @ctf/web run build",
+    "verify:pre-push": "pnpm run verify:web",
     "test": "pnpm -r --if-present run test",
     "seed:skills-taxonomy": "node ./scripts/seedSkillsTaxonomyPhase0.mjs",
     "seed:directory": "node ./scripts/seedDirectoryPhase0.mjs",

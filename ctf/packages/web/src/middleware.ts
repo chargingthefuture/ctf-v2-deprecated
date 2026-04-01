@@ -11,7 +11,7 @@ import { NextResponse } from 'next/server';
 
 import type { NextRequest } from 'next/server';
 const actualMiddleware = (process.env.NEXT_PUBLIC_DISABLE_AUTH === 'true')
-  ? (req: NextRequest) => NextResponse.next()
+  ? () => NextResponse.next()
   : clerkMiddleware((auth, req: NextRequest) => {
       if (isProtectedWebRoute(req)) {
         auth().protect();

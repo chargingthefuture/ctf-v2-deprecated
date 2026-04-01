@@ -1,21 +1,10 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-# Prevent commit if typecheck fails in any package except /platform
-# Run typecheck for all packages except platform
-echo "Running typecheck on all packages except /platform..."
+repo_root="$(cd "$(dirname "$0")/.." && pwd)"
 
-# Find all package.json files except in /platform, then run typecheck if script exists
-find ../packages -name package.json -not -path "../platform/*" | while read pkg; do
-  pkg_dir=$(dirname "$pkg")
-  if jq -e '.scripts.typecheck' "$pkg" > /dev/null; then
-    echo "Typechecking $pkg_dir..."
-    (cd "$pkg_dir" && pnpm run typecheck)
-    if [ $? -ne 0 ]; then
-      echo "Typecheck failed in $pkg_dir. Commit aborted."
-      exit 1
-    fi
-  fi
-done
+echo "Running rewrite typecheck gate..."
+cd "$repo_root" || exit 1
+pnpm run typecheck
 
 echo "All typechecks passed. Proceeding with commit."
