@@ -363,3 +363,14 @@ jobs:
 
       - name: Run web-android parity gate
         run: node ctf/scripts/check-web-android-parity.mjs
+
+      - name: Run performance budget audit (warning mode)
+        run: pnpm --dir ctf run perf:budgets:ci
+
+      - name: Upload performance budget artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: perf-budget-${{ github.run_id }}
+          path: ctf/artifacts/performance/perf-budget-report.json
+          if-no-files-found: warn
+          retention-days: 14

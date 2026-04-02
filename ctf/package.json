@@ -32,6 +32,8 @@
     "formance:bootstrap:railway": "bash ./scripts/formanceRailwayBootstrap.sh",
     "format:check": "bash ./scripts/check-eof-format.sh",
     "governance:check": "bash ./scripts/check-modularity-governance.sh",
+    "perf:budgets": "node ./scripts/performanceBudgetAudit.mjs --mode=warn --output=./artifacts/performance/perf-budget-report.json",
+    "perf:budgets:ci": "PERF_BUDGET_MODE=warn PERF_BUDGET_OUTPUT_PATH=./artifacts/performance/perf-budget-report.json node ./scripts/performanceBudgetAudit.mjs",
     "dev:web": "pnpm --filter @ctf/web run dev",
     "dev:mobile": "pnpm --filter @ctf/mobile run start"
   },
