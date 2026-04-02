@@ -33,7 +33,7 @@ function mapMetric(row: MetricRow) {
 
 export async function listWeeks() {
   const result = await queryDb<WeekRow>(
-    `SELECT week_start_date::text, week_end_date::text, status
+    `SELECT week_start_date::text, (week_start_date + INTERVAL '6 days')::date::text AS week_end_date, status
      FROM weekly_performance_weeks
      ORDER BY week_start_date DESC
      LIMIT 52`,
@@ -47,7 +47,7 @@ export async function selectWeek(input: { actorId: string; weekStartDate: string
     `UPDATE weekly_performance_weeks
      SET selected_by_user_id = $1, selected_at = NOW(), updated_at = NOW()
      WHERE week_start_date = $2
-     RETURNING week_start_date::text, week_end_date::text, status`,
+     RETURNING week_start_date::text, (week_start_date + INTERVAL '6 days')::date::text AS week_end_date, status`,
     [input.actorId, input.weekStartDate],
   );
 
@@ -60,7 +60,7 @@ export async function selectWeek(input: { actorId: string; weekStartDate: string
 
 export async function getCurrentWeek() {
   const result = await queryDb<WeekRow>(
-    `SELECT week_start_date::text, week_end_date::text, status
+    `SELECT week_start_date::text, (week_start_date + INTERVAL '6 days')::date::text AS week_end_date, status
      FROM weekly_performance_weeks
      WHERE week_start_date = DATE_TRUNC('week', NOW())::date
      LIMIT 1`,

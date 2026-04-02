@@ -2288,11 +2288,13 @@ ALTER TABLE IF EXISTS foundation_connection_threads ADD COLUMN IF NOT EXISTS sur
 ALTER TABLE IF EXISTS foundation_connection_threads ADD COLUMN IF NOT EXISTS provider_user_id TEXT;
 ALTER TABLE IF EXISTS foundation_connection_threads ADD COLUMN IF NOT EXISTS stream_channel_id TEXT NOT NULL DEFAULT 'pending';
 ALTER TABLE IF EXISTS foundation_connection_threads ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'active';
+ALTER TABLE IF EXISTS foundation_connection_threads ADD COLUMN IF NOT EXISTS provider_directory_profile_id TEXT;
 
 -- foundation_quote_requests (5 missing)
 ALTER TABLE IF EXISTS foundation_quote_requests ADD COLUMN IF NOT EXISTS survivor_user_id TEXT;
 ALTER TABLE IF EXISTS foundation_quote_requests ADD COLUMN IF NOT EXISTS provider_user_id TEXT;
 ALTER TABLE IF EXISTS foundation_quote_requests ADD COLUMN IF NOT EXISTS service_type TEXT;
+ALTER TABLE IF EXISTS foundation_quote_requests ADD COLUMN IF NOT EXISTS thread_id UUID REFERENCES foundation_connection_threads(id);
 ALTER TABLE IF EXISTS foundation_quote_requests ADD COLUMN IF NOT EXISTS lifecycle_state TEXT NOT NULL DEFAULT 'open';
 ALTER TABLE IF EXISTS foundation_quote_requests ADD COLUMN IF NOT EXISTS last_transitioned_at TIMESTAMPTZ;
 

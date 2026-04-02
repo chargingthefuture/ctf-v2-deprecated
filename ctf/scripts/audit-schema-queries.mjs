@@ -231,8 +231,10 @@ function extractColumnRefs(filePath, source) {
         const cleaned = part.trim();
         // Handle aliased columns: col AS alias
         const colPart = cleaned.split(/\s+(?:AS|as)\s+/)[0].trim();
+        // Strip PostgreSQL type casts (e.g., ::text, ::date::text)
+        const colNoCast = colPart.replace(/::[a-z]+/gi, '').trim();
         // Simple column name (not expression)
-        const simpleCol = colPart.match(/^"?([a-z_][a-z0-9_]*)"?$/i);
+        const simpleCol = colNoCast.match(/^"?([a-z_][a-z0-9_]*)"?$/i);
         if (simpleCol) {
           refs.push({
             table: tableName,
@@ -241,8 +243,8 @@ function extractColumnRefs(filePath, source) {
             line: startLine,
           });
         }
-        // table.column reference
-        const qualCol = colPart.match(
+        // table.column reference (also strip casts)
+        const qualCol = colNoCast.match(
           /^([a-z_][a-z0-9_]*)\.([a-z_][a-z0-9_]*)$/i,
         );
         if (qualCol) {
@@ -287,6 +289,27 @@ function extractColumnRefs(filePath, source) {
           refs.push({
             table: tableName,
             column: eqMatch[1].toLowerCase(),
+            file: filePath,
+            line: startLine,
+          });
+        }
+      }
+    }
+
+    // Extract columns from RETURNING clause
+    const returningMatch = sql.match(
+      /\bRETURNING\s+([\s\S]*?)(?:`|$)/i,
+    );
+    if (returningMatch && tableName) {
+      for (const part of returningMatch[1].split(',')) {
+        const cleaned = part.trim();
+        const rColPart = cleaned.split(/\s+(?:AS|as)\s+/)[0].trim();
+        const rColNoCast = rColPart.replace(/::[a-z]+/gi, '').trim();
+        const rSimpleCol = rColNoCast.match(/^"?([a-z_][a-z0-9_]*)"?$/i);
+        if (rSimpleCol) {
+          refs.push({
+            table: tableName,
+            column: rSimpleCol[1].toLowerCase(),
             file: filePath,
             line: startLine,
           });
