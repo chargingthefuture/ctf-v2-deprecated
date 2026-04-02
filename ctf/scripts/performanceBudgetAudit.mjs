@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 /* eslint-env node */
+/* global console, process */
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -46,6 +47,17 @@ function listFilesRecursively(rootDir) {
     }
   }
 
+  return files;
+}
+
+function listFilesInExistingDirs(rootDirs) {
+  let files = [];
+  for (const dir of rootDirs) {
+    if (!fs.existsSync(dir)) {
+      continue;
+    }
+    files = files.concat(listFilesRecursively(dir));
+  }
   return files;
 }
 
@@ -139,7 +151,13 @@ function main() {
   if (!fs.existsSync(webDir)) {
     notes.push(`Web build directory missing: ${budgets.web.nextBuildDir}. Run web build first.`);
   } else {
-    const webFiles = listFilesRecursively(webDir);
+    const webClientDir = path.join(webDir, 'static');
+    const webFiles = listFilesInExistingDirs([webClientDir]);
+
+    if (webFiles.length === 0) {
+      notes.push(`Web client assets missing under: ${path.relative(cwd, webClientDir)}.`);
+    }
+
     const webJsBytes = sumBytesForExtensions(webFiles, ['.js']);
     const webCssBytes = sumBytesForExtensions(webFiles, ['.css']);
 
@@ -165,7 +183,7 @@ function main() {
   } else {
     const androidFiles = listFilesRecursively(androidDir);
     const androidTotalBytes = sumBytesForAll(androidFiles);
-    const androidJsBytes = sumBytesForExtensions(androidFiles, ['.js']);
+    const androidJsBytes = sumBytesForExtensions(androidFiles, ['.js', '.hbc']);
 
     addResult(
       results,
