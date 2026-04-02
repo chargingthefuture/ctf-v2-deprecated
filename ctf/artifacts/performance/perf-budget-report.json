@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-02T14:29:15.536Z",
+  "generatedAt": "2026-04-02T14:40:49.480Z",
   "mode": "warn",
   "status": "ok",
   "notes": [],
@@ -7,7 +7,7 @@
   "results": [
     {
       "metric": "web.jsBytes",
-      "value": 2904714,
+      "value": 2904711,
       "warningMax": 3670016,
       "blockMax": 4718592,
       "status": "ok"

@@ -51,18 +51,70 @@ Ship a repeatable, low-overhead performance program for web and Android with mob
 	- upload budget JSON artifact
 - This preserves low overhead by reusing already-built outputs.
 
+### Step 4: Local validation completed
+
+- `pnpm --dir ctf run typecheck`: passed.
+- `pnpm --dir ctf run lint`: passed.
+- `pnpm --dir ctf run perf:budgets:ci`: passed in warning mode.
+- `pnpm --dir ctf run build`: failed in existing web prerender path with:
+	- `TypeError: Cannot read properties of undefined (reading 'call')`
+	- route: `/admin/feed-announcements`
+	- status: pre-existing blocker outside this performance-infra change set.
+
+### Step 5: Codacy analysis completed for edited files
+
+- Clean results:
+	- `ctf/scripts/performanceBudgetAudit.mjs`
+	- `ctf/config/performance-budgets.json`
+	- `ctf/package.json`
+- Workflow/docs compatibility notes:
+	- `.github/workflows/rewrite-ci.yml` and markdown docs may return unsupported/empty-tool responses depending on Codacy analyzer support.
+	- Script lint findings were fixed (`process`/`console` globals declared) and re-verified.
+
+### Next implementation slice
+
+- Add optional trend script that compares current report vs previous report artifact for delta visibility.
+- Add warning summary annotation in CI job output for quick PR scanning.
+- Add first baseline result file derived from real Chromebook/Android/iOS manual runs.
+
+## Resume From Here
+
+The performance-infra foundation is in place. The next agent should continue in this order:
+
+1. Keep only performance-infra edits in scope.
+2. Do not revert or reason about unrelated generated/tooling changes unless the user asks.
+3. Add a budget delta/trend script that compares the current JSON artifact to a prior artifact.
+4. Add CI step-summary output so warnings are visible without downloading artifacts.
+5. Create the first populated benchmark results file using the manual device matrix in `PERFORMANCE_BENCHMARK_RUNBOOK.md`.
+6. Re-run validation and update this tracker again.
+
+## Known Non-Performance Workspace Changes To Ignore
+
+- `.codacy/codacy.yaml` may appear reordered after Codacy runs.
+- `ctf/packages/mobile/dist/android/**` changes when Expo export runs.
+- Those changes were not intentionally authored as part of the performance-infra implementation.
+- Unless the user explicitly asks, do not treat them as part of the intended change set.
+
 ## Work Backlog
 
 - [x] Create durable tracker document
 - [x] Add machine-readable performance budget config
 - [x] Add low-overhead web/mobile size audit script
 - [x] Add benchmark runbook for manual device runs
+- [x] Add machine-readable benchmark result template
 - [x] Add npm scripts for local and CI warning mode
 - [x] Wire warning-mode check into `.github/workflows/rewrite-ci.yml`
-- [ ] Run required local validation (`pnpm build`, lint/typecheck as needed)
-- [ ] Run Codacy analysis for every edited file
-- [ ] Update tracker with final outputs and follow-up actions
+- [x] Run required local validation (`pnpm build`, lint/typecheck as needed)
+- [x] Run Codacy analysis for every edited file
+- [x] Update tracker with final outputs and follow-up actions
+
+## Current Validation Snapshot
+
+- `pnpm --dir ctf run lint`: passed
+- `pnpm --dir ctf run typecheck`: passed
+- `pnpm --dir ctf run perf:budgets:ci`: passed
+- `pnpm --dir ctf run build`: still blocked by existing web prerender error on `/admin/feed-announcements`
 
 ## Handoff Notes
 
-If session ends abruptly, continue from the first unchecked backlog item and keep this file updated after each completed change.
+If session ends abruptly, start with `Resume From Here`, then keep this file updated after each completed change.

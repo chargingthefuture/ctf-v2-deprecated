@@ -78,6 +78,11 @@ Worst run:
 Notes:
 ```
 
+Machine-readable template:
+
+- `ctf/docs/developer/PERFORMANCE_BENCHMARK_RESULTS_TEMPLATE.json`
+- Copy it to a dated results file and fill real device data after each baseline run.
+
 ## Budget Interpretation
 
 - Under warning threshold: healthy
@@ -96,3 +101,4 @@ From `ctf/`:
 
 - Open a performance remediation task for any metric above warning threshold.
 - Include trace evidence for p75 regressions.
+- Store completed benchmark result files next to the template using a dated filename.

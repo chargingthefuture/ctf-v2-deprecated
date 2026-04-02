@@ -1,22 +1,34 @@
 import { createNoopReporter } from './noop-reporter';
-import { createSentryReporter } from './sentry-reporter.server';
+import { shouldEnableWebSentry } from './sentry-config';
 import type { ObservabilityProvider, ObservabilityReporter } from './types';
 
 let reporterInstance: ObservabilityReporter | null = null;
 
 function resolveProvider(): ObservabilityProvider {
+  if (!shouldEnableWebSentry()) {
+    return 'noop';
+  }
+
   const raw = (process.env.OBSERVABILITY_PROVIDER ?? '').trim().toLowerCase();
   return raw === 'sentry' ? 'sentry' : 'noop';
 }
 
-export function getObservabilityReporter(): ObservabilityReporter {
+export async function getObservabilityReporter(): Promise<ObservabilityReporter> {
   if (reporterInstance) {
     return reporterInstance;
   }
 
-  reporterInstance = resolveProvider() === 'sentry'
-    ? createSentryReporter()
-    : createNoopReporter();
+  if (resolveProvider() !== 'sentry') {
+    reporterInstance = createNoopReporter();
+    return reporterInstance;
+  }
+
+  try {
+    const { createSentryReporter } = await import('./sentry-reporter.server');
+    reporterInstance = createSentryReporter();
+  } catch {
+    reporterInstance = createNoopReporter();
+  }
 
   return reporterInstance;
 }

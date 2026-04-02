@@ -266,6 +266,10 @@ function buildSummary(items: PluginRegistryItem[]): PluginRegistrySummary {
   };
 }
 
+function sortPluginsByName(items: PluginRegistryItem[]): PluginRegistryItem[] {
+  return [...items].sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }));
+}
+
 export async function listPluginRegistry(options?: { includeHidden?: boolean }): Promise<PluginRegistryItem[]> {
   const includeHidden = Boolean(options?.includeHidden);
 
@@ -282,23 +286,17 @@ export async function listPluginRegistry(options?: { includeHidden?: boolean }):
          is_visible
        FROM ctf_plugin_registry
        WHERE ($1::boolean OR is_visible = TRUE)
-       ORDER BY
-         CASE phase
-           WHEN 'phase-0' THEN 0
-           WHEN 'phase-1' THEN 1
-           WHEN 'phase-2' THEN 2
-           WHEN 'phase-3' THEN 3
-         END,
-         nav_rank ASC,
-         display_name ASC`,
+       ORDER BY display_name ASC`,
       [includeHidden],
     );
 
     return result.rows.map(mapPluginRegistryRow);
   } catch {
-    return includeHidden
+    const items = includeHidden
       ? fallbackPluginRegistry
       : fallbackPluginRegistry.filter((item) => item.isVisible);
+
+    return sortPluginsByName(items);
   }
 }
 

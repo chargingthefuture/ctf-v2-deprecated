@@ -50,7 +50,6 @@ export function ShellAppsPanel({ plugins, activeApp, onAppSelect }: ShellAppsPan
                   {emoji}
                 </div>
                 <div className={styles.appCardBadges}>
-                  <span className={styles.appCardPhase}>{plugin.startGate}</span>
                   {plugin.availabilityState === 'implemented_shell' && (
                     <span className={styles.appCardLive} style={{ color }}>Live</span>
                   )}

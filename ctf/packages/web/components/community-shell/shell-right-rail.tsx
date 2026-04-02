@@ -20,11 +20,11 @@ function formatCurrencyAbbr(value: number): string {
 
 type ShellRightRailProps = {
   stats: ShellStats;
-  activePlugins: PluginRegistryItem[];
+  readyApps: PluginRegistryItem[];
   implementedCount: number;
 };
 
-export function ShellRightRail({ stats, activePlugins, implementedCount }: ShellRightRailProps) {
+export function ShellRightRail({ stats, readyApps, implementedCount }: ShellRightRailProps) {
   const { user } = useUser();
   const displayName = user?.firstName ?? user?.username ?? 'Survivor';
   const initial = displayName.slice(0, 1).toUpperCase();
@@ -45,7 +45,7 @@ export function ShellRightRail({ stats, activePlugins, implementedCount }: Shell
       <section className={styles.profileCard}>
         <div className={styles.profileAvatar} aria-hidden="true">{initial}</div>
         <p className={styles.profileName}>Welcome, {displayName}</p>
-        <p className={styles.profileMeta}>Space · {implementedCount} live plugins</p>
+        <p className={styles.profileMeta}>Space · {implementedCount} ready apps</p>
         <span className={styles.profileBadge}>Space ✓</span>
       </section>
 
@@ -58,9 +58,9 @@ export function ShellRightRail({ stats, activePlugins, implementedCount }: Shell
       </section>
 
       <section>
-        <p className={styles.sectionTitle}>Active Plugins</p>
+        <p className={styles.sectionTitle}>Ready Apps</p>
         <ul className={styles.memberList}>
-          {activePlugins.map((plugin) => {
+          {readyApps.map((plugin) => {
             const { emoji, color } = getPluginVisuals(plugin.slug);
             return (
               <li key={plugin.slug}>
@@ -71,12 +71,12 @@ export function ShellRightRail({ stats, activePlugins, implementedCount }: Shell
                 >
                   <span aria-hidden="true">{emoji}</span>
                   <span className={styles.memberItemName}>{plugin.name}</span>
-                  <span className={styles.memberItemGate} style={{ color }}>{plugin.startGate}</span>
+                  <span className={styles.memberItemGate} style={{ color }}>Ready</span>
                 </Link>
               </li>
             );
           })}
-          {activePlugins.length === 0 && (
+          {readyApps.length === 0 && (
             <li className={styles.memberItem}>No active plugins yet.</li>
           )}
         </ul>

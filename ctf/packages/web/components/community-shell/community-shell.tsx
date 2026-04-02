@@ -20,12 +20,54 @@ type PluginsApiPayload = {
   plugins?: PluginRegistryItem[];
 };
 
+const RECENT_PLUGIN_STORAGE_KEY = 'ctf.communityShell.recentPluginSlugs';
+const MAX_RECENT_PLUGINS = 12;
+
+function parseStoredRecentPlugins(value: string | null): string[] {
+  if (!value) return [];
+
+  try {
+    const parsed = JSON.parse(value) as unknown;
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((item): item is string => typeof item === 'string' && item.trim().length > 0);
+  } catch {
+    return [];
+  }
+}
+
+function sortPluginsForUi(items: PluginRegistryItem[], recentSlugs: string[]): PluginRegistryItem[] {
+  const rankBySlug = new Map<string, number>();
+  for (let index = 0; index < recentSlugs.length; index += 1) {
+    rankBySlug.set(recentSlugs[index], index);
+  }
+
+  return [...items].sort((a, b) => {
+    const aRecentRank = rankBySlug.get(a.slug);
+    const bRecentRank = rankBySlug.get(b.slug);
+
+    if (aRecentRank !== undefined && bRecentRank !== undefined) {
+      return aRecentRank - bRecentRank;
+    }
+
+    if (aRecentRank !== undefined) return -1;
+    if (bRecentRank !== undefined) return 1;
+
+    return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
+  });
+}
+
 export function CommunityShell({ initialPlugins, shellStats }: CommunityShellProps) {
   const [section, setSection] = useState<ShellSection>('chat');
   const [query, setQuery] = useState('');
   const [plugins, setPlugins] = useState(initialPlugins);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [activeApp, setActiveApp] = useState<string | null>(null);
+  const [recentPluginSlugs, setRecentPluginSlugs] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    setRecentPluginSlugs(parseStoredRecentPlugins(window.localStorage.getItem(RECENT_PLUGIN_STORAGE_KEY)));
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -53,16 +95,32 @@ export function CommunityShell({ initialPlugins, shellStats }: CommunityShellPro
     };
   }, []);
 
+  const orderedPlugins = useMemo(
+    () => sortPluginsForUi(plugins, recentPluginSlugs),
+    [plugins, recentPluginSlugs],
+  );
+
   const normalizedQuery = query.trim().toLowerCase();
   const filteredPlugins = useMemo(() => {
-    if (!normalizedQuery) return plugins;
-    return plugins.filter((p) =>
-      `${p.name} ${p.summary} ${p.phase} ${p.startGate}`.toLowerCase().includes(normalizedQuery),
+    if (!normalizedQuery) return orderedPlugins;
+    return orderedPlugins.filter((p) =>
+      `${p.name} ${p.summary}`.toLowerCase().includes(normalizedQuery),
     );
-  }, [normalizedQuery, plugins]);
+  }, [normalizedQuery, orderedPlugins]);
+
+  const handleAppSelect = (slug: string | null) => {
+    setActiveApp(slug);
+    if (!slug || typeof window === 'undefined') return;
+
+    setRecentPluginSlugs((previous) => {
+      const next = [slug, ...previous.filter((item) => item !== slug)].slice(0, MAX_RECENT_PLUGINS);
+      window.localStorage.setItem(RECENT_PLUGIN_STORAGE_KEY, JSON.stringify(next));
+      return next;
+    });
+  };
 
   const implementedCount = plugins.filter((p) => p.availabilityState === 'implemented_shell').length;
-  const activePlugins = filteredPlugins
+  const readyApps = orderedPlugins
     .filter((p) => p.availabilityState === 'implemented_shell')
     .slice(0, 5);
 
@@ -74,7 +132,7 @@ export function CommunityShell({ initialPlugins, shellStats }: CommunityShellPro
           section={section}
           plugins={filteredPlugins}
           activeApp={activeApp}
-          onAppSelect={setActiveApp}
+          onAppSelect={handleAppSelect}
           query={query}
           onQueryChange={setQuery}
         />
@@ -87,12 +145,12 @@ export function CommunityShell({ initialPlugins, shellStats }: CommunityShellPro
           {section === 'chat' ? (
             <ShellChatPanel stats={shellStats} plugins={filteredPlugins} />
           ) : (
-            <ShellAppsPanel plugins={filteredPlugins} activeApp={activeApp} onAppSelect={setActiveApp} />
+            <ShellAppsPanel plugins={filteredPlugins} activeApp={activeApp} onAppSelect={handleAppSelect} />
           )}
         </main>
         <ShellRightRail
           stats={shellStats}
-          activePlugins={activePlugins}
+          readyApps={readyApps}
           implementedCount={implementedCount}
         />
       </div>

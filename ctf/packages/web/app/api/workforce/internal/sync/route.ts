@@ -45,7 +45,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const reporter = getObservabilityReporter();
+    const reporter = await getObservabilityReporter();
     const checkInId = await reporter.captureCronCheckIn({
       monitorSlug: WORKFORCE_INCREMENTAL_SYNC_MONITOR_SLUG,
       status: 'in_progress',

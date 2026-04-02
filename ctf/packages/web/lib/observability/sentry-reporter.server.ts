@@ -1,5 +1,5 @@
 import type { CronCheckInInput, ObservabilityReporter } from './types';
-import { resolveWebSentryDsn } from './sentry-config';
+import { shouldEnableWebSentry } from './sentry-config';
 
 type SentryModule = {
   init: (options: Record<string, unknown>) => void;
@@ -14,7 +14,9 @@ let sentryModulePromise: Promise<SentryModule | null> | null = null;
 
 async function getSentryModule(): Promise<SentryModule | null> {
   if (!sentryModulePromise) {
-    sentryModulePromise = import('@sentry/nextjs')
+    sentryModulePromise = import(
+      /* webpackIgnore: true */ '@sentry/nextjs'
+    )
       .then((module) => module as unknown as SentryModule)
       .catch(() => null);
   }
@@ -26,7 +28,7 @@ export function createSentryReporter(): ObservabilityReporter {
   return {
     async captureCronCheckIn(input: CronCheckInInput): Promise<string | undefined> {
       try {
-        if (!resolveWebSentryDsn()) {
+        if (!shouldEnableWebSentry()) {
           return undefined;
         }
 
