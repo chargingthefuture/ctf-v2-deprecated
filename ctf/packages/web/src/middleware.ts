@@ -10,13 +10,18 @@ import { NextResponse } from 'next/server';
 // based on NEXT_PUBLIC_DISABLE_AUTH. Exporting conditionally caused compilation errors because exports must be top-level.
 
 import type { NextRequest } from 'next/server';
-const actualMiddleware = (process.env.NEXT_PUBLIC_DISABLE_AUTH === 'true')
-  ? () => NextResponse.next()
-  : clerkMiddleware((auth, req: NextRequest) => {
-      if (isProtectedWebRoute(req)) {
-        auth().protect();
-      }
-    }, clerkRuntimeOptions);
+const actualMiddleware = clerkMiddleware((auth, req: NextRequest) => {
+  // Keep Clerk middleware active so server-side auth() can always detect middleware.
+  if (process.env.NEXT_PUBLIC_DISABLE_AUTH === 'true') {
+    return NextResponse.next();
+  }
+
+  if (isProtectedWebRoute(req)) {
+    auth().protect();
+  }
+
+  return NextResponse.next();
+}, clerkRuntimeOptions);
 
 
 import type { NextFetchEvent } from 'next/server';
