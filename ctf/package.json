@@ -25,6 +25,8 @@
     "migrate:file": "node ./scripts/runMigrationFile.mjs",
     "migrate:schema": "node ./scripts/runMigrationFile.mjs --file=./schema.sql",
     "migrate:all": "pnpm run migrate:schema",
+    "schema:report-live-drift": "bash ./scripts/audit_schema_drift.sh",
+    "schema:audit-queries": "node ./scripts/audit-schema-queries.mjs",
 
     "formance:fetch:standalone": "node ./scripts/fetchFormanceStandalone.mjs",
     "formance:up:standalone": "pnpm run formance:fetch:standalone && docker compose -f ./ops/formance/upstream-standalone/docker-compose.yml up -d",

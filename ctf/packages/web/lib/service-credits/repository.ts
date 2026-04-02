@@ -1317,7 +1317,7 @@ export async function getTreasuryConfig() {
   const result = await queryDb<{ policy: Record<string, unknown> }>(
     `SELECT policy
      FROM service_credits_treasury_config
-     WHERE id = 1
+     WHERE id = TRUE
      LIMIT 1`,
   );
 
@@ -1328,7 +1328,7 @@ export async function updateTreasuryConfig(input: { actorId: string; policy: Rec
   await queryDb(
     `UPDATE service_credits_treasury_config
      SET policy = $1::jsonb, updated_by_user_id = $2, updated_at = NOW()
-     WHERE id = 1`,
+     WHERE id = TRUE`,
     [JSON.stringify(input.policy), input.actorId],
   );
 }
