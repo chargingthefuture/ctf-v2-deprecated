@@ -19,6 +19,14 @@ else
   echo "GitHub CLI already installed."
 fi
 
+# Install ripgrep for fast recursive search used by agent workflows.
+echo "Checking for ripgrep (rg)..."
+if ! command -v rg &> /dev/null; then
+  sudo apt-get update && sudo apt-get install -y ripgrep
+else
+  echo "ripgrep already installed."
+fi
+
 # Install/update Railway CLI
 echo "Checking for Railway CLI..."
 if ! command -v railway &> /dev/null; then

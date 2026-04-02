@@ -77,7 +77,7 @@ export function ShellRightRail({ stats, readyApps, implementedCount }: ShellRigh
             );
           })}
           {readyApps.length === 0 && (
-            <li className={styles.memberItem}>No active plugins yet.</li>
+            <li className={styles.memberItem}>No ready apps yet.</li>
           )}
         </ul>
       </section>

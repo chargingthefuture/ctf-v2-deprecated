@@ -3,6 +3,13 @@
 - The primary development environment is GitHub Codespaces.
 - All environment-type updates, additions, and tooling changes must be reflected in the devcontainer setup (e.g., .devcontainer/setup.sh, devcontainer.json) to ensure reproducibility and zero manual steps on container start.
 
+## Search Tooling Policy
+
+- Prefer `rg`/ripgrep for recursive text and file discovery.
+- Keep grep fallback logic in scripts and prompts where search commands are demonstrated.
+- Use this portable shell pattern when needed:
+  - `if command -v rg >/dev/null 2>&1; then rg -n "pattern" path; else grep -RIn "pattern" path; fi`
+
 # Product Rules Index
 
 ## Scope
