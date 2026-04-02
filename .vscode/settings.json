@@ -57,6 +57,9 @@
     },
     "python-envs.defaultEnvManager": "ms-python.python:system",
 
+    "npm.autoDetect": "off",
+    "npm.enableScriptExplorer": false,
+
     "workbench.editor.enablePreview": true,
     "workbench.editor.enablePreviewFromCodeNavigation": true,
     "workbench.editor.limit.enabled": true,

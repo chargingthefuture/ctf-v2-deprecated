@@ -13,6 +13,7 @@ import { PeerProgrammingShell } from '@/components/peer-programming/peer-program
 import { ServiceCreditsShell } from '@/components/service-credits/service-credits-shell';
 import { SocketRelayShell } from '@/components/socketrelay/socketrelay-shell';
 import { SkillsHuntShell } from '@/components/skills-hunt/skills-hunt-shell';
+import { SkillsTaxonomyShell } from '@/components/skills-taxonomy/skills-taxonomy-shell';
 import { TrustTransportShell } from '@/components/trusttransport/trusttransport-shell';
 import { WeeklyPerformanceShell } from '@/components/weekly-performance/weekly-performance-shell';
 import { WorkforceShell } from '@/components/workforce/workforce-shell';
@@ -186,6 +187,10 @@ export default async function PluginRoutePage({ params, searchParams }: PluginRo
 
   if (selectedPlugin.slug === 'skills-hunt') {
     return <SkillsHuntShell userId={decision.userId} isAdmin={decision.isAdmin} isModerator={decision.role === 'moderator'} />;
+  }
+
+  if (selectedPlugin.slug === 'skills-taxonomy') {
+    return <SkillsTaxonomyShell isAdmin={decision.isAdmin} />;
   }
 
   if (selectedPlugin.slug === 'foundation') {

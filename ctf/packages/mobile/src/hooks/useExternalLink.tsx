@@ -3,7 +3,6 @@ import {
   Alert,
   Linking,
   Share,
-  Platform,
 } from 'react-native';
 
 /**
@@ -25,9 +24,9 @@ function isInternalLink(url: string, baseURL: string = 'https://chargingthefutur
   }
 }
 
-interface UseExternalLinkResult {
-  openExternal: (url: string) => Promise<void>;
-  isInternal: (url: string) => boolean;
+export interface UseExternalLinkResult {
+  openExternal: (_url: string) => Promise<void>;
+  isInternal: (_url: string) => boolean;
 }
 
 /**
@@ -47,7 +46,7 @@ interface UseExternalLinkResult {
  * ```
  */
 export function useExternalLink(): UseExternalLinkResult {
-  const [isLoading, setIsLoading] = useState(false);
+  const [, setIsLoading] = useState(false);
 
   const openExternal = async (url: string): Promise<void> => {
     try {

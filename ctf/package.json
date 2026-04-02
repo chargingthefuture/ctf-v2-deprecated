@@ -48,5 +48,15 @@
     "husky": "^9.1.7",
     "prettier": "^3.5.0",
     "typescript": "^5.7.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "brace-expansion@1.1.12": "1.1.13",
+      "brace-expansion@5.0.4": "5.0.5",
+      "minimatch@3.1.2": "3.1.4",
+      "picomatch@2.3.1": "2.3.2",
+      "picomatch@4.0.3": "4.0.4",
+      "yaml@2.8.2": "2.8.3"
+    }
   }
 }

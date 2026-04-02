@@ -48,7 +48,7 @@ const fallbackPluginRegistry: PluginRegistryItem[] = [
     phase: 'phase-0',
     startGate: 'Phase 0',
     summary: 'Hierarchy and CRUD for sectors, job titles, and skills with impact preview.',
-    availabilityState: 'planned',
+    availabilityState: 'implemented_shell',
     navRank: 20,
     isVisible: true,
   },

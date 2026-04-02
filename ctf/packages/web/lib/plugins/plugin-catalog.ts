@@ -73,6 +73,13 @@ export const pluginCatalog: PluginCatalogItem[] = [
     summary: 'Rounds, moderation, scoring, leaderboards, and governed profile generation.',
   },
   {
+    id: 'unlock',
+    name: 'Unlock',
+    phase: 'phase-1',
+    startGate: 'Phase 1',
+    summary: 'Verification queue and staged unlock orchestration tied to support-only safeguards.',
+  },
+  {
     id: 'foundation',
     name: 'Foundation',
     phase: 'phase-1',

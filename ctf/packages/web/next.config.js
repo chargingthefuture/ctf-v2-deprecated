@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 const { withSentryConfig } = require('@sentry/nextjs');
+const shouldSkipSentryBuildPlugin = process.env.CTF_SKIP_SENTRY_NEXTJS === '1';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -12,9 +13,11 @@ const nextConfig = {
   },
 };
 
-module.exports = withSentryConfig(nextConfig, {
-  silent: true,
-  webpack: {
-    automaticVercelMonitors: true,
-  },
-});
+module.exports = shouldSkipSentryBuildPlugin
+  ? nextConfig
+  : withSentryConfig(nextConfig, {
+      silent: true,
+      webpack: {
+        automaticVercelMonitors: true,
+      },
+    });

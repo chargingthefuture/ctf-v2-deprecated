@@ -2,7 +2,10 @@
 # Husky shell helper with standard behavior: only skip when explicitly disabled.
 if [ -z "$husky_skip_init" ]; then
   debug () {
-    [ "$HUSKY_DEBUG" = "1" ] && echo "husky (debug) - $*"
+    if [ "$HUSKY_DEBUG" = "1" ]; then
+      echo "husky (debug) - $*"
+    fi
+    return 0
   }
 
   readonly hook_name="$(basename "$0")"
