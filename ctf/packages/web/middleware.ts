@@ -1,25 +1,20 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { clerkMiddleware } from '@clerk/nextjs/server';
 import { getClerkRuntimeOptions } from './lib/auth/clerk-env';
 
-const isProtectedWebRoute = createRouteMatcher(['/apps(.*)', '/plugin(.*)', '/admin(.*)']);
 const clerkRuntimeOptions = getClerkRuntimeOptions();
 
 import { NextResponse } from 'next/server';
 
-// Always export a top-level middleware function. The runtime behavior (no-op vs Clerk middleware) is chosen at runtime
-// based on NEXT_PUBLIC_DISABLE_AUTH. Exporting conditionally caused compilation errors because exports must be top-level.
-
-import type { NextRequest } from 'next/server';
-const actualMiddleware = clerkMiddleware((auth, req: NextRequest) => {
-  // Keep Clerk middleware active so server-side auth() can always detect middleware.
-  if (process.env.NEXT_PUBLIC_DISABLE_AUTH === 'true') {
-    return NextResponse.next();
-  }
-
-  if (isProtectedWebRoute(req)) {
-    auth().protect();
-  }
-
+// Clerk middleware runs on every matched request for session detection only.
+// It does NOT call auth().protect() — calling protect() triggers a server-side
+// redirect that bypasses Clerk's Account Portal session handshake and causes
+// redirect loops for authenticated users.
+//
+// Instead, each protected page calls evaluatePluginAccess() which checks auth
+// server-side and redirects to Account Portal when unauthenticated. This matches
+// the working platform pattern: Express clerkMiddleware() does session detection
+// only; route handlers enforce auth.
+const actualMiddleware = clerkMiddleware(() => {
   return NextResponse.next();
 }, clerkRuntimeOptions);
 
