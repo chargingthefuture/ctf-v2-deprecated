@@ -31,12 +31,12 @@ const signInUrl = process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL;
 let parsedAppUrl, parsedSignInUrl;
 if (appUrl) parsedAppUrl = new URL(appUrl);
 if (signInUrl) parsedSignInUrl = new URL(signInUrl);
-  if (parsedAppUrl && parsedSignInUrl && parsedSignInUrl.host !== parsedAppUrl.host) {
-    console.error(
-      `Sign-in URL host mismatch. signIn=${parsedSignInUrl.host} app=${parsedAppUrl.host}.`,
-    );
-    process.exit(1);
-  }
+if (parsedAppUrl && parsedSignInUrl && parsedSignInUrl.protocol !== parsedAppUrl.protocol) {
+  console.error(
+    `Sign-in URL protocol mismatch. signIn=${parsedSignInUrl.protocol} app=${parsedAppUrl.protocol}.`,
+  );
+  process.exit(1);
+}
 
 const ENV_TARGET = process.env.CLERK_ENV_TARGET || (() => {
   // Railway explicit prefixed vars

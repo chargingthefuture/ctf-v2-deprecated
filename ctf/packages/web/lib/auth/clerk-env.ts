@@ -54,17 +54,35 @@ export function getClerkSignInUrl(): string | undefined {
   }
 
   const signInUrl = parseUrl(configuredSignInUrl);
-  const appUrl = parseUrl(getAppUrl());
-
-  if (!signInUrl || !appUrl) {
+  if (!signInUrl) {
     return undefined;
   }
 
-  if (signInUrl.host !== appUrl.host) {
+  // Hosted Clerk auth can live on a different host; preserve absolute URLs.
+  return signInUrl.toString();
+}
+
+export function getClerkAfterSignOutUrl(): string | undefined {
+  const configuredAfterSignOutUrl = firstNonEmpty(
+    process.env.CLERK_AFTER_SIGN_OUT_URL,
+    process.env.RAILWAY_STAGING_CLERK_AFTER_SIGN_OUT_URL,
+    process.env.RAILWAY_PROD_CLERK_AFTER_SIGN_OUT_URL,
+    getClerkSignInUrl(),
+  );
+  if (!configuredAfterSignOutUrl) {
     return undefined;
   }
 
-  return `${signInUrl.pathname}${signInUrl.search}${signInUrl.hash}`;
+  if (configuredAfterSignOutUrl.startsWith('/')) {
+    return configuredAfterSignOutUrl;
+  }
+
+  const afterSignOutUrl = parseUrl(configuredAfterSignOutUrl);
+  if (!afterSignOutUrl) {
+    return undefined;
+  }
+
+  return afterSignOutUrl.toString();
 }
 
 export function getClerkRuntimeOptions(): {

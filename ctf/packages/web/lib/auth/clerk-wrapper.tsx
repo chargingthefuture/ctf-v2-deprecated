@@ -61,7 +61,7 @@ export const SignInButton: FC<SignInButtonProps> = ({ children, ...props }) => {
   if (isAuthDisabled) {
     return <>{children}</>;
   }
-  return <SignInButtonBase {...props}>{children}</SignInButtonBase>;
+  return <SignInButtonBase mode="redirect" {...props}>{children}</SignInButtonBase>;
 };
 
 export const UserButton: FC<UserButtonProps> = (props) => {

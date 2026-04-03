@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { ClerkProvider } from '../lib/auth/clerk-wrapper';
 import {
+  getClerkAfterSignOutUrl,
   getClerkPublishableKey,
   getClerkSignInUrl,
 } from '../lib/auth/clerk-env';
@@ -18,9 +19,11 @@ export default function RootLayout({
 }) {
   const publishableKey = getClerkPublishableKey();
   const signInUrl = getClerkSignInUrl();
+  const afterSignOutUrl = getClerkAfterSignOutUrl();
   const clerkProviderProps = {
     ...(publishableKey ? { publishableKey } : {}),
     ...(signInUrl ? { signInUrl } : {}),
+    ...(afterSignOutUrl ? { afterSignOutUrl } : {}),
   };
 
   return (
