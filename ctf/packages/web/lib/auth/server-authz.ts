@@ -1,9 +1,7 @@
 import { auth, currentUser } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
 import { getEffectiveUnlockAccessTier } from 'lib/unlock/repository';
 import type { UnlockAccessTier } from 'lib/unlock/types';
 import { pluginAuthDeny, type PluginDenyResponse } from './deny-taxonomy';
-import { getClerkSignInUrl } from './clerk-env';
 
 export type AllowDecision = {
   allowed: true;
@@ -201,13 +199,6 @@ export async function evaluatePluginAccess(
   const session = await auth();
 
   if (!session.userId) {
-    // Redirect unauthenticated users to Clerk Account Portal instead of
-    // returning a deny object. This matches the platform's pattern where
-    // route handlers handle auth redirects (not middleware).
-    const signInUrl = getClerkSignInUrl();
-    if (signInUrl) {
-      redirect(signInUrl);
-    }
     return pluginAuthDeny.unauthorized();
   }
 

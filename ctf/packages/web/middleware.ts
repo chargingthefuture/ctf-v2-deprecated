@@ -1,23 +1,22 @@
-import { clerkMiddleware } from '@clerk/nextjs/server';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 import { getClerkRuntimeOptions } from './lib/auth/clerk-env';
 
+const isProtectedWebRoute = createRouteMatcher(['/apps(.*)', '/plugin(.*)', '/admin(.*)']);
 const clerkRuntimeOptions = getClerkRuntimeOptions();
 
-import { NextResponse } from 'next/server';
+// No signInUrl is passed to clerkMiddleware (see getClerkRuntimeOptions).
+// Clerk auto-detects Account Portal from the publishable key and dashboard
+// config. Passing signInUrl would override that and redirect to the app
+// domain's /sign-in page instead of Account Portal.
+const actualMiddleware = clerkMiddleware((auth, req) => {
+  if (process.env.NEXT_PUBLIC_DISABLE_AUTH === 'true') {
+    return;
+  }
 
-// Clerk middleware runs on every matched request for session detection only.
-// It does NOT call auth().protect() — calling protect() triggers a server-side
-// redirect that bypasses Clerk's Account Portal session handshake and causes
-// redirect loops for authenticated users.
-//
-// Instead, each protected page calls evaluatePluginAccess() which checks auth
-// server-side and redirects to Account Portal when unauthenticated. This matches
-// the working platform pattern: Express clerkMiddleware() does session detection
-// only; route handlers enforce auth.
-const actualMiddleware = clerkMiddleware(() => {
-  return NextResponse.next();
+  if (isProtectedWebRoute(req)) {
+    auth().protect();
+  }
 }, clerkRuntimeOptions);
-
 
 import type { NextFetchEvent } from 'next/server';
 

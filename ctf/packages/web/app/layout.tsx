@@ -3,7 +3,6 @@ import { ClerkProvider } from '../lib/auth/clerk-wrapper';
 import {
   getClerkAfterSignOutUrl,
   getClerkPublishableKey,
-  getClerkSignInUrl,
 } from '../lib/auth/clerk-env';
 import './globals.css';
 
@@ -18,17 +17,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const publishableKey = getClerkPublishableKey();
-  // signInUrl is passed to ClerkProvider for client-side redirect awareness
-  // (matching the working platform pattern). It is NOT passed to
-  // clerkMiddleware — see clerk-env.ts getClerkRuntimeOptions().
-  const signInUrl = getClerkSignInUrl();
   const afterSignOutUrl = getClerkAfterSignOutUrl();
+  // signInUrl is NOT passed to ClerkProvider. Clerk auto-detects Account
+  // Portal from the publishable key and Clerk dashboard Paths config.
+  // Passing signInUrl overrides that and redirects to the app domain's
+  // /sign-in page, which is not a valid Clerk auth surface.
   const clerkProviderProps = {
     ...(publishableKey ? { publishableKey } : {}),
-    ...(signInUrl ? { signInUrl } : {}),
     ...(afterSignOutUrl ? { afterSignOutUrl } : {}),
-    // After sign-in, redirect to /apps if no redirect_url was provided.
-    // Matches the platform's signInFallbackRedirectUrl pattern.
     signInFallbackRedirectUrl: '/apps',
   };
 
