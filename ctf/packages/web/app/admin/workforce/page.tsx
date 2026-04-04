@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { evaluatePluginAccess } from 'lib/auth/server-authz';
+
+export const dynamic = 'force-dynamic';
 import { getDashboard, getWorkforceConfig } from 'lib/workforce/repository';
 
 export default async function WorkforceAdminPage() {

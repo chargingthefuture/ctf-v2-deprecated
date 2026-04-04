@@ -2,6 +2,8 @@ import { evaluatePluginAccess } from 'lib/auth/server-authz';
 import { getUnlockDashboardSnapshot, listUnlockSubmissions } from 'lib/unlock/repository';
 import { redirect } from 'next/navigation';
 
+export const dynamic = 'force-dynamic';
+
 export default async function UnlockAdminPage() {
   const access = await evaluatePluginAccess({ requiredRoles: ['admin'], requireUsername: false });
   if (!access.allowed) {

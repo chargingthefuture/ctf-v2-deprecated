@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation';
 import { evaluatePluginAccess } from 'lib/auth/server-authz';
 import { getCapacityPolicy, getFoundationDashboard } from 'lib/foundation/repository';
 
+export const dynamic = 'force-dynamic';
+
 export default async function FoundationAdminPage() {
   const access = await evaluatePluginAccess({ requireUsername: false });
   if (!access.allowed || !access.isAdmin) {

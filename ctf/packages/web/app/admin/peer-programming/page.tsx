@@ -1,5 +1,7 @@
 import { redirect } from 'next/navigation';
 import { evaluatePluginAccess } from 'lib/auth/server-authz';
+
+export const dynamic = 'force-dynamic';
 import { getPublishedWeeklyTopic } from 'lib/peer-programming/repository';
 
 export default async function PeerProgrammingAdminPage() {

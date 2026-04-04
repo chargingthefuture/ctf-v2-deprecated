@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { evaluatePluginAccess } from 'lib/auth/server-authz';
+
+export const dynamic = 'force-dynamic';
 import { getTreasuryConfig } from 'lib/service-credits/repository';
 
 export default async function ServiceCreditsAdminPage() {
