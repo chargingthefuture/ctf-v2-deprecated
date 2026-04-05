@@ -4,16 +4,14 @@ import type { UnlockAccessTier } from 'lib/unlock/types';
 type MaybeValue = string | null | undefined;
 
 export type RequestIdentity = {
-  userId: string;
+  isAuthenticated: boolean;
+  authProvider: string | null;
+  userId: string | null;
   username: string | null;
   role: string | null;
   isApproved: boolean;
   unlockAccessTier: UnlockAccessTier | null;
 };
-
-const DEFAULT_USER_ID = 'local_user';
-const DEFAULT_USERNAME = 'local_user';
-const DEFAULT_ROLE = 'admin';
 
 function pickFirstNonEmpty(...values: MaybeValue[]): string | null {
   for (const value of values) {
@@ -70,30 +68,41 @@ export async function resolveRequestIdentity(): Promise<RequestIdentity> {
   const headerStore = await headers();
   const cookieStore = await cookies();
 
-  const userId = readIdentityValue('x-ctf-user-id', 'ctf_user_id', headerStore, cookieStore) ?? DEFAULT_USER_ID;
-  const username = readIdentityValue('x-ctf-username', 'ctf_username', headerStore, cookieStore) ?? DEFAULT_USERNAME;
+  const userId = readIdentityValue('x-ctf-user-id', 'ctf_user_id', headerStore, cookieStore);
+  const authProvider = readIdentityValue('x-ctf-auth-provider', 'ctf_auth_provider', headerStore, cookieStore);
+  const explicitAuthenticationState = normalizeBoolean(
+    readIdentityValue('x-ctf-authenticated', 'ctf_authenticated', headerStore, cookieStore),
+  );
+  const isAuthenticated = explicitAuthenticationState ?? Boolean(userId);
+  const username = readIdentityValue('x-ctf-username', 'ctf_username', headerStore, cookieStore);
   const role = normalizeRole(
-    readIdentityValue('x-ctf-user-role', 'ctf_user_role', headerStore, cookieStore) ?? DEFAULT_ROLE,
+    readIdentityValue('x-ctf-user-role', 'ctf_user_role', headerStore, cookieStore),
   );
   const isApproved = normalizeBoolean(
     readIdentityValue('x-ctf-user-approved', 'ctf_user_approved', headerStore, cookieStore),
-  ) ?? true;
+  ) ?? isAuthenticated;
   const unlockAccessTier = normalizeUnlockAccessTier(
     readIdentityValue('x-ctf-unlock-tier', 'ctf_unlock_tier', headerStore, cookieStore),
   );
 
   return {
-    userId,
-    username,
-    role,
-    isApproved,
-    unlockAccessTier,
+    isAuthenticated,
+    authProvider,
+    userId: isAuthenticated ? userId : null,
+    username: isAuthenticated ? username : null,
+    role: isAuthenticated ? role : null,
+    isApproved: isAuthenticated ? isApproved : false,
+    unlockAccessTier: isAuthenticated ? unlockAccessTier : null,
   };
 }
 
-export function buildIdentityDisplayName(username: string | null, userId: string): string {
+export function buildIdentityDisplayName(username: string | null, userId: string | null): string {
   if (username) {
     return `@${username}`;
+  }
+
+  if (!userId) {
+    return 'Guest';
   }
 
   return `user-${userId.slice(0, 8)}`;

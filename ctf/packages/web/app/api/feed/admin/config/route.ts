@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { ensureMutationCsrf, requireFeedAdminAccess } from '../../_lib';
-import { FEED_ERROR_CODE } from 'lib/feed/constants';
+import { FEED_ALLOWED_CHANNELS, FEED_ERROR_CODE } from 'lib/feed/constants';
 import { getFeedConfig, updateFeedConfig, validateFeedConfigInput } from 'lib/feed/repository';
 import { logFeedAudit } from 'lib/feed/audit';
 import type { FeedConfigInput } from 'lib/feed/types';
@@ -12,6 +12,11 @@ function parseBody(body: ConfigBody): FeedConfigInput {
     renderMode: body.renderMode === 'card_toast' ? 'card_toast' : 'card_only',
     killSwitchEnabled: Boolean(body.killSwitchEnabled),
     maxTimelinePageSize: Number(body.maxTimelinePageSize ?? 50),
+    enabledChannels: Array.isArray(body.enabledChannels)
+      ? body.enabledChannels.filter(
+        (channel): channel is 'announcements' | 'questions' | 'community' => typeof channel === 'string' && FEED_ALLOWED_CHANNELS.includes(channel as 'announcements' | 'questions' | 'community'),
+      )
+      : undefined,
   };
 }
 
@@ -73,6 +78,9 @@ export async function PUT(request: Request) {
       targetId: 'singleton',
       result: 'success',
       errorCategory: null,
+      metadata: {
+        enabledChannels: config.enabledChannels,
+      },
     });
 
     return NextResponse.json({ ok: true, config }, { status: 200 });

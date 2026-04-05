@@ -99,7 +99,7 @@ Stack decision (confirmed by product owner, 2026-03-23):
    utterance, operator response, tagged intent, tagged entity values, routed plugin, outcome.
 4. Postgres `intent_labels` table: canonical intent→plugin→action mappings maintained by operators.
 5. Background ETL job: extract structured fields from transcripts, populate `intent_labels`.
-6. Auth: Clerk-authenticated access; unauthenticated users cannot initiate chat.
+6. Auth: authenticated access; unauthenticated users cannot initiate chat.
 7. Policy: operator identity is logged; no PII outside approved retention fields.
 
 ### 2.2 User-Facing Changes (Planned)

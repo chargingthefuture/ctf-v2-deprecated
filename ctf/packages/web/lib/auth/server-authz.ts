@@ -62,6 +62,10 @@ export async function evaluatePluginAccess(
   const identity = await resolveRequestIdentity();
   const normalizedRequiredRoles = normalizeRequiredRoles(requiredRoles);
 
+  if (!identity.isAuthenticated || !identity.userId) {
+    return pluginAuthDeny.unauthorized();
+  }
+
   if (requireUsername && !identity.username) {
     return pluginAuthDeny.forbiddenPolicy('missing_username');
   }

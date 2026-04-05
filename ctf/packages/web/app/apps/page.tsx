@@ -7,7 +7,7 @@ import { listPluginRegistry } from '../../lib/plugins/repository';
 import { getTrustUserExtension } from '../../lib/trust/repository';
 
 function buildShellUser(userId: string, username: string | null): ShellCurrentUser {
-  const safeUsername = username && username !== 'local_user' ? username : null;
+  const safeUsername = username && username !== 'guest' ? username : null;
   const displayName = safeUsername ? `@${safeUsername}` : 'Survivor';
   const initial = safeUsername ? safeUsername.charAt(0).toUpperCase() : 'S';
 
@@ -42,7 +42,7 @@ export default async function AppsPage() {
 
   const currentUser = authDecision && authDecision.allowed
     ? buildShellUser(authDecision.userId, authDecision.username)
-    : buildShellUser('local_user', null);
+    : buildShellUser('guest', null);
 
   const trust = authDecision && authDecision.allowed
     ? await getTrustUserExtension(authDecision.userId).catch(() => buildFallbackTrust(authDecision.userId))

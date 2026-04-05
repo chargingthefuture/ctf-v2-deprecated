@@ -178,7 +178,12 @@ Planned domain tables:
 11. `announcement_user_state`
 12. `announcement_membership_events`
 
-**New (required for Q&A and community channels):** 13. `feed_questions` 14. `feed_answers` 15. `feed_answer_ratings` 16. `llm_inference_log` 17. `feed_community_posts` 18. `feed_community_replies`
+13. `feed_questions`
+14. `feed_answers`
+15. `feed_answer_ratings`
+16. `llm_inference_log`
+17. `feed_community_posts`
+18. `feed_community_replies`
 
 ### 4.3 Source-of-Truth and Fan-Out
 

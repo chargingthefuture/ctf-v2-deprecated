@@ -50,6 +50,7 @@ export default async function FeedAnnouncementsAdminPage() {
         <p><span className="font-medium">Render mode:</span> {config.renderMode}</p>
         <p><span className="font-medium">Kill switch:</span> {config.killSwitchEnabled ? 'enabled' : 'disabled'}</p>
         <p><span className="font-medium">Max page size:</span> {config.maxTimelinePageSize}</p>
+        <p><span className="font-medium">Enabled channels:</span> {config.enabledChannels.join(', ')}</p>
       </section>
 
       <section className="rounded-lg border bg-card p-5 space-y-3">

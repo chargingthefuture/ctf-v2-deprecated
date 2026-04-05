@@ -1,5 +1,5 @@
   // check-clerk-env.mjs
-  // Validates that all environment variables listed in .env.local.example are set in the current environment
+  // Validates the legacy Clerk-based environment contract while auth remains provider-pluggable.
   import fs from 'fs';
   import path from 'path';
 
@@ -73,4 +73,4 @@ if (!ENV_TARGET) {
   process.exit(1);
 }
 
-console.log(`Clerk environment validation passed for target: ${ENV_TARGET}`);
+console.log(`Auth environment validation passed for target: ${ENV_TARGET}`);

@@ -275,21 +275,33 @@ CREATE TABLE IF NOT EXISTS feed_render_config (
   render_mode TEXT NOT NULL,
   kill_switch_enabled BOOLEAN NOT NULL DEFAULT FALSE,
   max_timeline_page_size INTEGER NOT NULL DEFAULT 100,
+  enabled_channels JSONB NOT NULL DEFAULT '["announcements", "questions", "community"]'::jsonb,
   updated_by_user_id TEXT NOT NULL,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 -- Add columns with guarded DDL for legacy DBs
 ALTER TABLE IF EXISTS feed_render_config ADD COLUMN IF NOT EXISTS singleton_key BOOLEAN DEFAULT TRUE;
+ALTER TABLE IF EXISTS feed_render_config ADD COLUMN IF NOT EXISTS render_mode TEXT NOT NULL DEFAULT 'card_only';
+ALTER TABLE IF EXISTS feed_render_config ADD COLUMN IF NOT EXISTS kill_switch_enabled BOOLEAN NOT NULL DEFAULT FALSE;
+ALTER TABLE IF EXISTS feed_render_config ADD COLUMN IF NOT EXISTS max_timeline_page_size INTEGER NOT NULL DEFAULT 100;
+ALTER TABLE IF EXISTS feed_render_config ADD COLUMN IF NOT EXISTS enabled_channels JSONB NOT NULL DEFAULT '["announcements", "questions", "community"]'::jsonb;
+ALTER TABLE IF EXISTS feed_render_config ADD COLUMN IF NOT EXISTS updated_by_user_id TEXT NOT NULL DEFAULT 'system';
+ALTER TABLE IF EXISTS feed_render_config ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
 -- Seed default feed config row (idempotent)
-INSERT INTO feed_render_config (singleton_key, render_mode, kill_switch_enabled, max_timeline_page_size, updated_by_user_id, updated_at)
-SELECT TRUE, 'card_only', FALSE, 100, 'system', NOW()
+INSERT INTO feed_render_config (singleton_key, render_mode, kill_switch_enabled, max_timeline_page_size, enabled_channels, updated_by_user_id, updated_at)
+SELECT TRUE, 'card_only', FALSE, 100, '["announcements", "questions", "community"]'::jsonb, 'system', NOW()
 WHERE NOT EXISTS (
   SELECT 1 FROM feed_render_config WHERE singleton_key IS TRUE
 );
+UPDATE feed_render_config
+SET enabled_channels = '["announcements", "questions", "community"]'::jsonb
+WHERE enabled_channels IS NULL OR enabled_channels = '[]'::jsonb;
 CREATE TABLE IF NOT EXISTS feed_items (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   item_type TEXT NOT NULL,
   source_announcement_id UUID,
+  source_question_id UUID,
+  source_community_post_id UUID,
   title TEXT NOT NULL,
   body TEXT NOT NULL,
   priority INTEGER NOT NULL DEFAULT 0,
@@ -302,6 +314,12 @@ CREATE TABLE IF NOT EXISTS feed_items (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+ALTER TABLE IF EXISTS feed_items ADD COLUMN IF NOT EXISTS source_question_id UUID;
+ALTER TABLE IF EXISTS feed_items ADD COLUMN IF NOT EXISTS source_community_post_id UUID;
+CREATE UNIQUE INDEX IF NOT EXISTS idx_feed_items_source_announcement_unique ON feed_items(source_announcement_id);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_feed_items_source_question_unique ON feed_items(source_question_id);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_feed_items_source_community_post_unique ON feed_items(source_community_post_id);
+CREATE INDEX IF NOT EXISTS idx_feed_items_timeline_lookup ON feed_items(item_type, is_active, published_at DESC, priority DESC);
 -- === foundation_quote_requests ===
 CREATE TABLE IF NOT EXISTS foundation_quote_requests (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -375,6 +393,7 @@ CREATE TABLE IF NOT EXISTS feed_membership_events (
 CREATE TABLE IF NOT EXISTS announcement_revisions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   announcement_id UUID NOT NULL,
+  revision_number INTEGER NOT NULL DEFAULT 1,
   title TEXT NOT NULL,
   body TEXT NOT NULL,
   status TEXT NOT NULL,
@@ -388,6 +407,8 @@ CREATE TABLE IF NOT EXISTS announcement_revisions (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+ALTER TABLE IF EXISTS announcement_revisions ADD COLUMN IF NOT EXISTS revision_number INTEGER NOT NULL DEFAULT 1;
+CREATE UNIQUE INDEX IF NOT EXISTS idx_announcement_revisions_announcement_revision ON announcement_revisions(announcement_id, revision_number);
 CREATE TABLE IF NOT EXISTS announcement_delivery_events (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   announcement_id UUID NOT NULL,
@@ -415,6 +436,140 @@ CREATE TABLE IF NOT EXISTS announcement_membership_events (
   trace_id TEXT,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+CREATE TABLE IF NOT EXISTS feed_questions (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  asked_by_user_id TEXT NOT NULL,
+  body TEXT NOT NULL,
+  category TEXT NOT NULL DEFAULT 'general',
+  location_context JSONB NULL,
+  llm_consent_granted BOOLEAN NOT NULL DEFAULT FALSE,
+  status TEXT NOT NULL DEFAULT 'open',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+ALTER TABLE IF EXISTS feed_questions ADD COLUMN IF NOT EXISTS id UUID DEFAULT gen_random_uuid();
+ALTER TABLE IF EXISTS feed_questions ADD COLUMN IF NOT EXISTS asked_by_user_id TEXT NOT NULL DEFAULT '';
+ALTER TABLE IF EXISTS feed_questions ADD COLUMN IF NOT EXISTS body TEXT NOT NULL DEFAULT '';
+ALTER TABLE IF EXISTS feed_questions ADD COLUMN IF NOT EXISTS category TEXT NOT NULL DEFAULT 'general';
+ALTER TABLE IF EXISTS feed_questions ADD COLUMN IF NOT EXISTS location_context JSONB NULL;
+ALTER TABLE IF EXISTS feed_questions ADD COLUMN IF NOT EXISTS llm_consent_granted BOOLEAN NOT NULL DEFAULT FALSE;
+ALTER TABLE IF EXISTS feed_questions ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'open';
+ALTER TABLE IF EXISTS feed_questions ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+ALTER TABLE IF EXISTS feed_questions ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+
+CREATE TABLE IF NOT EXISTS feed_answers (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  question_id UUID NOT NULL REFERENCES feed_questions(id) ON DELETE CASCADE,
+  answer_type TEXT NOT NULL CHECK (answer_type IN ('llm', 'community')),
+  body TEXT NOT NULL,
+  confidence NUMERIC(5,4) NULL,
+  model_id TEXT NULL,
+  sources JSONB NOT NULL DEFAULT '[]'::jsonb,
+  author_user_id TEXT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+ALTER TABLE IF EXISTS feed_answers ADD COLUMN IF NOT EXISTS id UUID DEFAULT gen_random_uuid();
+ALTER TABLE IF EXISTS feed_answers ADD COLUMN IF NOT EXISTS question_id UUID;
+ALTER TABLE IF EXISTS feed_answers ADD COLUMN IF NOT EXISTS answer_type TEXT NOT NULL DEFAULT 'community';
+ALTER TABLE IF EXISTS feed_answers ADD COLUMN IF NOT EXISTS body TEXT NOT NULL DEFAULT '';
+ALTER TABLE IF EXISTS feed_answers ADD COLUMN IF NOT EXISTS confidence NUMERIC(5,4) NULL;
+ALTER TABLE IF EXISTS feed_answers ADD COLUMN IF NOT EXISTS model_id TEXT NULL;
+ALTER TABLE IF EXISTS feed_answers ADD COLUMN IF NOT EXISTS sources JSONB NOT NULL DEFAULT '[]'::jsonb;
+ALTER TABLE IF EXISTS feed_answers ADD COLUMN IF NOT EXISTS author_user_id TEXT NULL;
+ALTER TABLE IF EXISTS feed_answers ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+ALTER TABLE IF EXISTS feed_answers ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+
+CREATE TABLE IF NOT EXISTS feed_answer_ratings (
+  user_id TEXT NOT NULL,
+  answer_id UUID NOT NULL REFERENCES feed_answers(id) ON DELETE CASCADE,
+  rating TEXT NOT NULL CHECK (rating IN ('helpful', 'not_helpful', 'flagged')),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (user_id, answer_id)
+);
+ALTER TABLE IF EXISTS feed_answer_ratings ADD COLUMN IF NOT EXISTS user_id TEXT NOT NULL DEFAULT '';
+ALTER TABLE IF EXISTS feed_answer_ratings ADD COLUMN IF NOT EXISTS answer_id UUID;
+ALTER TABLE IF EXISTS feed_answer_ratings ADD COLUMN IF NOT EXISTS rating TEXT NOT NULL DEFAULT 'helpful';
+ALTER TABLE IF EXISTS feed_answer_ratings ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+ALTER TABLE IF EXISTS feed_answer_ratings ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+
+CREATE TABLE IF NOT EXISTS llm_inference_log (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  actor_user_id TEXT NOT NULL,
+  question_id UUID NOT NULL REFERENCES feed_questions(id) ON DELETE CASCADE,
+  answer_id UUID NOT NULL REFERENCES feed_answers(id) ON DELETE CASCADE,
+  model_id TEXT NOT NULL,
+  request_payload JSONB NOT NULL DEFAULT '{}'::jsonb,
+  response_payload JSONB NOT NULL DEFAULT '{}'::jsonb,
+  sources JSONB NOT NULL DEFAULT '[]'::jsonb,
+  confidence NUMERIC(5,4) NULL,
+  latency_ms INTEGER NOT NULL DEFAULT 0,
+  prompt_token_count INTEGER NOT NULL DEFAULT 0,
+  completion_token_count INTEGER NOT NULL DEFAULT 0,
+  total_token_count INTEGER NOT NULL DEFAULT 0,
+  status TEXT NOT NULL DEFAULT 'completed',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+ALTER TABLE IF EXISTS llm_inference_log ADD COLUMN IF NOT EXISTS id UUID DEFAULT gen_random_uuid();
+ALTER TABLE IF EXISTS llm_inference_log ADD COLUMN IF NOT EXISTS actor_user_id TEXT NOT NULL DEFAULT '';
+ALTER TABLE IF EXISTS llm_inference_log ADD COLUMN IF NOT EXISTS question_id UUID;
+ALTER TABLE IF EXISTS llm_inference_log ADD COLUMN IF NOT EXISTS answer_id UUID;
+ALTER TABLE IF EXISTS llm_inference_log ADD COLUMN IF NOT EXISTS model_id TEXT NOT NULL DEFAULT 'ctf-approved-sources-summarizer-v1';
+ALTER TABLE IF EXISTS llm_inference_log ADD COLUMN IF NOT EXISTS request_payload JSONB NOT NULL DEFAULT '{}'::jsonb;
+ALTER TABLE IF EXISTS llm_inference_log ADD COLUMN IF NOT EXISTS response_payload JSONB NOT NULL DEFAULT '{}'::jsonb;
+ALTER TABLE IF EXISTS llm_inference_log ADD COLUMN IF NOT EXISTS sources JSONB NOT NULL DEFAULT '[]'::jsonb;
+ALTER TABLE IF EXISTS llm_inference_log ADD COLUMN IF NOT EXISTS confidence NUMERIC(5,4) NULL;
+ALTER TABLE IF EXISTS llm_inference_log ADD COLUMN IF NOT EXISTS latency_ms INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE IF EXISTS llm_inference_log ADD COLUMN IF NOT EXISTS prompt_token_count INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE IF EXISTS llm_inference_log ADD COLUMN IF NOT EXISTS completion_token_count INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE IF EXISTS llm_inference_log ADD COLUMN IF NOT EXISTS total_token_count INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE IF EXISTS llm_inference_log ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'completed';
+ALTER TABLE IF EXISTS llm_inference_log ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+
+CREATE TABLE IF NOT EXISTS feed_community_posts (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  author_user_id TEXT NOT NULL,
+  body TEXT NOT NULL,
+  category TEXT NOT NULL DEFAULT 'general',
+  moderation_status TEXT NOT NULL DEFAULT 'accepted',
+  reply_count INTEGER NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+ALTER TABLE IF EXISTS feed_community_posts ADD COLUMN IF NOT EXISTS id UUID DEFAULT gen_random_uuid();
+ALTER TABLE IF EXISTS feed_community_posts ADD COLUMN IF NOT EXISTS author_user_id TEXT NOT NULL DEFAULT '';
+ALTER TABLE IF EXISTS feed_community_posts ADD COLUMN IF NOT EXISTS body TEXT NOT NULL DEFAULT '';
+ALTER TABLE IF EXISTS feed_community_posts ADD COLUMN IF NOT EXISTS category TEXT NOT NULL DEFAULT 'general';
+ALTER TABLE IF EXISTS feed_community_posts ADD COLUMN IF NOT EXISTS moderation_status TEXT NOT NULL DEFAULT 'accepted';
+ALTER TABLE IF EXISTS feed_community_posts ADD COLUMN IF NOT EXISTS reply_count INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE IF EXISTS feed_community_posts ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+ALTER TABLE IF EXISTS feed_community_posts ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+
+CREATE TABLE IF NOT EXISTS feed_community_replies (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  post_id UUID NOT NULL REFERENCES feed_community_posts(id) ON DELETE CASCADE,
+  author_user_id TEXT NOT NULL,
+  body TEXT NOT NULL,
+  moderation_status TEXT NOT NULL DEFAULT 'accepted',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+ALTER TABLE IF EXISTS feed_community_replies ADD COLUMN IF NOT EXISTS id UUID DEFAULT gen_random_uuid();
+ALTER TABLE IF EXISTS feed_community_replies ADD COLUMN IF NOT EXISTS post_id UUID;
+ALTER TABLE IF EXISTS feed_community_replies ADD COLUMN IF NOT EXISTS author_user_id TEXT NOT NULL DEFAULT '';
+ALTER TABLE IF EXISTS feed_community_replies ADD COLUMN IF NOT EXISTS body TEXT NOT NULL DEFAULT '';
+ALTER TABLE IF EXISTS feed_community_replies ADD COLUMN IF NOT EXISTS moderation_status TEXT NOT NULL DEFAULT 'accepted';
+ALTER TABLE IF EXISTS feed_community_replies ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+ALTER TABLE IF EXISTS feed_community_replies ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+
+CREATE INDEX IF NOT EXISTS idx_feed_questions_created_at ON feed_questions(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_feed_answers_question_created_at ON feed_answers(question_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_feed_answer_ratings_answer_id ON feed_answer_ratings(answer_id);
+CREATE INDEX IF NOT EXISTS idx_llm_inference_log_question_created_at ON llm_inference_log(question_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_feed_community_posts_created_at ON feed_community_posts(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_feed_community_replies_post_created_at ON feed_community_replies(post_id, created_at ASC);
 
 -- === unlock tables ===
 CREATE TABLE IF NOT EXISTS unlock_verification_submissions (

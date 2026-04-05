@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { requireFeedReadAccess } from '../_lib';
 import { FEED_ERROR_CODE } from 'lib/feed/constants';
-import { listFeedTimeline, parsePaginationParams } from 'lib/feed/repository';
+import { isValidFeedChannel, listFeedTimeline, parsePaginationParams } from 'lib/feed/repository';
 
 export async function GET(request: Request) {
   const gate = await requireFeedReadAccess();
@@ -12,13 +12,21 @@ export async function GET(request: Request) {
   const pagination = parsePaginationParams(request.url);
   const params = new URL(request.url).searchParams;
   const pluginId = params.get('pluginId');
+  const channel = params.get('channel');
+
+  if (channel !== null && !isValidFeedChannel(channel)) {
+    return NextResponse.json(
+      { ok: false, code: FEED_ERROR_CODE.invalidPayload, message: 'Invalid feed channel filter.' },
+      { status: 400 },
+    );
+  }
 
   try {
     const payload = await listFeedTimeline(
       gate.auth.userId,
       gate.auth.role,
       pagination,
-      { pluginId },
+      { pluginId, channel: channel ?? 'all' },
     );
 
     return NextResponse.json(payload, { status: 200 });

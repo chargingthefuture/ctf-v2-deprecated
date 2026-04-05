@@ -15,7 +15,7 @@ Lifecycle/governance references applied:
 
 1. Inventory/checklist lifecycle follows `index.mdc` precedence and Rule 120.
 2. Profile/deletion boundaries follow Rule 114 and `ctf/docs/contracts/CHYME_PROFILE_AND_DELETION_CONTRACT.md`.
-3. Implementation sequencing must honor baseline phase order: Clerk integration, Railway deployment baseline, Vercel integration, Expo baseline.
+3. Implementation sequencing must honor baseline phase order: auth integration, Railway deployment baseline, Vercel integration, Expo baseline.
 
 ## Target User Features (Implementation Scope)
 
@@ -70,9 +70,9 @@ Canonical migration target: Chyme core tables under `ctf/migrations/` aligned to
 
 ## Security, Privacy, and Compliance Controls (Target)
 
-1. Clerk-authenticated access is required on Chyme routes; unauthenticated requests are denied (`401`).
+1. Authenticated access is required on Chyme routes; unauthenticated requests are denied (`401`).
 2. Access gate enforces approved-user or admin eligibility (`403` for non-approved non-admin users).
-3. Identity handle source is Clerk `username` for username/`@mention` semantics, aligned to `ctf/docs/contracts/PLUGIN_IDENTITY_HANDLE_BASELINE.md`.
+3. Identity handle source is the canonical auth-provider username/handle for username/`@mention` semantics, aligned to `ctf/docs/contracts/PLUGIN_IDENTITY_HANDLE_BASELINE.md`.
 4. Message payloads are trimmed server-side and rejected when empty.
 5. Service deletion runs in transaction and records deletion event for audit trail.
 6. Full-account endpoint currently records request and enqueues Service Credits reclaim dependency.
@@ -116,6 +116,7 @@ Current status:
 - 2026-02-25: Created initial Chyme CTF rewrite inventory and documented governance/parity requirements.
 - 2026-02-25: Added Chyme command/access/audit YAML triplet references and removed contract-triplet gap from known technical debt.
 - 2026-03-01: Reframed inventory for fresh-start implementation sequencing and removed implemented-baseline assumptions.
-- 2026-03-01: Added canonical Clerk username handle decision for Chyme/plugin identity parity.
+- 2026-03-01: Added canonical auth-provider handle decision for Chyme/plugin identity parity.
+- 2026-04-05: Re-audited auth boundaries so Chyme depends on provider-neutral auth context and generic server identity policy rather than Clerk-specific assumptions.
 - 2026-03-01: Recorded Phase 0 delivery status (API + policy + audit + migration + deterministic seed) and Android deferment details.
 - 2026-03-02: Closed Chyme second-pass scaffold gap by persisting room call-active state on join and publishing dedicated closure handoff evidence.

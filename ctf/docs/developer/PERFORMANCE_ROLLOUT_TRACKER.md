@@ -32,23 +32,23 @@ Ship a repeatable, low-overhead performance program for web and Android with mob
 - Added `ctf/config/performance-budgets.json` with balanced thresholds and warning-first policy.
 - Added `ctf/scripts/performanceBudgetAudit.mjs`.
 - Script computes low-overhead build footprint metrics using existing build outputs:
-	- `web.jsBytes`
-	- `web.cssBytes`
-	- `android.totalBytes`
-	- `android.jsBundleBytes`
+  - `web.jsBytes`
+  - `web.cssBytes`
+  - `android.totalBytes`
+  - `android.jsBundleBytes`
 - Script supports modes:
-	- `warn`: never blocks
-	- `block`: exits non-zero on blocked thresholds
+  - `warn`: never blocks
+  - `block`: exits non-zero on blocked thresholds
 - Script supports JSON output for CI artifact retention.
 
 ### Step 3: CI wiring (warning mode) completed
 
 - Added package scripts:
-	- `pnpm --dir ctf run perf:budgets`
-	- `pnpm --dir ctf run perf:budgets:ci`
+  - `pnpm --dir ctf run perf:budgets`
+  - `pnpm --dir ctf run perf:budgets:ci`
 - Updated `.github/workflows/rewrite-ci.yml` to:
-	- run budget audit after existing web/mobile build gates
-	- upload budget JSON artifact
+  - run budget audit after existing web/mobile build gates
+  - upload budget JSON artifact
 - This preserves low overhead by reusing already-built outputs.
 
 ### Step 4: Local validation completed
@@ -57,19 +57,18 @@ Ship a repeatable, low-overhead performance program for web and Android with mob
 - `pnpm --dir ctf run lint`: passed.
 - `pnpm --dir ctf run perf:budgets:ci`: passed in warning mode.
 - `pnpm --dir ctf run build`: failed in existing web prerender path with:
-	- `TypeError: Cannot read properties of undefined (reading 'call')`
-	- route: `/admin/feed-announcements`
-	- status: pre-existing blocker outside this performance-infra change set.
+  - `TypeError: Cannot read properties of undefined (reading 'call')`
+  - route: `/admin/feed-announcements`
+  - status: pre-existing blocker outside this performance-infra change set.
 
-### Step 5: Codacy analysis completed for edited files
+### Step 5: Validation completed for edited files
 
 - Clean results:
-	- `ctf/scripts/performanceBudgetAudit.mjs`
-	- `ctf/config/performance-budgets.json`
-	- `ctf/package.json`
+  - `ctf/scripts/performanceBudgetAudit.mjs`
+  - `ctf/config/performance-budgets.json`
+  - `ctf/package.json`
 - Workflow/docs compatibility notes:
-	- `.github/workflows/rewrite-ci.yml` and markdown docs may return unsupported/empty-tool responses depending on Codacy analyzer support.
-	- Script lint findings were fixed (`process`/`console` globals declared) and re-verified.
+  - Script lint findings were fixed (`process`/`console` globals declared) and re-verified.
 
 ### Next implementation slice
 
@@ -90,7 +89,6 @@ The performance-infra foundation is in place. The next agent should continue in 
 
 ## Known Non-Performance Workspace Changes To Ignore
 
-- `.codacy/codacy.yaml` may appear reordered after Codacy runs.
 - `ctf/packages/mobile/dist/android/**` changes when Expo export runs.
 - Those changes were not intentionally authored as part of the performance-infra implementation.
 - Unless the user explicitly asks, do not treat them as part of the intended change set.
@@ -105,7 +103,6 @@ The performance-infra foundation is in place. The next agent should continue in 
 - [x] Add npm scripts for local and CI warning mode
 - [x] Wire warning-mode check into `.github/workflows/rewrite-ci.yml`
 - [x] Run required local validation (`pnpm build`, lint/typecheck as needed)
-- [x] Run Codacy analysis for every edited file
 - [x] Update tracker with final outputs and follow-up actions
 
 ## Current Validation Snapshot

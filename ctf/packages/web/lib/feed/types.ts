@@ -1,5 +1,67 @@
 export type FeedRenderMode = 'card_only' | 'card_toast';
 
+export type FeedChannel = 'all' | 'announcements' | 'questions' | 'community';
+
+export type FeedEnabledChannel = Exclude<FeedChannel, 'all'>;
+
+export type FeedQuestionCategory = 'housing' | 'services' | 'general' | 'safety' | 'benefits';
+
+export type FeedCommunityCategory = 'general' | 'peer_support' | 'resource_share' | 'event';
+
+export type FeedAnswerRatingValue = 'helpful' | 'not_helpful' | 'flagged';
+
+export type FeedLocationContext = {
+  zipCode: string;
+  radiusMiles: number | null;
+};
+
+export type FeedAnswerSource = {
+  id: string;
+  label: string;
+  detail: string;
+};
+
+export type FeedAnswer = {
+  id: string;
+  questionId: string;
+  answerType: 'llm' | 'community';
+  body: string;
+  confidence: number | null;
+  modelId: string | null;
+  sources: FeedAnswerSource[];
+  authorUserId: string | null;
+  ratingSummary: Record<FeedAnswerRatingValue, number>;
+  currentUserRating: FeedAnswerRatingValue | null;
+  createdAtIso: string;
+};
+
+export type FeedQuestionDetail = {
+  id: string;
+  body: string;
+  category: FeedQuestionCategory;
+  location: FeedLocationContext | null;
+  llmConsentGranted: boolean;
+  answerCount: number;
+  answers: FeedAnswer[];
+};
+
+export type FeedCommunityReply = {
+  id: string;
+  postId: string;
+  body: string;
+  authorUserId: string;
+  createdAtIso: string;
+};
+
+export type FeedCommunityDetail = {
+  id: string;
+  body: string;
+  category: FeedCommunityCategory;
+  authorUserId: string;
+  replyCount: number;
+  replies: FeedCommunityReply[];
+};
+
 export type FeedPagination = {
   page: number;
   pageSize: number;
@@ -8,8 +70,10 @@ export type FeedPagination = {
 
 export type FeedTimelineItem = {
   id: string;
-  itemType: 'announcement' | 'activity';
+  itemType: 'announcement' | 'question' | 'community';
   sourceAnnouncementId: string | null;
+  sourceQuestionId: string | null;
+  sourceCommunityPostId: string | null;
   title: string;
   body: string;
   priority: number;
@@ -18,12 +82,15 @@ export type FeedTimelineItem = {
   expiresAtIso: string | null;
   isRead: boolean;
   isDismissed: boolean;
+  question: FeedQuestionDetail | null;
+  community: FeedCommunityDetail | null;
 };
 
 export type FeedConfig = {
   renderMode: FeedRenderMode;
   killSwitchEnabled: boolean;
   maxTimelinePageSize: number;
+  enabledChannels: FeedEnabledChannel[];
   updatedByUserId: string;
   updatedAtIso: string;
 };
@@ -32,6 +99,7 @@ export type FeedConfigInput = {
   renderMode: FeedRenderMode;
   killSwitchEnabled: boolean;
   maxTimelinePageSize: number;
+  enabledChannels?: FeedEnabledChannel[];
 };
 
 export type AnnouncementStatus = 'draft' | 'published' | 'archived';
@@ -70,3 +138,15 @@ export type AnnouncementDraftInput = {
 };
 
 export type MembershipEventType = 'join' | 'leave';
+
+export type FeedQuestionInput = {
+  body: string;
+  category?: FeedQuestionCategory;
+  location?: FeedLocationContext | null;
+  consentGranted: boolean;
+};
+
+export type FeedCommunityPostInput = {
+  body: string;
+  category?: FeedCommunityCategory;
+};

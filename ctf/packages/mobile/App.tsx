@@ -76,10 +76,10 @@ export default function App() {
         return <DirectoryList />;
       case 'feed-announcements':
         return (
-          <View>
+          <ScrollView contentContainerStyle={styles.feedStack}>
             <Feed />
             <Announcements />
-          </View>
+          </ScrollView>
         );
       case 'workforce':
         return <Workforce />;
@@ -185,5 +185,9 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     marginTop: 10,
+  },
+  feedStack: {
+    gap: 12,
+    paddingBottom: 24,
   },
 });

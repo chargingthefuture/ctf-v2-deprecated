@@ -9,12 +9,14 @@ Android parity is required for the Feed plugin before release. This note documen
 All three feed channels must be implemented on Android with full feature parity:
 
 ### 1. Announcements Channel
+
 - Timeline rendering with priority/expiry handling
 - Read/dismiss user-state transitions
 - Admin-published announcement cards with correct visibility targeting
 - Membership-aware visibility (only members see targeted announcements)
 
 ### 2. Questions Channel (LLM-Assisted Q&A)
+
 - Question submission form
 - LLM-generated answer display (inline in timeline)
 - Answer rating (helpful/not helpful)
@@ -22,6 +24,7 @@ All three feed channels must be implemented on Android with full feature parity:
 - Graceful fallback when LLM service is unavailable
 
 ### 3. Community Support Channel
+
 - Community post creation
 - Reply threading
 - Content moderation enforcement (same policies as web)
@@ -47,10 +50,13 @@ All three feed channels must be implemented on Android with full feature parity:
 ## Mobile Feature Directories
 
 Per `plugin-parity-contracts.json`, mobile implementation directories are:
+
 - `feed`
 - `announcements`
+- `questions`
+- `community`
 
-These should be extended to include `questions` and `community` directories once those channels are implemented.
+The current mobile parity shell exposes all four directories inside the `feed-announcements` surface so Android work can track the same three-channel model as web while the full native API integration is hardened.
 
 ## Risk
 
@@ -68,3 +74,4 @@ These should be extended to include `questions` and `community` directories once
 ## Change Log
 
 - 2026-04-05: Created Android parity note with three-channel scope, LLM requirements, and acceptance criteria.
+- 2026-04-05: Updated parity note after adding `questions` and `community` mobile feature directories and unified feed parity shells.

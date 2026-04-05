@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { useAuth, AuthProvider } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import {
   Mic, MicOff, Phone, Hand, Users, Search, Plus, Bell,
   Settings, ChevronRight, Radio, Lock, Globe, Star,
@@ -352,9 +352,5 @@ export function ChymeApp({ onClose }: ChymeAppProps) {
 }
 
 export function Chyme() {
-  return (
-    <AuthProvider>
-      <ChymeApp onClose={() => {}} />
-    </AuthProvider>
-  );
+  return <ChymeApp onClose={() => {}} />;
 }

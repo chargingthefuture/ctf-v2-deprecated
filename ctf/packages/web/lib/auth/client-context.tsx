@@ -20,10 +20,12 @@ export interface AuthUser {
   email?: string | null;
   isAdmin?: boolean;
   isApproved?: boolean;
+  provider?: string | null;
 }
 
 export interface AuthContextType {
   user: AuthUser | null;
+  provider: string | null;
   isLoading: boolean;
   isAuthenticated: boolean;
   signIn: () => Promise<void> | void;
@@ -45,8 +47,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Future: Initialize auth from headers/cookies set by server
-    // For now, assume no user (local_user by default on server)
+    // Future: hydrate the active auth provider session here.
     setUser(null);
     setIsLoading(false);
   }, []);
@@ -66,6 +67,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     <AuthContext.Provider
       value={{
         user,
+        provider: user?.provider ?? null,
         isLoading,
         isAuthenticated: !!user,
         signIn: handleSignIn,

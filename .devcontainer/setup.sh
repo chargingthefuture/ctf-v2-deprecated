@@ -11,9 +11,6 @@ else
   echo "Snyk CLI already installed."
 fi
 
-# Install/update Codacy CLI
-.codacy/cli.sh --version || bash .codacy/cli.sh
-
 # Install/update GitHub CLI
 echo "Checking for GitHub CLI (gh)..."
 if ! command -v gh &> /dev/null; then
@@ -73,9 +70,21 @@ else
 fi
 
 
-# Install all monorepo dependencies (including expo-cli for mobile)
-echo "Installing all pnpm dependencies..."
+# Install dependencies for the root project, ctf workspace, and standalone apps.
+echo "Installing root pnpm dependencies..."
 pnpm install
+
+echo "Installing ctf workspace dependencies..."
+pnpm --dir /workspaces/chargingthefuture/ctf install
+
+echo "Installing landing-page dependencies..."
+pnpm --dir /workspaces/chargingthefuture/landing-page install
+
+echo "Installing waitlist-landing-page dependencies..."
+pnpm --dir /workspaces/chargingthefuture/waitlist-landing-page install
+
+echo "Installing wiki-blog dependencies..."
+pnpm --dir /workspaces/chargingthefuture/wiki-blog install
 
 # Apply schema.sql and run startup builds only when fast mode is disabled.
 if [ "$FAST_MODE" != "1" ] && [ -n "$DATABASE_URL" ]; then
@@ -91,19 +100,19 @@ if [ "$FAST_MODE" != "1" ] && [ -n "$DATABASE_URL" ]; then
     exit 1;
   fi
   echo "Running Next.js build for ctf/packages/web against Neon DB..."
-  pnpm --filter ./ctf/packages/web run build || {
+  pnpm --dir /workspaces/chargingthefuture/ctf --filter @ctf/web run build || {
     echo "Next.js build failed for ctf/packages/web. Check for SQL/runtime errors in your codebase.";
     exit 1;
   }
 
   echo "Running Next.js build for landing-page against Neon DB..."
-  pnpm --filter ./landing-page run build || {
+  pnpm --dir /workspaces/chargingthefuture/landing-page run build || {
     echo "Next.js build failed for landing-page. Check for SQL/runtime errors in your codebase.";
     exit 1;
   }
 
   echo "Running Next.js build for waitlist-landing-page against Neon DB..."
-  pnpm --filter ./waitlist-landing-page run build || {
+  pnpm --dir /workspaces/chargingthefuture/waitlist-landing-page run build || {
     echo "Next.js build failed for waitlist-landing-page. Check for SQL/runtime errors in your codebase.";
     exit 1;
   }
