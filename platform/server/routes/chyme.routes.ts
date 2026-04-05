@@ -394,7 +394,7 @@ export function registerChymeRoutes(app: Express) {
       return res.status(400).json({ message: "Invalid code format" });
     }
     
-    // Validate format: must be exactly 8 uppercase hex characters
+    // Validate format: must be exactly 8 uppercase hex characters (input is normalized to uppercase above)
     if (code.length !== 8 || !/^[A-F0-9]{8}$/.test(code)) {
       logWarning(`[Mobile Auth] Invalid code format. Length: ${code.length}, Code: ${code.substring(0, 8)}`, req);
       return res.status(400).json({ message: "Invalid code format" });
