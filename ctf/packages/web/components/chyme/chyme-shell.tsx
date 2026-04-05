@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { ChevronLeft, Radio } from 'lucide-react';
 import { Chyme } from '@/components/mockups/survivor-hub/Chyme';
