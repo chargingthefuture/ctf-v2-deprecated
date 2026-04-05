@@ -17,7 +17,7 @@
 
 - [x] Confirm baseline sequence completion before Chyme build start.
   - Acceptance criteria:
-    - Clerk foundation completed.
+    - Auth foundation completed.
     - Railway deployment baseline completed.
     - Vercel staging integration completed.
     - Expo baseline completed.

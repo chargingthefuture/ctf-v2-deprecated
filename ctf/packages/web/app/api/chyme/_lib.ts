@@ -24,7 +24,7 @@ export async function requireChymeAccess(): Promise<ChymeApiGate> {
   const authDecision = await evaluatePluginAccess({
     allowUnlockSupportOnly: true,
     requireUsername: false,
-    requireApprovedUserOrAdmin: false,
+    requireApprovedUserOrAdmin: true,
   });
 
   if (!authDecision.allowed) {

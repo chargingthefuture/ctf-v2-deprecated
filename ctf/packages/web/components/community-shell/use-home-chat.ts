@@ -1,20 +1,8 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { StreamChat } from 'stream-chat';
-import type { Channel } from 'stream-chat';
+import { useCallback, useEffect, useState } from 'react';
 import type { ChymeJoinResponse, ChymeMessage, ChymeMessagesResponse } from '../../lib/chyme/types';
 import type { ChatMessage, ShellCurrentUser } from './shell-types';
-
-type StreamEventMessage = {
-  id?: string;
-  text?: string | null;
-  created_at?: string | Date | null;
-  user?: {
-    id?: string;
-    name?: string | null;
-  } | null;
-};
 
 type ChatConnectionState = 'loading' | 'live' | 'fallback';
 
@@ -86,21 +74,6 @@ function mapStoredMessage(message: ChymeMessage, currentUserId: string): ChatMes
   );
 }
 
-function mapStreamMessage(message: StreamEventMessage | null | undefined, currentUserId: string): ChatMessage | null {
-  if (!message?.text || !message.id) {
-    return null;
-  }
-
-  const from = message.user?.id?.endsWith(currentUserId) ? 'user' : 'hub';
-  return buildChatMessage(
-    message.id,
-    from,
-    message.text,
-    formatTimeLabel(message.created_at),
-    message.user?.name ?? undefined,
-  );
-}
-
 function getMessageDedupKey(message: ChatMessage): string {
   return [message.from, message.senderLabel ?? '', message.text.trim().toLowerCase(), message.time].join('|');
 }
@@ -145,8 +118,6 @@ export function useHomeChat(currentUser: ShellCurrentUser) {
   const [error, setError] = useState<string | null>(null);
   const [connectionState, setConnectionState] = useState<ChatConnectionState>('loading');
   const [isSending, setIsSending] = useState(false);
-  const clientRef = useRef<StreamChat | null>(null);
-  const channelRef = useRef<Channel | null>(null);
 
   const refreshHistory = useCallback(async () => {
     const payload = await requestJson<ChymeMessagesResponse>('/api/chyme/messages?limit=50');
@@ -157,7 +128,6 @@ export function useHomeChat(currentUser: ShellCurrentUser) {
   useEffect(() => {
     let active = true;
     let pollId: number | undefined;
-    let removeListener: (() => void) | null = null;
 
     setConnectionState('loading');
     setError(null);
@@ -175,43 +145,14 @@ export function useHomeChat(currentUser: ShellCurrentUser) {
       try {
         const join = await requestJson<ChymeJoinResponse>('/api/chyme/join', { method: 'POST' });
         if (!active) return;
-
-        const streamClient = StreamChat.getInstance(join.streamApiKey);
-        await streamClient.connectUser(
-          {
-            id: join.streamUserId,
-            name: currentUser.displayName,
-          },
-          join.streamToken,
-        );
-
-        const channel = streamClient.channel('messaging', join.streamChannelId);
-        await channel.watch();
-
-        const liveMessages = channel.state.messages
-          .map((message) => mapStreamMessage(message as StreamEventMessage, currentUser.userId))
-          .filter((message): message is ChatMessage => Boolean(message));
-
-        setMessages((previous) => mergeMessages(previous, liveMessages));
-
-        const onMessageNew = (event: { message?: StreamEventMessage }) => {
-          const nextMessage = mapStreamMessage(event.message, currentUser.userId);
-          if (!nextMessage || !active) {
-            return;
-          }
-
-          setMessages((previous) => mergeMessages(previous, [nextMessage]));
-        };
-
-        streamClient.on('message.new', onMessageNew);
-        removeListener = () => {
-          streamClient.off('message.new', onMessageNew);
-        };
-
-        clientRef.current = streamClient;
-        channelRef.current = channel;
+        void join;
         setConnectionState('live');
         setError(null);
+        pollId = window.setInterval(() => {
+          void refreshHistory().catch(() => {
+            // Keep polling while the shell is mounted.
+          });
+        }, 10000);
       } catch (joinError) {
         if (!active) return;
 
@@ -232,17 +173,6 @@ export function useHomeChat(currentUser: ShellCurrentUser) {
       if (pollId) {
         window.clearInterval(pollId);
       }
-
-      if (removeListener) {
-        removeListener();
-      }
-
-      const streamClient = clientRef.current;
-      clientRef.current = null;
-      channelRef.current = null;
-      if (streamClient) {
-        void streamClient.disconnectUser();
-      }
     };
   }, [currentUser.displayName, currentUser.userId, refreshHistory]);
 
@@ -255,21 +185,9 @@ export function useHomeChat(currentUser: ShellCurrentUser) {
     setIsSending(true);
     setError(null);
 
-    const optimisticId = `pending-${Date.now()}`;
-    const optimisticMessage = buildChatMessage(optimisticId, 'user', text, 'Now', currentUser.displayName);
-    const channel = channelRef.current;
-
-    if (!channel) {
-      setMessages((previous) => mergeMessages(previous, [optimisticMessage]));
-    }
-
     setInput('');
 
     try {
-      if (channel) {
-        await channel.sendMessage({ text });
-      }
-
       const payload = await requestJson<{ ok: true; message: ChymeMessage }>('/api/chyme/messages', {
         method: 'POST',
         headers: {
@@ -277,18 +195,9 @@ export function useHomeChat(currentUser: ShellCurrentUser) {
         },
         body: JSON.stringify({ text }),
       });
-
-      if (!channel) {
-        const savedMessage = mapStoredMessage(payload.message, currentUser.userId);
-        setMessages((previous) => previous.map((message) => (
-          message.id === optimisticId ? savedMessage : message
-        )));
-      }
+      const savedMessage = mapStoredMessage(payload.message, currentUser.userId);
+      setMessages((previous) => mergeMessages(previous, [savedMessage]));
     } catch (sendError) {
-      if (!channel) {
-        setMessages((previous) => previous.filter((message) => message.id !== optimisticId));
-      }
-
       setError(sendError instanceof Error ? sendError.message : 'Unable to send your message right now.');
     } finally {
       setIsSending(false);

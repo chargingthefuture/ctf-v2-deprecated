@@ -1,5 +1,6 @@
 import {
   getConfiguredAuthProvider,
+  getAuthRuntimeOptions,
   isConfiguredAuthSignInExternal,
 } from './provider-env';
 
@@ -29,13 +30,5 @@ export function getClerkRuntimeOptions(): {
   publishableKey?: string;
   secretKey?: string;
 } {
-  const configuredProvider = getConfiguredAuthProvider();
-  if (!configuredProvider) {
-    return {};
-  }
-
-  return {
-    ...(configuredProvider.publishableKey ? { publishableKey: configuredProvider.publishableKey } : {}),
-    ...(configuredProvider.secretKey ? { secretKey: configuredProvider.secretKey } : {}),
-  };
+  return getAuthRuntimeOptions();
 }

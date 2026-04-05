@@ -143,6 +143,7 @@ export default async function PluginRoutePage({ params, searchParams }: PluginRo
   const decision = await evaluatePluginAccess({
     requireUsername: shouldRequireUsername,
     allowUnlockSupportOnly: selectedPlugin.slug === 'chyme',
+    requireApprovedUserOrAdmin: selectedPlugin.slug === 'chyme',
   });
 
   if (!decision.allowed) {
@@ -157,7 +158,15 @@ export default async function PluginRoutePage({ params, searchParams }: PluginRo
   }
 
   if (selectedPlugin.slug === 'chyme') {
-    return <ChymeShell />;
+    return (
+      <ChymeShell
+        currentUser={{
+          userId: decision.userId,
+          username: decision.username,
+          displayName: decision.username ? `@${decision.username}` : `user-${decision.userId.slice(0, 8)}`,
+        }}
+      />
+    );
   }
 
   if (selectedPlugin.slug === 'directory') {

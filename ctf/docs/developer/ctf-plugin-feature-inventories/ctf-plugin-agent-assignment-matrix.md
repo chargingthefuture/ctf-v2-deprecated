@@ -80,29 +80,29 @@ Status legend:
 - `Blocked` — cannot continue without dependency/decision/input.
 - `Done` — handoff received and accepted.
 
-| Agent                               | Phase     | Status      | Started At | Owner | PR/Branch | Handoff Received |
-| ----------------------------------- | --------- | ----------- | ---------- | ----- | --------- | ---------------- |
-| `agent-bf-01-clerk-foundation`      | Phase -1A | Done        | 2026-03-01 |       |           | Yes              |
-| `agent-bf-02-railway-baseline`      | Phase -1B | Done        | 2026-03-01 |       |           | Yes              |
-| `agent-bf-03-vercel-integration`    | Phase -1C | Done        | 2026-03-01 |       |           | Yes              |
-| `agent-bf-04-expo-baseline`         | Phase -1D | Done        | 2026-03-01 |       |           | Yes              |
-| `agent-bf-01-clerk-foundation-v2`   | Phase -1E | Done        | 2026-03-02 |       |           | Yes              |
-| `agent-bf-02-railway-baseline-v2`   | Phase -1F | Done        | 2026-03-02 |       |           | Yes              |
-| `agent-bf-03-vercel-integration-v2` | Phase -1G | Done        | 2026-03-02 |       |           | Yes              |
-| `agent-bf-04-expo-baseline-v2`      | Phase -1H | Done        | 2026-03-02 |       |           | Yes              |
-| `agent-00-chyme-core`               | Phase 0   | Done        | 2026-03-02 |       |           | Yes              |
-| `agent-01-taxonomy-core`            | Phase 0   | Done        | 2026-03-02 |       |           | Yes              |
-| `agent-02-directory-core`           | Phase 0   | Done        | 2026-03-02 |       |           | Yes              |
-| `agent-03-feed-announcements`       | Phase 0   | Done        | 2026-03-02 |       |           | Yes              |
-| `agent-04-workforce`                | Phase 1   | Done        | 2026-03-03 |       |           | Yes              |
-| `agent-05-skills-hunt`              | Phase 1   | Done        | 2026-03-03 |       |           | Yes              |
-| `agent-06-foundation`               | Phase 1   | Done        | 2026-03-03 |       |           | Yes              |
-| `agent-07-lighthouse`               | Phase 2   | Done        | 2026-03-03 |       |           | Yes              |
-| `agent-08-socketrelay`              | Phase 2   | Done        | 2026-03-03 |       |           | Yes              |
-| `agent-09-trusttransport`           | Phase 2   | Done        | 2026-03-03 |       |           | Yes              |
-| `agent-10-peer-programming`         | Phase 2   | Done        | 2026-03-04 |       |           | Yes              |
-| `agent-11-mood`                     | Phase 2   | Done        | 2026-03-04 |       |           | Yes              |
-| `agent-12-gentlepulse`              | Phase 2   | Done        | 2026-03-04 |       |           | Yes              |
-| `agent-13-weekly-performance`       | Phase 2   | Done        | 2026-03-04 |       |           | Yes              |
-| `agent-14-gdp`                      | Phase 3   | Done        | 2026-03-04 |       |           | Yes              |
-| `agent-15-service-credits`          | Phase 3   | Done        | 2026-03-04 |       |           | Yes              |
+| Agent                               | Phase     | Status | Started At | Owner | PR/Branch | Handoff Received |
+| ----------------------------------- | --------- | ------ | ---------- | ----- | --------- | ---------------- |
+| `agent-bf-01-clerk-foundation`      | Phase -1A | Done   | 2026-03-01 |       |           | Yes              |
+| `agent-bf-02-railway-baseline`      | Phase -1B | Done   | 2026-03-01 |       |           | Yes              |
+| `agent-bf-03-vercel-integration`    | Phase -1C | Done   | 2026-03-01 |       |           | Yes              |
+| `agent-bf-04-expo-baseline`         | Phase -1D | Done   | 2026-03-01 |       |           | Yes              |
+| `agent-bf-01-clerk-foundation-v2`   | Phase -1E | Done   | 2026-03-02 |       |           | Yes              |
+| `agent-bf-02-railway-baseline-v2`   | Phase -1F | Done   | 2026-03-02 |       |           | Yes              |
+| `agent-bf-03-vercel-integration-v2` | Phase -1G | Done   | 2026-03-02 |       |           | Yes              |
+| `agent-bf-04-expo-baseline-v2`      | Phase -1H | Done   | 2026-03-02 |       |           | Yes              |
+| `agent-00-chyme-core`               | Phase 0   | Done   | 2026-03-02 |       |           | Yes              |
+| `agent-01-taxonomy-core`            | Phase 0   | Done   | 2026-03-02 |       |           | Yes              |
+| `agent-02-directory-core`           | Phase 0   | Done   | 2026-03-02 |       |           | Yes              |
+| `agent-03-feed-announcements`       | Phase 0   | Done   | 2026-03-02 |       |           | Yes              |
+| `agent-04-workforce`                | Phase 1   | Done   | 2026-03-03 |       |           | Yes              |
+| `agent-05-skills-hunt`              | Phase 1   | Done   | 2026-03-03 |       |           | Yes              |
+| `agent-06-foundation`               | Phase 1   | Done   | 2026-03-03 |       |           | Yes              |
+| `agent-07-lighthouse`               | Phase 2   | Done   | 2026-03-03 |       |           | Yes              |
+| `agent-08-socketrelay`              | Phase 2   | Done   | 2026-03-03 |       |           | Yes              |
+| `agent-09-trusttransport`           | Phase 2   | Done   | 2026-03-03 |       |           | Yes              |
+| `agent-10-peer-programming`         | Phase 2   | Done   | 2026-03-04 |       |           | Yes              |
+| `agent-11-mood`                     | Phase 2   | Done   | 2026-03-04 |       |           | Yes              |
+| `agent-12-gentlepulse`              | Phase 2   | Done   | 2026-03-04 |       |           | Yes              |
+| `agent-13-weekly-performance`       | Phase 2   | Done   | 2026-03-04 |       |           | Yes              |
+| `agent-14-gdp`                      | Phase 3   | Done   | 2026-03-04 |       |           | Yes              |
+| `agent-15-service-credits`          | Phase 3   | Done   | 2026-03-04 |       |           | Yes              |

@@ -37,4 +37,4 @@ Temporary checkpoint file to preserve the Chyme review findings and remediation 
 
 ## Open Technical Ambiguity
 
-The mobile app currently has no real auth integration and no existing Stream audio/video client stack. If the repository does not already support a preferred mobile auth/call path, a narrow user decision may still be required on whether to add Clerk Expo plus a native Stream mobile client stack or to scope parity to the shipped room/chat/join/deletion behaviors without an in-app live audio UI.
+The mobile app currently has no real auth integration and no existing Stream audio/video client stack. If the repository does not already support a preferred mobile auth/call path, a narrow user decision may still be required on whether to add a mobile auth provider SDK plus a native Stream mobile client stack or to scope parity to the shipped room/chat/join/deletion behaviors without an in-app live audio UI.

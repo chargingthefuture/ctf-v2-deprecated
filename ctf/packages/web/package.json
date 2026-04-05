@@ -12,9 +12,12 @@
     "start": "NEXT_TELEMETRY_DISABLED=1 next start -p ${PORT:-3000}",
     "check:all": "pnpm run lint && pnpm run typecheck && pnpm run build",
     "typecheck": "tsc --noEmit -p tsconfig.json",
+    "check:auth-env": "node ./scripts/check-auth-env.mjs",
+    "check:clerk-env": "node ./scripts/check-clerk-env.mjs",
     "check:formance-env": "node ./scripts/check-formance-env.mjs"
   },
   "dependencies": {
+    "@ctf/shared": "workspace:*",
     "@radix-ui/react-dialog": "^1.1.2",
     "@sentry/nextjs": "^10.21.0",
     "lucide-react": "^1.6.0",

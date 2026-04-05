@@ -4,6 +4,9 @@
   "private": true,
   "type": "module",
   "main": "src/index.ts",
+  "dependencies": {
+    "stream-chat": "^8.60.0"
+  },
   "scripts": {
     "build": "echo \"@ctf/shared build ok\"",
     "lint": "pnpm exec eslint --config eslint.config.mjs src --max-warnings 0",

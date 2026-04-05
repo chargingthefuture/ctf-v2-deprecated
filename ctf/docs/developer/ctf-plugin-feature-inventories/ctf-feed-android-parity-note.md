@@ -34,7 +34,7 @@ All three feed channels must be implemented on Android with full feature parity:
 
 - **GetStream**: Android must use the same `stream-chat` channel (`ctf-feed-membership-events`) for real-time fan-out
 - **Postgres**: All canonical reads/writes go through the same API routes used by web
-- **Auth**: Clerk authentication with the same role/consent checks
+- **Auth**: provider-neutral authentication with the same server-side role and consent checks
 - **Audit**: All commands must log with unified `feed.*` namespace (e.g., `feed.announcement.read.mark`, `feed.question.submit`)
 - **Offline**: Graceful degradation when offline; cached timeline items remain visible
 

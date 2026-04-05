@@ -2,9 +2,17 @@
 
 import Link from 'next/link';
 import { ChevronLeft, Radio } from 'lucide-react';
-import { Chyme } from '@/components/mockups/survivor-hub/Chyme';
+import { ChymeLiveShell } from '@/components/chyme/chyme-live-shell';
 
-export function ChymeShell() {
+type ChymeShellProps = {
+  currentUser: {
+    userId: string;
+    username: string | null;
+    displayName: string;
+  };
+};
+
+export function ChymeShell({ currentUser }: ChymeShellProps) {
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: '#021006' }}>
       {/* Left navigation rail */}
@@ -69,7 +77,7 @@ export function ChymeShell() {
 
       {/* Main Chyme component */}
       <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
-        <Chyme />
+        <ChymeLiveShell currentUser={currentUser} />
       </div>
     </div>
   );

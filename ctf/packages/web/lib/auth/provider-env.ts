@@ -1,16 +1,21 @@
-type MaybeEnv = string | undefined;
+import {
+  AUTH_AFTER_SIGN_OUT_URL_KEYS,
+  AUTH_PUBLISHABLE_KEY_KEYS,
+  AUTH_SECRET_KEY_KEYS,
+  AUTH_SIGN_IN_URL_KEYS,
+  LEGACY_CLERK_DETECTION_KEYS,
+  firstNonEmpty,
+  hasAnyConfiguredValue,
+  readEnvValue,
+} from './env-keys';
 
 export type AuthProviderRuntimeConfig = {
-  providerName: 'clerk';
+  providerName: string;
   publishableKey?: string;
   secretKey?: string;
   signInUrl?: string;
   afterSignOutUrl?: string;
 };
-
-function firstNonEmpty(...values: MaybeEnv[]): string | undefined {
-  return values.find((value) => typeof value === 'string' && value.length > 0);
-}
 
 function parseUrl(value: string | undefined): URL | null {
   if (!value) {
@@ -37,37 +42,33 @@ function normalizeUrl(value: string | undefined): string | undefined {
   return parsed ? parsed.toString() : undefined;
 }
 
-function getClerkPublishableKey(): string | undefined {
-  return firstNonEmpty(
-    process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
-    process.env.RAILWAY_STAGING_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
-    process.env.RAILWAY_PROD_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+function getAuthPublishableKey(): string | undefined {
+  return readEnvValue(AUTH_PUBLISHABLE_KEY_KEYS);
+}
+
+function getAuthSecretKey(): string | undefined {
+  return readEnvValue(AUTH_SECRET_KEY_KEYS);
+}
+
+function getAuthSignInUrl(): string | undefined {
+  return normalizeUrl(readEnvValue(AUTH_SIGN_IN_URL_KEYS));
+}
+
+function getAuthAfterSignOutUrl(): string | undefined {
+  return normalizeUrl(firstNonEmpty(readEnvValue(AUTH_AFTER_SIGN_OUT_URL_KEYS), getAuthSignInUrl()));
+}
+
+function detectProviderName(hasLegacyClerkValues: boolean): string {
+  const explicitProviderName = firstNonEmpty(
+    process.env.CTF_AUTH_PROVIDER,
+    process.env.NEXT_PUBLIC_AUTH_PROVIDER,
   );
-}
 
-function getClerkSecretKey(): string | undefined {
-  return firstNonEmpty(
-    process.env.CLERK_SECRET_KEY,
-    process.env.RAILWAY_STAGING_CLERK_SECRET_KEY,
-    process.env.RAILWAY_PROD_CLERK_SECRET_KEY,
-  );
-}
+  if (explicitProviderName) {
+    return explicitProviderName;
+  }
 
-function getClerkSignInUrl(): string | undefined {
-  return normalizeUrl(firstNonEmpty(
-    process.env.CLERK_SIGN_IN_URL,
-    process.env.RAILWAY_STAGING_CLERK_SIGN_IN_URL,
-    process.env.RAILWAY_PROD_CLERK_SIGN_IN_URL,
-  ));
-}
-
-function getClerkAfterSignOutUrl(): string | undefined {
-  return normalizeUrl(firstNonEmpty(
-    process.env.CLERK_AFTER_SIGN_OUT_URL,
-    process.env.RAILWAY_STAGING_CLERK_AFTER_SIGN_OUT_URL,
-    process.env.RAILWAY_PROD_CLERK_AFTER_SIGN_OUT_URL,
-    getClerkSignInUrl(),
-  ));
+  return hasLegacyClerkValues ? 'clerk' : 'auth-provider';
 }
 
 export function getAppUrl(): string | undefined {
@@ -78,21 +79,38 @@ export function getAppUrl(): string | undefined {
 }
 
 export function getConfiguredAuthProvider(): AuthProviderRuntimeConfig | null {
-  const publishableKey = getClerkPublishableKey();
-  const secretKey = getClerkSecretKey();
-  const signInUrl = getClerkSignInUrl();
-  const afterSignOutUrl = getClerkAfterSignOutUrl();
+  const publishableKey = getAuthPublishableKey();
+  const secretKey = getAuthSecretKey();
+  const signInUrl = getAuthSignInUrl();
+  const afterSignOutUrl = getAuthAfterSignOutUrl();
 
   if (!publishableKey && !secretKey && !signInUrl && !afterSignOutUrl) {
     return null;
   }
 
+  const hasLegacyClerkValues = hasAnyConfiguredValue(LEGACY_CLERK_DETECTION_KEYS);
+
   return {
-    providerName: 'clerk',
+    providerName: detectProviderName(hasLegacyClerkValues),
     ...(publishableKey ? { publishableKey } : {}),
     ...(secretKey ? { secretKey } : {}),
     ...(signInUrl ? { signInUrl } : {}),
     ...(afterSignOutUrl ? { afterSignOutUrl } : {}),
+  };
+}
+
+export function getAuthRuntimeOptions(): {
+  publishableKey?: string;
+  secretKey?: string;
+} {
+  const configuredProvider = getConfiguredAuthProvider();
+  if (!configuredProvider) {
+    return {};
+  }
+
+  return {
+    ...(configuredProvider.publishableKey ? { publishableKey: configuredProvider.publishableKey } : {}),
+    ...(configuredProvider.secretKey ? { secretKey: configuredProvider.secretKey } : {}),
   };
 }
 

@@ -9,7 +9,7 @@
 
 ## 2) Canonical Profile Usage
 
-Current implementation reads user identity from Clerk server user context.
+Current implementation reads user identity from the provider-neutral server auth context.
 
 - Read fields:
   - canonical handle (`username`) for `@mention`/identity-handle consistency
@@ -24,9 +24,9 @@ Current implementation reads user identity from Clerk server user context.
 
 Chyme handle contract decision:
 
-- Canonical handle is Clerk `username`.
+- Canonical handle is the active auth provider's `username` or equivalent handle field.
 - Chyme must not create plugin-local username ownership fields.
-- If Clerk `username` is missing, Chyme must show non-handle display fallback and treat `@mention` targeting as unavailable.
+- If the canonical provider handle is missing, Chyme must show non-handle display fallback and treat `@mention` targeting as unavailable.
 
 ## 3) Plugin Extension Fields
 

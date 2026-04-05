@@ -1,5 +1,7 @@
+import { randomUUID } from 'crypto';
 import { createTransfer } from 'lib/service-credits/repository';
 import type { ChymeServiceCreditsTransaction } from './types';
+import { sendChymeStreamMessage } from './stream';
 
 export async function sendServiceCredits(
   fromUserId: string,
@@ -78,6 +80,15 @@ type MessageRow = {
   sent_at: Date;
 };
 
+type DeletionEventRow = {
+  id: string;
+  requested_at: Date;
+};
+
+type TreasuryConfigRow = {
+  policy: Record<string, unknown>;
+};
+
 function normalizeDisplayName(username: string | null, userId: string): string {
   if (username) {
     return `@${username}`;
@@ -112,6 +123,75 @@ function mapMessage(row: MessageRow): ChymeMessage {
 
 function sanitizeMessageText(text: string): string {
   return text.trim().replace(/\s+/g, ' ');
+}
+
+function readTreasuryUserId(policy: Record<string, unknown> | null | undefined): string | null {
+  if (!policy) {
+    return null;
+  }
+
+  const direct = policy.treasuryUserId;
+  if (typeof direct === 'string' && direct.trim().length > 0) {
+    return direct.trim();
+  }
+
+  const snakeCase = policy.treasury_user_id;
+  if (typeof snakeCase === 'string' && snakeCase.trim().length > 0) {
+    return snakeCase.trim();
+  }
+
+  return null;
+}
+
+async function enqueueServiceCreditsDeletionReclaim(
+  client: PoolClient,
+  userId: string,
+  deletionRequestId: string,
+  requestedAtIso: string,
+): Promise<void> {
+  const treasuryConfig = await client.query<TreasuryConfigRow>(
+    `SELECT policy FROM service_credits_treasury_config WHERE id = TRUE LIMIT 1`,
+  );
+
+  const treasuryUserId = readTreasuryUserId(treasuryConfig.rows[0]?.policy);
+  const requestId = `chyme-account-delete:${deletionRequestId}`;
+  const traceId = randomUUID();
+  const idempotencyKey = `chyme-account-delete:${deletionRequestId}`;
+
+  await client.query(
+    `INSERT INTO service_credits_account_deletion_reclaims
+      (id, user_id, account_id, deletion_request_id, treasury_user_id, amount_transferred, request_id, trace_id, actor_id, idempotency_key)
+     VALUES ($1, $2, $3, $4, $5, 0, $6, $7, 'chyme_full_account_delete', $8)
+     ON CONFLICT (account_id, deletion_request_id)
+     DO UPDATE SET
+       treasury_user_id = EXCLUDED.treasury_user_id,
+       request_id = EXCLUDED.request_id,
+       trace_id = EXCLUDED.trace_id,
+       actor_id = EXCLUDED.actor_id,
+       idempotency_key = EXCLUDED.idempotency_key`,
+    [randomUUID(), userId, userId, deletionRequestId, treasuryUserId, requestId, traceId, idempotencyKey],
+  );
+
+  await client.query(
+    `INSERT INTO service_credits_adapter_outbox
+      (id, command_name, idempotency_key, provider, status, payload, last_error, attempt_count)
+     VALUES ($1, 'account.deletion.reclaim.execute', $2, 'formance', 'queued', $3::jsonb, NULL, 0)
+     ON CONFLICT (command_name, idempotency_key)
+     DO UPDATE SET payload = EXCLUDED.payload, status = 'queued', updated_at = NOW()`,
+    [
+      randomUUID(),
+      idempotencyKey,
+      JSON.stringify({
+        accountId: userId,
+        deletionRequestId,
+        treasuryUserId,
+        requestedAt: requestedAtIso,
+        requestId,
+        traceId,
+        idempotencyKey,
+      }),
+    ],
+  );
 }
 
 async function ensureMainRoom(client: PoolClient): Promise<RoomRow> {
@@ -268,6 +348,11 @@ export async function sendRoomMessage(identity: IdentityInput, text: string): Pr
     const room = await ensureMainRoom(client);
     await ensureServiceProfile(client, identity);
     await upsertMember(client, room.id, identity);
+    await sendChymeStreamMessage({
+      userId: identity.userId,
+      displayName: identity.displayName || normalizeDisplayName(identity.username, identity.userId),
+      text: validation.normalizedText,
+    });
 
     const inserted = await client.query<MessageRow>(
       `
@@ -361,19 +446,25 @@ export async function markServiceDeletion(userId: string): Promise<ChymeDeletion
 }
 
 export async function markFullAccountDeletionRequested(userId: string): Promise<ChymeDeletionResponse> {
-  const result = await queryDb<{ requested_at: Date }>(
-    `
-      INSERT INTO chyme_deletion_events (user_id, scope, service_name, requested_at, status)
-      VALUES ($1, 'account', 'all-services', NOW(), 'requested')
-      RETURNING requested_at
-    `,
-    [userId],
-  );
+  return withDbTransaction(async (client) => {
+    const result = await client.query<DeletionEventRow>(
+      `
+        INSERT INTO chyme_deletion_events (user_id, scope, service_name, requested_at, status)
+        VALUES ($1, 'account', 'all-services', NOW(), 'requested')
+        RETURNING id, requested_at
+      `,
+      [userId],
+    );
 
-  return {
-    ok: true,
-    scope: 'account',
-    status: 'requested',
-    requestedAtIso: result.rows[0].requested_at.toISOString(),
-  };
+    const deletionRequest = result.rows[0];
+    const requestedAtIso = deletionRequest.requested_at.toISOString();
+    await enqueueServiceCreditsDeletionReclaim(client, userId, deletionRequest.id, requestedAtIso);
+
+    return {
+      ok: true,
+      scope: 'account',
+      status: 'requested',
+      requestedAtIso,
+    };
+  });
 }

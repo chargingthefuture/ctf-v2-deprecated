@@ -45,16 +45,16 @@ This folder contains the rewrite monorepo scaffold for:
 
 ## Invite-Only Access Flow (Rewrite)
 
-- Users sign in with Clerk on the web app root page.
+- Users sign in through the active auth provider on the web app root page.
 - First-time users must submit a Quora profile URL.
 - Access stays pending until an admin approves them.
 - Admins (existing `users.is_admin = true`) can review and approve users at `/admin/users`.
 
 ## Auth Foundation Baseline (BF-01)
 
-- Clerk foundation implementation notes: `ctf/docs/developer/CLERK_FOUNDATION_BASELINE_BF01.md`
+- Auth foundation implementation notes: `ctf/docs/developer/AUTH_ARCHITECTURE.md`
 - Plugin deny taxonomy baseline: `ctf/docs/contracts/PLUGIN_AUTH_DENY_TAXONOMY_BASELINE.md`
-- Clerk username rollout plan (legacy user backfill + migration): `ctf/docs/developer/CLERK_USERNAME_ROLLOUT_PLAN.md`
+- Legacy Clerk username rollout reference: `ctf/docs/developer/CLERK_USERNAME_ROLLOUT_PLAN.md`
 
 ## Railway Deploy Baseline
 

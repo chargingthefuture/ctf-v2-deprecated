@@ -27,6 +27,13 @@ function requireVar(key) {
   }
 }
 
+function requireAuthPublishableKey(target) {
+  requireOneOf(`mobile auth publishable key (${target})`, [
+    `MOBILE_AUTH_PUBLISHABLE_KEY_${target}`,
+    `MOBILE_CLERK_PUBLISHABLE_KEY_${target}`,
+  ]);
+}
+
 function parseUrl(value) {
   if (!value) {
     return null;
@@ -63,10 +70,10 @@ if (!parsedMobileAppUrl) {
 }
 
 if (profile === 'production') {
-  requireVar('MOBILE_CLERK_PUBLISHABLE_KEY_PRODUCTION');
+  requireAuthPublishableKey('PRODUCTION');
   requireVar('EXPO_OWNER');
 } else {
-  requireVar('MOBILE_CLERK_PUBLISHABLE_KEY_STAGING');
+  requireAuthPublishableKey('STAGING');
 }
 
 if (process.exitCode && process.exitCode !== 0) {
