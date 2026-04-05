@@ -10,7 +10,7 @@ import {
 
 /**
  * Provider-agnostic authentication context and types.
- * This abstraction allows swapping auth providers (Clerk, Auth0, custom, etc.)
+ * This abstraction allows swapping auth providers without breaking consumers.
  * without breaking dependent components.
  */
 
@@ -40,7 +40,7 @@ export interface AuthProviderProps {
 
 /**
  * Default no-op auth provider for local/unauthenticated development.
- * Replace with actual provider (Clerk, Auth0, etc.) as needed.
+ * Replace with the active auth provider implementation as needed.
  */
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<AuthUser | null>(null);

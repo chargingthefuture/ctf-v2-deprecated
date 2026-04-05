@@ -1,3 +1,5 @@
+import Constants from 'expo-constants';
+
 type MobileRequestIdentity = {
   userId: string;
   username: string;
@@ -44,24 +46,73 @@ type ChymeSendResponse = {
 
 type ChymeJoinResponse = {
   ok: true;
+  roomId: string;
+  roomKey: string;
+  streamApiKey: string;
   streamChannelId: string;
+  streamUserId: string;
+  streamToken: string;
 };
 
 type ChymeDeletionResponse = {
   ok: true;
+  scope: 'service' | 'account';
   status: 'requested' | 'processing' | 'completed' | 'failed';
+  requestedAtIso: string;
 };
 
-declare const process: any;
+type RuntimeConfig = {
+  mobileAppUrl?: string;
+  chymeRequestIdentity?: {
+    userId?: string;
+    username?: string;
+    role?: string;
+    isApproved?: string | boolean;
+  };
+};
 
-const MOBILE_BASE = process?.env?.MOBILE_APP_URL || '';
+function getRuntimeConfig(): RuntimeConfig {
+  return (Constants.expoConfig?.extra ?? Constants.manifest2?.extra ?? {}) as RuntimeConfig;
+}
 
 function getBaseUrl(): string {
-  if (typeof MOBILE_BASE === 'string' && MOBILE_BASE.trim().length > 0) {
-    return MOBILE_BASE.trim().replace(/\/$/, '');
+  const mobileAppUrl = getRuntimeConfig().mobileAppUrl;
+  if (typeof mobileAppUrl === 'string' && mobileAppUrl.trim().length > 0) {
+    return mobileAppUrl.trim().replace(/\/$/, '');
   }
 
   throw new Error('MOBILE_APP_URL is required for Chyme mobile parity.');
+}
+
+function normalizeApproved(value: string | boolean | undefined): boolean {
+  if (typeof value === 'boolean') {
+    return value;
+  }
+
+  const normalized = String(value ?? 'approved').trim().toLowerCase();
+  return ['1', 'true', 'yes', 'approved'].includes(normalized);
+}
+
+export function getChymeMobileIdentity(): MobileRequestIdentity {
+  const identity = getRuntimeConfig().chymeRequestIdentity;
+  const userId = identity?.userId?.trim();
+  const username = identity?.username?.trim();
+  const role = identity?.role?.trim().toLowerCase();
+
+  if (!userId || !username) {
+    throw new Error('Chyme mobile identity is missing. Configure MOBILE_CTF_USER_ID and MOBILE_CTF_USERNAME.');
+  }
+
+  if (role !== 'member' && role !== 'admin') {
+    throw new Error('Chyme mobile identity role must be member or admin.');
+  }
+
+  return {
+    userId,
+    username,
+    role,
+    isApproved: normalizeApproved(identity?.isApproved),
+  };
 }
 
 function buildIdentityHeaders(identity: MobileRequestIdentity): HeadersInit {

@@ -1,11 +1,10 @@
-import React, { Fragment, useMemo, useState } from 'react';
+import React, { Fragment, useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
   Button,
   FlatList,
   StyleSheet,
-  Switch,
   Text,
   TextInput,
   View,
@@ -13,32 +12,46 @@ import {
 import {
   deleteChymeProfile,
   deleteFullAccount,
+  getChymeMobileIdentity,
   getChymeMessages,
   getChymeRoom,
   postChymeJoin,
   postChymeMessage,
-  type MobileRequestIdentity,
 } from './ChymeApi';
 
+type RoomState = Awaited<ReturnType<typeof getChymeRoom>>;
+type MessageState = Awaited<ReturnType<typeof getChymeMessages>>['messages'][number];
+
 export const ChymeRoom = () => {
-  const [identity, setIdentity] = useState<MobileRequestIdentity>({
-    userId: '',
-    username: '',
-    role: 'member',
-    isApproved: true,
-  });
-  const [room, setRoom] = useState<any | null>(null);
-  const [messages, setMessages] = useState<Array<any>>([]);
+  const [room, setRoom] = useState<RoomState | null>(null);
+  const [messages, setMessages] = useState<MessageState[]>([]);
   const [loading, setLoading] = useState(false);
   const [text, setText] = useState('');
   const [joined, setJoined] = useState(false);
   const [joinChannelId, setJoinChannelId] = useState<string | null>(null);
+  const [runtimeError, setRuntimeError] = useState<string | null>(null);
 
-  const ready = useMemo(() => identity.userId.trim().length > 0, [identity.userId]);
+  const identity = useMemo(() => {
+    try {
+      setRuntimeError(null);
+      return getChymeMobileIdentity();
+    } catch (error) {
+      setRuntimeError(error instanceof Error ? error.message : 'Unable to resolve Chyme mobile identity.');
+      return null;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!identity) {
+      return;
+    }
+
+    void loadRoom();
+  }, [identity]);
 
   const loadRoom = async () => {
-    if (!ready) {
-      Alert.alert('Identity required', 'Enter a user id before loading Chyme.');
+    if (!identity) {
+      Alert.alert('Configuration required', runtimeError ?? 'Chyme mobile identity is not configured.');
       return;
     }
 
@@ -58,7 +71,7 @@ export const ChymeRoom = () => {
   };
 
   const handleSend = async () => {
-    if (!text.trim() || !ready) return;
+    if (!text.trim() || !identity) return;
     try {
       const sent = await postChymeMessage(identity, text.trim());
       setMessages((prev) => [...prev, sent.message]);
@@ -69,8 +82,8 @@ export const ChymeRoom = () => {
   };
 
   const handleJoin = async () => {
-    if (!ready) {
-      Alert.alert('Identity required', 'Enter a user id before joining Chyme.');
+    if (!identity) {
+      Alert.alert('Configuration required', runtimeError ?? 'Chyme mobile identity is not configured.');
       return;
     }
 
@@ -88,10 +101,15 @@ export const ChymeRoom = () => {
   };
 
   const handleDeleteProfile = async () => {
+    if (!identity) {
+      Alert.alert('Configuration required', runtimeError ?? 'Chyme mobile identity is not configured.');
+      return;
+    }
+
     try {
       const payload = await deleteChymeProfile(identity);
       setMessages([]);
-      setRoom((current: any) => current
+      setRoom((current) => current
         ? { ...current, participants: current.participants.filter((participant: any) => participant.userId !== identity.userId) }
         : current);
       Alert.alert('Deleted', `Chyme data ${payload.status}`);
@@ -101,6 +119,11 @@ export const ChymeRoom = () => {
   };
 
   const handleDeleteAccount = async () => {
+    if (!identity) {
+      Alert.alert('Configuration required', runtimeError ?? 'Chyme mobile identity is not configured.');
+      return;
+    }
+
     try {
       const payload = await deleteFullAccount(identity);
       Alert.alert('Requested', `Full account deletion ${payload.status}`);
@@ -112,42 +135,23 @@ export const ChymeRoom = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Chyme</Text>
-      <Text style={styles.subtitle}>Social audio room with provider-neutral request identity</Text>
+      <Text style={styles.subtitle}>Social audio room with runtime-configured provider-neutral identity</Text>
 
       <View style={styles.identityCard}>
-        <Text style={styles.identityLabel}>User ID</Text>
-        <TextInput
-          value={identity.userId}
-          onChangeText={(value) => setIdentity((current) => ({ ...current, userId: value }))}
-          placeholder="user_123"
-          placeholderTextColor="#6B7280"
-          style={styles.input}
-        />
-
-        <Text style={styles.identityLabel}>Username</Text>
-        <TextInput
-          value={identity.username}
-          onChangeText={(value) => setIdentity((current) => ({ ...current, username: value }))}
-          placeholder="approved_user"
-          placeholderTextColor="#6B7280"
-          style={styles.input}
-        />
-
-        <View style={styles.identityRow}>
-          <Button
-            title={identity.role === 'admin' ? 'Role: admin' : 'Role: member'}
-            onPress={() => setIdentity((current) => ({ ...current, role: current.role === 'admin' ? 'member' : 'admin' }))}
-          />
-          <View style={styles.switchRow}>
-            <Text style={styles.switchLabel}>Approved</Text>
-            <Switch
-              value={identity.isApproved}
-              onValueChange={(value) => setIdentity((current) => ({ ...current, isApproved: value }))}
-            />
-          </View>
-        </View>
-
-        <Button title="Load Room" onPress={loadRoom} disabled={!ready || loading} />
+        <Text style={styles.identityLabel}>Runtime identity</Text>
+        {identity ? (
+          <>
+            <Text style={styles.summaryText}>User: {identity.userId}</Text>
+            <Text style={styles.summaryText}>Username: @{identity.username}</Text>
+            <Text style={styles.summaryText}>Role: {identity.role}</Text>
+            <Text style={styles.summaryText}>Approved: {identity.isApproved ? 'yes' : 'no'}</Text>
+            <View style={styles.identityRow}>
+              <Button title="Reload Room" onPress={loadRoom} disabled={loading} />
+            </View>
+          </>
+        ) : (
+          <Text style={styles.errorText}>{runtimeError ?? 'Chyme mobile identity is not configured.'}</Text>
+        )}
       </View>
 
       {room ? (
@@ -163,7 +167,7 @@ export const ChymeRoom = () => {
       {room?.participants?.length ? (
         <View style={styles.participantCard}>
           <Text style={styles.sectionTitle}>Participants</Text>
-          {room.participants.map((participant: any) => (
+          {room.participants.map((participant) => (
             <Fragment key={participant.userId}>
               <View style={styles.participantRow}>
                 <View>
@@ -194,7 +198,7 @@ export const ChymeRoom = () => {
           style={styles.list}
           renderItem={({ item }) => (
             <View style={styles.messageRow}>
-              <Text style={styles.messageAuthor}>{item.sender ?? 'You'}</Text>
+              <Text style={styles.messageAuthor}>{item.displayName ?? 'You'}</Text>
               <Text style={styles.messageText}>{item.text}</Text>
             </View>
           )}
@@ -209,13 +213,13 @@ export const ChymeRoom = () => {
           style={styles.input}
           placeholderTextColor="#9CA3AF"
         />
-        <Button title="Send" onPress={handleSend} disabled={!text.trim()} />
+        <Button title="Send" onPress={handleSend} disabled={!identity || !text.trim()} />
       </View>
 
       <View style={styles.rowButtons}>
-        <Button title={joined ? 'Joined' : 'Join Room'} onPress={handleJoin} disabled={joined} />
-        <Button title="Delete Chyme Profile" onPress={handleDeleteProfile} />
-        <Button title="Delete Full Account" onPress={handleDeleteAccount} />
+        <Button title={joined ? 'Joined' : 'Join Room'} onPress={handleJoin} disabled={!identity || joined} />
+        <Button title="Delete Chyme Profile" onPress={handleDeleteProfile} disabled={!identity} />
+        <Button title="Delete Full Account" onPress={handleDeleteAccount} disabled={!identity} />
       </View>
     </View>
   );
@@ -228,8 +232,7 @@ const styles = StyleSheet.create({
   identityCard: { width: '95%', padding: 12, borderRadius: 12, borderWidth: 1, borderColor: '#14532d', backgroundColor: '#041a0b', marginBottom: 12 },
   identityLabel: { color: '#bbf7d0', fontSize: 12, fontWeight: '700', marginBottom: 6, marginTop: 6 },
   identityRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginVertical: 10 },
-  switchRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  switchLabel: { color: '#F0FDF4', fontSize: 13 },
+  errorText: { color: '#fecaca', fontSize: 13 },
   summaryCard: { width: '95%', padding: 12, borderRadius: 12, borderWidth: 1, borderColor: '#14532d', backgroundColor: '#041a0b', marginBottom: 12 },
   summaryTitle: { color: '#F0FDF4', fontWeight: '700', fontSize: 16, marginBottom: 6 },
   summaryText: { color: '#bbf7d0', fontSize: 13, marginBottom: 2 },

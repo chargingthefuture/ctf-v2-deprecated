@@ -134,7 +134,7 @@ const tools: Tool[] = [
         },
         approverId: {
           type: 'string',
-          description: 'Clerk user ID of approver',
+          description: 'Auth provider user ID of approver',
         },
         approverFeedback: {
           type: 'string',

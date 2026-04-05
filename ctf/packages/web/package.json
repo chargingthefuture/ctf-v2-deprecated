@@ -13,7 +13,7 @@
     "check:all": "pnpm run lint && pnpm run typecheck && pnpm run build",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "check:auth-env": "node ./scripts/check-auth-env.mjs",
-    "check:clerk-env": "node ./scripts/check-clerk-env.mjs",
+    "check:clerk-env": "node ./scripts/check-auth-env.mjs",
     "check:formance-env": "node ./scripts/check-formance-env.mjs"
   },
   "dependencies": {

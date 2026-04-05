@@ -81,7 +81,7 @@ When user deletes Chyme usage only (`DELETE /api/account/chyme-profile`):
 When user requests full account deletion (`DELETE /api/account/full-account`):
 
 - Additional records removed vs service-scoped deletion:
-  - currently none immediately; request is recorded only
+  - currently none immediately; request is recorded and downstream reclaim dependency is queued
 - Cross-service dependencies:
   - requires global account deletion orchestrator across all plugin domains
   - Service Credits reclaim/finalization is required before account deletion can be marked `completed`
@@ -116,10 +116,10 @@ If user returns to Chyme after service-scoped deletion:
 - Service delete endpoint:
   - `DELETE /api/account/chyme-profile`
 - Full account delete endpoint (or orchestrator):
-  - `DELETE /api/account/full-account` (currently records request)
+  - `DELETE /api/account/full-account` (records request and queues Service Credits reclaim dependency)
 - Status model (`requested`, `processing`, `completed`, `failed`):
   - currently synchronous `ok` response for service delete
-  - full-account currently `requested` only (needs async orchestrator states)
+  - full-account currently returns `requested` while async orchestrator states remain external to Chyme
 - User-facing copy reviewed by:
   - pending formal product/compliance copy review in post-MVP hardening
 
@@ -143,4 +143,4 @@ If user returns to Chyme after service-scoped deletion:
 - [ ] Engineering reviewed schema boundaries
 - [ ] Compliance/privacy reviewed retention and deletion
 - [ ] Observability added (without sensitive payloads)
-- [ ] Web and Android parity confirmed (Android deferred; see phase-0 handoff)
+- [x] Web and Android parity confirmed
