@@ -167,9 +167,6 @@ importers:
 
   packages/web:
     dependencies:
-      '@ctf/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@radix-ui/react-dialog':
         specifier: ^1.1.2
         version: 1.1.15(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
