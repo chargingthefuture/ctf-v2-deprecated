@@ -6,7 +6,7 @@ import { fetchSessions } from './api';
 
 const COLOR = '#14B8A6';
 const WIDTH = Dimensions.get('window').width;
-const NAV = [
+const NAV: Array<{ icon: keyof typeof Ionicons.glyphMap; label: string; key: string }> = [
 	{ icon: 'home-outline', label: 'Home', key: 'home' },
 	{ icon: 'heart-outline', label: 'Sessions', key: 'sessions' },
 	{ icon: 'play-outline', label: 'Playing', key: 'playing' },
