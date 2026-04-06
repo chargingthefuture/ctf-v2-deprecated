@@ -1,4 +1,4 @@
-import { Foundation } from '@/components/mockups/survivor-hub/Foundation';
+import { Foundation } from './Foundation';
 
 type FoundationShellProps = {
   userId: string;
