@@ -48,6 +48,7 @@ export async function ensureTrustTransportTripChannel(input: {
   const streamChannelId = `trusttransport-trip-${input.tripId}`;
   const channel = streamClient.channel('messaging', streamChannelId, {
     created_by_id: requesterStreamUserId,
+    // @ts-expect-error: name is used for runtime config
     name: 'TrustTransport Trip Thread',
   });
 

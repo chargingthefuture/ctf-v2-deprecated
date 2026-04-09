@@ -1,24 +1,21 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-
+import { NextRequest, NextResponse } from 'next/server';
 import { getCohorts } from '../../../../lib/peer-programming/repository';
 import { requirePeerProgrammingAuth } from '../../../../lib/peer-programming/auth';
+import type { AuthProvider } from '../../../../../../shared/auth/genericPluginAuth';
 
-  if (req.method !== 'GET') {
-    res.status(405).json({ error: 'Method not allowed' });
-    return;
-  }
-  // Example: extract provider/token from headers or cookies
-  const provider = req.headers['x-auth-provider'] as string || 'clerk';
-  const token = req.headers['authorization']?.replace('Bearer ', '') || undefined;
+export async function GET(req: NextRequest) {
+  // Example: extract provider/token from headers
+  const provider = (req.headers.get('x-auth-provider') as AuthProvider) || 'clerk';
+  const authHeader = req.headers.get('authorization');
+  const token = authHeader ? authHeader.replace('Bearer ', '') : undefined;
   const authResult = await requirePeerProgrammingAuth({ provider, token });
   if (!authResult.isAuthenticated) {
-    res.status(401).json({ error: 'Authentication required' });
-    return;
+    return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
   }
   try {
     const cohorts = await getCohorts();
-    res.status(200).json(cohorts);
+    return NextResponse.json(cohorts, { status: 200 });
   } catch (e) {
-    res.status(500).json({ error: 'Failed to load cohorts' });
+    return NextResponse.json({ error: 'Failed to load cohorts' }, { status: 500 });
   }
 }

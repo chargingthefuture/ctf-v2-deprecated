@@ -7,7 +7,7 @@ type WorkforceShellProps = {
 
 
 
-import React from 'react';
+// ...existing code...
 
 const CHARTS = [
   { label: 'Employed', value: 1830000, pct: 37, color: '#22C55E' },

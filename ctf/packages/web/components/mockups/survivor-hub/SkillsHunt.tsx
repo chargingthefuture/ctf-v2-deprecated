@@ -135,24 +135,48 @@ export function SkillsHunt() {
                 {LEADERBOARD.length === 0 ? (
                   <div style={{ color: '#aaa', textAlign: 'center', marginTop: 40, fontSize: 18 }}>No leaderboard data.</div>
                 ) : (
-                  LEADERBOARD.map((p) => (
-                    <div key={p.rank} style={{ padding: "16px 20px", borderRadius: 14, background: (p as any).isMe ? `${COLOR}12` : "rgba(255,255,255,0.02)", border: `1px solid ${(p as any).isMe ? COLOR + "40" : "rgba(255,255,255,0.06)"}", display: "flex", alignItems: "center", gap: 16 }}>
-                      <div style={{ width: 32, height: 32, borderRadius: 8, background: p.rank <= 3 ? `${["#F59E0B", "#9CA3AF", "#CD7C2F"][p.rank - 1]}20` : "rgba(255,255,255,0.04)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, fontWeight: 800, color: p.rank <= 3 ? ["#F59E0B", "#9CA3AF", "#CD7C2F"][p.rank - 1] : "#6B7280", flexShrink: 0 }}>
-                        {p.rank <= 3 ? ["🥇", "🥈", "🥉"][p.rank - 1] : `#${p.rank}`}
+                  LEADERBOARD.map((p) => {
+                    const rankStyle = {
+                      width: 32,
+                      height: 32,
+                      borderRadius: 8,
+                      background: p.rank <= 3 ? `${["#F59E0B", "#9CA3AF", "#CD7C2F"][p.rank - 1]}20` : "rgba(255,255,255,0.04)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: 16,
+                      fontWeight: 800,
+                      color: p.rank <= 3 ? ["#F59E0B", "#9CA3AF", "#CD7C2F"][p.rank - 1] : "#6B7280",
+                      flexShrink: 0
+                    };
+                    const containerStyle = {
+                      padding: "16px 20px",
+                      borderRadius: 14,
+                      background: (p).isMe ? `${COLOR}12` : "rgba(255,255,255,0.02)",
+                      border: (p).isMe ? `${COLOR}40` : "rgba(255,255,255,0.06)",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 16
+                    };
+                    return (
+                      <div key={p.rank} style={containerStyle}>
+                        <div style={rankStyle}>
+                          {p.rank <= 3 ? ["🥇", "🥈", "🥉"][p.rank - 1] : `#${p.rank}`}
+                        </div>
+                        <Avatar style={{ width: 40, height: 40 }}>
+                          <AvatarFallback style={{ background: `${COLOR}25`, color: COLOR, fontSize: 15, fontWeight: 800 }}>{p.avatar}</AvatarFallback>
+                        </Avatar>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ fontSize: 14, fontWeight: 700, color: (p).isMe ? COLOR : "#F9FAFB" }}>{p.name} {(p).isMe && "(You)"}</div>
+                          <div style={{ fontSize: 12, color: "#6B7280" }}>{p.badges} badges earned</div>
+                        </div>
+                        <div style={{ textAlign: "right" }}>
+                          <div style={{ fontSize: 16, fontWeight: 800, color: COLOR }}>{p.points.toLocaleString()}</div>
+                          <div style={{ fontSize: 11, color: "#4B5563" }}>points</div>
+                        </div>
                       </div>
-                      <Avatar style={{ width: 40, height: 40 }}>
-                        <AvatarFallback style={{ background: `${COLOR}25`, color: COLOR, fontSize: 15, fontWeight: 800 }}>{p.avatar}</AvatarFallback>
-                      </Avatar>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: 14, fontWeight: 700, color: (p as any).isMe ? COLOR : "#F9FAFB" }}>{p.name} {(p as any).isMe && "(You)"}</div>
-                        <div style={{ fontSize: 12, color: "#6B7280" }}>{p.badges} badges earned</div>
-                      </div>
-                      <div style={{ textAlign: "right" }}>
-                        <div style={{ fontSize: 16, fontWeight: 800, color: COLOR }}>{p.points.toLocaleString()}</div>
-                        <div style={{ fontSize: 11, color: "#4B5563" }}>points</div>
-                      </div>
-                    </div>
-                  ))
+                    );
+                  })
                 )}
               </div>
             </div>
@@ -194,54 +218,6 @@ export function SkillsHunt() {
             </div>
           </div>
         )}
-      </main>
-      {/* Right panel */}
-      <aside style={{ width: 280, borderLeft: "1px solid rgba(255,255,255,0.06)", background: "#0D0F14", padding: "20px 16px", flexShrink: 0 }}>
-        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", color: "#4B5563", textTransform: "uppercase", marginBottom: 12 }}>Your Progress</div>
-        <div style={{ padding: "16px", borderRadius: 14, background: `${COLOR}08`, border: `1px solid ${COLOR}20`, marginBottom: 16 }}>
-          <div style={{ display: "flex", gap: 12, marginBottom: 12 }}>
-            {[{ l: "Rounds", v: "3" }, { l: "Pts", v: "6,412" }, { l: "Rank", v: "#4" }].map(({ l, v }) => (
-              <div key={l} style={{ flex: 1, textAlign: "center", padding: "10px 6px", borderRadius: 10, background: "rgba(255,255,255,0.04)" }}>
-                <div style={{ fontSize: 18, fontWeight: 800, color: COLOR }}>{v}</div>
-                <div style={{ fontSize: 10, color: "#6B7280" }}>{l}</div>
-              </div>
-            ))}
-          </div>
-          <div style={{ fontSize: 12, color: "#6B7280" }}>🔥 7-day streak</div>
-        </div>
-        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", color: "#4B5563", textTransform: "uppercase", marginBottom: 10 }}>Recent Badges</div>
-        {BADGES.filter((b) => b.earned).map((b) => (
-          <div key={b.name} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 10px", borderRadius: 8, background: "rgba(255,255,255,0.02)", border: `1px solid ${COLOR}15`, marginBottom: 6 }}>
-            <div style={{ fontSize: 20 }}>{b.emoji}</div>
-            <div style={{ fontSize: 13, color: "#E8EAF0" }}>{b.name}</div>
-            <CheckCircle size={14} style={{ color: COLOR, marginLeft: "auto" }} />
-          </div>
-        ))}
-        <div style={{ marginTop: 16, padding: "14px 16px", borderRadius: 12, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
-          <div style={{ fontSize: 12, fontWeight: 600, color: "#9CA3AF", marginBottom: 8 }}>Next Badge: 5 Rounds 🏆</div>
-          <div style={{ height: 6, background: "rgba(255,255,255,0.05)", borderRadius: 3, overflow: "hidden" }}>
-            <div style={{ height: "100%", background: COLOR, borderRadius: 3, width: "60%" }} />
-          </div>
-          <div style={{ fontSize: 11, color: "#4B5563", marginTop: 6 }}>3/5 rounds completed</div>
-        </div>
-      </aside>
-    </div>
-  );
-}
-              ))}
-            </ScrollArea>
-            <div style={{ padding: "8px 24px 20px", flexShrink: 0 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 16px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 14 }}>
-                <Plus size={18} style={{ color: "#4B5563" }} />
-                <input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && send()} placeholder="Find rounds, ask about skills, check your score…" style={{ flex: 1, background: "transparent", border: "none", outline: "none", fontSize: 14, color: "#E8EAF0" }} />
-                <button onClick={send} style={{ width: 32, height: 32, borderRadius: 8, background: input.trim() ? COLOR : "rgba(255,255,255,0.06)", border: "none", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
-                  <Send size={14} style={{ color: input.trim() ? "#fff" : "#4B5563" }} />
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
       </main>
       {/* Right panel */}
       <aside style={{ width: 280, borderLeft: "1px solid rgba(255,255,255,0.06)", background: "#0D0F14", padding: "20px 16px", flexShrink: 0 }}>

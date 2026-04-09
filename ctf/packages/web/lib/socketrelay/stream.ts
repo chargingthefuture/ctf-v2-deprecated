@@ -50,6 +50,7 @@ export async function ensureSocketRelayFulfillmentChannel(input: {
   const streamChannelId = `socketrelay-fulfillment-${input.fulfillmentId}`;
   const channel = streamClient.channel('messaging', streamChannelId, {
     created_by_id: requesterStreamUserId,
+    // @ts-expect-error: name is used for runtime config
     name: 'SocketRelay Fulfillment Thread',
   });
 
