@@ -1,3 +1,4 @@
+"use client";
 import { useState, useCallback } from 'react';
 import { submitMoodCheck, fetchMoodEligibility } from '@ctf/shared';
 export function useMoodEligibility(clientId) {

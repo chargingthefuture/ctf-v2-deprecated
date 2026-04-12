@@ -1,15 +1,10 @@
 
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Button, ActivityIndicator } from 'react-native';
-<<<<<<< HEAD
-// Stub hooks for mobile build
-const useMoodEligibility = () => ({ eligibility: null, loading: false, error: null, fetchEligibility: () => {} });
-const useSubmitMoodCheck = () => ({ result: null, loading: false, error: null, submit: () => {} });
-=======
 import { useMoodEligibility, useSubmitMoodCheck } from '@ctf/shared';
->>>>>>> fix/react-native-type-errors
 
 // TODO: Replace with real clientId from auth context
+
 const getClientId = () => 'demo-client-id';
 
 export const Mood = () => {
@@ -24,6 +19,7 @@ export const Mood = () => {
 	if (eligibilityError) return <View style={styles.container}><Text style={styles.error}>{eligibilityError}</Text></View>;
 
 	if (!eligibility) return <View style={styles.container}><Text style={styles.empty}>Unable to load eligibility.</Text></View>;
+
 
 	if (!eligibility.eligible) {
 		return (
@@ -58,12 +54,6 @@ export const Mood = () => {
 			{result && <Text style={styles.success}>Mood check submitted!</Text>}
 		</View>
 	);
-			// @ts-expect-error React Native key prop
-			<Button
-				title={v.toString()}
-				color={selected === v ? '#FFD600' : '#333'}
-				onPress={() => setSelected(v)}
-			/>
 };
 
 const styles = StyleSheet.create({

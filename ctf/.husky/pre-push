@@ -3,7 +3,8 @@
 set -e
 . "$(dirname "$0")/_/husky.sh"
 
-repo_root="$(cd "$(dirname "$0")/.." && pwd)"
+
+repo_root="$(git rev-parse --show-toplevel)"
 
 echo "Running rewrite pre-push verification (lint, typecheck, web build)..."
 cd "$repo_root" || exit 1

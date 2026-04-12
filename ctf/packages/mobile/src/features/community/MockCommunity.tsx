@@ -1,11 +1,5 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-
-<<<<<<< HEAD
-=======
-import { mobileFeedItems } from '../feed/feedDemoData';
->>>>>>> fix/react-native-type-errors
-
 import { Trust } from '../trust';
 import { mobileFeedItems } from '../feed/feedDemoData';
 
