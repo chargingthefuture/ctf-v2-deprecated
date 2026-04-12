@@ -16,6 +16,7 @@
     "check:formance-env": "node ./scripts/check-formance-env.mjs"
   },
   "dependencies": {
+    "@ctf/shared": "workspace:*",
     "@radix-ui/react-dialog": "^1.1.2",
     "@sentry/nextjs": "^10.21.0",
     "@tailwindcss/postcss": "^4.2.2",

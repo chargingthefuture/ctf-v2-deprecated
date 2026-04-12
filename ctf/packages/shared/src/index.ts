@@ -1,10 +1,6 @@
 export * from './auth/genericPluginAuth';
 export * from './mood';
-export * from './mood/hooks';
-export * from './mood/index.web';
-// Export mood plugin modules for path mapping and type safety
-export * from './mood';
-export * from './mood/hooks';
+// Do NOT export mood/hooks or mood/index.web here; import them directly in client components only.
 export type HealthStatus = 'ok';
 
 export const healthStatus: HealthStatus = 'ok';

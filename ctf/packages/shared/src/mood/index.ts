@@ -37,3 +37,6 @@ export async function fetchMoodEligibility(clientId: string): Promise<MoodEligib
 }
 
 // Add analytics/tracking hooks here if required by contract
+
+// Export client hooks for client-only imports
+export { useMoodEligibility, useSubmitMoodCheck } from './hooks';

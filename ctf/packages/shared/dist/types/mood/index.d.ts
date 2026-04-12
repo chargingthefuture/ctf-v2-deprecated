@@ -9,3 +9,4 @@ export type MoodEligibility = {
 };
 export declare function submitMoodCheck(clientId: string, moodValue: number): Promise<MoodCheck>;
 export declare function fetchMoodEligibility(clientId: string): Promise<MoodEligibility>;
+export { useMoodEligibility, useSubmitMoodCheck } from './hooks';
