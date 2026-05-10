@@ -1,32 +1,48 @@
-chyme-android/sentry-wizard
+# Test outputs
+test-results/
+playwright-report/
+coverage/
+.nyc_output/
+.vitest/
 
 # Node
 node_modules/
-npm-debug.log*
-yarn.lock
-pnpm-lock.yaml
-# package-lock.json
-!platform/package-lock.json
-!ctf/pnpm-lock.yaml
-!wiki-blog/pnpm-lock.yaml
+dist/
+build/
 
-# Platform build output
-platform/dist/
+# Environment
+.env
+.env.local
+.env.*.local
 
-# ctf rewrite build artifacts and local env
-ctf/packages/web/.next/
-ctf/packages/web/.env.local
-ctf/packages/web/tsconfig.tsbuildinfo
-ctf/packages/mobile/.expo/
-ctf/packages/mobile/dist/
-ctf/packages/mobile/.env
-ctf/packages/mobile/.env.local
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# OS / editor junk
+# OS
 .DS_Store
+Thumbs.db
+
+# Logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Local AI prompt scratch notes
-.ai/
+# TypeScript
+*.tsbuildinfo
 
+# Database
+*.db
+*.sqlite
 
+# Sentry Config File
+.env.sentry-build-plugin
+
+/migrations
+/docs
+.vercel
+.env*.local
